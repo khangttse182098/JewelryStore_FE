@@ -1,6 +1,6 @@
 import classes from "./Invoice.module.css";
 import "./Invoice.module.css";
-import DiamondRing from "/assets/DiamondRing.png";
+import DiamondRing from "/assets/DiamondRing.png"
 
 const Invoice = ({ invoice }) => {
   const { productName, productCode, materialName, categoryName, price } =

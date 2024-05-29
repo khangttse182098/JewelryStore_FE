@@ -1,13 +1,10 @@
-import { useState } from "react";
 import classes from "./SearchProduct.module.css";
 import SearchIcon from "./Vector.png";
 
 const SearchProduct = ({ placeholder, onChangeHandler }) => {
   return (
     <div className={classes.container}>
-      <span className={classes["search-icon"]}>
-        <img src={SearchIcon} alt="Search Icon" />
-      </span>
+        <img src={SearchIcon} alt="Search Icon" className={classes["search-icon"]} />
       <input
         className={classes["search-box"]}
         type="search"

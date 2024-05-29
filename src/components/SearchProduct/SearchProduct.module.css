@@ -16,8 +16,8 @@
 .search-icon {
   position: absolute;
   left: 10px;
+  margin: 0;
+  height: 60px;
+  width: 55px;
 }
 
-.search-icon img {
-  width: 60px;
-}

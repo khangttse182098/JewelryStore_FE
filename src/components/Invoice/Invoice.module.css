@@ -68,6 +68,7 @@ h6 {
   height: 177px;
   border-radius: 66px;
   display: flex;
+  margin-bottom: 10px;
 }
 
 p {
@@ -91,7 +92,7 @@ img {
 }
 
 .first-paragraph {
-  width: 217px;
+  width: 270px;
   height: 13px;
   margin-bottom: 15px;
 }
