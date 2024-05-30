@@ -43,25 +43,22 @@ const CategoryType = () => {
   // ----------------------------------------------------------
 
   //------------------------Counter----------------------------
-  const [seletedCounter, setSelectedCounter] = useState(null);
+  const [listCounter, setListCounter] = useState([]);
 
-  useEffect = () => {
+  useEffect(() => {
     fetch("http://localhost:8080/api/counter")
       .then((res) => res.json())
-      .then((dataCounter) => setSelectedCounter(dataCounter));
-  };
-
-  //------------------------------------------------------------
+      .then((dataCounter) => setListCounter(dataCounter));
+  }, []);
 
   // const [invoiceField, setInvoiceField] = useState([]);
 
   //---------------------------------FETCH API--------------------------
-  // const handleSubmit = () => {
-  //   fetch("http://localhost:8080/api/product?counter_id=1", {
-  //     method: "GET",
-  //   })
+  // const onCounterSelect = (counter) => {
+  //   setSelectedCounter(counter);
+  //   fetch(`http://localhost:8080/api/product?counter_id=${counter.id}`)
   //     .then((res) => res.json())
-  //     .then((data) => setInvoiceField(data))
+  //     .then((data) => setProducts(data))
   //     .catch((error) => console.log(error));
   // };
   //---------------------------------------------------------------------
@@ -76,7 +73,7 @@ const CategoryType = () => {
           />
         </div>
         <div className={classes.selection}>
-          <DropDownCounter />
+          <DropDownCounter listCounter={listCounter} />
           <ButtonType
             option="option1"
             activeOption={activeOption}
