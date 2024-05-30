@@ -4,9 +4,9 @@ import { ProductSelectionContext } from "../../context/ProductSelectionContext";
 import { useContext } from "react";
 
 const ButtonType = ({ option, activeOption, onClick, children }) => {
-  const [{ selectedCategoryName, setSelectedCategoryName }] = useContext(
-    ProductSelectionContext
-  );
+  const {
+    categoryName: { selectedCategoryName, setSelectedCategoryName },
+  } = useContext(ProductSelectionContext);
   function handleClick(e) {
     console.log(setSelectedCategoryName);
     e.preventDefault();

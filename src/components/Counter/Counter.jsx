@@ -4,9 +4,9 @@ import { ProductSelectionContext } from "../../context/ProductSelectionContext";
 
 const Counter = ({ counter }) => {
   const { counterNo } = counter;
-  const [{ selectedCounter, setSelectedCounter }] = useContext(
-    ProductSelectionContext
-  );
+  const {
+    counter: { selectedCounter, setSelectedCounter },
+  } = useContext(ProductSelectionContext);
   function handleClick(e) {
     e.preventDefault();
     setSelectedCounter(counterNo);

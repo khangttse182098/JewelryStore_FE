@@ -1,19 +1,25 @@
 import { createContext, useState } from "react";
 
-export const ProductSelectionContext = createContext([
-  { selectedCounter: "", setSelectedCounter: () => null },
-  { selectedCategoryName: "", setSelectedCategoryName: () => null },
-]);
+export const ProductSelectionContext = createContext({
+  counter: {
+    selectedCounter: "",
+    setSelectedCounter: () => null,
+  },
+  categoryName: {
+    selectedCategoryName: "",
+    setSelectedCategoryName: () => null,
+  },
+});
 
 export const ProductSelectionProvider = ({ children }) => {
   const [selectedCounter, setSelectedCounter] = useState("");
   const [selectedCategoryName, setSelectedCategoryName] = useState("");
   return (
     <ProductSelectionContext.Provider
-      value={[
-        { selectedCounter, setSelectedCounter },
-        { selectedCategoryName, setSelectedCategoryName },
-      ]}
+      value={{
+        counter: { selectedCounter, setSelectedCounter },
+        categoryName: { selectedCategoryName, setSelectedCategoryName },
+      }}
     >
       {children}
     </ProductSelectionContext.Provider>
