@@ -33,7 +33,10 @@ const CategoryType = () => {
       `http://localhost:8080/api/product?counter_id=${selectedCounter}&category_name=${selectedCategoryName}`
     )
       .then((res) => res.json())
-      .then((dataProduct) => setProducts(dataProduct));
+      .then((dataProduct) => {
+        console.log(selectedCategoryName);
+        return setProducts(dataProduct);
+      });
   }, [selectedCounter, selectedCategoryName]);
 
   //for filter through all products if the productname match in the searchField the setFilterProduct to newFilterProduct
@@ -71,19 +74,6 @@ const CategoryType = () => {
     handleCounter();
   }, []);
   //-------------------------------------------------------------------
-
-  //---------------Products display by counter and type--------------------
-  // const [invoiceField, setInvoiceField] = useState([]);
-
-  //---------------------------------FETCH API--------------------------
-  // const onCounterSelect = (counter) => {
-  //   setSelectedCounter(counter);
-  //   fetch(`http://localhost:8080/api/product?counter_id=${counter.id}`)
-  //     .then((res) => res.json())
-  //     .then((data) => setProducts(data))
-  //     .catch((error) => console.log(error));
-  // };
-  //---------------------------------------------------------------------
 
   return (
     <div className={classes.container}>

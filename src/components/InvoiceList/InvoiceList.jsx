@@ -5,7 +5,7 @@ import { useState } from "react";
 const InvoiceList = ({ listProducts }) => {
   const [invoiceField, setInvoiceField] = useState([]);
 
-  return (
+  return (  
     <div className={classes.list}>
       {listProducts.map((invoice) => {
         return <Invoice key={invoice.productCode} invoice={invoice} />;

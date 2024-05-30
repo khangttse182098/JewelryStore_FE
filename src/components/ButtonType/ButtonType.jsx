@@ -8,20 +8,22 @@ const ButtonType = ({ option, activeOption, onClick, children }) => {
     categoryName: { selectedCategoryName, setSelectedCategoryName },
   } = useContext(ProductSelectionContext);
   function handleClick(e) {
-    console.log(setSelectedCategoryName);
     e.preventDefault();
-    setSelectedCategoryName(activeOption);
+    setSelectedCategoryName(option);
   }
+
   return (
     <button
       className={`${classes.option} ${
         activeOption === option ? classes.active : ""
       }`}
-      onClick={() => onClick(option)}
+      // onClick={() => onClick(option)}
+      onClick={(e) => {
+        onClick(option);
+        handleClick(e);
+      }}
     >
-      <a onClick={handleClick} href="#" className={classes["option-content"]}>
-        {children}
-      </a>
+      <span className={classes["option-content"]}>{children}</span>
     </button>
   );
 };
