@@ -1,23 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RingImg from "/assets/ring.png";
 import classes from "./PurchaseProduct.module.css";
 
-const PurchaseProduct = () => {
+const PurchaseProduct = ({
+  product,
+  setShowPurchaseProductInvoice,
+  showPurchaseProduct,
+}) => {
+  // const [showProduct, isShowProduct] = useState(true);
+  function handleClick() {
+    setShowPurchaseProductInvoice((prevShowProduct) => !prevShowProduct);
+  }
   return (
-    <div className={classes.container}>
-      <h1>Nhẫn kim cương vàng trắng 14k</h1>
-      <div className={classes["conntent-container"]}>
-        <div className={classes["img-container"]}>
-          <img src={RingImg} alt="ring img" />
+    <>
+      {showPurchaseProduct && (
+        <div className={classes.container}>
+          <h1>{product.productName}</h1>
+          <div className={classes["content-container"]}>
+            <div className={classes["img-container"]}>
+              <img src={RingImg} alt="ring img" />
+            </div>
+            <div className={classes["product-info"]}>
+              <p>Mã sản phẩm: {product.productCode}</p>
+              <p>
+                Chất liệu:{""}
+                {product.materialName === "" ? product.gemName : "Không có"}
+              </p>
+              <p>
+                Tên kim cương:{""}
+                {product.gemName === "" ? product.gemName : "Không có"}
+              </p>
+            </div>
+            <button onClick={handleClick}>Mua lại</button>
+          </div>
         </div>
-        <div className={classes["product-info"]}>
-          <p>Mã sản phẩm: aaaa</p>
-          <p>Chất liệu: vàng trắng</p>
-          <p>Loại đá: Kim cương</p>
-        </div>
-        <button>Mua lại</button>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

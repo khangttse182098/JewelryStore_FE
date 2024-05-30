@@ -1,11 +1,26 @@
 import React from "react";
 import classes from "./PurchaseOrderDetail.module.css";
+import PurchaseProductInvoice from "../PurchaseProductInvoice/PurchaseProductInvoice";
 
-const PurchaseOrderDetail = () => {
+const PurchaseOrderDetail = ({
+  productList,
+  setShowPurchaseProduct,
+  showPurchaseProductInvoice,
+}) => {
   return (
     <div className={classes.container}>
-      <div className={classes.title}>Thông tin đơn hàng mua lại</div>
+      <div className={classes.title}>Thông tin đơn hàng</div>
       <div>
+        {productList.map((product, productIndex) => {
+          return (
+            <PurchaseProductInvoice
+              showPurchaseProductInvoice={showPurchaseProductInvoice}
+              setShowPurchaseProduct={setShowPurchaseProduct}
+              key={productIndex}
+              product={product}
+            />
+          );
+        })}
         <div className={classes.frame}>
           <p>Chiết khấu</p>
           <p>2</p>

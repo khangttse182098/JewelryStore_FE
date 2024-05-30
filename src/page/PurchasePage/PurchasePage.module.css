@@ -2,3 +2,18 @@
   font-family: "Montserrat";
   display: flex;
 }
+
+.invoice-title {
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.left-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 23px;
+  margin-top: 118px;
+  height: 800px;
+  width: 100%;
+  overflow: scroll;
+}

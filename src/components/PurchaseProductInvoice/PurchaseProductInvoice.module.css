@@ -1,6 +1,6 @@
 .container {
-  width: 752px;
-  height: 337px;
+  width: 553px;
+  height: 100px;
   border-radius: 90px;
   background-color: #dfd8d8;
   margin-bottom: 63px;
@@ -13,28 +13,28 @@
 }
 
 .img-container {
-  width: 204px;
-  height: 211px;
+  width: 73px;
+  height: 73px;
 }
 
 .product-info {
-  font-size: 30px;
+  font-size: 17px;
 }
 
 h1 {
   text-align: center;
 }
 
-button {
+.btn {
   background-color: #c3a06d;
-  width: 141px;
-  height: 101px;
-  border-radius: 20px;
-  font-size: 30px;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  font-size: 50px;
   font-weight: 500;
   margin-right: 26px;
 }
 
-button:hover {
+.btn:hover {
   background-color: #9c815b;
 }
