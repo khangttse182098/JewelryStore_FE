@@ -1,4 +1,4 @@
-import PurchasePage from "./page/PurchasePage";
+import PurchasePage from "./page/PurchasePage/PurchasePage";
 
 function App() {
   return <PurchasePage />;
