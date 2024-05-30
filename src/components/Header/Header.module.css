@@ -8,18 +8,13 @@
 
 .navbar {
   display: flex;
-<<<<<<< HEAD
   justify-content: space-between;
-=======
-  justify-content: center;
->>>>>>> feature/issue-01/login-form
   align-items: center;
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
 }
 
-<<<<<<< HEAD
 .toggleButton {
   display: flex;
   flex-direction: column;
@@ -43,18 +38,13 @@
   text-align: center;
 }
 
-=======
->>>>>>> feature/issue-01/login-form
 .logo {
   width: 150px;
   margin-top: 0px;
 }
-<<<<<<< HEAD
 
 .toggleButtonInvisible {
   width: 30px;
   height: 30px;
-  visibility: hidden; 
+  visibility: hidden;
 }
-=======
->>>>>>> feature/issue-01/login-form

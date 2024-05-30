@@ -1,5 +1,7 @@
+import PurchasePage from "./page/PurchasePage";
+
 function App() {
-  return;
+  return <PurchasePage />;
 }
 
 export default App;
