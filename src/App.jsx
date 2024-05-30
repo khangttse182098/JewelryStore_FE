@@ -1,7 +1,6 @@
-import SellerPage from "./page/SellerPage";
+import PurchaseProduct from "./components/PurchaseProduct/PurchaseProduct";
 
 function App() {
-  return <SellerPage />;
+  return <PurchaseProduct />;
 }
-
 export default App;
