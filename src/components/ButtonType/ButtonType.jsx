@@ -1,7 +1,17 @@
 import React from "react";
 import classes from "./ButtonType.module.css";
+import { ProductSelectionContext } from "../../context/ProductSelectionContext";
+import { useContext } from "react";
 
 const ButtonType = ({ option, activeOption, onClick, children }) => {
+  const [{ selectedCategoryName, setSelectedCategoryName }] = useContext(
+    ProductSelectionContext
+  );
+  function handleClick(e) {
+    console.log(setSelectedCategoryName);
+    e.preventDefault();
+    setSelectedCategoryName(activeOption);
+  }
   return (
     <button
       className={`${classes.option} ${
@@ -9,7 +19,7 @@ const ButtonType = ({ option, activeOption, onClick, children }) => {
       }`}
       onClick={() => onClick(option)}
     >
-      <a href="#" className={classes["option-content"]}>
+      <a onClick={handleClick} href="#" className={classes["option-content"]}>
         {children}
       </a>
     </button>

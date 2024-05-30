@@ -4,7 +4,8 @@ import SearchProduct from "../SearchProduct/SearchProduct";
 import DropDownCounter from "../DropDownCounter/DropDownCounter";
 import InvoiceList from "../InvoiceList/InvoiceList";
 import InformationBar from "../InformationBar/InformationBar";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { ProductSelectionContext } from "../../context/ProductSelectionContext";
 
 const CategoryType = () => {
   //select category type
@@ -19,12 +20,21 @@ const CategoryType = () => {
 
   //filter product if using search
   const [filterProduct, setFilterProduct] = useState([products]);
+  const type = "";
+  //----------------------------------------------------------
 
+  //--------------------------------------------------------'
+  const [
+    { selectedCounter, setSelectedCounter },
+    { selectedCategoryName, setSelectedCategoryName },
+  ] = useContext(ProductSelectionContext);
   useEffect(() => {
-    fetch("http://localhost:8080/api/product")
+    fetch(
+      `http://localhost:8080/api/product?counter_id=${selectedCounter}&category_type=${type}`
+    )
       .then((res) => res.json())
       .then((dataProduct) => setProducts(dataProduct));
-  });
+  }, [selectedCounter, selectedCategoryName]);
 
   //for filter through all products if the productname match in the searchField the setFilterProduct to newFilterProduct
   //whenever products and searchField change
@@ -60,10 +70,9 @@ const CategoryType = () => {
   useEffect(() => {
     handleCounter();
   }, []);
+  //-------------------------------------------------------------------
 
-  //-------------------------------------------------------
-
-
+  //---------------Products display by counter and type--------------------
   // const [invoiceField, setInvoiceField] = useState([]);
 
   //---------------------------------FETCH API--------------------------
@@ -88,21 +97,21 @@ const CategoryType = () => {
         <div className={classes.selection}>
           <DropDownCounter listCounter={listCounter} />
           <ButtonType
-            option="option1"
+            option="Trang sức"
             activeOption={activeOption}
             onClick={setActiveOption}
           >
             Trang sức
           </ButtonType>
           <ButtonType
-            option="option2"
+            option="Kim cương"
             activeOption={activeOption}
             onClick={setActiveOption}
           >
             Kim cương
           </ButtonType>
           <ButtonType
-            option="option3"
+            option="Vàng, bạc"
             activeOption={activeOption}
             onClick={setActiveOption}
           >
