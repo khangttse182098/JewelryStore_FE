@@ -11,6 +11,7 @@ const PurchasePage = () => {
       <div className={classes.container}>
         <div
           style={{
+            margin: "23px",
             width: "789px",
             height: "53px",
             borderRadius: "20px",
@@ -18,9 +19,7 @@ const PurchasePage = () => {
             textAlign: "center",
             marginTop: "42px",
           }}
-        >
-          Tìm kiếm
-        </div>
+        ></div>
         {/* purchase product list */}
         <PurchaseOrderDetail />
       </div>
