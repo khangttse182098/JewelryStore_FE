@@ -42,14 +42,27 @@ const CategoryType = () => {
   };
   // ----------------------------------------------------------
 
-  //------------------------Counter----------------------------
+  //------------------------Get List Counter----------------------------
   const [listCounter, setListCounter] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:8080/api/counter")
+  const handleCounter = () => {
+    fetch("http://localhost:8080/api/counter", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
-      .then((dataCounter) => setListCounter(dataCounter));
+      .then((dataCounter) => setListCounter(dataCounter))
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    handleCounter();
   }, []);
+
+  //-------------------------------------------------------
+
 
   // const [invoiceField, setInvoiceField] = useState([]);
 

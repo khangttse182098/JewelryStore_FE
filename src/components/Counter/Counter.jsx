@@ -1,11 +1,11 @@
 import classes from "./Counter.module.css";
 
 const Counter = ({ counter }) => {
-  const { counterId, counterNo, counterDescription } = counter;
+  const { counterNo } = counter;
 
   return (
-    <div className={classes["dropdown-content"]}>
-      <a href="#">Quay {counterNo}</a>
+    <div className={classes.counterItem}>
+      <a href="#">Quầy {counterNo}</a>
     </div>
   );
 };
