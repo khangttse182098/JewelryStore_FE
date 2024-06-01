@@ -1,50 +1,34 @@
 .header {
-  background-color: #182537;
+  background-color: #ffffff;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
-  height: 116px;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
-
-.toggleButton {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-}
-
-.bar {
-  width: 100%;
-  height: 4px;
-  background-color: #c3a06d;
-  border-radius: 2px;
-}
-
-.logoContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  height: 90px;
+  width: 1566px;
+  margin-left: 300px;
+  border-bottom-style: solid;
 }
 
 .logo {
-  width: 150px;
-  margin-top: 0px;
+  /* margin-right: 800px; */
 }
 
-.toggleButtonInvisible {
+.img-logo {
+  width: 80px;
+  /* margin-right: 500px; */
+  float: left;
+  margin-left: 50px;
+}
+.text-logo {
+  margin-top: 10px;
+
+  margin-left: 100px;
+}
+.name {
+  font-size: 25px;
+  margin-left: 700px;
+}
+.arrow-down-icon {
   width: 30px;
-  height: 30px;
-  visibility: hidden;
+  margin-left: 50px;
 }

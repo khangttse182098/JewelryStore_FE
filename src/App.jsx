@@ -1,5 +1,10 @@
+import InvoiceListPage from "./page/InvoiceListPage/";
 function App() {
-  return;
+  return (
+    <>
+      <InvoiceListPage />
+    </>
+  );
 }
 
 export default App;
