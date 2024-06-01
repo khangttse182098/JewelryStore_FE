@@ -44,7 +44,7 @@ select {
 /*
   7. Avoid text overflows
 */
-/* p,
+p,
 h1,
 h2,
 h3,
@@ -52,7 +52,7 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
-} */
+}
 /*
   8. Create a root stacking context
 */
@@ -64,15 +64,15 @@ h6 {
 .container {
   font-family: "Montserrat";
   background-color: #dfd8d8;
-  width: 630px;
-  height: 200px; /* 177 */
+  width: 700px;
+  height: 200px; /* 177px */
   border-radius: 66px;
   display: flex;
   margin-bottom: 10px;
 }
 
 p {
-  font-size: 15px;
+  font-size: 17px;
 }
 
 img {
@@ -85,7 +85,7 @@ img {
 
 .tittle {
   font-weight: 600;
-  width: 350px;
+  width: 340px;
   height: 16px;
   margin-top: 20px;
   margin-bottom: 15px;
@@ -107,7 +107,6 @@ img {
   width: 313px;
   height: 13px;
   margin-bottom: 20px;
-  margin-top: 50px;
 }
 
 .fourth-paragraph {
