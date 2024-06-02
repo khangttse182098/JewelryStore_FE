@@ -1,5 +1,7 @@
+import CashierSidebar from "./components/CashierSidebar/CashierSidebar";
+
 function App() {
-  return;
+  return <CashierSidebar />;
 }
 
 export default App;
