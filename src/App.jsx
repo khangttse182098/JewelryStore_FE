@@ -1,6 +1,5 @@
-import SellerPage from "../src/page/SellerPage";
-// import Header from "./components/Header/Header";
-// import SellerSidebar from "./components/SellerSidebar/SellerSidebar";
+import SellerPage from "./page/SellerPage";
+
 function App() {
   return <SellerPage />;
 }
