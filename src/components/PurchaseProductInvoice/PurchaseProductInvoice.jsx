@@ -1,36 +1,34 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import classes from "./PurchaseProductInvoice.module.css";
 import RingImg from "/assets/ring.png";
+import { ProductSellInvoiceContext } from "../../context/ProductSellInvoiceContext";
+import { ProductSellListContext } from "../../context/ProductSellListContext";
 
-const PurchaseProductInvoice = ({
-  product,
-  setShowPurchaseProduct,
-  showPurchaseProductInvoice,
-}) => {
-  // const [showProduct, setShowProduct] = useState(true);
+const PurchaseProductInvoice = ({ product }) => {
+  const { removeItemFromSellInvoice } = useContext(ProductSellInvoiceContext);
+  const { addItemToSellList } = useContext(ProductSellListContext);
+
   function handleClick() {
-    setShowPurchaseProduct((prevShowProduct) => !prevShowProduct);
+    removeItemFromSellInvoice(product);
+    addItemToSellList(product);
   }
+
   return (
-    <>
-      {showPurchaseProductInvoice && (
-        <div className={classes.container}>
-          <h1>{product.productName}</h1>
-          <div className={classes["content-container"]}>
-            <div className={classes["img-container"]}>
-              <img src={RingImg} alt="ring img" />
-            </div>
-            <div className={classes["product-info"]}>
-              <p>Mã sản phẩm: {product.productCode}</p>
-              <p>37.619.000đ</p>
-            </div>
-            <button className={classes.btn} onClick={handleClick}>
-              -
-            </button>
-          </div>
+    <div className={classes.container}>
+      <h1>{product.productName}</h1>
+      <div className={classes["content-container"]}>
+        <div className={classes["img-container"]}>
+          <img src={RingImg} alt="ring img" />
         </div>
-      )}
-    </>
+        <div className={classes["product-info"]}>
+          <p>Mã sản phẩm: {product.productCode}</p>
+          <p>37.619.000đ</p>
+        </div>
+        <button className={classes.btn} onClick={handleClick}>
+          -
+        </button>
+      </div>
+    </div>
   );
 };
 

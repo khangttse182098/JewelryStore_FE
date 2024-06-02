@@ -1,6 +1,6 @@
 .container {
   width: 553px;
-  height: 100px;
+  height: 160px;
   border-radius: 90px;
   background-color: #dfd8d8;
   margin-bottom: 63px;
@@ -8,7 +8,6 @@
 
 .content-container {
   display: flex;
-  align-items: center;
   justify-content: space-between;
 }
 

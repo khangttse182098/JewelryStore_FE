@@ -3,40 +3,31 @@ import Header from "../../components/Header/Header";
 import classes from "./PurchasePage.module.css";
 import PurchaseOrderDetail from "../../components/PurchaseOrderDetail/PurchaseOrderDetail";
 import PurchaseProduct from "../../components/PurchaseProduct/PurchaseProduct";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ProductSellListContext } from "../../context/ProductSellListContext";
 
 const PurchasePage = () => {
-  const [productList, setProductList] = useState([]);
-  const [showPurchaseProduct, setShowPurchaseProduct] = useState(true);
-  const [showPurchaseProductInvoice, setShowPurchaseProductInvoice] =
-    useState(false);
-  http: useEffect(() => {
-    fetch(`http://localhost:8080/api/product`)
+  const { itemSellList, setItemSellList } = useContext(ProductSellListContext);
+  const handleFetch = () => {
+    fetch(`http://localhost:8080/api/sell-order?sellOrderCode=SEL003`)
       .then((res) => res.json())
-      .then((data) => setProductList(data));
-  }, [productList]);
+      .then((data) => setItemSellList(data));
+  };
+
+  useEffect(() => {
+    handleFetch();
+  }, []);
   return (
     <>
       <Header />
-      <p className={classes["invoice-title"]}>Mã hóa đơn: INV001</p>
+      <p className={classes["invoice-title"]}>Mã hóa đơn: SEL003</p>
       <div className={classes.container}>
         <div className={classes["left-container"]}>
-          {productList.map((product, productIndex) => {
-            return (
-              <PurchaseProduct
-                showPurchaseProduct={showPurchaseProduct}
-                setShowPurchaseProductInvoice={setShowPurchaseProductInvoice}
-                key={productIndex}
-                product={product}
-              />
-            );
+          {itemSellList.map((product, productIndex) => {
+            return <PurchaseProduct key={productIndex} product={product} />;
           })}
         </div>
-        <PurchaseOrderDetail
-          showPurchaseProductInvoice={showPurchaseProductInvoice}
-          setShowPurchaseProduct={setShowPurchaseProduct}
-          productList={productList}
-        />
+        <PurchaseOrderDetail />
       </div>
     </>
   );

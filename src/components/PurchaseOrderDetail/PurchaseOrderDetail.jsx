@@ -1,24 +1,18 @@
 import React from "react";
 import classes from "./PurchaseOrderDetail.module.css";
 import PurchaseProductInvoice from "../PurchaseProductInvoice/PurchaseProductInvoice";
+import { useContext } from "react";
+import { ProductSellInvoiceContext } from "../../context/ProductSellInvoiceContext";
 
-const PurchaseOrderDetail = ({
-  productList,
-  setShowPurchaseProduct,
-  showPurchaseProductInvoice,
-}) => {
+const PurchaseOrderDetail = () => {
+  const { itemSellInvoice } = useContext(ProductSellInvoiceContext);
   return (
     <div className={classes.container}>
       <div className={classes.title}>Thông tin đơn hàng</div>
       <div>
-        {productList.map((product, productIndex) => {
+        {itemSellInvoice.map((product, productIndex) => {
           return (
-            <PurchaseProductInvoice
-              showPurchaseProductInvoice={showPurchaseProductInvoice}
-              setShowPurchaseProduct={setShowPurchaseProduct}
-              key={productIndex}
-              product={product}
-            />
+            <PurchaseProductInvoice key={productIndex} product={product} />
           );
         })}
         <div className={classes.frame}>
