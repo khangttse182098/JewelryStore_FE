@@ -1,9 +1,9 @@
-import classes from "./Header.module.css";
+import classes from "./HeaderCashier.module.css";
 import MahikaLogoImg from "/assets/img-logo.png";
 import MahikaLogoText from "/assets/text-logo.png";
 import Arrow from "/assets/arrow-down-icon.png";
 
-const Header = () => {
+const HeaderCashier = () => {
   return (
     <div className={classes.header}>
       <div className={classes.logo}>
@@ -26,4 +26,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderCashier;

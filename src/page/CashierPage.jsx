@@ -1,11 +1,11 @@
 import ListTableInvoice from "../components/ListTableInvoice/ListTableInvoice";
-import Header from "../components/Header/Header";
+import HeaderCashier from "../components/HeaderCashier/HeaderCashier";
 import CashierSidebar from "../components/CashierSidebar/CashierSidebar";
 
 const CashierPage = () => {
   return (
     <>
-      <Header />
+      <HeaderCashier />
       <CashierSidebar />
       <ListTableInvoice />
     </>
