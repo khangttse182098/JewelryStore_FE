@@ -1,20 +1,27 @@
 import classes from "./Header.module.css";
-import MahikaLogo from "/assets/Logo.png";
+import MahikaLogoImg from "/assets/img-logo.png";
+import MahikaLogoText from "/assets/text-logo.png";
+import Arrow from "/assets/arrow-down-icon.png";
 
 const Header = () => {
   return (
     <div className={classes.header}>
-      <nav className={classes.navbar}>
-        <div className={classes.toggleButton}>
-          <div className={classes.bar}></div>
-          <div className={classes.bar}></div>
-          <div className={classes.bar}></div>
-        </div>
-        <div className={classes.logoContainer}>
-          <img src={MahikaLogo} alt="Mahika Logo" className={classes.logo} />
-        </div>
-        <div className={classes.toggleButtonInvisible}></div>
-      </nav>
+      <div className={classes.logo}>
+        <img
+          src={MahikaLogoImg}
+          alt="Mahika Logo"
+          className={classes["img-logo"]}
+        />
+        <img
+          src={MahikaLogoText}
+          alt="Mahika Logo"
+          className={classes["text-logo"]}
+        />
+      </div>
+      <div className={classes.name}>
+        <p>Pham Hoang Phuc</p>
+      </div>
+      <img src={Arrow} alt="Arrow" className={classes["arrow-down-icon"]} />
     </div>
   );
 };
