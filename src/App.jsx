@@ -1,5 +1,7 @@
+import SearchSellOrderCode from "./components/SearchSellOrderCode/SearchSellOrderCode";
+
 function App() {
-  return;
+  return <SearchSellOrderCode />;
 }
 
 export default App;
