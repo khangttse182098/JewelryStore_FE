@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import classes from "./CusctomerInputForm.module.css";
 
-const CustomerInputForm = () => {
+const CustomerInputForm = forwardRef(function CustomerInputForm(
+  { handleHide },
+  ref
+) {
   const [customerInfor, setCustomerInfor] = useState({
     name: "",
     address: "",
@@ -37,12 +40,14 @@ const CustomerInputForm = () => {
       address: "",
       phoneNumber: "",
     });
+
+    handleHide();
   }
 
   return (
-    <div className={classes.container}>
+    <dialog ref={ref} className={classes.container}>
       <p>Nhập thông tin khách hàng</p>
-      <form>
+      <div className={classes["info-container"]}>
         <div>
           <label>Tên khách hàng</label>
           <input
@@ -70,12 +75,14 @@ const CustomerInputForm = () => {
             required
           />
         </div>
-        <button type="submit" onClick={handleSubmit}>
-          Lưu
-        </button>
-      </form>
-    </div>
+        <form method="dialog">
+          <button onClick={handleSubmit}>
+            <span>Lưu</span>
+          </button>
+        </form>
+      </div>
+    </dialog>
   );
-};
+});
 
 export default CustomerInputForm;
