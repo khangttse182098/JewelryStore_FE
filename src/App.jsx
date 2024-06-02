@@ -1,8 +1,9 @@
+import Header from "./components/Header/Header";
 import InvoiceListPage from "./page/InvoiceListPage/";
 function App() {
   return (
     <>
-      <InvoiceListPage />
+      <Header />
     </>
   );
 }
