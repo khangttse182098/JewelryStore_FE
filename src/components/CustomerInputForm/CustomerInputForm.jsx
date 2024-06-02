@@ -76,7 +76,7 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
           />
         </div>
         <form method="dialog">
-          <button onClick={handleSubmit}>
+          <button className={classes["save-button"]} onClick={handleSubmit}>
             <span>Lưu</span>
           </button>
         </form>

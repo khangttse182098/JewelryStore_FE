@@ -9,10 +9,9 @@ import smileIcon from "/assets/smile.png";
 const SellerSidebar = ({ visible, onClose }) => {
   return (
     <aside className={`${classes.container} ${visible ? classes.visible : ""}`}>
-      <div className={classes["img-container"]}>
+      {/* <div className={classes["img-container"]}>
         <img src={profilePicture} alt="profile picture" />
-      </div>
-
+      </div> */}
       <div className={classes["function-list"]}>
         <p className={classes["list-name"]}>Chức năng</p>
         <SidebarFunction icon={homeIcon} title="Trang chủ" />
