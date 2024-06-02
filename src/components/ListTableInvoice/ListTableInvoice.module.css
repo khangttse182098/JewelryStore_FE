@@ -25,17 +25,29 @@ body {
 .infor-bar {
   display: flex;
   padding-left: 42px;
-  height: 50px;
+  height: 70px;
 }
 
 .button {
-  height: 20px;
-  border: none;
+  height: 50px;
+  width: 200px;
+  border: #ffffff;
   background-color: #ffffff;
-  padding-right: 62px;
+  /* padding-right: 62px; */
+  justify-content: center;
+  border-radius: 0px;
+  text-align: center;
+}
+.status {
+  margin-top: 10px;
 }
 
 .button:hover {
+  border-style: solid;
+  border-bottom-color: #2661ec;
+  border-width: 2px;
+  border-top: none;
+  background-color: #ffffff;
   cursor: pointer;
 }
 
