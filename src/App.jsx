@@ -1,5 +1,7 @@
+import CashierPage from "../src/page/CashierPage";
+
 function App() {
-  return;
+  return <CashierPage />;
 }
 
 export default App;
