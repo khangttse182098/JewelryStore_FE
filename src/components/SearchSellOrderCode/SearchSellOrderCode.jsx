@@ -1,7 +1,12 @@
 import classes from "./SearchSellOrderCode.module.css";
 import SearchIcon from "/assets/Vector.png";
 
-const SearchSellOrderCode = () => {
+const SearchSellOrderCode = ({ setSearchResult }) => {
+  function handleChange(event) {
+    setSearchResult(event.target.value);
+    event.preventDefault();
+  }
+
   return (
     <div className={classes.container}>
       <img
@@ -13,6 +18,7 @@ const SearchSellOrderCode = () => {
         type="search"
         placeholder="Nhập mã đơn hàng..."
         className={classes.search}
+        onChange={handleChange}
       />
     </div>
   );

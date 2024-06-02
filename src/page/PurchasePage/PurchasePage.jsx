@@ -5,22 +5,25 @@ import PurchaseOrderDetail from "../../components/PurchaseOrderDetail/PurchaseOr
 import PurchaseProduct from "../../components/PurchaseProduct/PurchaseProduct";
 import { useState, useEffect, useContext } from "react";
 import { ProductSellListContext } from "../../context/ProductSellListContext";
+import SearchSellOrderCode from "../../components/SearchSellOrderCode/SearchSellOrderCode";
 
 const PurchasePage = () => {
   const { itemSellList, setItemSellList } = useContext(ProductSellListContext);
+  const [searchResult, setSearchResult] = useState("");
   const handleFetch = () => {
-    fetch(`http://localhost:8080/api/sell-order?sellOrderCode=SEL003`)
+    fetch(`http://localhost:8080/api/sell-order?sellOrderCode=${searchResult}`)
       .then((res) => res.json())
       .then((data) => setItemSellList(data));
   };
 
   useEffect(() => {
     handleFetch();
-  }, []);
+  }, [searchResult]);
   return (
     <>
       <Header />
-      <p className={classes["invoice-title"]}>Mã hóa đơn: SEL003</p>
+      <SearchSellOrderCode setSearchResult={setSearchResult} />
+      <p className={classes["invoice-title"]}>Mã hóa đơn: {searchResult}</p>
       <div className={classes.container}>
         <div className={classes["left-container"]}>
           {itemSellList.map((product, productIndex) => {

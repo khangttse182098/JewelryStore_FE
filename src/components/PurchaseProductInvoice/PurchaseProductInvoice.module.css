@@ -4,6 +4,7 @@
   border-radius: 90px;
   background-color: #dfd8d8;
   margin-bottom: 63px;
+  justify-self: flex-start;
 }
 
 .content-container {
@@ -14,6 +15,11 @@
 .img-container {
   width: 73px;
   height: 73px;
+}
+
+.img-container img {
+  width: 100%;
+  height: 100%;
 }
 
 .product-info {
