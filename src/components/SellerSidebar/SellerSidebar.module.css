@@ -1,9 +1,21 @@
 .container {
-  width: 563px;
-  height: 960px;
+  /* width: 563px;
+  height: 960px; */
+  position: fixed;
+  top: 0;
+  left: -900px;
+  width: 600px;
+  height: 900px;
+  background-color: #fff;
+  transition: left 0.4s ease-in-out;
+  z-index: 1000;
   background-color: #dac3a1;
   font-family: "Montserrat";
   text-align: center;
+}
+
+.visible {
+  left: 0;
 }
 
 .img-container {

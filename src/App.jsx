@@ -1,4 +1,4 @@
-import SellerPage from "./page/SellerPage";
+import SellerPage from "../src/page/SellerPage";
 
 function App() {
   return <SellerPage />;
