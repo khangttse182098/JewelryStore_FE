@@ -8,6 +8,7 @@ import InvoiceSellPurchase from "../InvoiceSellPurchase/InvoiceSellPurchase";
 import { useEffect, useState, useContext } from "react";
 import { ProductSelectionContext } from "../../context/ProductSelectionContext";
 import { ProductPurchaseContext } from "../../context/ProductPurchaseContext";
+import { ProductPurchaseListContext } from "../../context/ProductPurchaseListContext";
 
 const CategoryType = () => {
   //select category type
@@ -21,9 +22,11 @@ const CategoryType = () => {
   const [products, setProducts] = useState([]);
 
   //filter product if using search
-  const [filterProduct, setFilterProduct] = useState(products);
+  // const [filterProduct, setFilterProduct] = useState([]);
   //----------------------------------------------------------
-
+  const { setProductList, productList } = useContext(
+    ProductPurchaseListContext
+  );
   //--------------------------------------------------------'
   const {
     counter: { selectedCounter, setSelectedCounter },
@@ -46,7 +49,7 @@ const CategoryType = () => {
     const newFilterProduct = products.filter((product) => {
       return product.productName.toLowerCase().includes(searchField);
     });
-    setFilterProduct(newFilterProduct);
+    setProductList(newFilterProduct);
   }, [products, searchField]);
 
   //knowing when user type in and set search field to what user type
@@ -111,14 +114,17 @@ const CategoryType = () => {
           </ButtonType>
         </div>
         <div className={classes["content-left"]}>
-          <InvoiceList listProducts={filterProduct} />
+          <InvoiceList listProducts={productList} />
         </div>
       </div>
       <div className={classes["container-right"]}>
         <p className={classes.tittle}>Thông tin đơn hàng</p>
         <div className={classes["content-right"]}>
           {itemPurchase.map((product) => (
-            <InvoiceSellPurchase key={product.productCode} itemToPurchase={product} />
+            <InvoiceSellPurchase
+              key={product.productCode}
+              itemToPurchase={product}
+            />
           ))}
         </div>
         <div className={classes.inforBar}>

@@ -9,7 +9,7 @@ const addItemPurchase = (itemPurchase, productToAdd) => {
     return itemPurchase;
   }
 
-  return [...itemPurchase, { ...productToAdd }];
+  return [{ ...productToAdd }, ...itemPurchase];
 };
 
 const removeItemPurchase = (itemPurchase, productToRemove) => {

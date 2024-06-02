@@ -1,25 +1,26 @@
 import { createContext, useState } from "react";
 
-const addItemProductList = (itemPurchase, productToAdd) => {
-  const existingItemPurchase = itemPurchase.find(
+const addItemProductList = (productList, productToAdd) => {
+  const existingItemPurchase = productList.find(
     (item) => item.productCode === productToAdd.productCode
   );
 
   if (existingItemPurchase) {
-    return itemPurchase;
+    return productList;
   }
 
-  return [...itemPurchase, { ...productToAdd }];
+  return [{ ...productToAdd }, ...productList];
 };
 
-const removeItemProductList = (itemPurchase, productToRemove) => {
-  return itemPurchase.filter(
+const removeItemProductList = (productList, productToRemove) => {
+  return productList.filter(
     (item) => item.productCode !== productToRemove.productCode
   );
 };
 
 export const ProductPurchaseListContext = createContext({
   productList: [],
+  setProductList: () => {},
   addItemToProductList: () => {},
   removeItemFromProductList: () => {},
 });
@@ -32,13 +33,14 @@ export const ProductPurchaseListProvider = ({ children }) => {
   };
 
   const removeItemFromProductList = (productToRemove) => {
-    setProductList((prevItems) => 
+    setProductList((prevItems) =>
       removeItemProductList(prevItems, productToRemove)
     );
   };
 
   const value = {
     productList,
+    setProductList,
     addItemToProductList,
     removeItemFromProductList,
   };
