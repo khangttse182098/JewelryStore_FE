@@ -30,9 +30,15 @@ const ListTableInvoice = () => {
       </div>
       <div className={classes["table-container"]}>
         <div className={classes["infor-bar"]}>
-          <button className={classes.button}>Tất cả</button>
-          <button className={classes.button}>Đã thanh toán</button>
-          <button className={classes.button}>Chưa thanh toán</button>
+          <button className={classes.button}>
+            <p className={classes.status}>Tất cả</p>
+          </button>
+          <button className={classes.button}>
+            <p className={classes.status}>Đã thanh toán</p>
+          </button>
+          <button className={classes.button}>
+            <p className={classes.status}>Chưa thanh toán</p>
+          </button>
         </div>
         <hr />
         <div className={classes["search-container"]}>
