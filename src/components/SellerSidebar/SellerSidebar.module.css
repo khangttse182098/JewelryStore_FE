@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   left: -900px;
-  width: 600px;
+  width: 563px;
   height: 100%;
   background-color: #dac3a1;
   transition: left 0.4s ease-in-out;
@@ -19,6 +19,7 @@
   display: flex;
   justify-content: center;
   padding: 79px;
+  padding-bottom: 10px;
 }
 
 .list-name {
@@ -49,7 +50,7 @@
   outline: inherit;
   background-color: #f7f7f7;
   border-radius: 20px;
-  margin-top: 118px;
+  margin-top: 60px;
 }
 
 .close-button:hover {
