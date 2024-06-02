@@ -6,29 +6,42 @@ const addItemPurchase = (itemPurchase, productToAdd) => {
   );
 
   if (existingItemPurchase) {
-    return itemPurchase.map((item) =>
-      item.productCode === item.productCode ? { ...item } : item
-    );
+    return itemPurchase;
   }
 
   return [...itemPurchase, { ...productToAdd }];
 };
 
+const removeItemPurchase = (itemPurchase, productToRemove) => {
+  return itemPurchase.filter(
+    (item) => item.productCode !== productToRemove.productCode
+  );
+};
+
 export const ProductPurchaseContext = createContext({
   itemPurchase: [],
   addItemToPurchase: () => {},
+  removeItemFromPurchase: () => {},
 });
 
 export const ProductPurchaseProvider = ({ children }) => {
   const [itemPurchase, setItemPurchase] = useState([]);
 
   const addItemToPurchase = (productToAdd) => {
-    setItemPurchase(addItemPurchase(itemPurchase, productToAdd));
+    setItemPurchase((prevItems) => addItemPurchase(prevItems, productToAdd));
   };
 
-  const value = { addItemToPurchase, itemPurchase };
+  const removeItemFromPurchase = (productToRemove) => {
+    setItemPurchase((prevItems) =>
+      removeItemPurchase(prevItems, productToRemove)
+    );
+  };
+
+  const value = { itemPurchase, addItemToPurchase, removeItemFromPurchase };
 
   return (
-    <ProductPurchaseProvider value={value}>{children}</ProductPurchaseProvider>
+    <ProductPurchaseContext.Provider value={value}>
+      {children}
+    </ProductPurchaseContext.Provider>
   );
 };
