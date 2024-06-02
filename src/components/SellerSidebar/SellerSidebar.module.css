@@ -1,15 +1,25 @@
 .container {
+  position: fixed;
+  top: 0;
+  left: -900px;
   width: 563px;
-  height: 960px;
+  height: 100%;
   background-color: #dac3a1;
+  transition: left 0.4s ease-in-out;
+  z-index: 1000;
   font-family: "Montserrat";
   text-align: center;
+}
+
+.visible {
+  left: 0;
 }
 
 .img-container {
   display: flex;
   justify-content: center;
   padding: 79px;
+  padding-bottom: 10px;
 }
 
 .list-name {
@@ -40,7 +50,7 @@
   outline: inherit;
   background-color: #f7f7f7;
   border-radius: 20px;
-  margin-top: 118px;
+  margin-top: 60px;
 }
 
 .close-button:hover {

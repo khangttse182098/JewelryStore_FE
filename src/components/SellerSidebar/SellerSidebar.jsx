@@ -6,9 +6,9 @@ import searchIcon from "/assets/search.png";
 import tagIcon from "/assets/tag.png";
 import smileIcon from "/assets/smile.png";
 
-const SellerSidebar = () => {
+const SellerSidebar = ({ visible, onClose }) => {
   return (
-    <aside className={classes.container}>
+    <aside className={`${classes.container} ${visible ? classes.visible : ""}`}>
       <div className={classes["img-container"]}>
         <img src={profilePicture} alt="profile picture" />
       </div>
@@ -20,7 +20,9 @@ const SellerSidebar = () => {
         <SidebarFunction icon={tagIcon} title="Mã giảm giá" />
         <SidebarFunction icon={smileIcon} title="Đăng xuất" />
       </div>
-      <button className={classes["close-button"]}>Close</button>
+      <button className={classes["close-button"]} onClick={onClose}>
+        Close
+      </button>
     </aside>
   );
 };

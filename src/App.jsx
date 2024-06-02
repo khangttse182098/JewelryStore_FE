@@ -1,5 +1,7 @@
+import SellerPage from "./page/SellerPage";
+
 function App() {
-  return;
+  return <SellerPage />;
 }
 
 export default App;
