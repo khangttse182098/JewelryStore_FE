@@ -2,7 +2,7 @@ import classes from "./DropDownCounter.module.css";
 import Counter from "../Counter/Counter";
 import arrowDown from "/assets/arrowDown.png";
 import { useState, useContext } from "react";
-import { ProductSelectionContext } from "../../context/ProductSelectionContext";
+import { ProductSelectionContext } from "../../../../context/ProductSelectionContext";
 
 const DropDownCounter = ({ listCounter }) => {
   const [isOpen, setIsOpen] = useState(false);

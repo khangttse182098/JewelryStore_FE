@@ -1,14 +1,14 @@
 import React from "react";
-import ListTableInvoice from "../components/ListTableInvoice/ListTableInvoice";
-import HeaderCashier from "../components/HeaderCashier/HeaderCashier";
-import CashierSidebar from "../components/CashierSidebar/CashierSidebar";
+import TableInvoice from "../components/CashierRole/InvoiceListPage/TableInvoice/TableInvoice";
+import CashierHeader from "../components/CashierRole/UtilsComponent/CashierHeader/CashierHeader";
+import CashierSidebar from "../components/CashierRole/UtilsComponent/CashierSidebar/CashierSidebar";
 
 const CashierPage = () => {
   return (
     <>
-      <HeaderCashier />
+      <CashierHeader />
       <CashierSidebar />
-      <ListTableInvoice />
+      <TableInvoice />
     </>
   );
 };

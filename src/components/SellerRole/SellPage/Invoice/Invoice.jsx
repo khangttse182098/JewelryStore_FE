@@ -1,11 +1,11 @@
 import { useState, useContext, useRef } from "react";
-import { ProductPurchaseContext } from "../../context/ProductPurchaseContext";
+import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import classes from "./Invoice.module.css";
 import "./Invoice.module.css";
 import DiamondRing from "/assets/DiamondRing.png";
-import { ProductPurchaseListContext } from "../../context/ProductPurchaseListContext";
-import InvoiceDetail from "../../components/InvoiceDetail/InvoiceDetail";
-import { formatter } from "../../util/formatter";
+import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
+import InvoiceDetail from "../InvoiceDetail/InvoiceDetail"
+import { formatter } from "../../../../util/formatter";
 
 const Invoice = ({ invoice }) => {
   const { productName, productCode, materialName, categoryName, price } =

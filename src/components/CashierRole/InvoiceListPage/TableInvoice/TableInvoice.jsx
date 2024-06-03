@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import classes from "./ListTableInvoice.module.css";
+import classes from "./TableInvoice.module.css";
 import settingIcon from "/assets/setting.png";
 
-const ListTableInvoice = () => {
+const TableInvoice = () => {
   const [invoiceList, setInvoiceList] = useState([]);
 
   const handleInvoice = () => {
@@ -90,4 +90,4 @@ const ListTableInvoice = () => {
   );
 };
 
-export default ListTableInvoice;
+export default TableInvoice;

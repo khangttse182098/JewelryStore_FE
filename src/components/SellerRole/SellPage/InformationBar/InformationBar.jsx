@@ -1,8 +1,8 @@
 import { useRef, useState, useContext, useEffect } from "react";
-import CustomerInputForm from "../CustomerInputForm/CustomerInputForm";
+import CustomerInputForm from "../../UtilsComponent/CustomerInputForm/CustomerInputForm"
 import classes from "./InformationBar.module.css";
-import { ProductPurchaseContext } from "../../context/ProductPurchaseContext";
-import { formatter } from "../../util/formatter";
+import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
+import { formatter } from "../../../../util/formatter";
 
 const InformationBar = () => {
   const customerInputFormRef = useRef();

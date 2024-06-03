@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import classes from "./Counter.module.css";
-import { ProductSelectionContext } from "../../context/ProductSelectionContext";
+import { ProductSelectionContext } from "../../../../context/ProductSelectionContext";
 
 const Counter = ({ counter }) => {
   const { counterNo } = counter;

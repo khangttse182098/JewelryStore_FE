@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./ButtonType.module.css";
-import { ProductSelectionContext } from "../../context/ProductSelectionContext";
+import { ProductSelectionContext } from "../../../../context/ProductSelectionContext";
 import { useContext } from "react";
 
 const ButtonType = ({ option, activeOption, onClick, children }) => {

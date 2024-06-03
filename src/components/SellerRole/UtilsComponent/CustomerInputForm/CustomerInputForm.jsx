@@ -6,7 +6,7 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
   ref
 ) {
   const [customerInfor, setCustomerInfor] = useState({
-    name: "",
+    fullName: "",
     address: "",
     phoneNumber: "",
   });
@@ -23,20 +23,20 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
   function handleSubmit(event) {
     //prevent reload page
     event.preventDefault();
-    //customer api from backend (implement later)
-    // fetch("http://localhost:5000/customer", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(customerInfor),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => console.log(data));
+    //customer api from backend
+    fetch("http://localhost:8080/api/order/sell", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(customerInfor),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
 
     //reset customerInfor
     setCustomerInfor({
-      name: "",
+      fullname: "",
       address: "",
       phoneNumber: "",
     });

@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/Header/Header";
-import CategoryType from "../components/CategoryType/CategoryType";
+import Header from "../components/SellerRole/UtilsComponent/Header/Header";
+import CategoryType from "../components/SellerRole/SellPage/CategoryType/CategoryType";
 import { ProductSelectionProvider } from "../context/ProductSelectionContext";
 import { ProductPurchaseProvider } from "../context/ProductPurchaseContext";
 import { ProductPurchaseListProvider } from "../context/ProductPurchaseListContext";

@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../../components/Header/Header";
+import Header from "../../components/SellerRole/UtilsComponent/Header/Header";
 import classes from "./PurchasePage.module.css";
 import PurchaseOrderDetail from "../../components/PurchaseOrderDetail/PurchaseOrderDetail";
 import PurchaseProduct from "../../components/PurchaseProduct/PurchaseProduct";
