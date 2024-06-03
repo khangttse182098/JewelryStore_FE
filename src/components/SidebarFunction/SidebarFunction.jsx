@@ -5,7 +5,7 @@ const SidebarFunction = ({ icon, title }) => {
   return (
     <div className={classes.container}>
       <div className={classes["icon-container"]}>
-        {/* <img src={icon} /> */}
+        <img src={icon} />
       </div>
       <p className={classes.title}>{title}</p>
     </div>

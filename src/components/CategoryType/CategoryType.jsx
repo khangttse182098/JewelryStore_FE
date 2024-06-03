@@ -33,12 +33,12 @@ const CategoryType = () => {
     categoryName: { selectedCategoryName, setSelectedCategoryName },
   } = useContext(ProductSelectionContext);
   useEffect(() => {
+    const counterID = selectedCounter === "Chọn quầy" ? "" : selectedCounter;
     fetch(
-      `http://localhost:8080/api/product?counter_id=${selectedCounter}&category_name=${selectedCategoryName}`
+      `http://localhost:8080/api/product?counter_id=${counterID}&category_name=${selectedCategoryName}`
     )
       .then((res) => res.json())
       .then((dataProduct) => {
-        console.log(selectedCategoryName);
         return setProducts(dataProduct);
       });
   }, [selectedCounter, selectedCategoryName]);

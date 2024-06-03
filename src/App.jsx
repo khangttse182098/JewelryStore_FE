@@ -1,12 +1,16 @@
-import SellerPage from "./page/SellerPage";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 import LoginPage from "./page/LoginPage";
+import SellerPage from "./page/SellerPage";
+import CashierPage from "./page/CashierPage";
+import "./util/reset.css";
 
 function App() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/sellpage" element={<SellerPage />} />
+      <Route path="/invoicelist" element={<CashierPage />} />
     </Routes>
   );
 }

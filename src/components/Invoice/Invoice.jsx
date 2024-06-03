@@ -4,6 +4,7 @@ import classes from "./Invoice.module.css";
 import DiamondRing from "/assets/DiamondRing.png";
 import { ProductPurchaseListContext } from "../../context/ProductPurchaseListContext";
 import InvoiceDetail from "../../components/InvoiceDetail/InvoiceDetail";
+import { formatter } from "../../util/formatter";
 
 const Invoice = ({ invoice }) => {
   const { productName, productCode, materialName, categoryName, price } =
@@ -26,7 +27,11 @@ const Invoice = ({ invoice }) => {
       <InvoiceDetail invoice={invoice} ref={InvoiceDetailRef} />
       <div key={productCode} className={classes["container-invoice"]}>
         <div>
-          <img src={DiamondRing} alt="Diamond Ring 14K" />
+          <img
+            className={classes.img}
+            src={DiamondRing}
+            alt="Diamond Ring 14K"
+          />
         </div>
         <div onClick={handleShowProductDetail}>
           <p className={classes.tittle}>{productName}</p>
@@ -37,7 +42,9 @@ const Invoice = ({ invoice }) => {
             Chất liệu: {materialName}
           </p>
           <p className={classes["third-paragraph"]}>Loại đá: {categoryName}</p>
-          <p className={classes["fourth-paragraph"]}>{price}đ</p>
+          <p className={classes["fourth-paragraph"]}>
+            {formatter.format(price)}
+          </p>
         </div>
         <div>
           <button onClick={handleClick} className={classes.button}>

@@ -1,11 +1,14 @@
 import classes from "./DropDownCounter.module.css";
 import Counter from "../Counter/Counter";
 import arrowDown from "/assets/arrowDown.png";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ProductSelectionContext } from "../../context/ProductSelectionContext";
 
 const DropDownCounter = ({ listCounter }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const {
+    counter: { selectedCounter },
+  } = useContext(ProductSelectionContext);
   const toggleDropDown = () => {
     setIsOpen(!isOpen);
   };
@@ -14,7 +17,11 @@ const DropDownCounter = ({ listCounter }) => {
     <div>
       <div className={classes.dropdown}>
         <button className={classes.dropbtn} onClick={toggleDropDown}>
-          <p className={classes.text}>Chọn quầy</p>
+          <p className={classes.text}>
+            {selectedCounter === "Chọn quầy"
+              ? "Chọn quầy"
+              : `Quầy ${selectedCounter}`}
+          </p>
           <img src={arrowDown} alt="Arrow Down" className={classes.icon} />
         </button>
         {isOpen && (

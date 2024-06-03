@@ -2,9 +2,11 @@ import { useState } from "react";
 import classes from "./Header.module.css";
 import MahikaLogo from "/assets/Logo.png";
 import SellerSidebar from "../SellerSidebar/SellerSidebar";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
 
   const handleDisplay = () => {
     setVisible((prev) => !prev);

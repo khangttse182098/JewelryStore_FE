@@ -12,7 +12,7 @@ export const ProductSelectionContext = createContext({
 });
 
 export const ProductSelectionProvider = ({ children }) => {
-  const [selectedCounter, setSelectedCounter] = useState("");
+  const [selectedCounter, setSelectedCounter] = useState("Chọn quầy");
   const [selectedCategoryName, setSelectedCategoryName] = useState("");
   return (
     <ProductSelectionContext.Provider
