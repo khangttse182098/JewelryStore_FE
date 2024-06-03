@@ -1,6 +1,7 @@
 import { useState, useContext, useRef } from "react";
 import { ProductPurchaseContext } from "../../context/ProductPurchaseContext";
 import classes from "./Invoice.module.css";
+import "./Invoice.module.css";
 import DiamondRing from "/assets/DiamondRing.png";
 import { ProductPurchaseListContext } from "../../context/ProductPurchaseListContext";
 import InvoiceDetail from "../../components/InvoiceDetail/InvoiceDetail";

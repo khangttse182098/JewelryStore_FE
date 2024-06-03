@@ -34,7 +34,7 @@
 
 .second-paragraph {
   width: 313px;
-  height: 13px;
+  height: 30px;
   margin-bottom: 17px;
   font-size: 17px;
 }
@@ -43,6 +43,7 @@
   width: 313px;
   height: 13px;
   margin-bottom: 20px;
+  margin-top: 0px;
   font-size: 17px;
 }
 
