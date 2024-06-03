@@ -1,9 +1,16 @@
 import { useState, useEffect } from "react";
 import classes from "./TableInvoice.module.css";
 import settingIcon from "/assets/setting.png";
+import Pagination from "../../UtilsComponent/Pagination/Pagination";
 
 const TableInvoice = () => {
   const [invoiceList, setInvoiceList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [invoicePerPage, setInvoicePerPage] = useState(4);
+
+  const lastInvoiceIndex = currentPage * invoicePerPage;
+  const firstInvoiceIndex = lastInvoiceIndex - invoicePerPage;
+  const currentInvoice = invoiceList.slice(firstInvoiceIndex, lastInvoiceIndex);
 
   const handleInvoice = () => {
     fetch("http://localhost:8080/api/order", {
@@ -67,7 +74,7 @@ const TableInvoice = () => {
               <th className={classes.th}>Thành tiền</th>
               <th className={classes.th}>Trạng thái thanh toán</th>
             </tr>
-            {invoiceList.map((list) => {
+            {currentInvoice.map((list) => {
               return (
                 <tr className={classes.tr} key={list.invoiceCode}>
                   <td className={`${classes.checkbox} ${classes.td}`}>
@@ -84,6 +91,12 @@ const TableInvoice = () => {
               );
             })}
           </table>
+          <Pagination
+            totalInvoice={invoiceList.length}
+            invoicePerPage={invoicePerPage}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+          />
         </div>
       </div>
     </div>
