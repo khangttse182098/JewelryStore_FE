@@ -4,6 +4,9 @@ import Pagination from "../../UtilsComponent/Pagination/Pagination";
 
 const TableCustomer = () => {
   const [customerList, setCustomerList] = useState([]);
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  //----------------------Pagination---------------------
   const [currentPage, setCurrentPage] = useState(1);
   const [customerPerPage, setCustomerPerPage] = useState(4);
 
@@ -13,14 +16,18 @@ const TableCustomer = () => {
     firstCustomerIndex,
     lastCustomerIndex
   );
+  //------------------------------------------------------
 
   const handleInvoice = () => {
-    fetch("http://localhost:8080/api/customer/list", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      `http://localhost:8080/api/customer/list?phoneNumber=${phoneNumber}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((dataInvoice) => setCustomerList(dataInvoice))
       .catch((error) => console.log(error));
@@ -28,9 +35,11 @@ const TableCustomer = () => {
 
   useEffect(() => {
     handleInvoice();
-  }, []);
+  }, [phoneNumber]);
 
-  // console.log(invoiceList);
+  const handleSearchChange = (event) => {
+    setPhoneNumber(event.target.value);
+  };
 
   return (
     <div className={classes.container}>
@@ -52,6 +61,8 @@ const TableCustomer = () => {
             className={classes.search}
             type="search"
             placeholder="Tìm kiếm theo số điện thoại"
+            value={phoneNumber}
+            onChange={handleSearchChange}
           />
         </div>
         <table className={classes.table}>
@@ -65,11 +76,11 @@ const TableCustomer = () => {
           {currentCustomer.map((list) => {
             return (
               <tr className={classes.tr} key={list.invoiceCode}>
-                <td className={classes.td}>{list.invoiceCode}</td>
-                <td className={classes.td}>{list.createdDate}</td>
-                <td className={classes.td}>{list.customerName}</td>
-                <td className={classes.td}>{list.invoiceType}</td>
-                <td className={classes.td}>{list.staffName}</td>
+                <td className={classes.td}>{list.fullName}</td>
+                <td className={classes.td}>{list.phoneNumber}</td>
+                <td className={classes.td}>{list.address}</td>
+                <td className={classes.td}>{list.orderQuantity}</td>
+                <td className={classes.td}>{list.expense}</td>
               </tr>
             );
           })}

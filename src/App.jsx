@@ -17,7 +17,7 @@ function App() {
     //   <Route path="/customerlist" element={<CustomerListPage />} />
     // </Routes>
     <>
-      <CashierPage />
+      <CustomerListPage />
     </>
   );
 }
