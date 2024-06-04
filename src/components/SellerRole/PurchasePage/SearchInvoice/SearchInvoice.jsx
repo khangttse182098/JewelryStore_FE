@@ -1,7 +1,7 @@
-import classes from "./SearchSellOrderCode.module.css";
+import classes from "./SearchInvoice.module.css";
 import SearchIcon from "/assets/Vector.png";
 
-const SearchSellOrderCode = ({ setSearchResult }) => {
+const SearchInvoice = ({ setSearchResult }) => {
   function handleChange(event) {
     setSearchResult(event.target.value);
     event.preventDefault();
@@ -24,4 +24,4 @@ const SearchSellOrderCode = ({ setSearchResult }) => {
   );
 };
 
-export default SearchSellOrderCode;
+export default SearchInvoice;

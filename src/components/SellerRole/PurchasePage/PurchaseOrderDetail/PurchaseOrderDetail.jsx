@@ -1,8 +1,8 @@
 import React from "react";
 import classes from "./PurchaseOrderDetail.module.css";
-import PurchaseProductInvoice from "../PurchaseProductInvoice/PurchaseProductInvoice";
+import PurchaseOrderProduct from "../PurchaseOrderProduct/PurchaseOrderProduct";
 import { useContext } from "react";
-import { ProductSellInvoiceContext } from "../../context/ProductSellInvoiceContext";
+import { ProductSellInvoiceContext } from "../../../../context/ProductSellInvoiceContext";
 
 const PurchaseOrderDetail = () => {
   const { itemSellInvoice } = useContext(ProductSellInvoiceContext);
@@ -11,9 +11,7 @@ const PurchaseOrderDetail = () => {
       <div className={classes.title}>Thông tin đơn hàng</div>
       <div>
         {itemSellInvoice.map((product, productIndex) => {
-          return (
-            <PurchaseProductInvoice key={productIndex} product={product} />
-          );
+          return <PurchaseOrderProduct key={productIndex} product={product} />;
         })}
         <div className={classes.frame}>
           <p className={classes.p}>Chiết khấu</p>

@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import RingImg from "/assets/ring.png";
-import classes from "./PurchaseProduct.module.css";
-import { ProductSellInvoiceContext } from "../../context/ProductSellInvoiceContext";
-import { ProductSellListContext } from "../../context/ProductSellListContext";
+import classes from "./InvoiceProductList.module.css";
+import { ProductSellInvoiceContext } from "../../../../context/ProductSellInvoiceContext";
+import { ProductSellListContext } from "../../../../context/ProductSellListContext";
 
-const PurchaseProduct = ({ product }) => {
+const InvoiceProductList = ({ product }) => {
   const { addItemToSellInvoice } = useContext(ProductSellInvoiceContext);
   const { removeItemFromSellList } = useContext(ProductSellListContext);
 
@@ -39,4 +39,4 @@ const PurchaseProduct = ({ product }) => {
   );
 };
 
-export default PurchaseProduct;
+export default InvoiceProductList;
