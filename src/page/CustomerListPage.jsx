@@ -7,7 +7,7 @@ const CustomerListPage = () => {
     <>
       <CashierHeader />
       <CashierSidebar />
-      <TableCustomer />/
+      <TableCustomer />
     </>
   );
 };

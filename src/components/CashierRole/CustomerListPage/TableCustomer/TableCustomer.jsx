@@ -1,24 +1,34 @@
 import { useEffect, useState } from "react";
 import classes from "./TableCustomer.module.css";
+import Pagination from "../../UtilsComponent/Pagination/Pagination";
 
 const TableCustomer = () => {
-  // const [invoiceList, setInvoiceList] = useState([]);
+  const [customerList, setCustomerList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [customerPerPage, setCustomerPerPage] = useState(4);
 
-  // const handleInvoice = () => {
-  //   fetch("http://localhost:8080/api/order", {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((dataInvoice) => setInvoiceList(dataInvoice))
-  //     .catch((error) => console.log(error));
-  // };
+  const lastCustomerIndex = currentPage * customerPerPage;
+  const firstCustomerIndex = lastCustomerIndex - customerPerPage;
+  const currentCustomer = customerList.slice(
+    firstCustomerIndex,
+    lastCustomerIndex
+  );
 
-  // useEffect(() => {
-  //   handleInvoice();
-  // }, []);
+  const handleInvoice = () => {
+    fetch("http://localhost:8080/api/customer/list", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((dataInvoice) => setCustomerList(dataInvoice))
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    handleInvoice();
+  }, []);
 
   // console.log(invoiceList);
 
@@ -52,18 +62,24 @@ const TableCustomer = () => {
             <th className={classes.th}>Số lượng đơn hàng</th>
             <th className={classes.th}>Tổng chi tiêu</th>
           </tr>
-          {/* {invoiceList.map((list) => {
-              return (
-                <tr className={classes.tr} key={list.invoiceCode}>
-                  <td className={classes.td}>{list.invoiceCode}</td>
-                  <td className={classes.td}>{list.createdDate}</td>
-                  <td className={classes.td}>{list.customerName}</td>
-                  <td className={classes.td}>{list.invoiceType}</td>
-                  <td className={classes.td}>{list.staffName}</td>
-                </tr>
-              );
-            })} */}
+          {currentCustomer.map((list) => {
+            return (
+              <tr className={classes.tr} key={list.invoiceCode}>
+                <td className={classes.td}>{list.invoiceCode}</td>
+                <td className={classes.td}>{list.createdDate}</td>
+                <td className={classes.td}>{list.customerName}</td>
+                <td className={classes.td}>{list.invoiceType}</td>
+                <td className={classes.td}>{list.staffName}</td>
+              </tr>
+            );
+          })}
         </table>
+        <Pagination
+          totalInvoice={customerList.length}
+          invoicePerPage={customerPerPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );
