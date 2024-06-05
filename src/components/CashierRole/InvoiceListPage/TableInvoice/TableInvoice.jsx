@@ -13,7 +13,7 @@ const TableInvoice = () => {
   const currentInvoice = invoiceList.slice(firstInvoiceIndex, lastInvoiceIndex);
 
   const handleInvoice = () => {
-    fetch("http://localhost:8080/api/order", {
+    fetch("http://mahika.foundation:8080/swp/api/order", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

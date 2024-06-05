@@ -24,7 +24,7 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
     //prevent reload page
     event.preventDefault();
     //customer api from backend
-    fetch("http://localhost:8080/api/order/sell", {
+    fetch("http://mahika.foundation:8080/swp/api/order/sell", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -20,7 +20,7 @@ const TableCustomer = () => {
 
   const handleInvoice = () => {
     fetch(
-      `http://localhost:8080/api/customer/list?phoneNumber=${phoneNumber}`,
+      `http://mahika.foundation:8080/swp/api/customer/list?phoneNumber=${phoneNumber}`,
       {
         method: "GET",
         headers: {
@@ -79,7 +79,7 @@ const TableCustomer = () => {
                 <td className={classes.td}>{list.fullName}</td>
                 <td className={classes.td}>{list.phoneNumber}</td>
                 <td className={classes.td}>{list.address}</td>
-                <td className={classes.td}>{list.orderQuantity}</td>
+                <td className={classes.td}>{list.quantityOrder}</td>
                 <td className={classes.td}>{list.expense}</td>
               </tr>
             );

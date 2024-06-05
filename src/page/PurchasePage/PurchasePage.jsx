@@ -11,7 +11,9 @@ const PurchasePage = () => {
   const { itemSellList, setItemSellList } = useContext(ProductSellListContext);
   const [searchResult, setSearchResult] = useState("");
   const handleFetch = () => {
-    fetch(`http://localhost:8080/api/sell-order?sellOrderCode=${searchResult}`)
+    fetch(
+      `http://mahika.foundation:8080/swp/api/sell-order?sellOrderCode=${searchResult}`
+    )
       .then((res) => res.json())
       .then((data) => setItemSellList(data));
   };

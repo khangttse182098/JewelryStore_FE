@@ -14,7 +14,7 @@ const SignInForm = () => {
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
-    fetch("http://localhost:8080/api/user/login", {
+    fetch("http://mahika.foundation:8080/swp/api/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
