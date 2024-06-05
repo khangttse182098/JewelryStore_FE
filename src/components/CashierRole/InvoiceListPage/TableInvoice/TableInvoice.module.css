@@ -14,19 +14,14 @@ body {
   position: absolute;
 }
 .title {
-  margin-bottom: 30px;
   font-size: xx-large;
   font-weight: normal;
   background-color: #efeded;
-}
-.table-container {
-  background-color: #ffffff;
+  padding-bottom: 10px;
 }
 
-.infor-bar {
-  display: flex;
-  padding-left: 42px;
-  height: 70px;
+.table-container {
+  background-color: #ffffff;
 }
 
 .button {
@@ -38,11 +33,16 @@ body {
   justify-content: center;
   border-radius: 0px;
   text-align: center;
+  color: #a6abb2;
+}
+
+.para {
+  font-family: "Montserrat";
+  font-size: 15px;
 }
 
 .status {
-  font-family: "Montserrat";
-  font-size: 15px;
+  margin-top: 10px;
 }
 
 .button:hover {
@@ -108,9 +108,18 @@ body {
 .tr {
   text-align: center;
   padding: 8px;
+  cursor: pointer;
 }
 
 .th,
 .td {
   font-size: 17px;
+}
+
+.tr:hover {
+  background-color: #eff7fd;
+}
+
+.select {
+  background-color: #eff7fd;
 }

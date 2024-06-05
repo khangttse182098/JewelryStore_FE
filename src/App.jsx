@@ -9,16 +9,13 @@ import "./util/reset.css";
 
 function App() {
   return (
-    // <Routes>
-    //   <Route path="/login" element={<LoginPage />} />
-    //   <Route path="/sellpage" element={<SellerPage />} />
-    //   <Route path="/invoicelist" element={<CashierPage />} />
-    //   <Route path="/purchasepage" element={<PurchasePage />} />
-    //   <Route path="/customerlist" element={<CustomerListPage />} />
-    // </Routes>
-    <>
-      <CustomerListPage />
-    </>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/sellpage" element={<SellerPage />} />
+      <Route path="/invoicelist" element={<CashierPage />} />
+      <Route path="/purchasepage" element={<PurchasePage />} />
+      <Route path="/customerlist" element={<CustomerListPage />} />
+    </Routes>
   );
 }
 
