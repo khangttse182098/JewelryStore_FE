@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import classes from "./SignInForm.module.css";
 import { useNavigate } from "react-router-dom";
+import { LoggedInUserContext } from "../../context/LoggedInUserContext";
 
 const defaultFormField = {
   username: "",
@@ -10,11 +11,12 @@ const defaultFormField = {
 const SignInForm = () => {
   const [formField, setFormField] = useState(defaultFormField);
   const [isWrong, setIsWrong] = useState(false);
+  const { setUserId } = useContext(LoggedInUserContext);
   const { username, password } = formField;
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
-    fetch("http://localhost:8080/api/user/login", {
+    fetch("http://mahika.foundation:8080/swp/api/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,10 +25,14 @@ const SignInForm = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        {
+          data.roleCode && setUserId(data.userId);
+        }
         if (data.roleCode === "SELLER") {
-          navigate("/sellpage");
           setIsWrong(false);
+          navigate("/sellpage");
         } else if (data.roleCode === "CASHIER") {
+          setUserId(data.userId);
           navigate("/invoicelist");
           setIsWrong(false);
         } else {
@@ -35,10 +41,6 @@ const SignInForm = () => {
       })
       .catch((error) => console.log(error));
   };
-
-  // log what user type into the form
-  // console.log(formField);
-  // command line
 
   const handleChange = (event) => {
     const { name, value } = event.target;

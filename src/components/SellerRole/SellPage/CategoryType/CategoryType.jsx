@@ -35,7 +35,7 @@ const CategoryType = () => {
   useEffect(() => {
     const counterID = selectedCounter === "Chọn quầy" ? "" : selectedCounter;
     fetch(
-      `http://localhost:8080/api/product?counter_id=${counterID}&category_name=${selectedCategoryName}`
+      `http://mahika.foundation:8080/swp/api/product?counter_id=${counterID}&category_name=${selectedCategoryName}`
     )
       .then((res) => res.json())
       .then((dataProduct) => {
@@ -63,7 +63,7 @@ const CategoryType = () => {
   const [listCounter, setListCounter] = useState([]);
 
   const handleCounter = () => {
-    fetch("http://localhost:8080/api/counter", {
+    fetch("http://mahika.foundation:8080/swp/api/counter", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -120,11 +120,8 @@ const CategoryType = () => {
       <div className={classes["container-right"]}>
         <p className={classes.tittle}>Thông tin đơn hàng</p>
         <div className={classes["content-right"]}>
-          {itemPurchase.map((product) => (
-            <InvoiceSellPurchase
-              key={product.productCode}
-              itemToPurchase={product}
-            />
+          {itemPurchase.map((product, index) => (
+            <InvoiceSellPurchase key={index} itemToPurchase={product} />
           ))}
         </div>
         <div className={classes.inforBar}>
