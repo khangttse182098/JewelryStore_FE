@@ -3,6 +3,7 @@ import classes from "./PurchaseOrderProduct.module.css";
 import RingImg from "/assets/ring.png";
 import { ProductSellInvoiceContext } from "../../../../context/ProductSellInvoiceContext";
 import { ProductSellListContext } from "../../../../context/ProductSellListContext";
+import { formatter } from "../../../../util/formatter";
 
 const PurchaseOrderProduct = ({ product }) => {
   const { removeItemFromSellInvoice } = useContext(ProductSellInvoiceContext);
@@ -15,14 +16,14 @@ const PurchaseOrderProduct = ({ product }) => {
 
   return (
     <div className={classes.container}>
-      <h1>{product.productName}</h1>
+      <h1 className={classes.h1}>{product.productName}</h1>
       <div className={classes["content-container"]}>
         <div className={classes["img-container"]}>
           <img src={RingImg} alt="ring img" />
         </div>
         <div className={classes["product-info"]}>
           <p>Mã sản phẩm: {product.productCode}</p>
-          <p>{product.price}đ</p>
+          <p>Giá: {formatter.format(product.price)}</p>
         </div>
         <button className={classes.btn} onClick={handleClick}>
           -

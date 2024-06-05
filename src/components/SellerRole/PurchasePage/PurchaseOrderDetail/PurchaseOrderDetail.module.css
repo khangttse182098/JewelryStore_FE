@@ -29,6 +29,10 @@
 
 .total {
   font-weight: 700;
+  margin-top: 8px;
+  margin-left: 11px;
+  margin-right: 26px;
+  font-size: 20px;
 }
 
 .createInvoice {

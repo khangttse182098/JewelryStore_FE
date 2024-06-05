@@ -4,6 +4,8 @@
 }
 
 .invoice-title {
+  margin-top: 10px;
+  margin-left: 23px;
   width: 50%;
   font-size: 30px;
   font-weight: 500;
