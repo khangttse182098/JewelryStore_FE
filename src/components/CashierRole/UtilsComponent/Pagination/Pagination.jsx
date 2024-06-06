@@ -18,7 +18,7 @@ const Pagination = ({
         return (
           <button
             className={`${classes.button} ${
-              page == currentPage ? "active" : ""
+              page == currentPage ? classes.active : ""
             }`}
             key={index}
             onClick={() => setCurrentPage(page)}

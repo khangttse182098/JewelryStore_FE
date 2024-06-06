@@ -34,9 +34,6 @@ body {
   border-radius: 0px;
   text-align: center;
   color: #a6abb2;
-}
-
-.para {
   font-family: "Montserrat";
   font-size: 15px;
 }
@@ -122,4 +119,12 @@ body {
 
 .select {
   background-color: #eff7fd;
+}
+
+.current {
+  color: #2661ec;
+  font-weight: 500;
+  border-style: solid;
+  border-bottom-color: #2661ec;
+  opacity: 0.9;
 }

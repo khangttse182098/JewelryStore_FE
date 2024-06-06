@@ -17,7 +17,7 @@
   margin: 10px 10px;
 }
 
-.button:active {
+.active {
   background-color: #0088ff;
   color: white;
 }

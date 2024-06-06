@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import classes from "./TableInvoice.module.css";
 import settingIcon from "/assets/setting.png";
 import Pagination from "../../UtilsComponent/Pagination/Pagination";
+import { formatter } from "../../../../util/formatter";
 
 const TableInvoice = () => {
   const [invoiceList, setInvoiceList] = useState([]);
@@ -24,7 +25,7 @@ const TableInvoice = () => {
 
   //------------------------------Search----------------------------------
   const [searchField, setSearchField] = useState("");
-  const [filterInvoice, setFilterInvoice] = useState([invoiceList]);
+  const [filterInvoice, setFilterInvoice] = useState([...invoiceList]);
 
   const handleSearch = (event) => {
     const searchFieldString = event.target.value.toLowerCase();
@@ -50,7 +51,20 @@ const TableInvoice = () => {
     firstInvoiceIndex,
     lastInvoiceIndex
   );
-  //----------------------------------------------------------------------
+  //-------------------------------Status---------------------------------
+  const [currentStatus, setCurrentStatus] = useState("Tất cả");
+  const handleStatusOption = (event) => {
+    const status = event.target.getAttribute("status");
+    setCurrentStatus(status);
+    if (status === "Tất cả") {
+      setFilterInvoice([...invoiceList]);
+    } else {
+      const statusInvoice = invoiceList.filter(
+        (invoice) => invoice.status === status
+      );
+      setFilterInvoice(statusInvoice);
+    }
+  };
 
   //------------------------------CheckBox--------------------------------
   const handleCheckbox = (event) => {
@@ -78,14 +92,32 @@ const TableInvoice = () => {
       </div>
       <div className={classes["table-container"]}>
         <div>
-          <button className={classes.button}>
-            <p className={classes.para}>Tất cả</p>
+          <button
+            className={`${classes.button} ${
+              currentStatus === "Tất cả" ? classes.current : ""
+            }`}
+            status="Tất cả"
+            onClick={handleStatusOption}
+          >
+            Tất cả
           </button>
-          <button className={classes.button}>
-            <p className={classes.para}>Đã thanh toán</p>
+          <button
+            className={`${classes.button} ${
+              currentStatus === "Đã thanh toán" ? classes.current : ""
+            }`}
+            status="Đã thanh toán"
+            onClick={handleStatusOption}
+          >
+            Đã thanh toán
           </button>
-          <button className={classes.button}>
-            <p className={classes.para}>Chưa thanh toán</p>
+          <button
+            className={`${classes.button} ${
+              currentStatus === "Chưa thanh toán" ? classes.current : ""
+            }`}
+            status="Chưa thanh toán"
+            onClick={handleStatusOption}
+          >
+            Chưa thanh toán
           </button>
         </div>
         <hr />
@@ -136,11 +168,15 @@ const TableInvoice = () => {
                   />
                 </td>
                 <td className={classes.td}>{list.invoiceCode}</td>
-                <td className={classes.td}>{list.createdDate}</td>
+                <td className={classes.td}>
+                  {new Date(list.createdDate).toLocaleString()}
+                </td>
                 <td className={classes.td}>{list.customerName}</td>
                 <td className={classes.td}>{list.invoiceType}</td>
                 <td className={classes.td}>{list.staffName}</td>
-                <td className={classes.td}>{list.totalPrice}</td>
+                <td className={classes.td}>
+                  {formatter.format(list.totalPrice)}
+                </td>
                 <td className={classes.td}>{list.status}</td>
               </tr>
             );

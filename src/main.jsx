@@ -16,6 +16,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </ProductSellInvoiceProvider>
       </ProductSellListProvider>
     </React.StrictMode>
-    //{" "}
   </BrowserRouter>
 );

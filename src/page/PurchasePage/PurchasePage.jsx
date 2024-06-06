@@ -1,11 +1,11 @@
 import React from "react";
 import Header from "../../components/SellerRole/UtilsComponent/Header/Header";
 import classes from "./PurchasePage.module.css";
-import PurchaseOrderDetail from "../../components/PurchaseOrderDetail/PurchaseOrderDetail";
-import PurchaseProduct from "../../components/PurchaseProduct/PurchaseProduct";
+import PurchaseOrderDetail from "../../components/SellerRole/PurchasePage/PurchaseOrderDetail/PurchaseOrderDetail"
+import InvoiceProductList from "../../components/SellerRole/PurchasePage/InvoiceProductList/InvoiceProductList";
 import { useState, useEffect, useContext } from "react";
 import { ProductSellListContext } from "../../context/ProductSellListContext";
-import SearchSellOrderCode from "../../components/SearchSellOrderCode/SearchSellOrderCode";
+import SearchInvoice from "../../components/SellerRole/PurchasePage/SearchInvoice/SearchInvoice"
 
 const PurchasePage = () => {
   const { itemSellList, setItemSellList } = useContext(ProductSellListContext);
@@ -24,12 +24,12 @@ const PurchasePage = () => {
   return (
     <>
       <Header />
-      <SearchSellOrderCode setSearchResult={setSearchResult} />
+      <SearchInvoice setSearchResult={setSearchResult} />
       <p className={classes["invoice-title"]}>Mã hóa đơn: {searchResult}</p>
       <div className={classes.container}>
         <div className={classes["left-container"]}>
           {itemSellList.map((product, productIndex) => {
-            return <PurchaseProduct key={productIndex} product={product} />;
+            return <InvoiceProductList key={productIndex} product={product} />;
           })}
         </div>
         <PurchaseOrderDetail />
