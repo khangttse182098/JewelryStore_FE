@@ -7,8 +7,8 @@ const InvoiceList = ({ listProducts }) => {
 
   return (
     <div className={classes.list}>
-      {listProducts.map((invoice) => {
-        return <Invoice key={invoice.productCode} invoice={invoice} />;
+      {listProducts.map((invoice, index) => {
+        return <Invoice key={index} invoice={invoice} />;
       })}
     </div>
   );

@@ -1,11 +1,11 @@
 import React from "react";
 import Header from "../../components/SellerRole/UtilsComponent/Header/Header";
 import classes from "./PurchasePage.module.css";
-import PurchaseOrderDetail from "../../components/SellerRole/PurchasePage/PurchaseOrderDetail/PurchaseOrderDetail"
+import PurchaseOrderDetail from "../../components/SellerRole/PurchasePage/PurchaseOrderDetail/PurchaseOrderDetail";
 import InvoiceProductList from "../../components/SellerRole/PurchasePage/InvoiceProductList/InvoiceProductList";
 import { useState, useEffect, useContext } from "react";
 import { ProductSellListContext } from "../../context/ProductSellListContext";
-import SearchInvoice from "../../components/SellerRole/PurchasePage/SearchInvoice/SearchInvoice"
+import SearchInvoice from "../../components/SellerRole/PurchasePage/SearchInvoice/SearchInvoice";
 
 const PurchasePage = () => {
   const { itemSellList, setItemSellList } = useContext(ProductSellListContext);

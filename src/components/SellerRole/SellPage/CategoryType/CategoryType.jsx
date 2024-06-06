@@ -4,7 +4,7 @@ import SearchProduct from "../SearchProduct/SearchProduct";
 import DropDownCounter from "../DropDownCounter/DropDownCounter";
 import InvoiceList from "../InvoiceList/InvoiceList";
 import InformationBar from "../InformationBar/InformationBar";
-import InvoiceSellPurchase from "../../PurchasePage/InvoiceSellPurchase/InvoiceSellPurchase"
+import InvoiceSellPurchase from "../../PurchasePage/InvoiceSellPurchase/InvoiceSellPurchase";
 import { useEffect, useState, useContext } from "react";
 import { ProductSelectionContext } from "../../../../context/ProductSelectionContext";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
@@ -120,11 +120,8 @@ const CategoryType = () => {
       <div className={classes["container-right"]}>
         <p className={classes.tittle}>Thông tin đơn hàng</p>
         <div className={classes["content-right"]}>
-          {itemPurchase.map((product) => (
-            <InvoiceSellPurchase
-              key={product.productCode}
-              itemToPurchase={product}
-            />
+          {itemPurchase.map((product, index) => (
+            <InvoiceSellPurchase key={index} itemToPurchase={product} />
           ))}
         </div>
         <div className={classes.inforBar}>
