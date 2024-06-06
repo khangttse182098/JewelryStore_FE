@@ -44,3 +44,7 @@
 .icon {
   margin-top: 7px;
 }
+
+.current {
+  background-color: #324258;
+}
