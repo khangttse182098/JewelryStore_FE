@@ -20,6 +20,7 @@ const removeItemSellInvoice = (itemSellInvoice, productToRemove) => {
 
 export const ProductSellInvoiceContext = createContext({
   itemSellInvoice: [],
+  setItemSellInvoice: () => {},
   addItemToSellInvoice: () => {},
   removeItemFromSellInvoice: () => {},
 });
@@ -41,6 +42,7 @@ export const ProductSellInvoiceProvider = ({ children }) => {
 
   const value = {
     itemSellInvoice,
+    setItemSellInvoice,
     addItemToSellInvoice,
     removeItemFromSellInvoice,
   };

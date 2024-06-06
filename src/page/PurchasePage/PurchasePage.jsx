@@ -10,12 +10,14 @@ import SearchInvoice from "../../components/SellerRole/PurchasePage/SearchInvoic
 const PurchasePage = () => {
   const { itemSellList, setItemSellList } = useContext(ProductSellListContext);
   const [searchResult, setSearchResult] = useState("");
+  //fetch order by sell order code
   const handleFetch = () => {
     fetch(
       `http://mahika.foundation:8080/swp/api/sell-order?sellOrderCode=${searchResult}`
     )
       .then((res) => res.json())
-      .then((data) => setItemSellList(data));
+      .then((data) => setItemSellList(data))
+      .catch((err) => console.log(""));
   };
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const PurchasePage = () => {
             return <InvoiceProductList key={productIndex} product={product} />;
           })}
         </div>
-        <PurchaseOrderDetail />
+        <PurchaseOrderDetail sellOrderCode={searchResult} />
       </div>
     </>
   );

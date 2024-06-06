@@ -5,13 +5,27 @@ import { ProductSellInvoiceContext } from "../../../../context/ProductSellInvoic
 import { ProductSellListContext } from "../../../../context/ProductSellListContext";
 import { formatter } from "../../../../util/formatter";
 
-const PurchaseOrderProduct = ({ product }) => {
+const PurchaseOrderProduct = ({ product, sellOrderCode }) => {
   const { removeItemFromSellInvoice } = useContext(ProductSellInvoiceContext);
   const { addItemToSellList } = useContext(ProductSellListContext);
+  //fetch get sell order by sell order code
+  const handleFetch = () => {
+    fetch(
+      `http://mahika.foundation:8080/swp/api/sell-order?sellOrderCode=${sellOrderCode}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const oldProduct = data.find((item) => item.id === product.id);
+
+        //change product price back to old price
+        product = { ...product, price: oldProduct.price };
+        addItemToSellList(product);
+        removeItemFromSellInvoice(product);
+      });
+  };
 
   function handleClick() {
-    removeItemFromSellInvoice(product);
-    addItemToSellList(product);
+    handleFetch();
   }
 
   return (
