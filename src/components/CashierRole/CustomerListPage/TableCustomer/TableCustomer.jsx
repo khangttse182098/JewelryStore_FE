@@ -5,6 +5,12 @@ import Pagination from "../../UtilsComponent/Pagination/Pagination";
 const TableCustomer = () => {
   const [customerList, setCustomerList] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [status, setStatus] = useState("All");
+
+  const handleStatus = (event) => {
+    const status = event.target.getAttribute("status");
+    setStatus(status);
+  };
 
   //----------------------Pagination---------------------
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,11 +54,14 @@ const TableCustomer = () => {
       </div>
       <div className={classes["table-container"]}>
         <div>
-          <button className={classes.button}>
-            <p className={classes.para}>Tất cả</p>
-          </button>
-          <button className={classes.button}>
-            <p className={classes.para}>Khách hàng thân thiết</p>
+          <button
+            className={`${classes.button} ${
+              status === "All" ? classes.current : ""
+            }`}
+            onClick={handleStatus}
+            status="All"
+          >
+            Tất cả
           </button>
         </div>
         <hr />

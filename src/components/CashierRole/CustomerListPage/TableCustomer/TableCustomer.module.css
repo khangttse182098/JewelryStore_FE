@@ -30,15 +30,6 @@ body {
   height: 70px;
 }
 
-.para {
-  font-family: "Montserrat";
-  font-size: 15px;
-}
-
-.para:hover {
-  font-weight: 500;
-}
-
 .button {
   height: 50px;
   width: 200px;
@@ -49,6 +40,9 @@ body {
   border-radius: 0px;
   text-align: center;
   color: #a6abb2;
+  font-family: "Montserrat";
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .status {
@@ -123,4 +117,12 @@ body {
 .th,
 .td {
   font-size: 17px;
+}
+
+.current {
+  color: #2661ec;
+  font-weight: 500;
+  border-style: solid;
+  border-bottom-color: #2661ec;
+  opacity: 0.9;
 }
