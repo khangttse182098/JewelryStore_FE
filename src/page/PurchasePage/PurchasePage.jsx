@@ -6,18 +6,24 @@ import InvoiceProductList from "../../components/SellerRole/PurchasePage/Invoice
 import { useState, useEffect, useContext } from "react";
 import { ProductSellListContext } from "../../context/ProductSellListContext";
 import SearchInvoice from "../../components/SellerRole/PurchasePage/SearchInvoice/SearchInvoice";
+import { ProductSellInvoiceContext } from "../../context/ProductSellInvoiceContext";
 
 const PurchasePage = () => {
   const { itemSellList, setItemSellList } = useContext(ProductSellListContext);
   const [searchResult, setSearchResult] = useState("");
+  const { itemSellInvoice } = useContext(ProductSellInvoiceContext);
   //fetch order by sell order code
   const handleFetch = () => {
     fetch(
       `http://mahika.foundation:8080/swp/api/sell-order?sellOrderCode=${searchResult}`
     )
       .then((res) => res.json())
-      .then((data) => setItemSellList(data))
-      .catch((err) => console.log(""));
+      .then((data) => {
+        const filteredData = data.filter(
+          (item) => !itemSellInvoice.find((sellItem) => sellItem.id === item.id)
+        );
+        setItemSellList(filteredData);
+      });
   };
 
   useEffect(() => {
