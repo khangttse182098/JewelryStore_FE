@@ -21,8 +21,6 @@ const CategoryType = () => {
   //display initial -> Display all products when not selected counter or type
   const [products, setProducts] = useState([]);
 
-  //filter product if using search
-  // const [filterProduct, setFilterProduct] = useState([]);
   //----------------------------------------------------------
   const { setProductList, productList } = useContext(
     ProductPurchaseListContext

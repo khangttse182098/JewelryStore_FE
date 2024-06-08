@@ -2,7 +2,7 @@ import { useContext } from "react";
 import classes from "./Counter.module.css";
 import { ProductSelectionContext } from "../../../../context/ProductSelectionContext";
 
-const Counter = ({ counter }) => {
+const Counter = ({ counter, onClick }) => {
   const { counterNo } = counter;
   const {
     counter: { selectedCounter, setSelectedCounter },
@@ -10,6 +10,7 @@ const Counter = ({ counter }) => {
   function handleClick(e) {
     e.preventDefault();
     setSelectedCounter(counterNo);
+    onClick();
   }
   return (
     <div className={classes.counterItem}>
