@@ -1,0 +1,37 @@
+.header {
+  background-color: #ffffff;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  height: 90px;
+  width: 1650px;
+  margin-left: 260px;
+  box-shadow: 0px -7px 20px;
+  position: absolute;
+}
+
+.logo {
+  /* margin-right: 800px; */
+}
+
+.img-logo {
+  width: 80px;
+  /* margin-right: 500px; */
+  float: left;
+  margin-left: 50px;
+}
+.text-logo {
+  margin-top: 10px;
+
+  margin-left: 100px;
+}
+.name {
+  font-size: 25px;
+  margin-left: 700px;
+  text-decoration: black;
+}
+.arrow-down-icon {
+  width: 30px;
+  margin-left: 50px;
+  /* test */
+}

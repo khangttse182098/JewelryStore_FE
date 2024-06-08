@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  width: 466px;
+  height: 66px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.container:hover {
+  background-color: #dfd8d8;
+}
+
+.icon-container {
+  padding: 16px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 18px;
+}

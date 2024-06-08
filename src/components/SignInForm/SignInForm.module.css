@@ -1,0 +1,54 @@
+.sign-up-container {
+  font-family: "Montserrat";
+  margin: 100px auto;
+  background-color: #d9d9d9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 450px;
+  height: 350px;
+  padding: 20px;
+  border-radius: 7px;
+  box-sizing: border-box;
+}
+
+.h2 {
+  margin-bottom: 20px;
+  margin-top: 0px;
+}
+
+.form {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  outline-style: none;
+}
+
+.input-field {
+  width: 180px;
+  height: 35px;
+  border-radius: 7px;
+  border: none;
+  margin-bottom: 20px;
+}
+
+.input-field::placeholder {
+  color: black;
+  font-weight: 500;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.form-button {
+  width: 180px;
+  height: 35px;
+  border-radius: 7px;
+  background-color: #010d27;
+  color: #c3a06d;
+  font-weight: bold;
+}

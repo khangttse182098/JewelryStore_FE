@@ -1,12 +1,19 @@
-import Header from "./components/Header/Header";
-import "./App.css";
-import RepurchasePage from "./page/RepurchasePage";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import LoginPage from "./page/LoginPage";
+import SellerPage from "./page/SellerPage";
+import CashierPage from "./page/CashierPage";
+import PurchasePage from "./page/PurchasePage/PurchasePage";
+import "./util/reset.css";
 
 function App() {
   return (
-    <>
-      <RepurchasePage />
-    </>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/sellpage" element={<SellerPage />} />
+      <Route path="/invoicelist" element={<CashierPage />} />
+      <Route path="/purchasepage" element={<PurchasePage />} />
+    </Routes>
   );
 }
 

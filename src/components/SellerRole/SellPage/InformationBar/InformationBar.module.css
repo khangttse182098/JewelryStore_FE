@@ -1,0 +1,38 @@
+.frame {
+  background-color: #dfd8d8;
+  width: 534px;
+  height: 45px;
+  display: flex;
+  border-radius: 10px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.p {
+  margin-top: 8px;
+  margin-left: 11px;
+  margin-right: 26px;
+  font-size: 20px;
+}
+
+.total {
+  font-weight: 700;
+  margin-top: 8px;
+  margin-left: 11px;
+  margin-right: 26px;
+  font-size: 20px;
+}
+
+.createInvoice {
+  background-color: #c3a06d;
+  width: 534px;
+  height: 45px;
+  border: none;
+  border-radius: 22.5px;
+  color: inherit;
+  cursor: pointer;
+  margin-top: 7px;
+  color: #182537;
+  font-weight: 600;
+  font-size: 20px;
+}
