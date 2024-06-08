@@ -64,7 +64,7 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
     productId: [...productSellInvoiceListId],
   };
   function handleClick() {
-    fetch("http://mahika.foundation:8080/swp/api/purchase-order", {
+    fetch("http://mahika.foundation:8080/swp/api/purchase-order/have-invoice", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
