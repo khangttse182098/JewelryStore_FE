@@ -1,12 +1,14 @@
-import Header from "../components/Header/Header";
-import Category from "../components/Category/Category"
+import Header from "../components/SellerRole/UtilsComponent/Header/Header";
+import Category from "../components/SellerRole/PurchaseNoInvoicePage/Category/Category";
+import { RepurchaseProvider } from "../context/RepurchaseContext";
 
-const RepurchasePage =()=> {
+const RepurchasePage = () => {
   return (
-    <>
-        <Category />
-    </>
+    <RepurchaseProvider>
+      <Header />
+      <Category />
+    </RepurchaseProvider>
   );
-}
+};
 
 export default RepurchasePage;
