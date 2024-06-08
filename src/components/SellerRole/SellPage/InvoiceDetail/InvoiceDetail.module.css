@@ -1,15 +1,16 @@
 .modal-container {
+  overflow: hidden;
   background-color: #dac3a1;
-  width: 868px;
-  height: 518px;
+  width: 900px;
+  height: 550px;
   border-radius: 20px;
   font-family: "Montserrat";
   transform: translate(50%, 50%);
 }
 
-/* .modal-container[open] {
+.modal-container[open] {
   animation: slide-in-from-top 0.35s ease-out;
-} */
+}
 
 .modal-container::backdrop {
   background: rgba(0, 0, 0, 0.9);
@@ -91,11 +92,13 @@
 
 @keyframes slide-in-from-top {
   0% {
-    transform: translateY(-15%);
+    /* transform: translateY(-15%); */
+    top: -550px;
     opacity: 0;
   }
   100% {
-    transform: translateY(0);
+    /* transform: translateY(0); */
+    top: 0.1%;
     opacity: 1;
   }
 }
