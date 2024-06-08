@@ -16,7 +16,7 @@ const SellerSidebar = ({ visible, onClose }) => {
         <p className={classes["list-name"]}>Chức năng</p>
         <SidebarFunction icon={homeIcon} title="Dịch vụ bán" />
         <SidebarFunction icon={searchIcon} title="Dịch vụ mua lại" />
-        <SidebarFunction icon={tagIcon} title="Mã giảm giá" />
+        <SidebarFunction icon={tagIcon} title="Bảng sản phẩm đã thanh toán" />
         <SidebarFunction icon={smileIcon} title="Đăng xuất" />
       </div>
       <button className={classes["close-button"]} onClick={onClose}>
