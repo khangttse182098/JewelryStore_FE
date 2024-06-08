@@ -3,9 +3,11 @@ import classes from "./TableInvoice.module.css";
 import settingIcon from "/assets/setting.png";
 import Pagination from "../../UtilsComponent/Pagination/Pagination";
 import { formatter } from "../../../../util/formatter";
+import { useNavigate } from "react-router-dom";
 
 const TableInvoice = () => {
   const [invoiceList, setInvoiceList] = useState([]);
+  const navigate = useNavigate();
 
   const handleInvoice = () => {
     fetch("http://mahika.foundation:8080/swp/api/order", {
@@ -84,6 +86,9 @@ const TableInvoice = () => {
     }
   };
   //----------------------------------------------------------------------
+  function handleNavigate(list) {
+    navigate("/invoicedetail", { state: { list } });
+  }
 
   return (
     <div className={classes.container}>
@@ -158,6 +163,9 @@ const TableInvoice = () => {
                   list?.isChecked ? classes.select : ""
                 }`}
                 key={list.invoiceCode}
+                onClick={() => {
+                  handleNavigate(list);
+                }}
               >
                 <td className={`${classes.checkbox} ${classes.td}`}>
                   <input
