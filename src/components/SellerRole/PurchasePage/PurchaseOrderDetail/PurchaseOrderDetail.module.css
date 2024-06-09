@@ -5,6 +5,10 @@
   flex-direction: column;
   justify-content: space-between;
 }
+.container-order {
+  display: block;
+  overflow-y: scroll;
+}
 .title {
   text-align: center;
   font-size: 30px;
@@ -29,6 +33,10 @@
 
 .total {
   font-weight: 700;
+  margin-top: 8px;
+  margin-left: 11px;
+  margin-right: 26px;
+  font-size: 20px;
 }
 
 .createInvoice {

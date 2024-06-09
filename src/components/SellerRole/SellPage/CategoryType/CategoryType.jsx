@@ -4,7 +4,7 @@ import SearchProduct from "../SearchProduct/SearchProduct";
 import DropDownCounter from "../DropDownCounter/DropDownCounter";
 import InvoiceList from "../InvoiceList/InvoiceList";
 import InformationBar from "../InformationBar/InformationBar";
-import InvoiceSellPurchase from "../../PurchasePage/InvoiceSellPurchase/InvoiceSellPurchase";
+import InvoiceSellPurchase from "../InvoiceSellPurchase/InvoiceSellPurchase";
 import { useEffect, useState, useContext } from "react";
 import { ProductSelectionContext } from "../../../../context/ProductSelectionContext";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";

@@ -4,6 +4,8 @@
 }
 
 .invoice-title {
+  margin-top: 10px;
+  margin-left: 23px;
   width: 50%;
   font-size: 30px;
   font-weight: 500;
@@ -16,5 +18,5 @@
   margin-top: 118px;
   height: 800px;
   width: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
 }
