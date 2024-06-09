@@ -27,7 +27,11 @@ const DropDownCounter = ({ listCounter }) => {
         {isOpen && (
           <div className={classes["dropdown-content"]}>
             {listCounter.map((counter) => (
-              <Counter key={counter.id} counter={counter} />
+              <Counter
+                key={counter.id}
+                counter={counter}
+                onClick={toggleDropDown}
+              />
             ))}
           </div>
         )}

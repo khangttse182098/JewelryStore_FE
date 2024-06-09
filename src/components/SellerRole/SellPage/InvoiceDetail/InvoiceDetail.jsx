@@ -2,6 +2,7 @@ import { forwardRef, useState } from "react";
 import classes from "./InvoiceDetail.module.css";
 import ringImg from "/assets/ring.png";
 import { createPortal } from "react-dom";
+import { formatter } from "../../../../util/formatter";
 
 const InvoiceDetail = forwardRef(function InvoiceDetail({ invoice }, ref) {
   return createPortal(
@@ -18,7 +19,7 @@ const InvoiceDetail = forwardRef(function InvoiceDetail({ invoice }, ref) {
             <p>Mã sản phẩm: {invoice.productCode}</p>
             <p>Chất liệu: {invoice.materialName}</p>
             <p>Nhân công: {invoice.productionCode}</p>
-            <p className={classes.price}>{invoice.price}</p>
+            <p className={classes.price}>{formatter.format(invoice.price)}</p>
           </div>
           {/* close button */}
           <form method="dialog">

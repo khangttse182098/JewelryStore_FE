@@ -21,8 +21,6 @@ const CategoryType = () => {
   //display initial -> Display all products when not selected counter or type
   const [products, setProducts] = useState([]);
 
-  //filter product if using search
-  // const [filterProduct, setFilterProduct] = useState([]);
   //----------------------------------------------------------
   const { setProductList, productList } = useContext(
     ProductPurchaseListContext
@@ -32,6 +30,9 @@ const CategoryType = () => {
     counter: { selectedCounter, setSelectedCounter },
     categoryName: { selectedCategoryName, setSelectedCategoryName },
   } = useContext(ProductSelectionContext);
+
+  const { itemPurchase } = useContext(ProductPurchaseContext);
+
   useEffect(() => {
     const counterID = selectedCounter === "Chọn quầy" ? "" : selectedCounter;
     fetch(
@@ -39,7 +40,11 @@ const CategoryType = () => {
     )
       .then((res) => res.json())
       .then((dataProduct) => {
-        return setProducts(dataProduct);
+        const realProductList = dataProduct.filter(
+          (searchedProduct) =>
+            !itemPurchase.find((item) => item.id === searchedProduct.id)
+        );
+        setProducts(realProductList);
       });
   }, [selectedCounter, selectedCategoryName]);
 
@@ -78,7 +83,6 @@ const CategoryType = () => {
     handleCounter();
   }, []);
   //-------------------------------------------------------------------
-  const { itemPurchase } = useContext(ProductPurchaseContext);
 
   return (
     <div className={classes.container}>
