@@ -1,4 +1,3 @@
-import React from "react";
 import classes from "./PurchaseOrderDetail.module.css";
 import PurchaseOrderProduct from "../PurchaseOrderProduct/PurchaseOrderProduct";
 import CustomerInputForm from "../../UtilsComponent/CustomerInputForm/CustomerInputForm";

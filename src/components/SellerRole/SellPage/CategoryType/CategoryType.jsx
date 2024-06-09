@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import classes from "./CategoryType.module.css";
 import ButtonType from "../ButtonType/ButtonType";
 import SearchProduct from "../SearchProduct/SearchProduct";
@@ -89,6 +90,7 @@ const CategoryType = () => {
             placeholder="Nhập trang sức cần tìm kiếm..."
           />
         </div>
+
         <div className={classes.selection}>
           <DropDownCounter listCounter={listCounter} />
           <ButtonType

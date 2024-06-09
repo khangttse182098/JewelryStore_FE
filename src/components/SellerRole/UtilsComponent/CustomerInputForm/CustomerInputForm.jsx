@@ -1,17 +1,22 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { forwardRef, useContext, useState } from "react";
 import classes from "./CusctomerInputForm.module.css";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
+import { RepurchaseContext } from "../../../../context/RepurchaseContext";
 
 const CustomerInputForm = forwardRef(function CustomerInputForm(
-  { handleHide },
+  { handleHide, isPurchase },
   ref
 ) {
   const { itemPurchase } = useContext(ProductPurchaseContext);
   const { userId } = useContext(LoggedInUserContext);
+  const { itemPurchase: itemPurchaseNoInvoice } = useContext(RepurchaseContext);
+
   const productIdList = [];
   const productPriceList = [];
-  itemPurchase.map((item, index) => {
+  itemPurchase.map((item) => {
     productIdList.push(item.id);
     productPriceList.push(item.price);
   });
@@ -30,6 +35,30 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
     price: [...productPriceList],
   };
 
+  const purchaseOrderBody = {
+    ...customerInfor,
+    userId,
+    purchaseOrderStatus: "Chưa thanh toán",
+    criteria: {
+      diamondCriteriaResponseDTO: itemPurchaseNoInvoice
+        .filter((item) => item.id)
+        .map((obj) => {
+          return {
+            weight: parseInt(obj.data.weight),
+            ...obj.data,
+          };
+        }),
+
+      goldCriteriaResponseDTO: itemPurchaseNoInvoice
+        .filter((item) => !item.id)
+        .map((obj) => {
+          return {
+            ...obj.data,
+          };
+        }),
+    },
+  };
+
   function handleChange(customerAttribute, event) {
     setCustomerInfor((prevCustomerInfor) => {
       return {
@@ -39,17 +68,23 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
     });
   }
 
+  const URL = !isPurchase
+    ? "http://mahika.foundation:8080/swp/api/sell-order"
+    : "http://mahika.foundation:8080/swp/api/purchase-order/no-invoice";
+
+  const REQ_BODY = !isPurchase ? sellOrderBody : purchaseOrderBody;
+
   function handleSubmit(event) {
     //prevent reload page
     event.preventDefault();
-    console.log(sellOrderBody);
+    console.log(REQ_BODY);
     //customer api from backend
-    fetch("http://mahika.foundation:8080/swp/api/order/sell", {
+    fetch(URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(sellOrderBody),
+      body: JSON.stringify(REQ_BODY),
     })
       .then((res) => res.json())
       .then((data) => console.log(data));

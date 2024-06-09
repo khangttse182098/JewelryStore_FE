@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+/* eslint-disable react/prop-types */
+import { useContext } from "react";
 import RingImg from "/assets/ring.png";
 import classes from "./InvoiceProductList.module.css";
 import { ProductSellInvoiceContext } from "../../../../context/ProductSellInvoiceContext";

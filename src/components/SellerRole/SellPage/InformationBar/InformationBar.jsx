@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { useRef, useState, useContext, useEffect } from "react";
-import CustomerInputForm from "../../UtilsComponent/CustomerInputForm/CustomerInputForm"
+import CustomerInputForm from "../../UtilsComponent/CustomerInputForm/CustomerInputForm";
 import classes from "./InformationBar.module.css";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import { formatter } from "../../../../util/formatter";

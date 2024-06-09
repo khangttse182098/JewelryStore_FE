@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import classes from "./InvoiceSellPurchase.module.css";
 import DiamondRing from "/assets/DiamondRing.png";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
 import { formatter } from "../../../../util/formatter";
