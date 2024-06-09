@@ -1,15 +1,19 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import classes from "./InvoiceDetail.module.css";
-import RingImg from "/assets/ring.png";
 import PenImg from "/assets/pen.png";
 import { formatter } from "../../../../util/formatter";
+import loadImg from "../../../../util/loadImg";
 
 const InvoiceDetail = ({ invoice }) => {
   const [productList, setProductList] = useState(
     invoice.list.productResponseDTOList
   );
+
   const [customer, setCustomer] = useState({});
   const [payPrice, setPayPrice] = useState("");
+  const [image, setImage] = useState(null);
   const [fund, setFund] = useState("");
   const { invoiceCode, customerName, status, totalPrice, customerId } =
     invoice.list;
@@ -82,10 +86,13 @@ const InvoiceDetail = ({ invoice }) => {
           </thead>
           <tbody>
             {productList.map((list) => {
+              if (image === null) {
+                loadImg(list.productCode, setImage);
+              }
               return (
                 <tr>
                   <td className={classes["img-container"]}>
-                    <img className={classes.img} src={RingImg} alt="ring" />
+                    <img className={classes.img} src={image} alt="ring" />
                   </td>
                   <td>{list.productName}</td>
                   <td>{formatter.format(list.price)}</td>

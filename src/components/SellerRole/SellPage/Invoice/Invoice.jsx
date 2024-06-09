@@ -1,16 +1,22 @@
-import { useState, useContext, useRef } from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { useState, useContext, useEffect, useRef } from "react";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import classes from "./Invoice.module.css";
 import "./Invoice.module.css";
-import DiamondRing from "/assets/DiamondRing.png";
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
-import InvoiceDetail from "../InvoiceDetail/InvoiceDetail"
+import InvoiceDetail from "../InvoiceDetail/InvoiceDetail";
 import { formatter } from "../../../../util/formatter";
+import loadImg from "../../../../util/loadImg";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Invoice = ({ invoice }) => {
   const { productName, productCode, materialName, categoryName, price } =
     invoice;
-  const { removeItemFromProductList } = useContext(ProductPurchaseListContext);
+  const { removeItemFromProductList, productList } = useContext(
+    ProductPurchaseListContext
+  );
   const { addItemToPurchase } = useContext(ProductPurchaseContext);
   const InvoiceDetailRef = useRef();
 
@@ -23,16 +29,31 @@ const Invoice = ({ invoice }) => {
     InvoiceDetailRef.current.showModal();
   }
 
+  const [image, setImage] = useState(null);
+
+  if (image === null) {
+    loadImg(productCode, setImage);
+  }
+
   return (
     <>
       <InvoiceDetail invoice={invoice} ref={InvoiceDetailRef} />
       <div key={productCode} className={classes["container-invoice"]}>
         <div>
-          <img
-            className={classes.img}
-            src={DiamondRing}
-            alt="Diamond Ring 14K"
-          />
+          {image !== null ? (
+            <img className={classes.img} src={image} alt="Diamond Ring 14K" />
+          ) : (
+            <Skeleton
+              circle
+              style={{
+                marginTop: "38px",
+                marginLeft: "27px",
+                marginRight: "29px",
+                width: "95px",
+                height: "95px",
+              }}
+            />
+          )}
         </div>
         <div onClick={handleShowProductDetail}>
           <p className={classes.tittle}>{productName}</p>

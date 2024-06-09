@@ -1,10 +1,15 @@
+/* eslint-disable react/prop-types */
 import { forwardRef, useState } from "react";
 import classes from "./InvoiceDetail.module.css";
-import ringImg from "/assets/ring.png";
 import { createPortal } from "react-dom";
 import { formatter } from "../../../../util/formatter";
+import loadImg from "../../../../util/loadImg";
 
 const InvoiceDetail = forwardRef(function InvoiceDetail({ invoice }, ref) {
+  const [image, setImage] = useState(null);
+  if (image === null) {
+    loadImg(invoice.productCode, setImage);
+  }
   return createPortal(
     <dialog ref={ref} className={classes["modal-container"]}>
       <div className={classes["invoice-container"]}>
@@ -12,7 +17,7 @@ const InvoiceDetail = forwardRef(function InvoiceDetail({ invoice }, ref) {
         {/* image */}
         <div className={classes["info-container"]}>
           <div className={classes["img-container"]}>
-            <img src={ringImg} alt="ring" />
+            <img src={image} alt="ring" />
           </div>
           {/* invoice info */}
           <div className={classes.info}>

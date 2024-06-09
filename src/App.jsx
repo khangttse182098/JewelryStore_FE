@@ -12,7 +12,7 @@ import RepurchasePage from "./page/RepurchasePage";
 function App() {
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<LoginPage />} />
       <Route path="/sellpage" element={<SellerPage />} />
       <Route path="/invoicelist" element={<CashierPage />} />
       <Route path="/purchasepage" element={<PurchasePage />} />
