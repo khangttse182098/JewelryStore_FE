@@ -7,6 +7,7 @@ import PurchasePage from "./page/PurchasePage/PurchasePage";
 import CustomerListPage from "./page/CustomerListPage";
 import StatusSellerPage from "./page/StatusSellerPage";
 import "./util/reset.css";
+import CashierInvoiceDetailPage from "./page/CashierInvoiceDetailPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/purchasepage" element={<PurchasePage />} />
       <Route path="/customerlist" element={<CustomerListPage />} />
       <Route path="/statuslist" element={<StatusSellerPage />} />
+      <Route path="/invoicedetail" element={<CashierInvoiceDetailPage />} />
     </Routes>
   );
 }
