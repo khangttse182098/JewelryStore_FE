@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import classes from "./SearchInvoice.module.css";
 import SearchIcon from "/assets/Vector.png";
 

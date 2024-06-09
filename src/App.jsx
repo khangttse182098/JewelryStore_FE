@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./page/LoginPage";
 import SellerPage from "./page/SellerPage";
@@ -8,6 +7,7 @@ import CustomerListPage from "./page/CustomerListPage";
 import StatusSellerPage from "./page/StatusSellerPage";
 import "./util/reset.css";
 import CashierInvoiceDetailPage from "./page/CashierInvoiceDetailPage";
+import RepurchasePage from "./page/RepurchasePage";
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
       <Route path="/customerlist" element={<CustomerListPage />} />
       <Route path="/statuslist" element={<StatusSellerPage />} />
       <Route path="/invoicedetail" element={<CashierInvoiceDetailPage />} />
+      <Route path="/repurchasepage" element={<RepurchasePage />} />
     </Routes>
   );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { createContext, useState } from "react";
 
 const addItemPurchase = (itemPurchase, productToAdd) => {
@@ -20,6 +21,7 @@ const removeItemPurchase = (itemPurchase, productToRemove) => {
 
 export const ProductPurchaseContext = createContext({
   itemPurchase: [],
+  setItemPurchase: () => {},
   addItemToPurchase: () => {},
   removeItemFromPurchase: () => {},
 });
@@ -37,7 +39,12 @@ export const ProductPurchaseProvider = ({ children }) => {
     );
   };
 
-  const value = { itemPurchase, addItemToPurchase, removeItemFromPurchase };
+  const value = {
+    itemPurchase,
+    setItemPurchase,
+    addItemToPurchase,
+    removeItemFromPurchase,
+  };
 
   return (
     <ProductPurchaseContext.Provider value={value}>

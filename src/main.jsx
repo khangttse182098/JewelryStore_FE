@@ -7,17 +7,20 @@ import "./index.css";
 import { ProductSellListProvider } from "./context/ProductSellListContext.jsx";
 import { ProductSellInvoiceProvider } from "./context/ProductSellInvoiceContext.jsx";
 import { LoggedInUserProvider } from "./context/LoggedInUserContext.jsx";
+import { RepurchaseProvider } from "./context/RepurchaseContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <React.StrictMode>
-      <LoggedInUserProvider>
-        <ProductSellListProvider>
-          <ProductSellInvoiceProvider>
-            <App />
-          </ProductSellInvoiceProvider>
-        </ProductSellListProvider>
-      </LoggedInUserProvider>
+      <RepurchaseProvider>
+        <LoggedInUserProvider>
+          <ProductSellListProvider>
+            <ProductSellInvoiceProvider>
+              <App />
+            </ProductSellInvoiceProvider>
+          </ProductSellListProvider>
+        </LoggedInUserProvider>
+      </RepurchaseProvider>
     </React.StrictMode>
   </BrowserRouter>
 );

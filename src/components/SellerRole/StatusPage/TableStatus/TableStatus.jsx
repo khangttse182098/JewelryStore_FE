@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import classes from "./TableStatus.module.css";
 import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
@@ -107,6 +108,7 @@ const TableStatus = () => {
           invoicePerPage={statusPerPage}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
+          isStatus={true}
         />
       </div>
     </div>

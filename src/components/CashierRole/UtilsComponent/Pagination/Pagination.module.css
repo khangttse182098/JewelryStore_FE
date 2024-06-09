@@ -21,3 +21,8 @@
   background-color: #0088ff;
   color: white;
 }
+
+.active-status {
+  background-color: #c3a06d;
+  color: white;
+}

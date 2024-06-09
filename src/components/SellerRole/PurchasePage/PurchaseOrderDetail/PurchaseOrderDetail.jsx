@@ -1,12 +1,11 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import classes from "./PurchaseOrderDetail.module.css";
 import PurchaseOrderProduct from "../PurchaseOrderProduct/PurchaseOrderProduct";
-import CustomerInputForm from "../../UtilsComponent/CustomerInputForm/CustomerInputForm";
-import { useContext, useRef, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ProductSellInvoiceContext } from "../../../../context/ProductSellInvoiceContext";
 import { formatter } from "../../../../util/formatter";
 import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
-import InvoiceProductList from "../InvoiceProductList/InvoiceProductList";
 import { ProductSellListContext } from "../../../../context/ProductSellListContext";
 
 const PurchaseOrderDetail = ({ sellOrderCode }) => {
@@ -70,6 +69,8 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(reqBody),
+    }).then((res) => {
+      setItemSellInvoice([]);
     });
   }
 

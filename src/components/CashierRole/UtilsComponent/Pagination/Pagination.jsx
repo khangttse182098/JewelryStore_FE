@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import classes from "./Pagination.module.css";
 
 const Pagination = ({
@@ -5,6 +6,7 @@ const Pagination = ({
   invoicePerPage,
   setCurrentPage,
   currentPage,
+  isStatus,
 }) => {
   const pages = [];
 
@@ -12,13 +14,15 @@ const Pagination = ({
     pages.push(i);
   }
 
+  const styleButton = isStatus ? classes["active-status"] : classes.active;
+
   return (
     <div className={classes.pagination}>
       {pages.map((page, index) => {
         return (
           <button
             className={`${classes.button} ${
-              page == currentPage ? classes.active : ""
+              page == currentPage ? styleButton : ""
             }`}
             key={index}
             onClick={() => setCurrentPage(page)}

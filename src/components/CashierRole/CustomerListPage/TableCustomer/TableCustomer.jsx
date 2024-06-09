@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import classes from "./TableCustomer.module.css";
 import Pagination from "../../UtilsComponent/Pagination/Pagination";
