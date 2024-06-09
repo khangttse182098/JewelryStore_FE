@@ -5,20 +5,35 @@ import PenImg from "/assets/pen.png";
 import { formatter } from "../../../../util/formatter";
 
 const InvoiceDetail = ({ invoice }) => {
-  const [productList, setProductList] = useState([]);
+  const [productList, setProductList] = useState(
+    invoice.list.productResponseDTOList
+  );
   const [customer, setCustomer] = useState({});
+  const [payPrice, setPayPrice] = useState("");
+  const [fund, setFund] = useState("");
   const { invoiceCode, customerName, status, totalPrice, customerId } =
     invoice.list;
 
-  const handleFetchProductList = () => {
-    fetch(
-      `http://mahika.foundation:8080/swp/api/product?invoiceCode=${invoiceCode}`
-    )
-      .then((res) => res.json())
-      .then((dataProduct) => {
-        console.log(dataProduct);
-        return setProductList(dataProduct);
-      });
+  const handleFund = (event) => {
+    event.preventDefault();
+    const input = event.target;
+    const value = input.value;
+    // Save the caret position
+    const caretPosition = input.selectionStart;
+    // Parse the input value to a number
+    const pay = parseInt(value.replace(/[^0-9]/g, ""), 10) || 0;
+    const fund = pay - totalPrice;
+    // Format the number back to currency format
+    const formattedPay = formatter.format(pay);
+    // Update the input value with the formatted currency
+    setPayPrice(formattedPay);
+    setFund(fund);
+    // Calculate the new caret position
+    const newCaretPosition = formattedPay.length - value.length + caretPosition;
+    // Set the new caret position
+    setTimeout(() => {
+      input.setSelectionRange(newCaretPosition, newCaretPosition);
+    }, 0);
   };
 
   const handleFetchCustomer = () => {
@@ -45,7 +60,6 @@ const InvoiceDetail = ({ invoice }) => {
   };
 
   useEffect(() => {
-    handleFetchProductList();
     handleFetchCustomer();
   }, []);
 
@@ -67,14 +81,14 @@ const InvoiceDetail = ({ invoice }) => {
             </tr>
           </thead>
           <tbody>
-            {productList.map((product) => {
+            {productList.map((list) => {
               return (
                 <tr>
                   <td className={classes["img-container"]}>
                     <img className={classes.img} src={RingImg} alt="ring" />
                   </td>
-                  <td>{product.productName}</td>
-                  <td>{formatter.format(product.price)}</td>
+                  <td>{list.productName}</td>
+                  <td>{formatter.format(list.price)}</td>
                 </tr>
               );
             })}
@@ -131,11 +145,18 @@ const InvoiceDetail = ({ invoice }) => {
           </div>
           <div className={classes["status-name-containter"]}>
             <div className={classes.highlight}>Khách đã trả</div>
-            <div className={classes["status-value"]}>70,000,000đ</div>
+            <input
+              className={classes["status-value"]}
+              onChange={handleFund}
+              placeholder="Nhập tiền khách hàng trả"
+              value={payPrice}
+            />
           </div>
           <div className={classes["status-name-containter"]}>
             <div className={classes.highlight}>Tiền hoàn lại khách</div>
-            <div className={classes["status-value"]}>1,000,000đ</div>
+            <div className={classes["status-value"]}>
+              {formatter.format(fund)}
+            </div>
           </div>
         </div>
         <button
