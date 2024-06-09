@@ -5,6 +5,10 @@
   flex-direction: column;
   justify-content: space-between;
 }
+.container-order {
+  display: block;
+  overflow-y: scroll;
+}
 .title {
   text-align: center;
   font-size: 30px;
