@@ -25,7 +25,7 @@ const CategoryType = () => {
   const { setProductList, productList } = useContext(
     ProductPurchaseListContext
   );
-  //--------------------------------------------------------'
+  //--------------------------------------------------------
   const {
     counter: { selectedCounter, setSelectedCounter },
     categoryName: { selectedCategoryName, setSelectedCategoryName },
