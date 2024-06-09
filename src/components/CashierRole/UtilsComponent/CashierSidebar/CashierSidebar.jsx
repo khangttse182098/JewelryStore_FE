@@ -74,18 +74,20 @@ const CashierSidebar = () => {
           </button>
         </Link>
 
-        <button
-          className={`${classes.button} ${
-            currentPage === "Khuyến mãi" ? classes.current : ""
-          }`}
-          page="Khuyến mãi"
-          onClick={handlePage}
-        >
-          <img src={Disount} alt="Disount icon" className={classes["icon"]} />
-          <div className={classes["text"]}>
-            <p>Khuyến mãi</p>
-          </div>
-        </button>
+        <Link to="/statuslistcashier">
+          <button
+            className={`${classes.button} ${
+              currentPage === "Khuyến mãi" ? classes.current : ""
+            }`}
+            page="Khuyến mãi"
+            onClick={handlePage}
+          >
+            <img src={Disount} alt="Disount icon" className={classes["icon"]} />
+            <div className={classes["text"]}>
+              <p>Trạng thái đơn hàng</p>
+            </div>
+          </button>
+        </Link>
       </div>
       <hr />
     </div>
