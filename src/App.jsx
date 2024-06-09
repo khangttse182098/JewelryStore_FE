@@ -5,6 +5,7 @@ import CashierPage from "./page/CashierPage";
 import PurchasePage from "./page/PurchasePage/PurchasePage";
 import CustomerListPage from "./page/CustomerListPage";
 import StatusSellerPage from "./page/StatusSellerPage";
+import CashierStatusPage from "./page/CashierStatusPage";
 import "./util/reset.css";
 import CashierInvoiceDetailPage from "./page/CashierInvoiceDetailPage";
 import RepurchasePage from "./page/RepurchasePage";
@@ -20,6 +21,7 @@ function App() {
       <Route path="/statuslist" element={<StatusSellerPage />} />
       <Route path="/invoicedetail" element={<CashierInvoiceDetailPage />} />
       <Route path="/repurchasepage" element={<RepurchasePage />} />
+      <Route path="/statuslistcashier" element={<CashierStatusPage />} />
     </Routes>
   );
 }
