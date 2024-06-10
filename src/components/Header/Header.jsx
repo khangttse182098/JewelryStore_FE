@@ -18,6 +18,7 @@ const Header = () => {
           className={classes["text-logo"]}
         />
       </div>
+
       <div className={classes.name}>
         <p>Pham Hoang Phuc</p>
       </div>
