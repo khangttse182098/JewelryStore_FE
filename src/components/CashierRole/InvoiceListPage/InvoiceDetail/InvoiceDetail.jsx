@@ -11,6 +11,12 @@ const InvoiceDetail = ({ invoice }) => {
     invoice.list.productResponseDTOList
   );
 
+  const {
+    productResponseDTOList,
+    diamondCriteriaResponseDTOS,
+    materialResponseDTOList,
+  } = invoice.list;
+
   const [customer, setCustomer] = useState({});
   const [payPrice, setPayPrice] = useState("");
   const [image, setImage] = useState(null);
@@ -85,20 +91,48 @@ const InvoiceDetail = ({ invoice }) => {
             </tr>
           </thead>
           <tbody>
-            {productList.map((list) => {
-              if (image === null) {
-                loadImg(list.productCode, setImage);
-              }
-              return (
-                <tr>
-                  <td className={classes["img-container"]}>
-                    <img className={classes.img} src={image} alt="ring" />
-                  </td>
-                  <td>{list.productName}</td>
-                  <td>{formatter.format(list.price)}</td>
-                </tr>
-              );
-            })}
+            {productResponseDTOList !== null
+              ? productResponseDTOList.map((list) => {
+                  if (image === null) {
+                    loadImg(list.productCode, setImage);
+                  }
+                  return (
+                    <tr>
+                      <td className={classes["img-container"]}>
+                        <img className={classes.img} src={image} alt="ring" />
+                      </td>
+                      <td>{list.productName}</td>
+                      <td>{formatter.format(list.price)}</td>
+                    </tr>
+                  );
+                })
+              : undefined}
+            {diamondCriteriaResponseDTOS !== null
+              ? diamondCriteriaResponseDTOS.map((list) => {
+                  return (
+                    <tr>
+                      <td className={classes["img-container"]}>
+                        {/* <img className={classes.img} src={image} alt="ring" /> */}
+                      </td>
+                      <td>Kim cương</td>
+                      <td>{formatter.format(list.price)}</td>
+                    </tr>
+                  );
+                })
+              : undefined}
+            {materialResponseDTOList !== null
+              ? materialResponseDTOList.map((list) => {
+                  return (
+                    <tr>
+                      <td className={classes["img-container"]}>
+                        {/* <img className={classes.img} src={image} alt="ring" /> */}
+                      </td>
+                      <td>Vàng</td>
+                      <td>{formatter.format(list.price)}</td>
+                    </tr>
+                  );
+                })
+              : undefined}
           </tbody>
         </table>
 
