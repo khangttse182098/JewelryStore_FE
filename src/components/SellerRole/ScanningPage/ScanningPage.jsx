@@ -1,12 +1,13 @@
 import { Html5QrcodeScanner } from "html5-qrcode";
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
+import classes from "./ScanningPage.module.css";
 
-const ScanningPage = () => {
+const ScanningPage = forwardRef(function ScanningPage(props, ref) {
   const [scanResult, setScanResult] = useState(null);
 
   useEffect(() => {
     const html5QrcodeScanner = new Html5QrcodeScanner("reader", {
-      fps: 10,
+      fps: 60,
       qrbox: 250,
     });
 
@@ -32,17 +33,16 @@ const ScanningPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>QR Code Scanning in React</h1>
+    <dialog ref={ref} className={classes.container}>
       {scanResult ? (
         <div>
           Success: <a href={scanResult}>{scanResult}</a>
         </div>
       ) : (
-        <div id="reader" style={{ width: "600px" }}></div>
+        <div id="reader" style={{ height: "490px", width: "600px" }}></div>
       )}
-    </div>
+    </dialog>
   );
-};
+});
 
 export default ScanningPage;
