@@ -5,12 +5,9 @@ import classes from "./InvoiceDetail.module.css";
 import PenImg from "/assets/pen.png";
 import { formatter } from "../../../../util/formatter";
 import loadImg from "../../../../util/loadImg";
+import diamondImg from "/assets/diamon.png";
 
 const InvoiceDetail = ({ invoice }) => {
-  const [productList, setProductList] = useState(
-    invoice.list.productResponseDTOList
-  );
-
   const {
     productResponseDTOList,
     diamondCriteriaResponseDTOS,
@@ -97,7 +94,7 @@ const InvoiceDetail = ({ invoice }) => {
                     loadImg(list.productCode, setImage);
                   }
                   return (
-                    <tr>
+                    <tr className={classes["row-container"]}>
                       <td className={classes["img-container"]}>
                         <img className={classes.img} src={image} alt="ring" />
                       </td>
@@ -110,9 +107,13 @@ const InvoiceDetail = ({ invoice }) => {
             {diamondCriteriaResponseDTOS !== null
               ? diamondCriteriaResponseDTOS.map((list) => {
                   return (
-                    <tr>
+                    <tr className={classes["row-container"]}>
                       <td className={classes["img-container"]}>
-                        {/* <img className={classes.img} src={image} alt="ring" /> */}
+                        <img
+                          className={classes.img}
+                          src={diamondImg}
+                          alt="ring"
+                        />
                       </td>
                       <td>Kim cương</td>
                       <td>{formatter.format(list.price)}</td>
@@ -123,7 +124,7 @@ const InvoiceDetail = ({ invoice }) => {
             {materialResponseDTOList !== null
               ? materialResponseDTOList.map((list) => {
                   return (
-                    <tr>
+                    <tr className={classes["row-container"]}>
                       <td className={classes["img-container"]}>
                         {/* <img className={classes.img} src={image} alt="ring" /> */}
                       </td>

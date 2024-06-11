@@ -11,6 +11,11 @@
   border-collapse: collapse;
 }
 
+.row-container:hover {
+  background-color: #eff7fd;
+  cursor: pointer;
+}
+
 .title {
   margin-top: 27px;
   margin-left: 52px;
@@ -41,13 +46,8 @@
   background-color: #f4f6f8;
 }
 
-.img-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .img {
+  margin: 0 auto;
   width: 36px;
   height: 58px;
 }
