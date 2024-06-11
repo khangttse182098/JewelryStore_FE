@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import classes from "./InvoiceDetail.module.css";
 import PenImg from "/assets/pen.png";
 import { formatter } from "../../../../util/formatter";
-import loadImg from "../../../../util/loadImg";
 import diamondImg from "/assets/diamon.png";
+import Gold from "/assets/Gold.png";
 
 const InvoiceDetail = ({ invoice }) => {
   const {
@@ -16,7 +16,6 @@ const InvoiceDetail = ({ invoice }) => {
 
   const [customer, setCustomer] = useState({});
   const [payPrice, setPayPrice] = useState("");
-  const [image, setImage] = useState(null);
   const [fund, setFund] = useState("");
   const { invoiceCode, customerName, status, totalPrice, customerId } =
     invoice.list;
@@ -90,13 +89,14 @@ const InvoiceDetail = ({ invoice }) => {
           <tbody>
             {productResponseDTOList !== null
               ? productResponseDTOList.map((list) => {
-                  if (image === null) {
-                    loadImg(list.productCode, setImage);
-                  }
                   return (
                     <tr className={classes["row-container"]}>
                       <td className={classes["img-container"]}>
-                        <img className={classes.img} src={image} alt="ring" />
+                        <img
+                          className={classes.img}
+                          src={list.productImage}
+                          alt="ring"
+                        />
                       </td>
                       <td>{list.productName}</td>
                       <td>{formatter.format(list.price)}</td>
@@ -126,7 +126,7 @@ const InvoiceDetail = ({ invoice }) => {
                   return (
                     <tr className={classes["row-container"]}>
                       <td className={classes["img-container"]}>
-                        {/* <img className={classes.img} src={image} alt="ring" /> */}
+                        <img className={classes.img} src={Gold} alt="ring" />
                       </td>
                       <td>Vàng</td>
                       <td>{formatter.format(list.price)}</td>
