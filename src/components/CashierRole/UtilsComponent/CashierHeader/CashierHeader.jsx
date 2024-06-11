@@ -2,10 +2,12 @@ import classes from "./CashierHeader.module.css";
 import MahikaLogoImg from "/assets/img-logo.png";
 import MahikaLogoText from "/assets/text-logo.png";
 import DropDownAccount from "../DropDownAccount/DropDownAccount";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
 
 const CashierHeader = () => {
   const [cashierName, setCashierName] = useState([]);
+  const { userId } = useContext(LoggedInUserContext);
   const handleUser = () => {
     fetch("http://mahika.foundation:8080/swp/api/user", {
       method: "GET",
@@ -15,7 +17,7 @@ const CashierHeader = () => {
     })
       .then((res) => res.json())
       .then((dataUser) => {
-        const cashierList = dataUser.filter((user) => user.role === "Thu ngân");
+        const cashierList = dataUser.filter((user) => user.id === userId);
         const name = cashierList.map((user) => user.fullName);
         setCashierName(name);
       })
@@ -45,7 +47,7 @@ const CashierHeader = () => {
           <p key={index}>{name}</p>
         ))}
       </div>
-      <DropDownAccount />
+      <DropDownAccount className={classes.dropdown} />
     </div>
   );
 };
