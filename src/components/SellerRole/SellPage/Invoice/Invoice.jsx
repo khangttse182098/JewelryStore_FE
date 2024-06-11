@@ -7,13 +7,17 @@ import "./Invoice.module.css";
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
 import InvoiceDetail from "../InvoiceDetail/InvoiceDetail";
 import { formatter } from "../../../../util/formatter";
-import loadImg from "../../../../util/loadImg";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import ImageLoader from "../../../../util/ImageLoader";
 
 const Invoice = ({ invoice }) => {
-  const { productName, productCode, materialName, categoryName, price } =
-    invoice;
+  const {
+    productName,
+    productCode,
+    productImage,
+    materialName,
+    categoryName,
+    price,
+  } = invoice;
   const { removeItemFromProductList, productList } = useContext(
     ProductPurchaseListContext
   );
@@ -29,31 +33,15 @@ const Invoice = ({ invoice }) => {
     InvoiceDetailRef.current.showModal();
   }
 
-  const [image, setImage] = useState(null);
-
-  if (image === null) {
-    loadImg(productCode, setImage);
-  }
-
   return (
     <>
       <InvoiceDetail invoice={invoice} ref={InvoiceDetailRef} />
       <div key={productCode} className={classes["container-invoice"]}>
-        <div>
-          {image !== null ? (
-            <img className={classes.img} src={image} alt="Diamond Ring 14K" />
-          ) : (
-            <Skeleton
-              circle
-              style={{
-                marginTop: "38px",
-                marginLeft: "27px",
-                marginRight: "29px",
-                width: "95px",
-                height: "95px",
-              }}
-            />
-          )}
+        <div className={classes.img}>
+          <ImageLoader
+            URL={productImage}
+            skeletonStyle={classes["img-skeleton"]}
+          />
         </div>
         <div onClick={handleShowProductDetail}>
           <p className={classes.tittle}>{productName}</p>

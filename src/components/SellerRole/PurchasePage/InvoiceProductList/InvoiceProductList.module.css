@@ -17,6 +17,10 @@
   height: 211px;
 }
 
+.img-skeleton {
+  height: 211px;
+}
+
 .img-container img {
   width: 100%;
   height: 100%;

@@ -4,13 +4,10 @@ import React, { useEffect, useState } from "react";
 import classes from "./InvoiceDetail.module.css";
 import PenImg from "/assets/pen.png";
 import { formatter } from "../../../../util/formatter";
-import loadImg from "../../../../util/loadImg";
+import ImageLoader from "../../../../util/ImageLoader";
+import Skeleton from "react-loading-skeleton";
 
 const InvoiceDetail = ({ invoice }) => {
-  const [productList, setProductList] = useState(
-    invoice.list.productResponseDTOList
-  );
-
   const {
     productResponseDTOList,
     diamondCriteriaResponseDTOS,
@@ -93,13 +90,14 @@ const InvoiceDetail = ({ invoice }) => {
           <tbody>
             {productResponseDTOList !== null
               ? productResponseDTOList.map((list) => {
-                  if (image === null) {
-                    loadImg(list.productCode, setImage);
-                  }
                   return (
                     <tr>
                       <td className={classes["img-container"]}>
-                        <img className={classes.img} src={image} alt="ring" />
+                        <ImageLoader
+                          URL={list.productImage}
+                          imgStyle={classes.img}
+                          skeletonStyle={classes["img-skeleton"]}
+                        />
                       </td>
                       <td>{list.productName}</td>
                       <td>{formatter.format(list.price)}</td>
@@ -140,7 +138,7 @@ const InvoiceDetail = ({ invoice }) => {
           <div className={classes["customer-title-container"]}>
             <p>Khách hàng</p>
             <div>
-              <img className={classes.img} src={PenImg} alt="pen-logo" />
+              <img className={classes["img-pen"]} src={PenImg} alt="pen-logo" />
             </div>
           </div>
           <hr
@@ -149,19 +147,42 @@ const InvoiceDetail = ({ invoice }) => {
           <div className={classes["customer-info"]}>
             <div className={classes["customer-name"]}>
               <p className={classes["customer-info-title"]}>Họ và tên: </p>
-              <p>{customerName}</p>
+              <p>
+                {customerName || (
+                  <Skeleton style={{ width: "150px", height: "10px" }} />
+                )}
+              </p>
             </div>
             <div className={classes["customer-gender"]}>
               <p className={classes["customer-info-title"]}>Giới tính: </p>
-              <p>{customer.gender}</p>
+              <p>
+                {customer.gender || (
+                  <Skeleton style={{ width: "150px", height: "10px" }} />
+                )}
+              </p>
             </div>
             <div className={classes["customer-phone"]}>
               <p className={classes["customer-info-title"]}>SĐT: </p>
-              <p>{customer.phoneNumber} </p>
+              <p>
+                {customer.phoneNumber || (
+                  <Skeleton style={{ width: "150px", height: "10px" }} />
+                )}{" "}
+              </p>
             </div>
             <div className={classes["customer-address"]}>
               <p className={classes["customer-info-title"]}>Địa chỉ: </p>
-              <p>{customer.address}</p>
+              <p>
+                {customer.address || (
+                  <>
+                    <Skeleton
+                      style={{
+                        width: "100px",
+                        height: "10px",
+                      }}
+                    />
+                  </>
+                )}
+              </p>
             </div>
           </div>
         </div>
