@@ -8,6 +8,7 @@ import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
 const CashierHeader = () => {
   const [cashierName, setCashierName] = useState([]);
   const { userId } = useContext(LoggedInUserContext);
+  // "test commit"
   const handleUser = () => {
     fetch("http://mahika.foundation:8080/swp/api/user", {
       method: "GET",
