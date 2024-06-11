@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { useRef, useState, useContext, useEffect } from "react";
-import CustomerInputForm from "../../UtilsComponent/CustomerInputForm/CustomerInputForm"
+import CustomerInputForm from "../../UtilsComponent/CustomerInputForm/CustomerInputForm";
 import classes from "./InformationBar.module.css";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import { formatter } from "../../../../util/formatter";
@@ -24,7 +25,11 @@ const InformationBar = () => {
 
   return (
     <>
-      <CustomerInputForm ref={customerInputFormRef} handleHide={handleHide} />
+      <CustomerInputForm
+        location="sellPage"
+        ref={customerInputFormRef}
+        handleHide={handleHide}
+      />
       <div>
         <div className={classes.frame}>
           <p className={classes.p}>Tổng số lượng</p>

@@ -6,6 +6,7 @@
   border-radius: 66px;
   display: flex;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .img {

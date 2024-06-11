@@ -9,9 +9,11 @@ const SidebarFunction = ({ icon, title }) => {
     if (title === "Dịch vụ mua lại") {
       navigate("/purchasepage");
     } else if (title === "Đăng xuất") {
-      navigate("/login");
-    } else if (title === "Trang chủ") {
+      navigate("/");
+    } else if (title === "Dịch vụ bán") {
       navigate("/sellpage");
+    } else if (title === "Bảng sản phẩm") {
+      navigate("/statuslist");
     }
   }
 

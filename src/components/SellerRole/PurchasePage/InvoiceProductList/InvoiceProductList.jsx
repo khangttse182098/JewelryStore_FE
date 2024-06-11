@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+/* eslint-disable react/prop-types */
+import { useContext } from "react";
 import RingImg from "/assets/ring.png";
 import classes from "./InvoiceProductList.module.css";
 import { ProductSellInvoiceContext } from "../../../../context/ProductSellInvoiceContext";
 import { ProductSellListContext } from "../../../../context/ProductSellListContext";
+import { formatter } from "../../../../util/formatter";
 
 const InvoiceProductList = ({ product }) => {
   const { addItemToSellInvoice } = useContext(ProductSellInvoiceContext);
@@ -30,6 +32,7 @@ const InvoiceProductList = ({ product }) => {
             Tên kim cương:{""}
             {product.gemName === "" ? product.gemName : "Không có"}
           </p>
+          <p>Giá:{formatter.format(product.price)}</p>
         </div>
         <button className={classes.button} onClick={handleClick}>
           Mua lại

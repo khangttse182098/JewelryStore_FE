@@ -4,9 +4,13 @@
 }
 
 .invoice-title {
+  margin-top: 10px;
+  margin-left: 23px;
   width: 50%;
   font-size: 30px;
   font-weight: 500;
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
 .left-container {
@@ -16,5 +20,16 @@
   margin-top: 118px;
   height: 800px;
   width: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
+}
+
+.not-found-btn {
+  background-color: #c3a06d;
+  width: 300px;
+  height: 93px;
+  margin-top: 20px;
+  margin-left: 20px;
+  font-size: 20px;
+  border-radius: 20px;
+  font-weight: 500;
 }

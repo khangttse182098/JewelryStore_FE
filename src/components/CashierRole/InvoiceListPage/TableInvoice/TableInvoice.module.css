@@ -1,4 +1,4 @@
-.body {
+body {
   background-color: #efeded;
 }
 
@@ -6,7 +6,7 @@
   font-family: "Montserrat";
   width: 1500px;
   height: 477px;
-  /* background-color: #ffffff; */
+  background-color: #ffffff;
 
   margin-left: 300px;
   margin-top: 120px;
@@ -14,19 +14,14 @@
   position: absolute;
 }
 .title {
-  margin-bottom: 30px;
   font-size: xx-large;
   font-weight: normal;
   background-color: #efeded;
-}
-.table-container {
-  background-color: #ffffff;
+  padding-bottom: 10px;
 }
 
-.infor-bar {
-  display: flex;
-  padding-left: 42px;
-  height: 70px;
+.table-container {
+  background-color: #ffffff;
 }
 
 .button {
@@ -38,7 +33,11 @@
   justify-content: center;
   border-radius: 0px;
   text-align: center;
+  color: #a6abb2;
+  font-family: "Montserrat";
+  font-size: 15px;
 }
+
 .status {
   margin-top: 10px;
 }
@@ -46,6 +45,7 @@
 .button:hover {
   border-style: solid;
   border-bottom-color: #2661ec;
+  color: #2661ec;
   border-width: 2px;
   border-top: none;
   background-color: #ffffff;
@@ -105,9 +105,26 @@
 .tr {
   text-align: center;
   padding: 8px;
+  cursor: pointer;
 }
 
 .th,
 .td {
   font-size: 17px;
+}
+
+.tr:hover {
+  background-color: #eff7fd;
+}
+
+.select {
+  background-color: #eff7fd;
+}
+
+.current {
+  color: #2661ec;
+  font-weight: 500;
+  border-style: solid;
+  border-bottom-color: #2661ec;
+  opacity: 0.9;
 }

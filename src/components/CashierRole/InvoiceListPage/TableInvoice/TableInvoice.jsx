@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import classes from "./TableInvoice.module.css";
 import settingIcon from "/assets/setting.png";
+import Pagination from "../../UtilsComponent/Pagination/Pagination";
+import { formatter } from "../../../../util/formatter";
+import { useNavigate } from "react-router-dom";
 
 const TableInvoice = () => {
   const [invoiceList, setInvoiceList] = useState([]);
+  const navigate = useNavigate();
 
   const handleInvoice = () => {
     fetch("http://mahika.foundation:8080/swp/api/order", {
@@ -21,70 +25,177 @@ const TableInvoice = () => {
     handleInvoice();
   }, []);
 
-  console.log(invoiceList);
+  //------------------------------Search----------------------------------
+  const [searchField, setSearchField] = useState("");
+  const [filterInvoice, setFilterInvoice] = useState([...invoiceList]);
+
+  const handleSearch = (event) => {
+    const searchFieldString = event.target.value.toLowerCase();
+    setSearchField(searchFieldString);
+    setCurrentPage(1);
+  };
+
+  useEffect(() => {
+    const newFilterInvoice = invoiceList.filter((invoice) => {
+      return invoice.invoiceCode.toLowerCase().includes(searchField);
+    });
+    setFilterInvoice(newFilterInvoice);
+  }, [searchField, invoiceList]);
+  //---------------------------------------------------------------------
+
+  //------------------------Pagination-----------------------------------
+  const [currentPage, setCurrentPage] = useState(1);
+  const [invoicePerPage, setInvoicePerPage] = useState(4);
+
+  const lastInvoiceIndex = currentPage * invoicePerPage;
+  const firstInvoiceIndex = lastInvoiceIndex - invoicePerPage;
+  const currentInvoice = filterInvoice.slice(
+    firstInvoiceIndex,
+    lastInvoiceIndex
+  );
+  //-------------------------------Status---------------------------------
+  const [currentStatus, setCurrentStatus] = useState("Tất cả");
+  const handleStatusOption = (event) => {
+    const status = event.target.getAttribute("status");
+    setCurrentStatus(status);
+    if (status === "Tất cả") {
+      setFilterInvoice([...invoiceList]);
+    } else {
+      const statusInvoice = invoiceList.filter(
+        (invoice) => invoice.status === status
+      );
+      setFilterInvoice(statusInvoice);
+    }
+  };
+
+  //------------------------------CheckBox--------------------------------
+  const handleCheckbox = (event) => {
+    const { name, checked } = event.target;
+    if (name === "allSelect") {
+      const tempInvoice = invoiceList.map((invoice) => {
+        return { ...invoice, isChecked: checked };
+      });
+      setInvoiceList(tempInvoice);
+    } else {
+      const tempInvoice = invoiceList.map((invoice) =>
+        invoice.invoiceCode === name
+          ? { ...invoice, isChecked: checked }
+          : invoice
+      );
+      setInvoiceList(tempInvoice);
+    }
+  };
+  //----------------------------------------------------------------------
+  function handleNavigate(list) {
+    navigate("/invoicedetail", { state: { list } });
+  }
 
   return (
-    <div className={classes.body}>
-      <div className={classes.container}>
-        <div className={classes.title}>
-          <p>Danh sách hóa đơn</p>
+    <div className={classes.container}>
+      <div className={classes.title}>
+        <p>Danh sách hóa đơn</p>
+      </div>
+      <div className={classes["table-container"]}>
+        <div>
+          <button
+            className={`${classes.button} ${
+              currentStatus === "Tất cả" ? classes.current : ""
+            }`}
+            status="Tất cả"
+            onClick={handleStatusOption}
+          >
+            Tất cả
+          </button>
+          <button
+            className={`${classes.button} ${
+              currentStatus === "Đã thanh toán" ? classes.current : ""
+            }`}
+            status="Đã thanh toán"
+            onClick={handleStatusOption}
+          >
+            Đã thanh toán
+          </button>
+          <button
+            className={`${classes.button} ${
+              currentStatus === "Chưa thanh toán" ? classes.current : ""
+            }`}
+            status="Chưa thanh toán"
+            onClick={handleStatusOption}
+          >
+            Chưa thanh toán
+          </button>
         </div>
-        <div className={classes["table-container"]}>
-          <div className={classes["infor-bar"]}>
-            <button className={classes.button}>
-              <p className={classes.status}>Tất cả</p>
-            </button>
-            <button className={classes.button}>
-              <p className={classes.status}>Đã thanh toán</p>
-            </button>
-            <button className={classes.button}>
-              <p className={classes.status}>Chưa thanh toán</p>
-            </button>
-          </div>
-          <hr />
-          <div className={classes["search-container"]}>
-            <input
-              className={classes.search}
-              type="search"
-              placeholder="Tìm kiếm theo mã hóa đơn"
-            />
-          </div>
-          <table className={classes.table}>
-            <tr className={classes.tr}>
-              <th className={`${classes["table-header"]} ${classes.th}`}>
-                <img
-                  src={settingIcon}
-                  alt="Setting Icon"
-                  className={`${classes.settingIcon} ${classes.img}`}
-                />
-                <input type="checkbox" />
-              </th>
-              <th className={classes.th}>Mã hóa đơn</th>
-              <th className={classes.th}>Ngày tạo</th>
-              <th className={classes.th}>Khách hàng</th>
-              <th className={classes.th}>Loại hóa đơn</th>
-              <th className={classes.th}>Nhân viên bán hàng</th>
-              <th className={classes.th}>Thành tiền</th>
-              <th className={classes.th}>Trạng thái thanh toán</th>
-            </tr>
-            {invoiceList.map((list) => {
-              return (
-                <tr className={classes.tr} key={list.invoiceCode}>
-                  <td className={`${classes.checkbox} ${classes.td}`}>
-                    <input type="checkbox" />
-                  </td>
-                  <td className={classes.td}>{list.invoiceCode}</td>
-                  <td className={classes.td}>{list.createdDate}</td>
-                  <td className={classes.td}>{list.customerName}</td>
-                  <td className={classes.td}>{list.invoiceType}</td>
-                  <td className={classes.td}>{list.staffName}</td>
-                  <td className={classes.td}>{list.totalPrice}</td>
-                  <td className={classes.td}>{list.status}</td>
-                </tr>
-              );
-            })}
-          </table>
+        <hr />
+        <div className={classes["search-container"]}>
+          <input
+            onChange={handleSearch}
+            className={classes.search}
+            type="search"
+            placeholder="Tìm kiếm theo mã hóa đơn"
+          />
         </div>
+        <table className={classes.table}>
+          <tr className={classes.tr}>
+            <th className={`${classes["table-header"]} ${classes.th}`}>
+              <img
+                src={settingIcon}
+                alt="Setting Icon"
+                className={`${classes.settingIcon} ${classes.img}`}
+              />
+              <input
+                type="checkbox"
+                onChange={handleCheckbox}
+                name="allSelect"
+              />
+            </th>
+            <th className={classes.th}>Mã hóa đơn</th>
+            <th className={classes.th}>Ngày tạo</th>
+            <th className={classes.th}>Khách hàng</th>
+            <th className={classes.th}>Loại hóa đơn</th>
+            <th className={classes.th}>Nhân viên bán hàng</th>
+            <th className={classes.th}>Thành tiền</th>
+            <th className={classes.th}>Trạng thái thanh toán</th>
+          </tr>
+          {currentInvoice.map((list) => {
+            return (
+              <tr
+                className={`${classes.tr} ${
+                  list?.isChecked ? classes.select : ""
+                }`}
+                key={list.invoiceCode}
+                onClick={() => {
+                  handleNavigate(list);
+                }}
+              >
+                <td className={`${classes.checkbox} ${classes.td}`}>
+                  <input
+                    type="checkbox"
+                    name={list.invoiceCode}
+                    onChange={handleCheckbox}
+                    checked={list?.isChecked || false}
+                  />
+                </td>
+                <td className={classes.td}>{list.invoiceCode}</td>
+                <td className={classes.td}>
+                  {new Date(list.createdDate).toLocaleString()}
+                </td>
+                <td className={classes.td}>{list.customerName}</td>
+                <td className={classes.td}>{list.invoiceType}</td>
+                <td className={classes.td}>{list.staffName}</td>
+                <td className={classes.td}>
+                  {formatter.format(list.totalPrice)}
+                </td>
+                <td className={classes.td}>{list.status}</td>
+              </tr>
+            );
+          })}
+        </table>
+        <Pagination
+          totalInvoice={invoiceList.length}
+          invoicePerPage={invoicePerPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );

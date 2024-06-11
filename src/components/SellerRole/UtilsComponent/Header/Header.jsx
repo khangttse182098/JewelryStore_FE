@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import classes from "./Header.module.css";
 import MahikaLogo from "/assets/Logo.png";
 import SellerSidebar from "../SellerSidebar/SellerSidebar";
 import { useNavigate } from "react-router-dom";
+import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
 
 const Header = () => {
   const [visible, setVisible] = useState(false);
+  const { userId } = useContext(LoggedInUserContext);
   const navigate = useNavigate();
 
   const handleDisplay = () => {
@@ -14,15 +16,23 @@ const Header = () => {
 
   return (
     <>
-      <SellerSidebar visible={visible} onClose={handleDisplay} />
+      {userId ? (
+        <SellerSidebar visible={visible} onClose={handleDisplay} />
+      ) : undefined}
       <div className={classes.header}>
         <nav className={classes.navbar}>
-          <div className={classes.toggleButton} onClick={handleDisplay}>
-            <div className={classes.bar}></div>
-            <div className={classes.bar}></div>
-            <div className={classes.bar}></div>
-          </div>
-          <div className={classes.logoContainer}>
+          {userId ? (
+            <div className={classes.toggleButton} onClick={handleDisplay}>
+              <div className={classes.bar}></div>
+              <div className={classes.bar}></div>
+              <div className={classes.bar}></div>
+            </div>
+          ) : undefined}
+          <div
+            className={`${classes.logoContainer} ${
+              !userId ? `${classes["logo-center"]}` : undefined
+            }`}
+          >
             <img src={MahikaLogo} alt="Mahika Logo" className={classes.logo} />
           </div>
           <div className={classes.toggleButtonInvisible}></div>

@@ -1,15 +1,23 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useState, useContext, useRef } from "react";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import classes from "./Invoice.module.css";
-import "./Invoice.module.css";
-import DiamondRing from "/assets/DiamondRing.png";
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
-import InvoiceDetail from "../InvoiceDetail/InvoiceDetail"
+import InvoiceDetail from "../InvoiceDetail/InvoiceDetail";
 import { formatter } from "../../../../util/formatter";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Invoice = ({ invoice }) => {
-  const { productName, productCode, materialName, categoryName, price } =
-    invoice;
+  const {
+    productName,
+    productCode,
+    productImage,
+    materialName,
+    categoryName,
+    price,
+  } = invoice;
   const { removeItemFromProductList } = useContext(ProductPurchaseListContext);
   const { addItemToPurchase } = useContext(ProductPurchaseContext);
   const InvoiceDetailRef = useRef();
@@ -23,16 +31,45 @@ const Invoice = ({ invoice }) => {
     InvoiceDetailRef.current.showModal();
   }
 
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    setImageError(false);
+  };
+
+  const handleImageError = () => {
+    setImageLoaded(true);
+    setImageError(true);
+  };
+
   return (
     <>
       <InvoiceDetail invoice={invoice} ref={InvoiceDetailRef} />
       <div key={productCode} className={classes["container-invoice"]}>
         <div>
+          {!imageLoaded && (
+            <Skeleton
+              circle
+              style={{
+                marginTop: "38px",
+                marginLeft: "27px",
+                marginRight: "29px",
+                width: "95px",
+                height: "95px",
+              }}
+            />
+          )}
           <img
             className={classes.img}
-            src={DiamondRing}
+            src={productImage}
             alt="Diamond Ring 14K"
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+            style={{ display: imageLoaded ? "block" : "none" }}
           />
+          {imageError && <p className={classes.error}>Image failed to load</p>}
         </div>
         <div onClick={handleShowProductDetail}>
           <p className={classes.tittle}>{productName}</p>

@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import Invoice from "../Invoice/Invoice";
 import classes from "./InvoiceList.module.css";
 import { useState } from "react";
