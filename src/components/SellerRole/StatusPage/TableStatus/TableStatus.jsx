@@ -30,7 +30,10 @@ const TableStatus = () => {
       },
     })
       .then((res) => res.json())
-      .then((dataStatus) => setStatusList(dataStatus))
+      .then((dataStatus) => {
+        console.log(dataStatus);
+        return setStatusList(dataStatus);
+      })
       .catch((error) => console.log(error));
   };
 
@@ -41,15 +44,15 @@ const TableStatus = () => {
   //-------------------------Pagination----------------------------
   const [currentPage, setCurrentPage] = useState(1);
   const [statusPerPage, setStatusPerPage] = useState(4);
+  const [searchField, setSearchField] = useState("");
+  const [filterStatus, setFilterStatus] = useState([statusList]);
 
   const lastStatusIndex = currentPage * statusPerPage;
   const firstStatusIndex = lastStatusIndex - statusPerPage;
-  const currentStatus = statusList.slice(firstStatusIndex, lastStatusIndex);
+  const currentStatus = filterStatus.slice(firstStatusIndex, lastStatusIndex);
   //--------------------------------------------------------------
 
   //------------------------Search Invoice code--------------------
-  const [searchField, setSearchField] = useState("");
-  const [filterStatus, setFilterStatus] = useState([statusList]);
 
   const handleSearch = (event) => {
     const searchFieldString = event.target.value.toLowerCase();
@@ -85,7 +88,7 @@ const TableStatus = () => {
             <th className={classes.th}>Trạng thái thanh toán</th>
             <th className={classes.th}>Xác nhận trạng thái</th>
           </tr>
-          {filterStatus.map((list) => {
+          {currentStatus.map((list) => {
             return (
               <tr className={classes.tr} key={list.invoiceCode}>
                 <td className={classes.td}>{list.invoiceCode}</td>
