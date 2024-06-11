@@ -1,0 +1,50 @@
+.container {
+  font-family: "Montserrat";
+  width: 260px;
+  height: 100%;
+  background-color: #182537;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+}
+
+.title {
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 28px;
+  margin-left: 35px;
+  margin-bottom: 26px;
+}
+.content {
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-bottom: 500px;
+}
+.button {
+  background-color: #182537;
+  outline: none;
+  border-style: double;
+  cursor: pointer;
+  border-color: #182537;
+  width: 232px;
+  height: 52px;
+  display: flex;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+.button:hover {
+  background-color: #324258;
+}
+.text {
+  margin-top: 12px;
+
+  color: #ffffff;
+}
+.icon {
+  margin-top: 7px;
+}
+
+.current {
+  background-color: #324258;
+}

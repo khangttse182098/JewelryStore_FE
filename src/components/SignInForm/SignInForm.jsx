@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import classes from "./SignInForm.module.css";
+import { useNavigate } from "react-router-dom";
+import { LoggedInUserContext } from "../../context/LoggedInUserContext";
 
 const defaultFormField = {
   username: "",
@@ -8,11 +10,13 @@ const defaultFormField = {
 
 const SignInForm = () => {
   const [formField, setFormField] = useState(defaultFormField);
+  const [isWrong, setIsWrong] = useState(false);
+  const { setUserId } = useContext(LoggedInUserContext);
   const { username, password } = formField;
-
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
-    fetch("http://localhost:8080/api/user/login", {
+    fetch("http://mahika.foundation:8080/swp/api/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,13 +24,23 @@ const SignInForm = () => {
       body: JSON.stringify(formField),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        {
+          data.roleCode && setUserId(data.userId);
+        }
+        if (data.roleCode === "SELLER") {
+          setIsWrong(false);
+          navigate("/sellpage");
+        } else if (data.roleCode === "CASHIER") {
+          setUserId(data.userId);
+          navigate("/invoicelist");
+          setIsWrong(false);
+        } else {
+          setIsWrong(true);
+        }
+      })
       .catch((error) => console.log(error));
   };
-
-  // log what user type into the form
-  // console.log(formField);
-  // command line
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -35,8 +49,8 @@ const SignInForm = () => {
 
   return (
     <div className={classes["sign-up-container"]}>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <h2 className={classes.h2}>Login</h2>
+      <form className={classes.form} onSubmit={handleSubmit}>
         <input
           className={classes["input-field"]}
           placeholder="Username"
@@ -60,6 +74,13 @@ const SignInForm = () => {
             Log In
           </button>
         </div>
+        {isWrong && (
+          <p
+            style={{ color: "#cc0000", textAlign: "center", marginTop: "5px" }}
+          >
+            Wrong username or password!
+          </p>
+        )}
       </form>
     </div>
   );

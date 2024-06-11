@@ -1,0 +1,33 @@
+.header {
+  background-color: #ffffff;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  height: 90px;
+  width: 1590px;
+  margin-left: 260px;
+  border-bottom-style: solid;
+}
+
+.logo {
+  /* margin-right: 800px; */
+}
+
+.img-logo {
+  width: 80px;
+  /* margin-right: 500px; */
+  float: left;
+  margin-left: 50px;
+}
+.text-logo {
+  margin-top: 10px;
+
+  margin-left: 100px;
+}
+.name {
+  font-size: 25px;
+  margin-left: 600px;
+}
+.dropdown {
+  margin-left: 20px;
+}

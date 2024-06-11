@@ -1,0 +1,66 @@
+.container {
+  background-color: whitesmoke;
+  width: 919px;
+  height: 837px;
+  border-radius: 30px;
+  text-align: center;
+  font-family: "Montserrat";
+  font-weight: 500;
+  transform: translate(50%, 10%);
+}
+
+.container::backdrop {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.container p {
+  transform: translate(0, 155px);
+  font-size: 30px;
+  margin: 0;
+}
+
+.info-container {
+  height: 493px;
+  transform: translate(0, 240px);
+}
+
+.container div {
+  position: relative;
+}
+
+.container label {
+  position: absolute;
+  left: 280px;
+  color: #0000004d;
+}
+
+.container input {
+  outline: none;
+  padding-left: 29px;
+  padding-top: 27px;
+  border: 0;
+  width: 409px;
+  height: 61px;
+  background-color: #d9d9d9;
+  border-radius: 20px;
+  margin-bottom: 64px;
+  font-size: 19px;
+}
+
+.save-button {
+  width: 298px;
+  height: 49px;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  background-color: #c3a06d;
+  border-radius: 22px;
+}
+
+.save-button:hover {
+  background-color: #886d45;
+}

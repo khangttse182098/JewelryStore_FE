@@ -1,0 +1,67 @@
+.invoice {
+  background-color: #dfd8d8;
+  width: 700px;
+  height: 200px;
+  border-radius: 50px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.detail {
+  display: block;
+  margin-top: 20px;
+  font-size: x-large;
+}
+.origin {
+  display: block;
+  float: left;
+  width: 50%;
+}
+.cut {
+  display: block;
+  /* margin-left: 100px; */
+  float: right;
+  width: 50%;
+}
+.color {
+  width: 500px;
+  display: block;
+  margin-top: 40px;
+}
+.carat {
+  width: 500px;
+  display: block;
+  margin-top: 5px;
+}
+.clarity {
+  margin-top: 5px;
+  width: 50%;
+  display: block;
+  float: left;
+}
+.price {
+  width: 50%;
+  display: block;
+  float: right;
+  margin-top: 5px;
+}
+
+.button {
+  background-color: #c3a06d;
+  width: 83px;
+  height: 83px;
+  font-size: 50px;
+  font-weight: 500;
+  border-radius: 50%;
+  margin-top: 60px;
+  margin-bottom: 51px;
+  color: inherit;
+  border: none;
+
+  cursor: pointer;
+  /* outline: inherit; */
+  margin-left: 90px;
+}
+.button:hover {
+  background-color: #a58657;
+}

@@ -13,12 +13,12 @@
   box-sizing: border-box;
 }
 
-h2 {
+.h2 {
   margin-bottom: 20px;
   margin-top: 0px;
 }
 
-form {
+.form {
   width: 360px;
   display: flex;
   flex-direction: column;

@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  position: relative;
+}
+
+.search-box {
+  width: 853px;
+  height: 53px;
+  border: none;
+  border-radius: 20.5px;
+  background-color: #dfd8d8;
+  padding-left: 87.14px;
+  font-size: 17px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  margin: 0;
+  height: 60px;
+  width: 55px;
+}
+
