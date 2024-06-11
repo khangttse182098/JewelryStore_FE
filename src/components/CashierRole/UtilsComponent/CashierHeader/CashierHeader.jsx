@@ -2,8 +2,10 @@ import classes from "./CashierHeader.module.css";
 import MahikaLogoImg from "/assets/img-logo.png";
 import MahikaLogoText from "/assets/text-logo.png";
 import DropDownAccount from "../DropDownAccount/DropDownAccount";
+import React, { useState, useEffect } from "react";
 
 const CashierHeader = () => {
+  const [cashierName, setCashierName] = useState([]);
   const handleUser = () => {
     fetch("http://mahika.foundation:8080/swp/api/user", {
       method: "GET",
@@ -12,9 +14,16 @@ const CashierHeader = () => {
       },
     })
       .then((res) => res.json())
-      .then((dataUser) => setListGold(dataUser))
+      .then((dataUser) => {
+        const cashierList = dataUser.filter((user) => user.role === "Thu ngân");
+        const name = cashierList.map((user) => user.fullName);
+        setCashierName(name);
+      })
       .catch((error) => console.log(error));
   };
+  useEffect(() => {
+    handleUser();
+  }, []);
 
   return (
     <div className={classes.header}>
@@ -32,9 +41,11 @@ const CashierHeader = () => {
       </div>
 
       <div className={classes.name}>
-        <p>Pham Hoang Phuc</p>
+        {cashierName.map((name, index) => (
+          <p key={index}>{name}</p>
+        ))}
       </div>
-      <DropDownAccount className={classes.dropdown} />
+      <DropDownAccount />
     </div>
   );
 };
