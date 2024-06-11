@@ -9,6 +9,7 @@ import CashierStatusPage from "./page/CashierStatusPage";
 import "./util/reset.css";
 import CashierInvoiceDetailPage from "./page/CashierInvoiceDetailPage";
 import RepurchasePage from "./page/RepurchasePage";
+import ScanningPage from "./components/SellerRole/ScanningPage/ScanningPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/invoicedetail" element={<CashierInvoiceDetailPage />} />
       <Route path="/repurchasepage" element={<RepurchasePage />} />
       <Route path="/statuslistcashier" element={<CashierStatusPage />} />
+      <Route path="/scanning" element={<ScanningPage />} />
     </Routes>
   );
 }
