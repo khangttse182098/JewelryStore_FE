@@ -6,10 +6,6 @@ import { formatter } from "../../../../util/formatter";
 import loadImg from "../../../../util/loadImg";
 
 const InvoiceDetail = forwardRef(function InvoiceDetail({ invoice }, ref) {
-  const [image, setImage] = useState(null);
-  if (image === null) {
-    loadImg(invoice.productCode, setImage);
-  }
   return createPortal(
     <dialog ref={ref} className={classes["modal-container"]}>
       <div className={classes["invoice-container"]}>
@@ -17,7 +13,7 @@ const InvoiceDetail = forwardRef(function InvoiceDetail({ invoice }, ref) {
         {/* image */}
         <div className={classes["info-container"]}>
           <div className={classes["img-container"]}>
-            <img src={image} alt="ring" />
+            <img src={invoice.productImage} alt="ring" />
           </div>
           {/* invoice info */}
           <div className={classes.info}>

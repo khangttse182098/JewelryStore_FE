@@ -5,17 +5,19 @@ import { ProductPurchaseContext } from "../../../../context/ProductPurchaseConte
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
 import { formatter } from "../../../../util/formatter";
 import loadImg from "../../../../util/loadImg";
+import Skeleton from "react-loading-skeleton";
 
 const InvoiceSellPurchase = ({ itemToPurchase }) => {
-  const { productName, productCode, materialName, categoryName, price } =
-    itemToPurchase;
+  const {
+    productName,
+    productCode,
+    productImage,
+    materialName,
+    categoryName,
+    price,
+  } = itemToPurchase;
   const { removeItemFromPurchase } = useContext(ProductPurchaseContext);
   const { addItemToProductList } = useContext(ProductPurchaseListContext);
-  const [image, setImage] = useState(null);
-
-  if (image === null) {
-    loadImg(productCode, setImage);
-  }
 
   const handleClick = () => {
     removeItemFromPurchase(itemToPurchase);
@@ -25,7 +27,11 @@ const InvoiceSellPurchase = ({ itemToPurchase }) => {
   return (
     <div className={classes["container"]}>
       <div>
-        <img className={classes.img} src={image} alt="Diamond Ring 14K" />
+        <img
+          className={classes.img}
+          src={productImage}
+          alt="Diamond Ring 14K"
+        />
       </div>
       <div>
         <p className={classes.tittle}>{productName}</p>
