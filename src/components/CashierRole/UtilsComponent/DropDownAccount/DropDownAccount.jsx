@@ -1,18 +1,23 @@
 import classes from "./DropDownAccount.module.css";
 import dropdownicon from "/assets/arrow-down-icon.png";
 import { useState } from "react";
+
 import LoginPage from "./../../../../page/LoginPage";
+import { useNavigate } from "react-router-dom";
 
 const DropDownAccount = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDropDown = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogOut = () => {
-    navigate("/login");
-  };
+  function handleClick() {
+    if ("Đăng xuất") {
+      navigate("/");
+    }
+  }
 
   return (
     <div>
@@ -22,7 +27,7 @@ const DropDownAccount = () => {
       {isOpen && (
         <div className={classes.dropdowncontent}>
           <button className={classes.dropdownbtn}>Thông tin</button>
-          <button className={classes.dropdownbtn} onClick={handleLogOut}>
+          <button className={classes.dropdownbtn} onClick={handleClick}>
             Đăng xuất
           </button>
         </div>

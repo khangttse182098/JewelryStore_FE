@@ -4,6 +4,18 @@ import MahikaLogoText from "/assets/text-logo.png";
 import DropDownAccount from "../DropDownAccount/DropDownAccount";
 
 const CashierHeader = () => {
+  const handleUser = () => {
+    fetch("http://mahika.foundation:8080/swp/api/user", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((dataUser) => setListGold(dataUser))
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className={classes.header}>
       <div className={classes.logo}>
