@@ -14,9 +14,6 @@ const ImageLoader = ({ URL, skeletonStyle, imgStyle }) => {
     setImageLoaded(true);
     setImageError(true);
   };
-  console.log(skeletonStyle);
-  console.log(imgStyle);
-
   return (
     <>
       {!imageLoaded && <Skeleton circle className={skeletonStyle} />}
