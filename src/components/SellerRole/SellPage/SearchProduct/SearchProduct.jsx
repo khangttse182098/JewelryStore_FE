@@ -11,9 +11,13 @@ const SearchProduct = ({ placeholder, onChangeHandler }) => {
     ScanningPageRef.current.showModal();
   }
 
+  function hanleHide() {
+    ScanningPageRef.current.close();
+  }
+
   return (
     <>
-      <ScanningPage ref={ScanningPageRef} />
+      <ScanningPage ref={ScanningPageRef} hanleHide={hanleHide} />
       <div className={classes.container}>
         <img
           src={SearchIcon}

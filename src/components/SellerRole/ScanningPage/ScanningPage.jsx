@@ -2,7 +2,7 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import { forwardRef, useEffect, useState } from "react";
 import classes from "./ScanningPage.module.css";
 
-const ScanningPage = forwardRef(function ScanningPage(props, ref) {
+const ScanningPage = forwardRef(function ScanningPage({ hanleHide }, ref) {
   const [scanResult, setScanResult] = useState(null);
 
   useEffect(() => {
@@ -34,6 +34,11 @@ const ScanningPage = forwardRef(function ScanningPage(props, ref) {
 
   return (
     <dialog ref={ref} className={classes.container}>
+      <div>
+        <p className={classes.close} onClick={hanleHide}>
+          &times;
+        </p>
+      </div>
       {scanResult ? (
         <div>
           Success: <a href={scanResult}>{scanResult}</a>
