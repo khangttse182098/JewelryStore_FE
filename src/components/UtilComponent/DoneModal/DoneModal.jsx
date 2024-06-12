@@ -3,9 +3,6 @@ import classes from "./DoneModal.module.css";
 import doneicon from "/assets/done.png";
 
 const DoneModal = forwardRef(function DoneModal({ handleClose }, ref) {
-  setTimeout(() => {
-    handleClose();
-  }, 7000);
   return (
     <>
       <dialog ref={ref} className={`${classes["modal-content"]}`}>

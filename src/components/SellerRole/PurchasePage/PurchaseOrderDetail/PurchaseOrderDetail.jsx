@@ -2,11 +2,12 @@
 /* eslint-disable react/prop-types */
 import classes from "./PurchaseOrderDetail.module.css";
 import PurchaseOrderProduct from "../PurchaseOrderProduct/PurchaseOrderProduct";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { ProductSellInvoiceContext } from "../../../../context/ProductSellInvoiceContext";
 import { formatter } from "../../../../util/formatter";
 import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
 import { ProductSellListContext } from "../../../../context/ProductSellListContext";
+import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 
 const PurchaseOrderDetail = ({ sellOrderCode }) => {
   const { itemSellInvoice, setItemSellInvoice } = useContext(
@@ -15,6 +16,7 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
   const { itemSellList } = useContext(ProductSellListContext);
   const { userId } = useContext(LoggedInUserContext);
   const [price, setPrice] = useState(0);
+  const doneModalRef = useRef();
 
   useEffect(() => {
     const total = itemSellInvoice.reduce((sum, item) => sum + item.price, 0);
@@ -71,11 +73,20 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
       body: JSON.stringify(reqBody),
     }).then((res) => {
       setItemSellInvoice([]);
+      handleOpenDoneModal();
     });
+  }
+
+  function handleOpenDoneModal() {
+    doneModalRef.current.showModal();
+  }
+  function handleCloseDoneModal() {
+    doneModalRef.current.close();
   }
 
   return (
     <>
+      <DoneModal ref={doneModalRef} handleClose={handleCloseDoneModal} />
       <div className={classes.container}>
         <div className={classes.title}>Thông tin đơn hàng</div>
         <div className={classes["container-order"]}>
