@@ -4,15 +4,11 @@ import Product from "/assets/product.png";
 import Customer from "/assets/customer.png";
 import Disount from "/assets/discount.png";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const CashierSidebar = () => {
-  const [currentPage, setCurrentPage] = useState("Danh sách hóa đơn");
-
-  const handlePage = (event) => {
-    const page = event.currentTarget.getAttribute("page");
-    setCurrentPage(page);
-  };
+  const location = useLocation();
+  const [currentPage, setCurrentPage] = useState(location.pathname);
 
   return (
     <div className={classes.container}>
@@ -24,32 +20,28 @@ const CashierSidebar = () => {
         <Link to="/invoicelist">
           <button
             className={`${classes.button} ${
-              currentPage === "Danh sách hóa đơn" ? classes.current : ""
+              currentPage === "/invoicelist" ? classes.current : ""
             }`}
-            page="Danh sách hóa đơn"
-            onClick={handlePage}
           >
             <img
               src={InvoiceList}
               alt="Invoice icon"
-              className={classes["icon"]}
+              className={classes.icon}
             />
-            <div className={classes["text"]}>
+            <div className={classes.text}>
               <p>Danh sách hóa đơn</p>
             </div>
           </button>
         </Link>
 
-        <Link to="/invoicelist">
+        <Link to="/products">
           <button
             className={`${classes.button} ${
-              currentPage === "Sản phẩm" ? classes.current : ""
+              currentPage === "/products" ? classes.current : ""
             }`}
-            page="Sản phẩm"
-            onClick={handlePage}
           >
-            <img src={Product} alt="Product icon" className={classes["icon"]} />
-            <div className={classes["text"]}>
+            <img src={Product} alt="Product icon" className={classes.icon} />
+            <div className={classes.text}>
               <p>Sản phẩm</p>
             </div>
           </button>
@@ -58,17 +50,11 @@ const CashierSidebar = () => {
         <Link to="/customerlist">
           <button
             className={`${classes.button} ${
-              currentPage === "Khách hàng" ? classes.current : ""
+              currentPage === "/customerlist" ? classes.current : ""
             }`}
-            page="Khách hàng"
-            onClick={handlePage}
           >
-            <img
-              src={Customer}
-              alt="Customer icon"
-              className={classes["icon"]}
-            />
-            <div className={classes["text"]}>
+            <img src={Customer} alt="Customer icon" className={classes.icon} />
+            <div className={classes.text}>
               <p>Khách hàng</p>
             </div>
           </button>
@@ -77,13 +63,11 @@ const CashierSidebar = () => {
         <Link to="/statuslistcashier">
           <button
             className={`${classes.button} ${
-              currentPage === "Khuyến mãi" ? classes.current : ""
+              currentPage === "/statuslistcashier" ? classes.current : ""
             }`}
-            page="Khuyến mãi"
-            onClick={handlePage}
           >
-            <img src={Disount} alt="Disount icon" className={classes["icon"]} />
-            <div className={classes["text"]}>
+            <img src={Disount} alt="Disount icon" className={classes.icon} />
+            <div className={classes.text}>
               <p>Trạng thái đơn hàng</p>
             </div>
           </button>
