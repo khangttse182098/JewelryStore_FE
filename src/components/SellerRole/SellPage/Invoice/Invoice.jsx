@@ -6,7 +6,6 @@ import classes from "./Invoice.module.css";
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
 import InvoiceDetail from "../InvoiceDetail/InvoiceDetail";
 import { formatter } from "../../../../util/formatter";
-import Skeleton from "react-loading-skeleton";
 import ImageLoader from "../../../../util/ImageLoader";
 
 const Invoice = ({ invoice }) => {

@@ -3,7 +3,6 @@ import { forwardRef, useState } from "react";
 import classes from "./InvoiceDetail.module.css";
 import { createPortal } from "react-dom";
 import { formatter } from "../../../../util/formatter";
-import loadImg from "../../../../util/loadImg";
 import ImageLoader from "../../../../util/ImageLoader";
 
 const InvoiceDetail = forwardRef(function InvoiceDetail({ invoice }, ref) {
@@ -14,11 +13,7 @@ const InvoiceDetail = forwardRef(function InvoiceDetail({ invoice }, ref) {
         {/* image */}
         <div className={classes["info-container"]}>
           <div className={classes["img-container"]}>
-<<<<<<< HEAD
-            <img src={invoice.productImage} alt="ring" />
-=======
             <ImageLoader URL={invoice.productImage} />
->>>>>>> feature/issue-05/purchase-page
           </div>
           {/* invoice info */}
           <div className={classes.info}>
