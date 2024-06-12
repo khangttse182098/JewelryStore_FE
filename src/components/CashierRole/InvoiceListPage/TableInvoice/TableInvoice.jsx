@@ -8,6 +8,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const TableInvoice = () => {
   const [invoiceList, setInvoiceList] = useState([]);
+
   const navigate = useNavigate();
 
   const handleInvoice = () => {
@@ -200,7 +201,20 @@ const TableInvoice = () => {
                       <td className={classes.td}>
                         {formatter.format(list.totalPrice)}
                       </td>
-                      <td className={classes.td}>{list.status}</td>
+                      <td className={classes.td}>
+                        <p
+                          className={
+                            list.status === "Chưa thanh toán"
+                              ? classes["status-inProgress"]
+                              : list.status === "Đã thanh toán"
+                              ? classes["status-success"]
+                              : classes["status-received-delivered"]
+                          }
+                          style={{ marginLeft: "70px" }}
+                        >
+                          {list.status}
+                        </p>
+                      </td>
                     </tr>
                   );
                 })}
