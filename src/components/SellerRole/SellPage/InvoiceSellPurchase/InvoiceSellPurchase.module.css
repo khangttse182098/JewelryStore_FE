@@ -72,3 +72,7 @@
   cursor: pointer;
   outline: inherit;
 }
+
+.button:hover {
+  background-color: #957a53;
+}

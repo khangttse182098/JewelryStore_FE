@@ -17,7 +17,6 @@ const ButtonType = ({ option, activeOption, onClick, children }) => {
       className={`${classes.option} ${
         activeOption === option ? classes.active : ""
       }`}
-      // onClick={() => onClick(option)}
       onClick={(e) => {
         onClick(option);
         handleClick(e);

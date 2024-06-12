@@ -37,7 +37,7 @@ const CategoryType = () => {
   useEffect(() => {
     const counterID = selectedCounter === "Chọn quầy" ? "" : selectedCounter;
     fetch(
-      `http://mahika.foundation:8080/swp/api/product?counter_id=${counterID}&category_name=${selectedCategoryName}`
+      `http://mahika.foundation:8080/swp/api/product?is_available=true&counter_id=${counterID}&category_name=${selectedCategoryName}`
     )
       .then((res) => res.json())
       .then((dataProduct) => {
