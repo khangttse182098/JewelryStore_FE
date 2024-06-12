@@ -1,19 +1,11 @@
 .container {
   width: 1282px;
   height: 931px;
-  position: absolute;
-  margin-left: 300px;
-  margin-top: 120px;
   background-color: #efeded;
   display: flex;
   flex-direction: column;
   font-family: "Montserrat";
   border-collapse: collapse;
-}
-
-.row-container:hover {
-  background-color: #eff7fd;
-  cursor: pointer;
 }
 
 .title {
@@ -46,28 +38,18 @@
   background-color: #f4f6f8;
 }
 
-.img-pen {
+.img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
   width: 36px;
   height: 58px;
 }
 
-.img-container {
-  width: 60px;
-  height: 100px;
-}
-
-.img {
-  margin-left: 5px;
-  width: 100%;
-  height: 100%;
-}
-
-.img-skeleton {
-  margin-left: 5px;
-  height: 90%;
-}
-
-.customer-detail {    
+.customer-detail {
   margin: 19px;
   width: 471px;
   height: 387px;
@@ -122,36 +104,19 @@
   border-radius: 5px;
 }
 
-.purchase-contatiner {
-  display: flex;
-  justify-content: space-between;
-}
-
 .highlight {
   font-weight: 500;
   font-size: 17px;
   margin-left: 30px;
 }
 
-.status-success {
+.status-type {
   padding: 5px;
   width: 153px;
   margin: 20px;
   background-color: #f3fcf9;
   outline-color: #9fedcf;
   color: #0db473;
-  outline-style: solid;
-  border-radius: 20px;
-  font-weight: 500;
-}
-
-.status-inProgress {
-  padding: 5px;
-  width: 160px;
-  margin: 20px;
-  background-color: #fffbf2;
-  outline-color: #ffdf9b;
-  color: #e49c06;
   outline-style: solid;
   border-radius: 20px;
   font-weight: 500;
@@ -164,21 +129,4 @@
 
 .status-value {
   margin-right: 30px;
-  text-align: center;
-}
-
-.purchase-button {
-  margin-top: 50px;
-  margin-right: 200px;
-  width: 182px;
-  height: 50px;
-  background-color: #0088ff;
-  color: white;
-  border-radius: 5px;
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.purchase-button:hover {
-  background-color: #005fb3;
 }
