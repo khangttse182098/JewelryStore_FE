@@ -23,6 +23,7 @@ function App() {
     //   <Route path="/invoicedetail" element={<CashierInvoiceDetailPage />} />
     //   <Route path="/repurchasepage" element={<RepurchasePage />} />
     //   <Route path="/statuslistcashier" element={<CashierStatusPage />} />
+    //   <Route path="/donemodal" element={<DoneModal />} />
     // </Routes>
     <>
       <DoneModal />
