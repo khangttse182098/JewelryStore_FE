@@ -1,6 +1,6 @@
 import React, { forwardRef, useState } from "react";
 import classes from "./DoneModal.module.css";
-import doneicon from "../../../../public/assets/done.png";
+import doneicon from "/assets/done.png";
 
 const DoneModal = forwardRef(function DoneModal({ handleClose }, ref) {
   setTimeout(() => {
