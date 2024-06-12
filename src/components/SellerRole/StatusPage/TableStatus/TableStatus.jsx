@@ -5,7 +5,6 @@ import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Paginatio
 
 const TableStatus = () => {
   const [statusList, setStatusList] = useState([]);
-  // const [status] = useState("Đã thanh toán");
 
   const handleDelivered = (invoiceCode) => {
     fetch("http://mahika.foundation:8080/swp/api/order/status/delivered", {
@@ -90,7 +89,17 @@ const TableStatus = () => {
               <tr className={classes.tr} key={list.invoiceCode}>
                 <td className={classes.td}>{list.invoiceCode}</td>
                 <td className={classes.td}>{list.customerName}</td>
-                <td className={classes.td}>{list.status}</td>
+                <td className={classes.td}>
+                  <p
+                    className={
+                      list.status === "Đã thanh toán"
+                        ? classes["status-success"]
+                        : classes["status-delivered"]
+                    }
+                  >
+                    {list.status}
+                  </p>
+                </td>
                 <td className={classes.td}>
                   <button
                     className={classes.button}
