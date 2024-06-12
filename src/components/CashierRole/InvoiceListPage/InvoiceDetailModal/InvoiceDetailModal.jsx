@@ -3,20 +3,20 @@ import classes from "./InvoiceDetailModal.module.css";
 import { formatter } from "../../../../util/formatter";
 import diamondImg from "/assets/diamon.png";
 import Gold from "/assets/Gold.png";
+import ImageLoader from "../../../../util/ImageLoader";
 
 const InvoiceDetailModal = forwardRef(({ invoice, handleHide, type }, ref) => {
   const renderDetail = () => {
-    console.log(invoice);
     switch (type) {
       case "product":
         return (
-          <div className={classes.productAll}>
-            <img
-              src={invoice.productImage}
-              alt="Product"
-              className={classes.imageSize}
+          <div key={invoice.productCode} className={classes.productAll}>
+            <ImageLoader
+              URL={invoice.productImage}
+              imgStyle={classes.imageSize}
+              skeletonStyle={classes.imageSize}
             />
-            <div key={invoice.productCode}>
+            <div>
               <div>
                 <b>Tên loại:</b> {invoice.categoryName}
               </div>
