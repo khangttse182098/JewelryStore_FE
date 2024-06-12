@@ -97,6 +97,12 @@
 
 .td {
   border-bottom: 1px solid #dddddd;
+  height: 70px;
+  font-weight: 400;
+}
+
+.td-skeleton {
+  border-bottom: 1px solid #dddddd;
   height: 53px;
   font-weight: 400;
 }
@@ -121,4 +127,30 @@
   border-style: solid;
   border-bottom-color: #2661ec;
   opacity: 0.9;
+}
+
+.status-success {
+  width: 160px;
+  height: 35px;
+  padding: 5px;
+  margin: 0 auto;
+  background-color: #f3fcf9;
+  outline-color: #9fedcf;
+  color: #0db473;
+  outline-style: solid;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.status-received {
+  width: 160px;
+  height: 35px;
+  padding: 5px;
+  margin: 0 auto;
+  background-color: #eae2f0;
+  outline-color: #876fca;
+  color: #7506e4;
+  outline-style: solid;
+  border-radius: 20px;
+  font-weight: 500;
 }

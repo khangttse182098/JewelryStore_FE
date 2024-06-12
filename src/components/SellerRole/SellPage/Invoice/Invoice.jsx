@@ -7,6 +7,7 @@ import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseL
 import InvoiceDetail from "../InvoiceDetail/InvoiceDetail";
 import { formatter } from "../../../../util/formatter";
 import Skeleton from "react-loading-skeleton";
+import ImageLoader from "../../../../util/ImageLoader";
 
 const Invoice = ({ invoice }) => {
   const {
@@ -17,7 +18,9 @@ const Invoice = ({ invoice }) => {
     categoryName,
     price,
   } = invoice;
-  const { removeItemFromProductList } = useContext(ProductPurchaseListContext);
+  const { removeItemFromProductList, productList } = useContext(
+    ProductPurchaseListContext
+  );
   const { addItemToPurchase } = useContext(ProductPurchaseContext);
   const InvoiceDetailRef = useRef();
 
@@ -30,45 +33,15 @@ const Invoice = ({ invoice }) => {
     InvoiceDetailRef.current.showModal();
   }
 
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
-
-  const handleImageLoad = () => {
-    setImageLoaded(true);
-    setImageError(false);
-  };
-
-  const handleImageError = () => {
-    setImageLoaded(true);
-    setImageError(true);
-  };
-
   return (
     <>
       <InvoiceDetail invoice={invoice} ref={InvoiceDetailRef} />
       <div key={productCode} className={classes["container-invoice"]}>
-        <div>
-          {!imageLoaded && (
-            <Skeleton
-              circle
-              style={{
-                marginTop: "38px",
-                marginLeft: "27px",
-                marginRight: "29px",
-                width: "95px",
-                height: "95px",
-              }}
-            />
-          )}
-          <img
-            className={classes.img}
-            src={productImage}
-            alt="Diamond Ring 14K"
-            onLoad={handleImageLoad}
-            onError={handleImageError}
-            style={{ display: imageLoaded ? "block" : "none" }}
+        <div className={classes.img}>
+          <ImageLoader
+            URL={productImage}
+            skeletonStyle={classes["img-skeleton"]}
           />
-          {imageError && <p className={classes.error}>Image failed to load</p>}
         </div>
         <div onClick={handleShowProductDetail}>
           <p className={classes.tittle}>{productName}</p>

@@ -5,7 +5,11 @@ import { ProductPurchaseContext } from "../../../../context/ProductPurchaseConte
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
 import { formatter } from "../../../../util/formatter";
 import loadImg from "../../../../util/loadImg";
+<<<<<<< HEAD
 import Skeleton from "react-loading-skeleton";
+=======
+import ImageLoader from "../../../../util/ImageLoader";
+>>>>>>> feature/issue-05/purchase-page
 
 const InvoiceSellPurchase = ({ itemToPurchase }) => {
   const {
@@ -26,12 +30,17 @@ const InvoiceSellPurchase = ({ itemToPurchase }) => {
 
   return (
     <div className={classes["container"]}>
+<<<<<<< HEAD
       <div>
         <img
           className={classes.img}
           src={productImage}
           alt="Diamond Ring 14K"
         />
+=======
+      <div className={classes.img}>
+        <ImageLoader URL={productImage} />
+>>>>>>> feature/issue-05/purchase-page
       </div>
       <div>
         <p className={classes.tittle}>{productName}</p>
