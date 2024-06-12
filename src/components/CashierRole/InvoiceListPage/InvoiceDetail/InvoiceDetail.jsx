@@ -9,9 +9,12 @@ import Gold from "/assets/Gold.png";
 import InvoiceDetailModal from "../InvoiceDetailModal/InvoiceDetailModal";
 import ImageLoader from "../../../../util/ImageLoader";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 
 const InvoiceDetail = ({ invoice }) => {
   const InvoiceDetailModalRef = useRef();
+  const doneModalRef = useRef();
+
   const {
     productResponseDTOList,
     diamondCriteriaResponseDTOS,
@@ -24,6 +27,7 @@ const InvoiceDetail = ({ invoice }) => {
   const [fund, setFund] = useState("");
   const { invoiceCode, customerName, status, totalPrice, customerId } =
     invoice.list;
+  const [renderStatus, setRenderStatus] = useState(status);
 
   const handleClick = (item, type) => {
     setSelectedItem({ item, type });
@@ -72,16 +76,22 @@ const InvoiceDetail = ({ invoice }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ invoiceCode }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+    }).then((res) => {
+      setRenderStatus("Đã thanh toán");
+      handleOpenDoneModal();
+    });
   };
 
   useEffect(() => {
     handleFetchCustomer();
   }, []);
+
+  function handleOpenDoneModal() {
+    doneModalRef.current.showModal();
+  }
+  function handleCloseDoneModal() {
+    doneModalRef.current.close();
+  }
 
   return (
     <>
@@ -94,6 +104,7 @@ const InvoiceDetail = ({ invoice }) => {
         />
       )}
       <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
+        <DoneModal ref={doneModalRef} handleClose={handleCloseDoneModal} />
         <div className={classes.container}>
           <div className={classes.title}>Chi tiết hóa đơn</div>
           <div className={classes["table-container"]}>
@@ -207,7 +218,9 @@ const InvoiceDetail = ({ invoice }) => {
                 <div className={classes["customer-gender"]}>
                   <p className={classes["customer-info-title"]}>Giới tính: </p>
                   <p>
-                    {customer.gender || (
+                    {Object.keys(customer).length ? (
+                      customer.gender || "Chưa có thông tin"
+                    ) : (
                       <Skeleton style={{ width: "150px", height: "10px" }} />
                     )}
                   </p>
@@ -223,15 +236,15 @@ const InvoiceDetail = ({ invoice }) => {
                 <div className={classes["customer-address"]}>
                   <p className={classes["customer-info-title"]}>Địa chỉ: </p>
                   <p>
-                    {customer.address || (
-                      <>
-                        <Skeleton
-                          style={{
-                            width: "300px",
-                            height: "10px",
-                          }}
-                        />
-                      </>
+                    {Object.keys(customer).length ? (
+                      customer.address || "Chưa có thông tin"
+                    ) : (
+                      <Skeleton
+                        style={{
+                          width: "300px",
+                          height: "10px",
+                        }}
+                      />
                     )}
                   </p>
                 </div>
@@ -243,12 +256,12 @@ const InvoiceDetail = ({ invoice }) => {
             <div className={classes["status-container"]}>
               <div
                 className={`${
-                  status === "Chưa thanh toán"
+                  renderStatus === "Chưa thanh toán"
                     ? `${classes["status-inProgress"]}`
                     : `${classes["status-success"]}`
                 } ${classes.highlight}`}
               >
-                {status}
+                {renderStatus}
               </div>
               <div className={classes["status-name-containter"]}>
                 <div className={classes.highlight}>Tổng tiền hàng</div>
