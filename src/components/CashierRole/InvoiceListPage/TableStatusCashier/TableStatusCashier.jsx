@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classes from "./TableStatusCashier.module.css";
 import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 
 const TableStatusCashier = () => {
   const [statusList, setStatusList] = useState([]);
-  // const [status] = useState("Đã thanh toán");
+  const doneModalRef = useRef();
 
   const handleDelivered = (invoiceCode) => {
     fetch("http://mahika.foundation:8080/swp/api/order/status/delivered", {
@@ -14,12 +15,10 @@ const TableStatusCashier = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ invoiceCode }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        handleStatus();
-      });
+    }).then((res) => {
+      handleStatus();
+      handleOpenDoneModal();
+    });
   };
 
   const handleStatus = () => {
@@ -75,8 +74,16 @@ const TableStatusCashier = () => {
     );
   }
 
+  function handleOpenDoneModal() {
+    doneModalRef.current.showModal();
+  }
+  function handleCloseDoneModal() {
+    doneModalRef.current.close();
+  }
+
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
+      <DoneModal ref={doneModalRef} handleClose={handleCloseDoneModal} />
       <div className={classes.container}>
         <div className={classes.title}>
           <p>Danh sách trạng thái</p>
