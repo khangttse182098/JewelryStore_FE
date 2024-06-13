@@ -15,7 +15,7 @@ const CashierSidebar = () => {
       <div className={classes.title}>
         <p>Trang thu ngân</p>
       </div>
-      <hr />
+      <hr className={classes.hr} />
       <div className={classes.content}>
         <Link to="/invoicelist">
           <button
@@ -73,7 +73,7 @@ const CashierSidebar = () => {
           </button>
         </Link>
       </div>
-      <hr />
+      <hr className={classes.hr} />
     </div>
   );
 };

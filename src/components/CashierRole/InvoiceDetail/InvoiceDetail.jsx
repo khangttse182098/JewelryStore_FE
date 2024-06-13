@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import classes from "./InvoiceDetail.module.css";
-import RingImg from "/assets/ring.png";
 import PenImg from "/assets/pen.png";
 
 const ProductInvoiceList = () => {
