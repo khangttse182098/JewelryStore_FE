@@ -114,7 +114,10 @@ const TableStatus = () => {
                   return (
                     <tr className={classes.tr} key={list.invoiceCode}>
                       <td className={classes.td}>{list.invoiceCode}</td>
+                      <td className={classes.td}>{list.createdDate}</td>
                       <td className={classes.td}>{list.customerName}</td>
+                      <td className={classes.td}>{list.invoiceType}</td>
+                      <td>{}</td>
                       <td className={classes.td}>
                         <p
                           className={
