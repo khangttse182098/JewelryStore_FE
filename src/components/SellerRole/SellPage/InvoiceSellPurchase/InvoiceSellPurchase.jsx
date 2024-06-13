@@ -1,14 +1,20 @@
 /* eslint-disable react/prop-types */
 import classes from "./InvoiceSellPurchase.module.css";
-import DiamondRing from "/assets/DiamondRing.png";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
 import { formatter } from "../../../../util/formatter";
+import ImageLoader from "../../../../util/ImageLoader";
 
 const InvoiceSellPurchase = ({ itemToPurchase }) => {
-  const { productName, productCode, materialName, categoryName, price } =
-    itemToPurchase;
+  const {
+    productName,
+    productCode,
+    productImage,
+    materialName,
+    categoryName,
+    price,
+  } = itemToPurchase;
   const { removeItemFromPurchase } = useContext(ProductPurchaseContext);
   const { addItemToProductList } = useContext(ProductPurchaseListContext);
 
@@ -19,8 +25,8 @@ const InvoiceSellPurchase = ({ itemToPurchase }) => {
 
   return (
     <div className={classes["container"]}>
-      <div>
-        <img className={classes.img} src={DiamondRing} alt="Diamond Ring 14K" />
+      <div className={classes.img}>
+        <ImageLoader URL={productImage} />
       </div>
       <div>
         <p className={classes.tittle}>{productName}</p>

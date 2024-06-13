@@ -6,6 +6,7 @@
   border-radius: 66px;
   display: flex;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .img {
@@ -13,6 +14,10 @@
   margin-left: 27px;
   margin-right: 29px;
   width: 95px;
+  height: 95px;
+}
+
+.img-skeleton {
   height: 95px;
 }
 
@@ -72,4 +77,8 @@
   padding: 0;
   cursor: pointer;
   outline: inherit;
+}
+
+.button:hover {
+  background-color: #957a53;
 }

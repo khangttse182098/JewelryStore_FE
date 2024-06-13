@@ -24,7 +24,6 @@ const Category = () => {
     listGoldCriteria: [],
   };
   const customerInputFormRef = useRef();
-
   const listDiamondCriteria = [];
   const listGoldCriteria = [];
 
@@ -36,6 +35,7 @@ const Category = () => {
       selectedItem = { ...selectedItem, weight: data.weight };
       listGoldCriteria.push(selectedItem);
       criteriaItem.listGoldCriteria = [...listGoldCriteria];
+      console.log(selectedItem);
     }
     if (type === "diamond") {
       selectedItem = {
@@ -67,6 +67,8 @@ const Category = () => {
       .then((s) => {
         data = {
           ...data,
+          id: (s.goldCriteriaResponseDTO[0] || s.diamondCriteriaResponseDTO[0])
+            .id,
           price: (
             s.goldCriteriaResponseDTO[0] || s.diamondCriteriaResponseDTO[0]
           ).price,

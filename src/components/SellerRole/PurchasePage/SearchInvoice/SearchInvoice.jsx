@@ -4,8 +4,8 @@ import SearchIcon from "/assets/Vector.png";
 
 const SearchInvoice = ({ setSearchResult }) => {
   function handleChange(event) {
-    setSearchResult(event.target.value);
     event.preventDefault();
+    setSearchResult(event.target.value);
   }
 
   return (

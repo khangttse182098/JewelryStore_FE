@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { createContext, useState } from "react";
 
 const removeItemPurchase = (itemPurchase, itemToRemove) =>
@@ -17,6 +19,7 @@ const addItemPurchase = (itemPurchase, itemToAdd) => {
 
 export const RepurchaseContext = createContext({
   itemPurchase: [],
+  setItemPurchase: () => {},
   removeItemFromPurchase: () => {},
   addItemToPurchase: () => {},
 });
@@ -34,6 +37,7 @@ export const RepurchaseProvider = ({ children }) => {
 
   const value = {
     itemPurchase,
+    setItemPurchase,
     removeItemFromPurchase,
     addItemToPurchase,
   };

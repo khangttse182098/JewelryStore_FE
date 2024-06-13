@@ -33,7 +33,7 @@
   border-radius: 20px;
   margin-top: 20px;
 }
-button:hover {
+.button:hover {
   background-color: #324258;
 }
 .text {
@@ -43,4 +43,12 @@ button:hover {
 }
 .icon {
   margin-top: 7px;
+}
+
+.current {
+  background-color: #324258;
+}
+
+.hr {
+  width: 100%;
 }

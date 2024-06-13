@@ -1,16 +1,27 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useState, useContext, useRef } from "react";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import classes from "./Invoice.module.css";
-import "./Invoice.module.css";
-import DiamondRing from "/assets/DiamondRing.png";
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
-import InvoiceDetail from "../InvoiceDetail/InvoiceDetail"
+import InvoiceDetail from "../InvoiceDetail/InvoiceDetail";
 import { formatter } from "../../../../util/formatter";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import ImageLoader from "../../../../util/ImageLoader";
 
 const Invoice = ({ invoice }) => {
-  const { productName, productCode, materialName, categoryName, price } =
-    invoice;
-  const { removeItemFromProductList } = useContext(ProductPurchaseListContext);
+  const {
+    productName,
+    productCode,
+    productImage,
+    materialName,
+    categoryName,
+    price,
+  } = invoice;
+  const { removeItemFromProductList, productList } = useContext(
+    ProductPurchaseListContext
+  );
   const { addItemToPurchase } = useContext(ProductPurchaseContext);
   const InvoiceDetailRef = useRef();
 
@@ -23,15 +34,27 @@ const Invoice = ({ invoice }) => {
     InvoiceDetailRef.current.showModal();
   }
 
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    setImageError(false);
+  };
+
+  const handleImageError = () => {
+    setImageLoaded(true);
+    setImageError(true);
+  };
+
   return (
     <>
       <InvoiceDetail invoice={invoice} ref={InvoiceDetailRef} />
       <div key={productCode} className={classes["container-invoice"]}>
-        <div>
-          <img
-            className={classes.img}
-            src={DiamondRing}
-            alt="Diamond Ring 14K"
+        <div className={classes.img}>
+          <ImageLoader
+            URL={productImage}
+            skeletonStyle={classes["img-skeleton"]}
           />
         </div>
         <div onClick={handleShowProductDetail}>

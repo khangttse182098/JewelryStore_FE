@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import classes from "./DropDownGold.module.css";
 import dropdownicon from "/assets/arrowDown.png";
 import { useState } from "react";

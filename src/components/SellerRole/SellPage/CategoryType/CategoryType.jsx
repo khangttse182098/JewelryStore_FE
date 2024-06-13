@@ -5,7 +5,7 @@ import SearchProduct from "../SearchProduct/SearchProduct";
 import DropDownCounter from "../DropDownCounter/DropDownCounter";
 import InvoiceList from "../InvoiceList/InvoiceList";
 import InformationBar from "../InformationBar/InformationBar";
-import InvoiceSellPurchase from "../../PurchasePage/InvoiceSellPurchase/InvoiceSellPurchase";
+import InvoiceSellPurchase from "../InvoiceSellPurchase/InvoiceSellPurchase";
 import { useEffect, useState, useContext } from "react";
 import { ProductSelectionContext } from "../../../../context/ProductSelectionContext";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
@@ -22,25 +22,30 @@ const CategoryType = () => {
   //display initial -> Display all products when not selected counter or type
   const [products, setProducts] = useState([]);
 
-  //filter product if using search
-  // const [filterProduct, setFilterProduct] = useState([]);
   //----------------------------------------------------------
   const { setProductList, productList } = useContext(
     ProductPurchaseListContext
   );
-  //--------------------------------------------------------'
+  //--------------------------------------------------------
   const {
     counter: { selectedCounter, setSelectedCounter },
     categoryName: { selectedCategoryName, setSelectedCategoryName },
   } = useContext(ProductSelectionContext);
+
+  const { itemPurchase } = useContext(ProductPurchaseContext);
+
   useEffect(() => {
     const counterID = selectedCounter === "Chọn quầy" ? "" : selectedCounter;
     fetch(
-      `http://mahika.foundation:8080/swp/api/product?counter_id=${counterID}&category_name=${selectedCategoryName}`
+      `http://mahika.foundation:8080/swp/api/product?is_available=true&counter_id=${counterID}&category_name=${selectedCategoryName}`
     )
       .then((res) => res.json())
       .then((dataProduct) => {
-        return setProducts(dataProduct);
+        const realProductList = dataProduct.filter(
+          (searchedProduct) =>
+            !itemPurchase.find((item) => item.id === searchedProduct.id)
+        );
+        setProducts(realProductList);
       });
   }, [selectedCounter, selectedCategoryName]);
 
@@ -79,7 +84,6 @@ const CategoryType = () => {
     handleCounter();
   }, []);
   //-------------------------------------------------------------------
-  const { itemPurchase } = useContext(ProductPurchaseContext);
 
   return (
     <div className={classes.container}>

@@ -1,18 +1,23 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { forwardRef, useContext, useState } from "react";
+import { forwardRef, useContext, useRef, useState } from "react";
 import classes from "./CusctomerInputForm.module.css";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
 import { RepurchaseContext } from "../../../../context/RepurchaseContext";
+import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 
 const CustomerInputForm = forwardRef(function CustomerInputForm(
   { handleHide, isPurchase },
   ref
 ) {
-  const { itemPurchase } = useContext(ProductPurchaseContext);
+  const { itemPurchase, setItemPurchase } = useContext(ProductPurchaseContext);
   const { userId } = useContext(LoggedInUserContext);
-  const { itemPurchase: itemPurchaseNoInvoice } = useContext(RepurchaseContext);
+  const doneModalRef = useRef();
+  const {
+    itemPurchase: itemPurchaseNoInvoice,
+    setItemPurchase: setItemPurchaseNoInvoice,
+  } = useContext(RepurchaseContext);
 
   const productIdList = [];
   const productPriceList = [];
@@ -41,18 +46,18 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
     purchaseOrderStatus: "Chưa thanh toán",
     criteria: {
       diamondCriteriaResponseDTO: itemPurchaseNoInvoice
-        .filter((item) => item.id)
+        .filter((item) => item.type === "diamond")
         .map((obj) => {
           return {
-            weight: parseInt(obj.data.weight),
             ...obj.data,
           };
         }),
 
       goldCriteriaResponseDTO: itemPurchaseNoInvoice
-        .filter((item) => !item.id)
+        .filter((item) => item.type === "gold")
         .map((obj) => {
           return {
+            weight: parseInt(obj.data.weight),
             ...obj.data,
           };
         }),
@@ -86,8 +91,12 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
       },
       body: JSON.stringify(REQ_BODY),
     })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((res) => {
+        isPurchase ? setItemPurchaseNoInvoice([]) : setItemPurchase([]);
+        handleOpenDoneModal();
+        return res.json();
+      })
+      .catch((er) => "");
 
     //reset customerInfor
     setCustomerInfor({
@@ -99,44 +108,54 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
     handleHide();
   }
 
+  function handleOpenDoneModal() {
+    doneModalRef.current.showModal();
+  }
+  function handleCloseDoneModal() {
+    doneModalRef.current.close();
+  }
+
   return (
-    <dialog ref={ref} className={classes.container}>
-      <p>Nhập thông tin khách hàng</p>
-      <div className={classes["info-container"]}>
-        <div>
-          <label>Tên khách hàng</label>
-          <input
-            type="text"
-            value={customerInfor.fullName}
-            onChange={(event) => handleChange("fullName", event)}
-            required
-          />
+    <>
+      <DoneModal ref={doneModalRef} handleClose={handleCloseDoneModal} />
+      <dialog ref={ref} className={classes.container}>
+        <p>Nhập thông tin khách hàng</p>
+        <div className={classes["info-container"]}>
+          <div>
+            <label>Tên khách hàng</label>
+            <input
+              type="text"
+              value={customerInfor.fullName}
+              onChange={(event) => handleChange("fullName", event)}
+              required
+            />
+          </div>
+          <div>
+            <label>Địa chỉ</label>
+            <input
+              type="text"
+              value={customerInfor.address}
+              onChange={(event) => handleChange("address", event)}
+              required
+            />
+          </div>
+          <div>
+            <label>Số điện thoại</label>
+            <input
+              type="text"
+              value={customerInfor.phoneNumber}
+              onChange={(event) => handleChange("phoneNumber", event)}
+              required
+            />
+          </div>
+          <form method="dialog">
+            <button className={classes["save-button"]} onClick={handleSubmit}>
+              <span>Lưu</span>
+            </button>
+          </form>
         </div>
-        <div>
-          <label>Địa chỉ</label>
-          <input
-            type="text"
-            value={customerInfor.address}
-            onChange={(event) => handleChange("address", event)}
-            required
-          />
-        </div>
-        <div>
-          <label>Số điện thoại</label>
-          <input
-            type="text"
-            value={customerInfor.phoneNumber}
-            onChange={(event) => handleChange("phoneNumber", event)}
-            required
-          />
-        </div>
-        <form method="dialog">
-          <button className={classes["save-button"]} onClick={handleSubmit}>
-            <span>Lưu</span>
-          </button>
-        </form>
-      </div>
-    </dialog>
+      </dialog>
+    </>
   );
 });
 

@@ -25,7 +25,11 @@ const InformationBar = () => {
 
   return (
     <>
-      <CustomerInputForm ref={customerInputFormRef} handleHide={handleHide} />
+      <CustomerInputForm
+        location="sellPage"
+        ref={customerInputFormRef}
+        handleHide={handleHide}
+      />
       <div>
         <div className={classes.frame}>
           <p className={classes.p}>Tổng số lượng</p>
