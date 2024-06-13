@@ -10,9 +10,11 @@ import InvoiceDetailModal from "../InvoiceDetailModal/InvoiceDetailModal";
 import ImageLoader from "../../../../util/ImageLoader";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
+import CustomerModal from "../CustomerModal/CustomerModal";
 
 const InvoiceDetail = ({ invoice }) => {
   const InvoiceDetailModalRef = useRef();
+  const CustomerModalRef = useRef();
   const doneModalRef = useRef();
 
   const {
@@ -67,6 +69,14 @@ const InvoiceDetail = ({ invoice }) => {
         console.log(customer);
         return setCustomer(customer);
       });
+  };
+
+  const handleOpenCustomerModal = () => {
+    CustomerModalRef.current.showModal();
+  };
+
+  const handleCloseCustomerModal = () => {
+    CustomerModalRef.current.close();
   };
 
   const handleFetchPurchase = () => {
@@ -188,6 +198,11 @@ const InvoiceDetail = ({ invoice }) => {
               </tbody>
             </table>
 
+            <CustomerModal
+              ref={CustomerModalRef}
+              customer={customer}
+              handleHide={handleCloseCustomerModal}
+            />
             <div className={classes["customer-detail"]}>
               <div className={classes["customer-title-container"]}>
                 <p>Khách hàng</p>
@@ -196,6 +211,7 @@ const InvoiceDetail = ({ invoice }) => {
                     className={classes["img-pen"]}
                     src={PenImg}
                     alt="pen-logo"
+                    onClick={handleOpenCustomerModal}
                   />
                 </div>
               </div>

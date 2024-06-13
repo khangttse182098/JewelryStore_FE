@@ -49,6 +49,7 @@
 .img-pen {
   width: 36px;
   height: 58px;
+  cursor: pointer;
 }
 
 .img-container {
@@ -67,7 +68,7 @@
   height: 90%;
 }
 
-.customer-detail {    
+.customer-detail {
   margin: 19px;
   width: 471px;
   height: 387px;
