@@ -8,6 +8,10 @@ import InvoiceRepurchaseDiamond from "../InvoiceRepurchaseDiamond/InvoiceRepurch
 import { RepurchaseContext } from "../../../../context/RepurchaseContext";
 import { formatter } from "../../../../util/formatter";
 import CustomerInputForm from "../../UtilsComponent/CustomerInputForm/CustomerInputForm";
+import DropDownOrigin from "../Diamond/DiamondDropDown/DropDownOrigin/DropDownOrigin";
+import DropDownCut from "../Diamond/DiamondDropDown/DropDownCut/DropDownCut";
+import DropDownColor from "../Diamond/DiamondDropDown/DropDownColor/DropDownColor";
+import DropDownClarity from "../Diamond/DiamondDropDown/DropDownClarity/DropDownClarity";
 const Category = () => {
   const [listGold, setListGold] = useState([]);
   const [weight, setGoldWeight] = useState(0);
@@ -19,6 +23,11 @@ const Category = () => {
   const [diamondClarity, setDiamondClarity] = useState("");
   const { itemPurchase, addItemToPurchase } = useContext(RepurchaseContext);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [listOrigin, setListOrigin] = useState([]);
+  const [listCut, setListCut] = useState([]);
+  const [listColor, setListColor] = useState([]);
+  const [listClarity, setListClarity] = useState([]);
+
   const criteriaItem = {
     listDiamondCriteria: [],
     listGoldCriteria: [],
@@ -174,30 +183,27 @@ const Category = () => {
             <hr className={classes.line} />
             <div className={classes.origin}>
               <p>Nguồn gốc</p>
-              <input
-                className={classes["input-field"]}
-                placeholder="Nhập nguồn gốc.."
-                type="text"
+              <DropDownOrigin
+                className={classes["dropdown-field"]}
+                listOrigin={listOrigin}
                 value={diamondOrigin}
                 onChange={(e) => setDiamondOrigin(e.target.value)}
               />
             </div>
             <div className={classes.cut}>
               <p>Giác cắt</p>
-              <input
-                className={classes["input-field"]}
-                placeholder="Nhập giác cắt.."
-                type="text"
+              <DropDownCut
+                className={classes["dropdown-field"]}
+                listCut={listCut}
                 value={diamondCut}
                 onChange={(e) => setDiamondCut(e.target.value)}
               />
             </div>
             <div className={classes["color-dmd"]}>
               <p>Màu sắc</p>
-              <input
-                className={classes["input-field"]}
-                placeholder="Nhập màu sắc.."
-                type="text"
+              <DropDownColor
+                className={classes["dropdown-field"]}
+                listColor={listColor}
                 value={diamondColor}
                 onChange={(e) => setDiamondColor(e.target.value)}
               />
@@ -214,10 +220,9 @@ const Category = () => {
             </div>
             <div className={classes.clarity}>
               <p>Độ tinh khiết</p>
-              <input
-                className={classes["input-field"]}
-                placeholder="Nhập độ trong suốt.."
-                type="text"
+              <DropDownClarity
+                className={classes["dropdown-field"]}
+                listClarity={listClarity}
                 value={diamondClarity}
                 onChange={(e) => setDiamondClarity(e.target.value)}
               />

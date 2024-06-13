@@ -1,9 +1,10 @@
-import classes from "./DropDownOrigin.module.css";
-import arrowDown from "../../../../../public/assets/arrow-down-icon.png";
-import arrowUp from "../../../../../public/assets/arrow-up-icon.png";
+import classes from "./DropdownClarity.module.css";
+import arrowDown from "../../../../../../../public/assets/arrow-down-icon.png";
+import arrowUp from "../../../../../../../public/assets/arrow-up-icon.png";
 import { useState } from "react";
+import Clarity from "../../DiamondCriteria/Clarity";
 
-const DropDownOrigin = ({ selectedValue, onChange }) => {
+const DropDownClarity = ({ listClarity, selectedValue, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropDown = () => {
     setIsOpen(!isOpen);
@@ -16,7 +17,9 @@ const DropDownOrigin = ({ selectedValue, onChange }) => {
     <div>
       <div className={classes.dropdown}>
         <button className={classes.dropbtn} onClick={toggleDropDown}>
-          <p className={classes.text}>{selectedValue || "Chọn nguồn gốc"}</p>
+          <p className={classes.text}>
+            {selectedValue || "Chọn độ tinh khiết"}
+          </p>
           {!isOpen ? (
             <img src={arrowDown} alt="Arrow Down" className={classes.icon} />
           ) : (
@@ -25,9 +28,9 @@ const DropDownOrigin = ({ selectedValue, onChange }) => {
         </button>
         {isOpen && (
           <div className={classes["dropdown-content"]}>
-            {listGold.map((type) => (
-              <GoldType
-                key={type.id}
+            {listClarity.map((type) => (
+              <Clarity
+                key={type.index[0]}
                 type={type}
                 onClick={(e) => clickItem(e)}
               />
@@ -38,4 +41,4 @@ const DropDownOrigin = ({ selectedValue, onChange }) => {
     </div>
   );
 };
-export default DropDownOrigin;
+export default DropDownClarity;

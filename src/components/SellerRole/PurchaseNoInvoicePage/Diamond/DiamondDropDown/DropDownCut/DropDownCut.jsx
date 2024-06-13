@@ -1,12 +1,11 @@
-import classes from "./DropDownGold.module.css";
-import arrowDown from "../../../../../public/assets/arrow-down-icon.png";
-import arrowUp from "../../../../../public/assets/arrow-up-icon.png";
+import classes from "./DropDownCut.module.css";
+import arrowDown from "../../../../../../../public/assets/arrow-down-icon.png";
+import arrowUp from "../../../../../../../public/assets/arrow-up-icon.png";
 import { useState } from "react";
-import GoldType from "../GoldType/GoldType";
+import Cut from "../../DiamondCriteria/Cut";
 
-const DropDownGold = ({ listGold, selectedValue, onChange }) => {
+const DropDownCut = ({ listCut, selectedValue, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleDropDown = () => {
     setIsOpen(!isOpen);
   };
@@ -14,12 +13,11 @@ const DropDownGold = ({ listGold, selectedValue, onChange }) => {
     onChange(e);
     setIsOpen(!isOpen);
   };
-
   return (
     <div>
       <div className={classes.dropdown}>
         <button className={classes.dropbtn} onClick={toggleDropDown}>
-          <p className={classes.text}>{selectedValue || "Chọn loại vàng"}</p>
+          <p className={classes.text}>{selectedValue || "Chọn giác cắt"}</p>
           {!isOpen ? (
             <img src={arrowDown} alt="Arrow Down" className={classes.icon} />
           ) : (
@@ -28,9 +26,9 @@ const DropDownGold = ({ listGold, selectedValue, onChange }) => {
         </button>
         {isOpen && (
           <div className={classes["dropdown-content"]}>
-            {listGold.map((type) => (
-              <GoldType
-                key={type.id}
+            {listCut.map((type) => (
+              <Cut
+                key={type.index[0]}
                 type={type}
                 onClick={(e) => clickItem(e)}
               />
@@ -41,5 +39,4 @@ const DropDownGold = ({ listGold, selectedValue, onChange }) => {
     </div>
   );
 };
-
-export default DropDownGold;
+export default DropDownCut;

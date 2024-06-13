@@ -117,6 +117,7 @@ hr {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
 .input-field {
   margin-top: 20px;
   width: 350px;
@@ -144,6 +145,16 @@ hr {
   background-color: #a58657;
   border-color: #a58657;
 }
+/* .gold-weight {
+  float: left;
+  width: 50%;
+  margin-left: 100px;
+  margin-top: 20px;
+}
+.gold-type {
+  margin-top: 20px;
+  margin-bottom: 20px;
+} */
 .origin {
   float: left;
   width: 50%;
@@ -151,8 +162,8 @@ hr {
   margin-top: 20px;
 }
 .cut {
-  margin-top: 20px;
   margin-bottom: 20px;
+  margin-top: 20px;
 }
 .color-dmd {
   float: left;
