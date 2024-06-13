@@ -26,12 +26,8 @@ const DropDownCut = ({ listCut, selectedValue, onChange }) => {
         </button>
         {isOpen && (
           <div className={classes["dropdown-content"]}>
-            {listCut.map((type) => (
-              <Cut
-                key={type.index[0]}
-                type={type}
-                onClick={(e) => clickItem(e)}
-              />
+            {listCut.map((type, index) => (
+              <Cut key={index} type={type} onClick={(e) => clickItem(e)} />
             ))}
           </div>
         )}

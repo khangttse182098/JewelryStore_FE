@@ -28,12 +28,8 @@ const DropDownClarity = ({ listClarity, selectedValue, onChange }) => {
         </button>
         {isOpen && (
           <div className={classes["dropdown-content"]}>
-            {listClarity.map((type) => (
-              <Clarity
-                key={type.index[0]}
-                type={type}
-                onClick={(e) => clickItem(e)}
-              />
+            {listClarity.map((type, index) => (
+              <Clarity key={index} type={type} onClick={(e) => clickItem(e)} />
             ))}
           </div>
         )}

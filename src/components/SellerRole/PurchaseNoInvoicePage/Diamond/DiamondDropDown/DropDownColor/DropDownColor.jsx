@@ -26,12 +26,8 @@ const DropDownColor = ({ listColor, selectedValue, onChange }) => {
         </button>
         {isOpen && (
           <div className={classes["dropdown-content"]}>
-            {listColor.map((type) => (
-              <Color
-                key={type.index[0]}
-                type={type}
-                onClick={(e) => clickItem(e)}
-              />
+            {listColor.map((type, index) => (
+              <Color key={index} type={type} onClick={(e) => clickItem(e)} />
             ))}
           </div>
         )}

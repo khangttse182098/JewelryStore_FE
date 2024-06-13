@@ -26,12 +26,8 @@ const DropDownOrigin = ({ listOrigin, selectedValue, onChange }) => {
         </button>
         {isOpen && (
           <div className={classes["dropdown-content"]}>
-            {listOrigin.map((type) => (
-              <Origin
-                key={type.index[0]}
-                type={type}
-                onClick={(e) => clickItem(e)}
-              />
+            {listOrigin.map((type, index) => (
+              <Origin key={index} type={type} onClick={(e) => clickItem(e)} />
             ))}
           </div>
         )}

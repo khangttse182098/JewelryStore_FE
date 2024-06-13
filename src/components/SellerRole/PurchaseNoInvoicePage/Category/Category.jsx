@@ -16,7 +16,7 @@ const Category = () => {
   const [listGold, setListGold] = useState([]);
   const [weight, setGoldWeight] = useState(0);
   const [name, setGoldType] = useState("");
-  const [diamondOrigin, setDiamondOrigin] = useState();
+  const [diamondOrigin, setDiamondOrigin] = useState("");
   const [diamondCut, setDiamondCut] = useState("");
   const [diamondColor, setDiamondColor] = useState("");
   const [diamondCaratWeight, setDiamondCaratWeight] = useState(0);
@@ -85,6 +85,7 @@ const Category = () => {
         };
         newInvoice = { ...newInvoice, data };
         addItemToPurchase(newInvoice);
+        console.log(addItemToPurchase);
       })
       .catch((error) => console.log(error));
   };
@@ -112,8 +113,42 @@ const Category = () => {
     return price;
   }
 
+  const handleDiamond = () => {
+    fetch(
+      // Api get diamond criteria
+      "http://mahika.foundation:8080/swp/api/diamond-criteria",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const { clarity, color, cut, origin } = data;
+        setListClarity(clarity);
+        setListColor(color);
+        setListCut(cut);
+        setListOrigin(origin);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  function handleCalculateTotalPrice() {
+    const price = itemPurchase.reduce(
+      (acc, curr) => (acc += Number(curr.data.price)),
+      0
+    );
+    return price;
+  }
+
   useEffect(() => {
     handleGold();
+  }, []);
+
+  useEffect(() => {
+    handleDiamond();
   }, []);
 
   useEffect(() => {
@@ -184,28 +219,25 @@ const Category = () => {
             <div className={classes.origin}>
               <p>Nguồn gốc</p>
               <DropDownOrigin
-                className={classes["dropdown-field"]}
                 listOrigin={listOrigin}
-                value={diamondOrigin}
-                onChange={(e) => setDiamondOrigin(e.target.value)}
+                selectedValue={diamondOrigin}
+                onChange={(e) => setDiamondOrigin(e)}
               />
             </div>
             <div className={classes.cut}>
               <p>Giác cắt</p>
               <DropDownCut
-                className={classes["dropdown-field"]}
                 listCut={listCut}
-                value={diamondCut}
-                onChange={(e) => setDiamondCut(e.target.value)}
+                selectedValue={diamondCut}
+                onChange={(e) => setDiamondCut(e)}
               />
             </div>
             <div className={classes["color-dmd"]}>
               <p>Màu sắc</p>
               <DropDownColor
-                className={classes["dropdown-field"]}
                 listColor={listColor}
-                value={diamondColor}
-                onChange={(e) => setDiamondColor(e.target.value)}
+                selectedValue={diamondColor}
+                onChange={(e) => setDiamondColor(e)}
               />
             </div>
             <div className={classes["carat-weight"]}>
@@ -221,10 +253,9 @@ const Category = () => {
             <div className={classes.clarity}>
               <p>Độ tinh khiết</p>
               <DropDownClarity
-                className={classes["dropdown-field"]}
                 listClarity={listClarity}
-                value={diamondClarity}
-                onChange={(e) => setDiamondClarity(e.target.value)}
+                selectedValue={diamondClarity}
+                onChange={(e) => setDiamondClarity(e)}
               />
             </div>
             <button

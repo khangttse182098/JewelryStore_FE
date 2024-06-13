@@ -1,9 +1,7 @@
 const Color = ({ type, onClick }) => {
-  const { index } = type;
-
   return (
-    <div onClick={() => onClick(index)}>
-      <span role="button">{index}</span>
+    <div onClick={() => onClick(type)}>
+      <span role="button">{type}</span>
     </div>
   );
 };
