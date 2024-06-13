@@ -8,6 +8,7 @@
   font-weight: 500;
   font-size: 20px;
   transform: translate(70%, 40%);
+  /* border-style: double; */
 }
 
 .container::backdrop {
@@ -23,7 +24,7 @@
 }
 
 .close {
-  font-size: 30px;
+  font-size: 35px;
   display: flex;
   justify-content: flex-end;
   cursor: pointer;
