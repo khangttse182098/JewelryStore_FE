@@ -33,6 +33,7 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
 
   const sellOrderBody = {
     productId: [...productIdList],
+    address: customerInfor.address,
     fullName: customerInfor.fullName,
     phoneNumber: customerInfor.phoneNumber,
     userId: userId,
