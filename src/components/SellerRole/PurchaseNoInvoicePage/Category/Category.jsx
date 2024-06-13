@@ -54,6 +54,7 @@ const Category = () => {
 
     let newInvoice = { type, data };
     fetch(
+      // Api post material
       "http://mahika.foundation:8080/swp/api/purchase-order/material-gem-price",
       {
         method: "POST",
@@ -79,12 +80,16 @@ const Category = () => {
       .catch((error) => console.log(error));
   };
   const handleGold = () => {
-    fetch("http://mahika.foundation:8080/swp/api/material", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      // Api get gold type
+      "http://mahika.foundation:8080/swp/api/material",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((dataGold) => setListGold(dataGold))
       .catch((error) => console.log(error));
