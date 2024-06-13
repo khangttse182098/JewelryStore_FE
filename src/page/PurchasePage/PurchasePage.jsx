@@ -43,22 +43,31 @@ const PurchasePage = () => {
   return (
     <>
       <Header />
-      <SearchInvoice setSearchResult={setSearchResult} />
-      {itemSellList.length ? (
-        <p className={classes["invoice-title"]}>Mã hóa đơn: {searchResult}</p>
-      ) : undefined}
-      {!itemSellList.length ? (
-        <button className={classes["not-found-btn"]} onClick={handleClick}>
-          Không tìm thấy hóa đơn
-        </button>
-      ) : undefined}
-      <div className={classes.container}>
-        <div className={classes["left-container"]}>
-          {itemSellList.map((product, productIndex) => {
-            return <InvoiceProductList key={productIndex} product={product} />;
-          })}
+      <div className={classes["container-all"]}>
+        <div>
+          <SearchInvoice setSearchResult={setSearchResult} />
+          {itemSellList.length ? (
+            <p className={classes["invoice-title"]}>
+              Mã hóa đơn: {searchResult}
+            </p>
+          ) : undefined}
+          {!itemSellList.length ? (
+            <button className={classes["not-found-btn"]} onClick={handleClick}>
+              Không tìm thấy hóa đơn
+            </button>
+          ) : undefined}
+          <div className={classes["left-container"]}>
+            {itemSellList.map((product, productIndex) => {
+              return (
+                <InvoiceProductList key={productIndex} product={product} />
+              );
+            })}
+          </div>
         </div>
-        <PurchaseOrderDetail sellOrderCode={searchResult} />
+
+        <div className={classes.container}>
+          <PurchaseOrderDetail sellOrderCode={searchResult} />
+        </div>
       </div>
     </>
   );

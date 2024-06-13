@@ -31,14 +31,16 @@ const PurchaseOrderProduct = ({ product, sellOrderCode }) => {
 
   return (
     <div className={classes.container}>
-      <h1 className={classes.h1}>{product.productName}</h1>
       <div className={classes["content-container"]}>
-        <div className={classes["img-container"]}>
-          <ImageLoader URL={product.productImage} />
-        </div>
-        <div className={classes["product-info"]}>
-          <p>Mã sản phẩm: {product.productCode}</p>
-          <p>Giá: {formatter.format(product.price)}</p>
+        <div style={{ display: "flex" }}>
+          <div className={classes["img-container"]}>
+            <ImageLoader URL={product.productImage} />
+          </div>
+          <div className={classes["product-info"]}>
+            <h1 className={classes.h1}>{product.productName}</h1>
+            <p>Mã sản phẩm: {product.productCode}</p>
+            <p>Giá: {formatter.format(product.price)}</p>
+          </div>
         </div>
         <button className={classes.btn} onClick={handleClick}>
           -
