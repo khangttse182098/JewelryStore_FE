@@ -71,6 +71,10 @@ const InvoiceDetail = ({ invoice }) => {
       });
   };
 
+  const onChangeCustomer = (updatedCustomer) => {
+    setCustomer(updatedCustomer);
+  };
+
   const handleOpenCustomerModal = () => {
     CustomerModalRef.current.showModal();
   };
@@ -202,6 +206,7 @@ const InvoiceDetail = ({ invoice }) => {
               ref={CustomerModalRef}
               customer={customer}
               handleHide={handleCloseCustomerModal}
+              onChangeCustomer={onChangeCustomer}
             />
             <div className={classes["customer-detail"]}>
               <div className={classes["customer-title-container"]}>
@@ -219,14 +224,14 @@ const InvoiceDetail = ({ invoice }) => {
                 style={{
                   width: "419px",
                   marginLeft: "23px",
-                  marginBottom: "10px",
+                  marginBottom: "20px",
                 }}
               />
               <div className={classes["customer-info"]}>
                 <div className={classes["customer-name"]}>
                   <p className={classes["customer-info-title"]}>Họ và tên: </p>
                   <p>
-                    {customerName || (
+                    {customer.fullName || (
                       <Skeleton style={{ width: "150px", height: "10px" }} />
                     )}
                   </p>

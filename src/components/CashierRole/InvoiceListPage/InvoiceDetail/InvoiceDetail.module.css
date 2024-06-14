@@ -48,7 +48,7 @@
 
 .img-pen {
   width: 36px;
-  height: 58px;
+  height: 36px;
   cursor: pointer;
 }
 
@@ -79,7 +79,7 @@
 .customer-title-container {
   display: flex;
   align-items: center;
-  margin-bottom: 37px;
+  margin-bottom: 25px;
 }
 
 .customer-title-container p {
@@ -108,6 +108,7 @@
 .customer-phone > p,
 .customer-address > p {
   margin: 9px;
+  font-size: 17px;
 }
 
 .customer-info-title {
