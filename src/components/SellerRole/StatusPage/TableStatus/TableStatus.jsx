@@ -4,6 +4,7 @@ import classes from "./TableStatus.module.css";
 import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { formatter } from "../../../../util/formatter";
 
 const TableStatus = () => {
   const [statusList, setStatusList] = useState([]);
@@ -104,7 +105,10 @@ const TableStatus = () => {
           <table className={classes.table}>
             <tr className={classes.tr}>
               <th className={classes.th}>Mã hóa đơn</th>
+              <th className={classes.th}>Ngày tạo</th>
               <th className={classes.th}>Khách hàng</th>
+              <th className={classes.th}>Loại hóa đơn</th>
+              <th className={classes.th}>Thành tiền</th>
               <th className={classes.th}>Trạng thái thanh toán</th>
               <th className={classes.th}>Xác nhận trạng thái</th>
             </tr>
@@ -117,7 +121,9 @@ const TableStatus = () => {
                       <td className={classes.td}>{list.createdDate}</td>
                       <td className={classes.td}>{list.customerName}</td>
                       <td className={classes.td}>{list.invoiceType}</td>
-                      <td>{}</td>
+                      <td className={classes.td}>
+                        {formatter.format(list.totalPrice)}
+                      </td>
                       <td className={classes.td}>
                         <p
                           className={
