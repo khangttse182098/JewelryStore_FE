@@ -88,19 +88,21 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
     <>
       <DoneModal ref={doneModalRef} handleClose={handleCloseDoneModal} />
       <div className={classes.container}>
-        <div className={classes.title}>Thông tin đơn hàng</div>
-        <div className={classes["container-order"]}>
-          {itemSellInvoice.map((product, productIndex) => {
-            return (
-              <PurchaseOrderProduct
-                sellOrderCode={sellOrderCode}
-                key={productIndex}
-                product={product}
-              />
-            );
-          })}
-        </div>
-        <div>
+        <di>
+          <div className={classes.title}>Thông tin đơn hàng</div>
+          <div className={classes["container-order"]}>
+            {itemSellInvoice.map((product, productIndex) => {
+              return (
+                <PurchaseOrderProduct
+                  sellOrderCode={sellOrderCode}
+                  key={productIndex}
+                  product={product}
+                />
+              );
+            })}
+          </div>
+        </di>
+        <div className={classes["information-bar"]}>
           <div className={classes.frame}>
             <p className={classes.p}>Chiết khấu</p>
             <p className={classes.p}></p>
@@ -114,10 +116,6 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
             <p className={classes.p}>
               {itemSellInvoice.length ? formatter.format(price) : ""}
             </p>
-          </div>
-          <div className={classes.frame}>
-            <p className={classes.p}>Giảm giá</p>
-            <p className={classes.p}></p>
           </div>
           <div className={classes.frame}>
             <p className={classes.total}>Thanh toán</p>
