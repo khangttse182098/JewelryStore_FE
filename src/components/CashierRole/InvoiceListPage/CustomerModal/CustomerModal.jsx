@@ -1,10 +1,35 @@
-import { forwardRef } from "react";
+import { forwardRef, useState, useEffect } from "react";
 import classes from "./CustomerModal.module.css";
 
 const CustomerModal = forwardRef(({ handleHide, customer }, ref) => {
+  const [customerInfor, setCustomerInfor] = useState({ ...customer });
+
+  useEffect(() => {
+    if (customer) {
+      setCustomerInfor(customer);
+      console.log(customerInfor);
+    }
+  }, [customer]);
+
+  function handleSubmitCustomer() {
+    fetch("http://mahika.foundation:8080/swp/api/customer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(customerInfor),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => err);
+    handleHide();
+  }
+
   const handleChange = (event) => {
-    v = event.target.value;
+    const { name, value } = event.target;
+    setCustomerInfor({ ...customerInfor, [name]: value });
   };
+
   return (
     <dialog ref={ref} className={classes.container}>
       <div className={classes.header}>
@@ -20,9 +45,11 @@ const CustomerModal = forwardRef(({ handleHide, customer }, ref) => {
             <label>Tên khách hàng</label> <br />
             <input
               className={classes.box}
-              type="text"
-              value={customer.fullName}
               placeholder="Nhập tên khách hàng"
+              type="text"
+              name="fullName"
+              value={customerInfor.fullName}
+              onChange={handleChange}
             />
           </div>
           <div className={classes["input-field"]}>
@@ -30,8 +57,10 @@ const CustomerModal = forwardRef(({ handleHide, customer }, ref) => {
             <input
               className={classes.box}
               type="text"
-              value={customer.phoneNumber}
-              placeholder="Nhập tên khách hàng"
+              name="phoneNumber"
+              value={customerInfor.phoneNumber}
+              placeholder="Nhập số điện thoại"
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -41,25 +70,49 @@ const CustomerModal = forwardRef(({ handleHide, customer }, ref) => {
             <input
               className={classes.box}
               type="text"
-              value={customer.address}
+              name="address"
+              value={customerInfor.address}
               placeholder="Nhập địa chỉ"
-            />  
+              onChange={handleChange}
+            />
           </div>
           <div className={classes["radio-field"]}>
             <label>Giới tính</label> <br />
             <div className={classes.range}>
-              <input type="radio" />
+              <input
+                type="radio"
+                name="gender"
+                value="Nam"
+                checked={customerInfor.gender === "Nam"}
+                onChange={handleChange}
+              />
               <label>Nam</label>
-              <input type="radio" />
+              <input
+                type="radio"
+                name="gender"
+                value="Nữ"
+                checked={customerInfor.gender === "Nữ"}
+                onChange={handleChange}
+              />
               <label>Nữ</label>
-              <input type="radio" />
+              <input
+                type="radio"
+                name="gender"
+                value="Giới tính khác"
+                checked={customerInfor.gender === "Giới tính khác"}
+                onChange={handleChange}
+              />
               <label>Giới tính khác</label>
             </div>
           </div>
         </div>
         <form method="dialog">
           <div className={classes["position-button"]}>
-            <button className={classes.button}>
+            <button
+              className={classes.button}
+              type="button"
+              onClick={handleSubmitCustomer}
+            >
               <span>Lưu thông tin</span>
             </button>
           </div>
