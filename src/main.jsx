@@ -12,16 +12,14 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <React.StrictMode>
-      <RepurchaseProvider>
-        <LoggedInUserProvider>
-          <ProductSellListProvider>
-            <ProductSellInvoiceProvider>
-              <App />
-            </ProductSellInvoiceProvider>
-          </ProductSellListProvider>
-        </LoggedInUserProvider>
-      </RepurchaseProvider>
-    </React.StrictMode>
+    <RepurchaseProvider>
+      <LoggedInUserProvider>
+        <ProductSellListProvider>
+          <ProductSellInvoiceProvider>
+            <App />
+          </ProductSellInvoiceProvider>
+        </ProductSellListProvider>
+      </LoggedInUserProvider>
+    </RepurchaseProvider>
   </BrowserRouter>
 );

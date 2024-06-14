@@ -28,6 +28,7 @@ const InvoiceDetail = ({ invoice }) => {
   const { invoiceCode, customerName, status, totalPrice, customerId } =
     invoice.list;
   const [renderStatus, setRenderStatus] = useState(status);
+  const [totalNumber, setTotalNumber] = useState(0);
 
   const handleClick = (item, type) => {
     setSelectedItem({ item, type });
@@ -85,6 +86,25 @@ const InvoiceDetail = ({ invoice }) => {
   useEffect(() => {
     handleFetchCustomer();
   }, []);
+
+  useEffect(() => {
+    if (productResponseDTOList) {
+      console.log(productResponseDTOList.length);
+      setTotalNumber((prev) => prev + productResponseDTOList.length);
+    }
+    if (materialResponseDTOList) {
+      console.log(materialResponseDTOList.length);
+      setTotalNumber((prev) => prev + materialResponseDTOList.length);
+    }
+    if (diamondCriteriaResponseDTOS) {
+      console.log(diamondCriteriaResponseDTOS.length);
+      setTotalNumber((prev) => prev + diamondCriteriaResponseDTOS.length);
+    }
+  }, [
+    productResponseDTOList,
+    materialResponseDTOList,
+    diamondCriteriaResponseDTOS,
+  ]);
 
   function handleOpenDoneModal() {
     doneModalRef.current.showModal();
@@ -264,33 +284,35 @@ const InvoiceDetail = ({ invoice }) => {
                 {renderStatus}
               </div>
               <div className={classes["status-name-containter"]}>
+                <div className={classes.highlight}>Tổng số lượng</div>
+                <div className={classes["status-value"]}>{totalNumber}</div>
+              </div>
+              <div className={classes["status-name-containter"]}>
                 <div className={classes.highlight}>Tổng tiền hàng</div>
                 <div className={classes["status-value"]}>
                   {formatter.format(totalPrice)}
                 </div>
               </div>
               <div className={classes["status-name-containter"]}>
-                <div className={classes.highlight}>Khách đã trả</div>
-                <input
-                  className={classes["status-value"]}
-                  onChange={handleFund}
-                  placeholder="Nhập tiền khách hàng trả"
-                  value={payPrice}
-                />
+                <div className={classes.highlight}>Khuyễn mãi</div>
+                <div className={classes["status-value"]}>-2.000.000₫</div>
               </div>
               <div className={classes["status-name-containter"]}>
-                <div className={classes.highlight}>Tiền hoàn lại khách</div>
+                <div className={classes.highlight}>Thanh toán</div>
                 <div className={classes["status-value"]}>
                   {formatter.format(fund)}
                 </div>
               </div>
             </div>
-            <button
-              className={classes["purchase-button"]}
-              onClick={handleFetchPurchase}
-            >
-              Thanh Toán
-            </button>
+
+            <div className={classes.dropdown}>
+              <button className={classes.dropbtn}>Thanh toán</button>
+              <div className={classes["dropdown-content"]}>
+                <a onClick={handleFetchPurchase}>Tiền mặt</a>
+                <a onClick={handleFetchPurchase}>Chuyển khoản</a>
+                <a onClick={handleFetchPurchase}>Thẻ tín dụng</a>
+              </div>
+            </div>
           </div>
         </div>
       </SkeletonTheme>
