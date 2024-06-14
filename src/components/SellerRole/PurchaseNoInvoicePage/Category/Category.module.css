@@ -65,6 +65,9 @@ h6 {
 }
 
 /* left-container */
+.selection-title {
+  font-weight: 700;
+}
 .left-container {
   float: left;
   width: 60%;
@@ -102,10 +105,12 @@ hr {
 }
 
 .head-frame-gold {
-  font-size: 20px;
+  font-size: 30px;
+  font-weight: 700;
 }
 .head-frame-diamond {
-  font-size: 20px;
+  font-size: 30px;
+  font-weight: 700;
 }
 .gold-weight {
   float: left;

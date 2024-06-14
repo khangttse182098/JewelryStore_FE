@@ -179,17 +179,17 @@ const Category = () => {
               <p className={classes["head-frame-gold"]}>Vàng</p>
             </div>
             <div className={classes["gold-weight"]}>
-              <p>Khối lượng</p>
+              <p className={classes["selection-title"]}>Khối lượng</p>
               <input
                 className={classes["input-field"]}
                 placeholder="Nhập khối lượng vàng.."
-                type="number"
+                type="text"
                 value={weight}
                 onChange={(e) => setGoldWeight(e.target.value)}
               />
             </div>
             <div className={classes["gold-type"]}>
-              <p>Loại vàng</p>
+              <p className={classes["selection-title"]}>Loại vàng</p>
             </div>
             <DropDownGold
               listGold={listGold}
@@ -217,7 +217,7 @@ const Category = () => {
             </div>
             <hr className={classes.line} />
             <div className={classes.origin}>
-              <p>Nguồn gốc</p>
+              <p className={classes["selection-title"]}>Nguồn gốc</p>
               <DropDownOrigin
                 listOrigin={listOrigin}
                 selectedValue={diamondOrigin}
@@ -225,7 +225,7 @@ const Category = () => {
               />
             </div>
             <div className={classes.cut}>
-              <p>Giác cắt</p>
+              <p className={classes["selection-title"]}>Giác cắt</p>
               <DropDownCut
                 listCut={listCut}
                 selectedValue={diamondCut}
@@ -233,7 +233,7 @@ const Category = () => {
               />
             </div>
             <div className={classes["color-dmd"]}>
-              <p>Màu sắc</p>
+              <p className={classes["selection-title"]}>Màu sắc</p>
               <DropDownColor
                 listColor={listColor}
                 selectedValue={diamondColor}
@@ -241,17 +241,17 @@ const Category = () => {
               />
             </div>
             <div className={classes["carat-weight"]}>
-              <p>Trọng lượng (carat)</p>
+              <p className={classes["selection-title"]}>Trọng lượng (carat)</p>
               <input
                 className={classes["input-field"]}
                 placeholder="Nhập trọng lượng carat.."
-                type="number"
+                type="text"
                 value={diamondCaratWeight}
                 onChange={(e) => setDiamondCaratWeight(e.target.value)}
               />
             </div>
             <div className={classes.clarity}>
-              <p>Độ tinh khiết</p>
+              <p className={classes["selection-title"]}>Độ tinh khiết</p>
               <DropDownClarity
                 listClarity={listClarity}
                 selectedValue={diamondClarity}
