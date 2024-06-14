@@ -6,6 +6,8 @@ import classes from "./Invoice.module.css";
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
 import InvoiceDetail from "../InvoiceDetail/InvoiceDetail";
 import { formatter } from "../../../../util/formatter";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import ImageLoader from "../../../../util/ImageLoader";
 
 const Invoice = ({ invoice }) => {
@@ -31,6 +33,19 @@ const Invoice = ({ invoice }) => {
   function handleShowProductDetail() {
     InvoiceDetailRef.current.showModal();
   }
+
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    setImageError(false);
+  };
+
+  const handleImageError = () => {
+    setImageLoaded(true);
+    setImageError(true);
+  };
 
   return (
     <>

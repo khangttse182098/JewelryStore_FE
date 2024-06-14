@@ -1,0 +1,35 @@
+.container {
+  background-color: whitesmoke;
+  width: 800px;
+  height: 455px;
+  border-radius: 30px;
+  text-align: left;
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 20px;
+  transform: translate(70%, 40%);
+}
+
+.container::backdrop {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.container div {
+  position: relative;
+}
+
+.productAll {
+  display: flex;
+}
+
+.close {
+  font-size: 30px;
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.imageSize {
+  width: 300px;
+  height: 360px;
+}
