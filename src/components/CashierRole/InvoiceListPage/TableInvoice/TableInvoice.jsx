@@ -38,7 +38,12 @@ const TableInvoice = () => {
 
   useEffect(() => {
     const newFilterInvoice = invoiceList.filter((invoice) => {
-      return invoice.invoiceCode.toLowerCase().includes(searchField);
+      return (
+        invoice.invoiceCode.toLowerCase().includes(searchField) ||
+        invoice.customerName.toLowerCase().includes(searchField) ||
+        invoice.invoiceType.toLowerCase().includes(searchField) ||
+        invoice.staffName.toLowerCase().includes(searchField)
+      );
     });
     setFilterInvoice(newFilterInvoice);
   }, [searchField, invoiceList]);
@@ -144,7 +149,7 @@ const TableInvoice = () => {
               onChange={handleSearch}
               className={classes.search}
               type="search"
-              placeholder="Tìm kiếm theo mã hóa đơn"
+              placeholder="Tìm kiếm hóa đơn"
             />
           </div>
           <table className={classes.table}>
