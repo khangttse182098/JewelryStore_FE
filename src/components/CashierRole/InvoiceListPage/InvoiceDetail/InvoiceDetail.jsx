@@ -19,6 +19,7 @@ const InvoiceDetail = ({ invoice }) => {
     productResponseDTOList,
     diamondCriteriaResponseDTOS,
     materialResponseDTOList,
+    discountValue,
   } = invoice.list;
 
   const [selectedItem, setSelectedItem] = useState(null);
@@ -29,6 +30,7 @@ const InvoiceDetail = ({ invoice }) => {
     invoice.list;
   const [renderStatus, setRenderStatus] = useState(status);
   const [totalNumber, setTotalNumber] = useState(0);
+  const [discountProduct, setDiscountProduct] = useState(0);
 
   const handleClick = (item, type) => {
     setSelectedItem({ item, type });
@@ -37,28 +39,6 @@ const InvoiceDetail = ({ invoice }) => {
 
   const handleHide = () => {
     InvoiceDetailModalRef.current.close();
-  };
-
-  const handleFund = (event) => {
-    event.preventDefault();
-    const input = event.target;
-    const value = input.value;
-    // Save the caret position
-    const caretPosition = input.selectionStart;
-    // Parse the input value to a number
-    const pay = parseInt(value.replace(/[^0-9]/g, ""), 10) || 0;
-    const fund = pay - totalPrice;
-    // Format the number back to currency format
-    const formattedPay = formatter.format(pay);
-    // Update the input value with the formatted currency
-    setPayPrice(formattedPay);
-    setFund(fund);
-    // Calculate the new caret position
-    const newCaretPosition = formattedPay.length - value.length + caretPosition;
-    // Set the new caret position
-    setTimeout(() => {
-      input.setSelectionRange(newCaretPosition, newCaretPosition);
-    }, 0);
   };
 
   const handleFetchCustomer = () => {
@@ -89,15 +69,15 @@ const InvoiceDetail = ({ invoice }) => {
 
   useEffect(() => {
     if (productResponseDTOList) {
-      console.log(productResponseDTOList.length);
+      productResponseDTOList.map((product) =>
+        setDiscountProduct((prev) => prev + product.discountPrice)
+      );
       setTotalNumber((prev) => prev + productResponseDTOList.length);
     }
     if (materialResponseDTOList) {
-      console.log(materialResponseDTOList.length);
       setTotalNumber((prev) => prev + materialResponseDTOList.length);
     }
     if (diamondCriteriaResponseDTOS) {
-      console.log(diamondCriteriaResponseDTOS.length);
       setTotalNumber((prev) => prev + diamondCriteriaResponseDTOS.length);
     }
   }, [
@@ -294,13 +274,17 @@ const InvoiceDetail = ({ invoice }) => {
                 </div>
               </div>
               <div className={classes["status-name-containter"]}>
-                <div className={classes.highlight}>Khuyễn mãi</div>
-                <div className={classes["status-value"]}>-2.000.000₫</div>
+                <div className={classes.highlight}>
+                  Khuyễn mãi {discountValue}%
+                </div>
+                <div className={classes["status-value"]}>
+                  -{formatter.format(discountProduct)}
+                </div>
               </div>
               <div className={classes["status-name-containter"]}>
                 <div className={classes.highlight}>Thanh toán</div>
                 <div className={classes["status-value"]}>
-                  {formatter.format(fund)}
+                  {formatter.format(totalPrice - discountProduct)}
                 </div>
               </div>
             </div>
