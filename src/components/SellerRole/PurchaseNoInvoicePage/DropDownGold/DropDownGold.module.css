@@ -4,25 +4,25 @@
 }
 
 .dropbtn {
-  width: 301px;
-  height: 75px;
+  width: 350px;
+  height: 56px;
   border-radius: 10px;
   background-color: #fff;
   cursor: pointer;
   outline: none;
   border-color: #dfd8d8;
-  border-style: double;
+  border-style: solid;
 }
 .dropbtn:hover {
   background-color: #dfd8d8;
   border-color: #dfd8d8;
 }
 .text {
-  width: 200px;
+  width: 250px;
   height: 24px;
   font-size: 20px;
   margin-left: 7px;
-  margin-top: 0px;
+  margin-top: 10px;
   font-weight: 500;
   float: left;
 }
@@ -30,7 +30,7 @@
   margin-top: 7px;
   width: 50px;
   height: 40px;
-  margin-left: 0px;
+  margin-left: 270px;
   margin-right: 0px;
 }
 .dropdown-content {

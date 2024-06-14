@@ -20,7 +20,7 @@ const SidebarFunction = ({ icon, title }) => {
   return (
     <div onClick={handleClick} className={classes.container}>
       <div className={classes["icon-container"]}>
-        <img src={icon} />
+        <img src={icon} className={classes.icon} />
       </div>
       <p className={classes.title}>{title}</p>
     </div>
