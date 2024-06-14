@@ -104,10 +104,6 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
         </di>
         <div className={classes["information-bar"]}>
           <div className={classes.frame}>
-            <p className={classes.p}>Chiết khấu</p>
-            <p className={classes.p}></p>
-          </div>
-          <div className={classes.frame}>
             <p className={classes.p}>Tổng số lượng</p>
             <p className={classes.p}>{itemSellInvoice.length ?? ""}</p>
           </div>
@@ -117,6 +113,11 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
               {itemSellInvoice.length ? formatter.format(price) : ""}
             </p>
           </div>
+          <div className={classes.frame}>
+            <p className={classes.p}>Chiết khấu</p>
+            <p className={classes.p}></p>
+          </div>
+
           <div className={classes.frame}>
             <p className={classes.total}>Thanh toán</p>
             <p className={classes.total}>
