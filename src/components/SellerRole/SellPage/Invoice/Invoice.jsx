@@ -50,7 +50,7 @@ const Invoice = ({ invoice }) => {
           <p className={classes["second-paragraph"]}>
             Chất liệu: {materialName}
           </p>
-          <p className={classes["third-paragraph"]}>Loại đá: {categoryName}</p>
+          <p className={classes["third-paragraph"]}>Danh mục: {categoryName}</p>
           <p className={classes["fourth-paragraph"]}>
             {formatter.format(price)}
           </p>
