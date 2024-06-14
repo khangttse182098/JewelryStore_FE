@@ -129,8 +129,9 @@ hr {
   height: 56px;
   border-radius: 10px;
   border-color: #dfd8d8;
-  border-style: double;
+  border-style: solid;
   outline: none;
+  font-size: 20px;
 }
 
 .add-goldInvoice {
@@ -145,6 +146,8 @@ hr {
   outline: none;
   border-style: double;
   cursor: pointer;
+  font-size: 20px;
+  font-weight: 500;
 }
 .add-goldInvoice:hover {
   background-color: #a58657;
@@ -194,6 +197,8 @@ hr {
   cursor: pointer;
   outline: none;
   border-style: double;
+  font-size: 20px;
+  font-weight: 500;
 }
 .add-diamondInvoice:hover {
   background-color: #a58657;
@@ -215,7 +220,7 @@ hr {
   margin-bottom: 10px;
 }
 .content-right::-webkit-scrollbar {
-  width: 12px; /* width of the entire scrollbar */
+  width: 7px; /* width of the entire scrollbar */
 }
 .content-right::-webkit-scrollbar-track {
   background: #bbbbbb; /* color of the tracking area */
@@ -278,6 +283,8 @@ hr {
   border-color: #c3a06d;
   outline: none;
   border-style: double;
+  font-weight: 700;
+  font-size: 20px;
 }
 .createInvoice:hover {
   background-color: #a58657;
@@ -288,4 +295,5 @@ hr {
 }
 .value {
   margin-right: 10px;
+  font-weight: 600;
 }

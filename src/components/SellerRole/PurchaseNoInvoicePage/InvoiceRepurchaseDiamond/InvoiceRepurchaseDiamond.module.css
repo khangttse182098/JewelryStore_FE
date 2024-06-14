@@ -15,13 +15,13 @@
 .origin {
   display: block;
   float: left;
-  width: 50%;
+  width: 60%;
 }
 .cut {
   display: block;
   /* margin-left: 100px; */
   float: right;
-  width: 50%;
+  width: 40%;
 }
 .color {
   width: 500px;

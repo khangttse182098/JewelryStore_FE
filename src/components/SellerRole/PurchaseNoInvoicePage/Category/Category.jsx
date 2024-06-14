@@ -14,12 +14,12 @@ import DropDownColor from "../Diamond/DiamondDropDown/DropDownColor/DropDownColo
 import DropDownClarity from "../Diamond/DiamondDropDown/DropDownClarity/DropDownClarity";
 const Category = () => {
   const [listGold, setListGold] = useState([]);
-  const [weight, setGoldWeight] = useState(0);
+  const [weight, setGoldWeight] = useState("");
   const [name, setGoldType] = useState("");
   const [diamondOrigin, setDiamondOrigin] = useState("");
   const [diamondCut, setDiamondCut] = useState("");
   const [diamondColor, setDiamondColor] = useState("");
-  const [diamondCaratWeight, setDiamondCaratWeight] = useState(0);
+  const [diamondCaratWeight, setDiamondCaratWeight] = useState("");
   const [diamondClarity, setDiamondClarity] = useState("");
   const { itemPurchase, addItemToPurchase } = useContext(RepurchaseContext);
   const [totalPrice, setTotalPrice] = useState(0);
