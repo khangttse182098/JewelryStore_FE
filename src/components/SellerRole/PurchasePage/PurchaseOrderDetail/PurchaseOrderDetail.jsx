@@ -16,6 +16,7 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
   const { itemSellList } = useContext(ProductSellListContext);
   const { userId } = useContext(LoggedInUserContext);
   const [price, setPrice] = useState(0);
+  const [totalDiscountPrice, setTotalDiscountPrice] = useState(0);
   const doneModalRef = useRef();
 
   useEffect(() => {
@@ -48,7 +49,13 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
             const resInvoice = data.find(
               (element) => element.productId === curr.id
             );
-            return [...acc, { ...curr, price: resInvoice.purchasePrice }];
+            return [
+              ...acc,
+              {
+                ...curr,
+                price: resInvoice.purchasePrice,
+              },
+            ];
           }, [])
         );
       });
@@ -56,6 +63,14 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
 
   useEffect(() => {
     handleFetch();
+  }, [itemSellList]);
+
+  useEffect(() => {
+    setTotalDiscountPrice(
+      itemSellInvoice.reduce((acc, curr) => {
+        return acc + curr.discountPrice;
+      }, 0)
+    );
   }, [itemSellList]);
 
   // send purhchase order to BE
@@ -115,13 +130,19 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
           </div>
           <div className={classes.frame}>
             <p className={classes.p}>Chiết khấu</p>
-            <p className={classes.p}></p>
+            <p className={classes.p}>
+              {itemSellInvoice.length
+                ? `+${formatter.format(totalDiscountPrice)}`
+                : ""}
+            </p>
           </div>
 
           <div className={classes.frame}>
             <p className={classes.total}>Thanh toán</p>
             <p className={classes.total}>
-              {itemSellInvoice.length ? formatter.format(price) : ""}
+              {itemSellInvoice.length
+                ? formatter.format(price + totalDiscountPrice)
+                : ""}
             </p>
           </div>
           <button className={classes.createInvoice} onClick={handleClick}>
