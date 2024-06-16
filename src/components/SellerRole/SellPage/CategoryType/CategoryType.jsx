@@ -6,12 +6,13 @@ import DropDownCounter from "../DropDownCounter/DropDownCounter";
 import InvoiceList from "../InvoiceList/InvoiceList";
 import InformationBar from "../InformationBar/InformationBar";
 import InvoiceSellPurchase from "../InvoiceSellPurchase/InvoiceSellPurchase";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { ProductSelectionContext } from "../../../../context/ProductSelectionContext";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
 
 const CategoryType = () => {
+  const controllerRef = useRef();
   //select category type
   const [activeOption, setActiveOption] = useState("");
 
@@ -68,19 +69,21 @@ const CategoryType = () => {
   //------------------------Get List Counter----------------------------
   const [listCounter, setListCounter] = useState([]);
 
-  const handleCounter = () => {
-    fetch("http://mahika.foundation:8080/swp/api/counter", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((dataCounter) => setListCounter(dataCounter))
-      .catch((error) => console.log(error));
-  };
-
   useEffect(() => {
+    controllerRef.current?.abort();
+    controllerRef.current = new AbortController();
+    const signal = controllerRef.current.signal;
+    const handleCounter = async () => {
+      try {
+        const response = await fetch(
+          "http://mahika.foundation:8080/swp/api/counter",
+          { signal }
+        );
+        const counterData = await response.json();
+        setListCounter(counterData);
+      } catch (error) {}
+    };
+
     handleCounter();
   }, []);
   //-------------------------------------------------------------------
