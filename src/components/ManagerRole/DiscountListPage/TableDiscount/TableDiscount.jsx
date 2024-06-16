@@ -4,23 +4,16 @@ import classes from "./TableDiscount.module.css";
 const TableDiscount = () => {
   const [discountList, setDiscountList] = useState([]);
 
-  const handleProduct = () => {
-    fetch("http://mahika.foundation:8080/swp/api/discount", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setDiscountList(data);
-        console.log(data);
-      })
-      .catch((error) => console.log(error));
-  };
-
   useEffect(() => {
-    handleProduct();
+    const handleDiscount = async () => {
+      const response = await fetch(
+        "http://mahika.foundation:8080/swp/api/discount"
+      );
+      const data = await response.json();
+      setDiscountList(data);
+    };
+
+    handleDiscount();
   }, []);
 
   return (
