@@ -54,7 +54,12 @@ const CategoryType = () => {
   //whenever products and searchField change
   useEffect(() => {
     const newFilterProduct = products.filter((product) => {
-      return product.productName.toLowerCase().includes(searchField);
+      return (
+        product.productName.toLowerCase().includes(searchField) ||
+        product.productCode.toLowerCase().includes(searchField) ||
+        product.materialName.toLowerCase().includes(searchField) ||
+        product.categoryName.toLowerCase().includes(searchField)
+      );
     });
     setProductList(newFilterProduct);
   }, [products, searchField]);
