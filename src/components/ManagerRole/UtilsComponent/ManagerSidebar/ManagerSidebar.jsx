@@ -6,7 +6,7 @@ import Staff from "/assets/staff.png";
 
 const ManagerSidebar = () => {
   return (
-    <div className="w-75 h-screen bg-sidebar-blue">
+    <div className="w-75 h-full bg-sidebar-blue">
       <div className="p-8 py-8">
         <p className="font-semibold text-2xl text-white">Trang quản lý</p>
       </div>
