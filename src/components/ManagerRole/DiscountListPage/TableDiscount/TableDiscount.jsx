@@ -1,8 +1,21 @@
 import { useEffect, useState } from "react";
 import classes from "./TableDiscount.module.css";
+import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const TableDiscount = () => {
   const [discountList, setDiscountList] = useState([]);
+  const [filterDiscountList, setFilterDiscountList] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState("Tất cả");
+  const [currentPage, setCurrentPage] = useState(1);
+  const discountPerPage = 4;
+
+  const lastDiscountIndex = currentPage * discountPerPage;
+  const firstDiscountIndex = lastDiscountIndex - discountPerPage;
+  const currentDiscount = filterDiscountList.slice(
+    firstDiscountIndex,
+    lastDiscountIndex
+  );
 
   useEffect(() => {
     const handleDiscount = async () => {
@@ -11,79 +24,123 @@ const TableDiscount = () => {
       );
       const data = await response.json();
       setDiscountList(data);
+      setFilterDiscountList(data);
     };
 
     handleDiscount();
   }, []);
 
+  function handleFilter(filterStatus) {
+    setSelectedFilter(filterStatus);
+    if (filterStatus === "Tất cả") {
+      setFilterDiscountList(discountList);
+    } else {
+      setFilterDiscountList(
+        discountList.filter((discount) => {
+          return discount.status === filterStatus;
+        })
+      );
+    }
+  }
+
+  let skeletonRowList = [];
+  for (let index = 0; index < discountPerPage; index++) {
+    skeletonRowList.push(
+      <tr>
+        <td colSpan="6">
+          <Skeleton className={classes["td-skeleton"]} />
+        </td>
+      </tr>
+    );
+  }
+
   return (
-    <div className="w-10/12 h-5/6 mx-auto">
-      <div className="text-3xl font-medium py-10">
-        <p>Danh sách mã khuyến mãi</p>
-      </div>
-      <div className="bg-white border-2 rounded-xl">
-        <div>
-          {["Tất cả", "Đang áp dụng", "Chưa áp dụng", "Ngừng áp dụng"].map(
-            (status) => (
-              <button
-                key={status}
-                className="h-12 w-48 border-none bg-white text-center text-gray-500 font-montserrat text-base hover:border-b-2 hover:border-blue-600 hover:text-blue-600 cursor-pointer"
-                status="All"
-              >
-                {status}
-              </button>
-            )
-          )}
+    <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
+      <div className="w-10/12 h-5/6 mx-auto">
+        <div className="text-3xl font-medium py-10 flex justify-between">
+          <p>Danh sách mã khuyến mãi</p>
+          <button className="h-15 w-40 rounded bg-blue-600 hover:bg-blue-700 text-slate-100 text-xl">
+            + Thêm mã
+          </button>
         </div>
-        <hr />
-        <div className="mt-5 mb-7">
-          <input
-            className="h-37 w-583 rounded-10 border-double border-[#dfd8d8] outline-none pl-11"
-            type="search"
-            placeholder="Tìm kiếm khuyến mãi"
+
+        <div className="bg-white border-2 rounded-xl">
+          <div>
+            {["Tất cả", "Đang áp dụng", "Chưa áp dụng", "Ngừng áp dụng"].map(
+              (status) => (
+                <button
+                  key={status}
+                  className={`${classes.button} ${
+                    status === selectedFilter ? classes.selectedFilter : ""
+                  }`}
+                  onClick={() => handleFilter(status)}
+                  name={status}
+                >
+                  {status}
+                </button>
+              )
+            )}
+          </div>
+          <hr />
+          <div className="mt-5 mb-7">
+            <input
+              className="h-9 w-96 rounded-lg border-2 border-gray-300 outline-none pl-4 ml-14"
+              type="search"
+              placeholder="Tìm kiếm khuyến mãi"
+            />
+          </div>
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className={classes.tr}>
+                <th className={classes.th}>
+                  <input type="checkbox" name="allSelect" />
+                </th>
+                <th className={classes.th}>Mã khuyễn mãi</th>
+                <th className={classes.th}>Phần trăm</th>
+                <th className={classes.th}>Trạng thái</th>
+                <th className={classes.th}>Ngày bắt đầu</th>
+                <th className={classes.th}>Ngày kết thúc</th>
+              </tr>
+            </thead>
+            <tbody>
+              {!currentDiscount.length
+                ? skeletonRowList
+                : currentDiscount.map((discount) => {
+                    const statusClass =
+                      discount.status === "Chưa áp dụng"
+                        ? classes["status-inProgress"]
+                        : discount.status === "Đang áp dụng"
+                        ? classes["status-success"]
+                        : classes["status-closed"];
+
+                    return (
+                      <tr className={classes.tr} key={discount.code}>
+                        <td className={classes.td}>
+                          <input type="checkbox" name="allSelect" />
+                        </td>
+                        <td className={classes.td}>{discount.code}</td>
+                        <td className={classes.td}>{`${discount.value}%`}</td>
+                        <td className={classes.td}>
+                          <p className={`${statusClass} ${classes.status}`}>
+                            {discount.status}
+                          </p>
+                        </td>
+                        <td className={classes.td}>{discount.startDate}</td>
+                        <td className={classes.td}>{discount.endDate}</td>
+                      </tr>
+                    );
+                  })}
+            </tbody>
+          </table>
+          <Pagination
+            totalInvoice={discountList.length}
+            invoicePerPage={discountPerPage}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
           />
         </div>
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className={classes.tr}>
-              <th className={classes.th}>
-                <input type="checkbox" name="allSelect" />
-              </th>
-              <th className={classes.th}>Mã khuyễn mãi</th>
-              <th className={classes.th}>Trạng thái</th>
-              <th className={classes.th}>Ngày bắt đầu</th>
-              <th className={classes.th}>Ngày kết thúc</th>
-            </tr>
-          </thead>
-          <tbody>
-            {discountList.map((discount) => {
-              const statusClass =
-                discount.status === "Chưa áp dụng"
-                  ? classes["status-inProgress"]
-                  : discount.status === "Đang áp dụng"
-                  ? classes["status-success"]
-                  : classes["status-closed"];
-
-              return (
-                <tr className={classes.tr} key={discount.code}>
-                  <td className={classes.td}>
-                    <input type="checkbox" name="allSelect" />
-                  </td>
-                  <td className={classes.td}>{discount.code}</td>
-                  <td className={classes.td}>
-                    <p className={`${statusClass} ${classes.status}`}>
-                      {discount.status}
-                    </p>
-                  </td>
-                  <td className={classes.td}>{discount.startDate}</td>
-                  <td className={classes.td}>{discount.endDate}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
       </div>
-    </div>
+    </SkeletonTheme>
   );
 };
 

@@ -1,11 +1,9 @@
-.button:hover {
-  border-style: solid;
-  border-bottom-color: #2661ec;
-  color: #2661ec;
-  border-width: 2px;
-  border-top: none;
-  background-color: #ffffff;
-  cursor: pointer;
+.button {
+  @apply h-12 w-48 bg-white text-center box-border text-gray-500 font-["Montserrat"] text-base hover:box-border hover:text-blue-600 hover:border-b-2 hover:border-blue-600 cursor-pointer;
+}
+
+.selectedFilter {
+  @apply box-border text-blue-600 border-b-2 border-blue-600;
 }
 
 .search-container {
@@ -37,9 +35,7 @@
 }
 
 .td-skeleton {
-  border-bottom: none;
-  cursor: pointer;
-  height: 53px;
+  @apply border-b-[#dddddd] h-20 font-[400] text-center border-b-0;
 }
 
 .checkbox {
