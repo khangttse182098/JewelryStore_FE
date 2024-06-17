@@ -8,7 +8,9 @@ import StatusSellerPage from "./page/StatusSellerPage";
 import "./util/reset.css";
 import CashierInvoiceDetailPage from "./page/CashierInvoiceDetailPage";
 import RepurchasePage from "./page/RepurchasePage";
+import ManagerProductPage from "./page/ManagerProductPage";
 import { SkeletonTheme } from "react-loading-skeleton";
+import { ManagerDiscountPage } from "./page/ManagerDiscountPage";
 
 function App() {
   return (
@@ -22,6 +24,9 @@ function App() {
         <Route path="/statuslist" element={<StatusSellerPage />} />
         <Route path="/invoicedetail" element={<CashierInvoiceDetailPage />} />
         <Route path="/repurchasepage" element={<RepurchasePage />} />
+        <Route path="/statuslistcashier" element={<CashierStatusPage />} />
+        <Route path="/managerproductlist" element={<ManagerProductPage />} />
+        <Route path="/managerdiscountlist" element={<ManagerDiscountPage />} />
       </Routes>
     </SkeletonTheme>
   );
