@@ -1,25 +1,48 @@
 import { useEffect, useState } from "react";
 import classes from "./TableProduct.module.css";
+import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
 
 const TableProduct = () => {
   const [productList, setProductList] = useState([]);
+  const [searchField, setSearchField] = useState("");
+  const [filterProduct, setFilterProduct] = useState([...productList]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productPerPage, setProductPerPage] = useState(4);
 
-  const handleProduct = () => {
-    fetch("http://mahika.foundation:8080/swp/api/product", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setProductList(data);
-        console.log(data);
-      })
-      .catch((error) => console.log(error));
+  //----------------------------Pagination---------------------------
+  const lastProductIndex = currentPage * productPerPage;
+  const firstProductIndex = lastProductIndex - productPerPage;
+  const currentProduct = filterProduct.slice(
+    firstProductIndex,
+    lastProductIndex
+  );
+
+  //----------------------------Search-------------------------------
+  const handleSearch = (event) => {
+    const searchFieldString = event.target.value.toLowerCase();
+    setSearchField(searchFieldString);
   };
 
   useEffect(() => {
+    const newFilterProduct = productList.filter((product) => {
+      return (
+        product.productCode.toLowerCase().includes(searchField) ||
+        product.productName.toLowerCase().includes(searchField) ||
+        product.categoryName.toLowerCase().includes(searchField)
+      );
+    });
+    setFilterProduct(newFilterProduct);
+  }, [searchField, productList]);
+
+  //------------------------Get list products--------------------
+  useEffect(() => {
+    const handleProduct = async () => {
+      const response = await fetch(
+        "http://mahika.foundation:8080/swp/api/product"
+      );
+      const data = await response.json();
+      setProductList(data);
+    };
     handleProduct();
   }, []);
 
@@ -39,25 +62,28 @@ const TableProduct = () => {
           </button>
         </div>
         <hr />
-        <div className={classes["search-container"]}>
+        <div className="mt-5 mb-7">
           <input
-            className={classes.search}
+            className="h-37 w-560 rounded-2xl border-[#dfd8d8] outline-none pl-11"
             type="search"
-            placeholder="Tìm kiếm theo số điện thoại"
+            placeholder="Tìm kiếm sản phẩm"
+            onChange={handleSearch}
           />
         </div>
-        <table className={classes.table}>
-          <tr className={classes.tr}>
-            <th className={`${classes["table-header"]} ${classes.th}`}>
-              <input type="checkbox" name="allSelect" />
-            </th>
-            <th className={classes.th}>Mã sản phẩm</th>
-            <th className={classes.th}>Tên sản phẩm</th>
-            <th className={classes.th}>Loại sản phẩm</th>
-            <th className={classes.th}>Quầy</th>
-            <th className={classes.th}>Ngày khởi tạo</th>
-          </tr>
-          {productList.map((product) => {
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className={classes.tr}>
+              <th className={`${classes["table-header"]} ${classes.th}`}>
+                <input type="checkbox" name="allSelect" />
+              </th>
+              <th className={classes.th}>Mã sản phẩm</th>
+              <th className={classes.th}>Tên sản phẩm</th>
+              <th className={classes.th}>Loại sản phẩm</th>
+              <th className={classes.th}>Quầy</th>
+              <th className={classes.th}>Ngày khởi tạo</th>
+            </tr>
+          </thead>
+          {currentProduct.map((product) => {
             return (
               <tbody>
                 <tr className={classes.tr} key={product.productCode}>
@@ -76,6 +102,12 @@ const TableProduct = () => {
             );
           })}
         </table>
+        <Pagination
+          totalInvoice={productList.length}
+          invoicePerPage={productPerPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );
