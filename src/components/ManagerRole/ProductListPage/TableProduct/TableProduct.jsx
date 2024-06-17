@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import classes from "./TableProduct.module.css";
 import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
+import DeleteProduct from "../DeleteProduct/DeleteProduct";
+import { useNavigate } from "react-router-dom";
 
 const TableProduct = () => {
   const controllerRef = useRef();
@@ -9,6 +11,9 @@ const TableProduct = () => {
   const [filterProduct, setFilterProduct] = useState([...productList]);
   const [currentPage, setCurrentPage] = useState(1);
   const [productPerPage, setProductPerPage] = useState(4);
+  const [select, setSelect] = useState(false);
+  const navigate = useNavigate();
+  const TabelProductRef = useRef();
 
   //------------------------Get list products--------------------
   useEffect(() => {
@@ -27,6 +32,21 @@ const TableProduct = () => {
     };
     handleProduct();
   }, []);
+
+  //-----------------------------HandleNavigate---------------------
+  function handleNavigate(list) {
+    navigate("/managerproductdetail", { state: { list } });
+  }
+
+  //----------------------------HandleModalRef----------------------
+  const handleClick = () => {
+    console.log("GG");
+    TabelProductRef.current.showModal();
+  };
+
+  const handleHide = () => {
+    TabelProductRef.current.close();
+  };
 
   //----------------------------Pagination---------------------------
   const lastProductIndex = currentPage * productPerPage;
@@ -57,6 +77,7 @@ const TableProduct = () => {
   const handleCheckbox = (event) => {
     const { name, checked } = event.target;
     if (name === "allSelect") {
+      setSelect(checked);
       const tempProduct = productList.map((product) => {
         return { ...product, isChecked: checked };
       });
@@ -73,6 +94,7 @@ const TableProduct = () => {
 
   return (
     <div className="w-10/12 h-5/6 ">
+      <DeleteProduct ref={TabelProductRef} handleHide={handleHide} />
       <div className="text-3xl font-medium py-9">
         <p>Danh sách sản phẩm</p>
       </div>
@@ -96,31 +118,43 @@ const TableProduct = () => {
         </div>
         <table className="w-full border-collapse">
           <thead>
-            <tr className={classes.tr}>
+            <tr className={classes.tr} onChange={handleCheckbox}>
               <th className={`${classes["table-header"]} ${classes.th}`}>
                 <input
                   type="checkbox"
                   name="allSelect"
                   onChange={handleCheckbox}
+                  checked={select}
                 />
               </th>
-              {/* <th colspan="5" className={classes.th}>
-                <div>
-                  <p className="font-normal">
-                    Đã chọn <b>tất cả</b> sản phẩm trên trang này
-                  </p>
-                  <select className="border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none">
-                    <option>Chọn thao tác</option>
-                    <option>Xóa sản phẩm</option>
-                  </select>
-                </div>
-              </th> */}
-              {/* <th className={classes.th}></th> */}
-              <th className={classes.th}>Mã sản phẩm</th>
-              <th className={classes.th}>Tên sản phẩm</th>
-              <th className={classes.th}>Loại sản phẩm</th>
-              <th className={classes.th}>Quầy</th>
-              <th className={classes.th}>Ngày khởi tạo</th>
+              {select && (
+                <>
+                  <th colspan="5" className={classes.th}>
+                    <div className="flex">
+                      <p className="font-normal pr-2">
+                        Đã chọn <b>tất cả</b> sản phẩm trên trang này
+                      </p>
+                      <select
+                        onChange={handleClick}
+                        className="border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none"
+                      >
+                        <option>Chọn thao tác</option>
+                        <option>Xóa sản phẩm</option>
+                      </select>
+                    </div>
+                  </th>
+                </>
+              )}
+              {!select && (
+                <>
+                  <th className={classes.th}>Hình ảnh</th>
+                  <th className={classes.th}>Mã sản phẩm</th>
+                  <th className={classes.th}>Tên sản phẩm</th>
+                  <th className={classes.th}>Loại sản phẩm</th>
+                  <th className={classes.th}>Quầy</th>
+                  <th className={classes.th}>Ngày khởi tạo</th>
+                </>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -131,6 +165,7 @@ const TableProduct = () => {
                     product?.isChecked ? classes.select : ""
                   }`}
                   key={product.productCode}
+                  onClick={() => handleNavigate(product)}
                 >
                   <td className={classes.td}>
                     <input
@@ -140,7 +175,11 @@ const TableProduct = () => {
                       checked={product?.isChecked || false}
                     />
                   </td>
-                  {/* <img src={product.productImage} alt="Jewelry" /> */}
+                  <img
+                    src={product.productImage}
+                    className="w-28 h-20"
+                    alt="Jewelry"
+                  />
                   <td className={classes.td}>{product.productCode}</td>
                   <td className={classes.td}>{product.productName}</td>
                   <td className={classes.td}>{product.categoryName}</td>

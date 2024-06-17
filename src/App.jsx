@@ -10,6 +10,7 @@ import "./util/reset.css";
 import CashierInvoiceDetailPage from "./page/CashierInvoiceDetailPage";
 import RepurchasePage from "./page/RepurchasePage";
 import ManagerProductPage from "./page/ManagerProductPage";
+import ManagerProductDetailPage from "./page/ManagerProductDetailPage";
 import { SkeletonTheme } from "react-loading-skeleton";
 
 function App() {
@@ -26,6 +27,10 @@ function App() {
         <Route path="/repurchasepage" element={<RepurchasePage />} />
         <Route path="/statuslistcashier" element={<CashierStatusPage />} />
         <Route path="/managerproductlist" element={<ManagerProductPage />} />
+        <Route
+          path="/managerproductdetail"
+          element={<ManagerProductDetailPage />}
+        />
       </Routes>
     </SkeletonTheme>
   );
