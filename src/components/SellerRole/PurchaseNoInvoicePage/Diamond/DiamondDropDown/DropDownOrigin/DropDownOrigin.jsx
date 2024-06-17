@@ -1,12 +1,11 @@
-import classes from "./DropDownGold.module.css";
-import arrowDown from "../../../../../public/assets/arrow-down-icon.png";
-import arrowUp from "../../../../../public/assets/arrow-up-icon.png";
+import classes from "./DropDownOrigin.module.css";
+import arrowDown from "../../../../../../../public/assets/arrow-down-icon.png";
+import arrowUp from "../../../../../../../public/assets/arrow-up-icon.png";
 import { useState } from "react";
-import GoldType from "../GoldType/GoldType";
+import Origin from "../../DiamondCriteria/Origin";
 
-const DropDownGold = ({ listGold, selectedValue, onChange }) => {
+const DropDownOrigin = ({ listOrigin, selectedValue, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleDropDown = () => {
     setIsOpen(!isOpen);
   };
@@ -14,12 +13,11 @@ const DropDownGold = ({ listGold, selectedValue, onChange }) => {
     onChange(e);
     setIsOpen(!isOpen);
   };
-
   return (
     <div>
       <div className={classes.dropdown}>
         <button className={classes.dropbtn} onClick={toggleDropDown}>
-          <p className={classes.text}>{selectedValue || "Chọn loại vàng"}</p>
+          <p className={classes.text}>{selectedValue || "Chọn nguồn gốc"}</p>
           {!isOpen ? (
             <img src={arrowDown} alt="Arrow Down" className={classes.icon} />
           ) : (
@@ -28,12 +26,8 @@ const DropDownGold = ({ listGold, selectedValue, onChange }) => {
         </button>
         {isOpen && (
           <div className={classes["dropdown-content"]}>
-            {listGold.map((type) => (
-              <GoldType
-                key={type.id}
-                type={type}
-                onClick={(e) => clickItem(e)}
-              />
+            {listOrigin.map((type, index) => (
+              <Origin key={index} type={type} onClick={(e) => clickItem(e)} />
             ))}
           </div>
         )}
@@ -41,5 +35,4 @@ const DropDownGold = ({ listGold, selectedValue, onChange }) => {
     </div>
   );
 };
-
-export default DropDownGold;
+export default DropDownOrigin;
