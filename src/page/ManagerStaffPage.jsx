@@ -1,9 +1,8 @@
-import React from "react";
-import TableDiscount from "../components/ManagerRole/DiscountListPage/TableDiscount/TableDiscount";
-import ManagerSidebar from "../components/ManagerRole/UtilsComponent/ManagerSidebar/ManagerSidebar";
 import ManagerHeader from "../components/ManagerRole/UtilsComponent/ManagerHeader/ManagerHeader";
+import ManagerSidebar from "../components/ManagerRole/UtilsComponent/ManagerSidebar/ManagerSidebar";
+import TableStaff from "../components/ManagerRole/StaffListPage/TableStaff/TableStaff";
 
-export const ManagerDiscountPage = () => {
+const ManagerProductPage = () => {
   return (
     <>
       <div className="grid grid-cols-6 grid-rows-none gap-0">
@@ -13,11 +12,12 @@ export const ManagerDiscountPage = () => {
         <div className="col-span-5">
           <ManagerHeader />
           <div className="w-full flex justify-center">
-            <TableDiscount />
+            <TableStaff />
           </div>
         </div>
       </div>
     </>
   );
 };
-export default ManagerDiscountPage;
+
+export default ManagerProductPage;
