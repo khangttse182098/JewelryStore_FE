@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import classes from "./TableInvoice.module.css";
 import settingIcon from "/assets/setting.png";
 import Pagination from "../../UtilsComponent/Pagination/Pagination";
@@ -8,23 +8,27 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const TableInvoice = () => {
   const [invoiceList, setInvoiceList] = useState([]);
+  const controllerRef = useRef();
 
   const navigate = useNavigate();
 
-  const handleInvoice = () => {
-    fetch("http://mahika.foundation:8080/swp/api/order", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((dataInvoice) => setInvoiceList(dataInvoice))
-      .catch((error) => console.log(error));
-  };
-
   useEffect(() => {
-    handleInvoice();
+    controllerRef.current?.abort();
+    controllerRef.current = new AbortController();
+    const signal = controllerRef.current.signal;
+    const handleInvoice = async () => {
+      try {
+        const response = await fetch(
+          "http://mahika.foundation:8080/swp/api/order",
+          {
+            signal,
+          }
+        );
+        const data = await response.json();
+        setInvoiceList(data);
+      } catch (err) {}
+    };
+    handleInvoice;
   }, []);
 
   //------------------------------Search----------------------------------
