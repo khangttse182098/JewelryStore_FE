@@ -11,6 +11,7 @@ import CashierInvoiceDetailPage from "./page/CashierInvoiceDetailPage";
 import RepurchasePage from "./page/RepurchasePage";
 import ManagerProductPage from "./page/ManagerProductPage";
 import ManagerProductDetailPage from "./page/ManagerProductDetailPage";
+import ManagerAddProductPage from "./page/ManageAddProductPage";
 import { SkeletonTheme } from "react-loading-skeleton";
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           path="/managerproductdetail"
           element={<ManagerProductDetailPage />}
         />
+        <Route path="/manageraddproduct" element={<ManagerAddProductPage />} />
       </Routes>
     </SkeletonTheme>
   );

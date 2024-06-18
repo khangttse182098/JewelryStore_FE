@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import classes from "./TableProduct.module.css";
 import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
 import DeleteProduct from "../DeleteProduct/DeleteProduct";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const TableProduct = () => {
   const controllerRef = useRef();
@@ -38,9 +38,12 @@ const TableProduct = () => {
     navigate("/managerproductdetail", { state: { list } });
   }
 
+  function handleAdd() {
+    navigate("/manageraddproduct");
+  }
+
   //----------------------------HandleModalRef----------------------
   const handleClick = () => {
-    console.log("GG");
     TabelProductRef.current.showModal();
   };
 
@@ -100,7 +103,10 @@ const TableProduct = () => {
       </div>
       <div className="bg-white border-2 rounded-xl">
         <div>
-          <button className="h-[50px] w-[200px] border-b-4 border-[#0088FF] text-center text-[#0088FF] font-montserrat text-[15px] cursor-pointer">
+          <button
+            onChange={handleAdd}
+            className="h-[50px] w-[200px] border-b-4 border-[#0088FF] text-center text-[#0088FF] font-montserrat text-[15px] cursor-pointer"
+          >
             Tất cả
           </button>
         </div>
@@ -112,9 +118,11 @@ const TableProduct = () => {
             placeholder="Tìm kiếm sản phẩm"
             onChange={handleSearch}
           />
-          <button className="w-32 h-9 rounded-md bg-[#0088FF] text-white">
-            + Thêm mới
-          </button>
+          <Link to="/manageraddproduct">
+            <button className="w-32 h-9 rounded-md bg-[#0088FF] text-white">
+              + Thêm mới
+            </button>
+          </Link>
         </div>
         <table className="w-full border-collapse">
           <thead>
@@ -184,9 +192,7 @@ const TableProduct = () => {
                   <td className={classes.td}>{product.productName}</td>
                   <td className={classes.td}>{product.categoryName}</td>
                   <td className={classes.td}>{product.counterNo}</td>
-                  <td className={classes.td}>
-                    {new Date(product.createdDate).toLocaleString()}
-                  </td>
+                  <td className={classes.td}>{product.createdDate}</td>
                 </tr>
               );
             })}

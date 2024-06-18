@@ -3,6 +3,7 @@ import Product from "/assets/product.png";
 import Customer from "/assets/customer.png";
 import Disount from "/assets/discount.png";
 import Staff from "/assets/staff.png";
+import { Link } from "react-router-dom";
 
 const ManagerSidebar = () => {
   return (
@@ -16,10 +17,12 @@ const ManagerSidebar = () => {
           <img src={InvoiceList} alt="Invoice icon" />
           <p>Danh sách hóa đơn</p>
         </button>
-        <button className="flex mb-8">
-          <img src={Product} alt="Product icon" />
-          <p>Sản phẩm</p>
-        </button>
+        <Link to="/managerproductlist">
+          <button className="flex mb-8">
+            <img src={Product} alt="Product icon" />
+            <p>Sản phẩm</p>
+          </button>
+        </Link>
         <button className="flex mb-8">
           <img src={Customer} alt="Customer icon" />
           <p>Khách hàng</p>
