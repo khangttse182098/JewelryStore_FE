@@ -13,15 +13,16 @@ const TableStaff = () => {
   const firstStaffIndex = lastStaffIndex - staffPerPage;
   const currentStaff = filterStaff.slice(firstStaffIndex, lastStaffIndex);
   const [showModal, setShowModal] = useState(false);
+  const staffInputFormRef = useRef();
   useEffect(() => {
-    const handleProduct = async () => {
+    const handleStaff = async () => {
       const response = await fetch(
         "http://mahika.foundation:8080/swp/api/user"
       );
       const data = await response.json();
       setStaffList(data);
     };
-    handleProduct();
+    handleStaff();
   }, []);
 
   const [currentStatus, setCurrentStatus] = useState("Tất cả");
@@ -35,6 +36,12 @@ const TableStaff = () => {
       setFilterStaff(statusStaff);
     }
   };
+  function handleClick() {
+    staffInputFormRef.current.showModal();
+  }
+  function handleHide() {
+    customerInputFormRef.current.close();
+  }
   return (
     <Fragment>
       <div className="w-10/12 h-5/6 mx-auto">
@@ -84,7 +91,7 @@ const TableStaff = () => {
             />
             <button
               className="w-40 h-10 bg-blue-600 rounded-md text-white ml-10 hover:bg-blue-900 text-xl"
-              onClick={() => setShowModal(true)}
+              onClick={handleClick}
             >
               + Thêm mới
             </button>
@@ -140,7 +147,7 @@ const TableStaff = () => {
           />
         </div>
       </div>
-      <AddStaffModal isVisible={showModal} onClose={setShowModal} />
+      <AddStaffModal handleHide={handleHide} ref={staffInputFormRef} />
     </Fragment>
   );
 };
