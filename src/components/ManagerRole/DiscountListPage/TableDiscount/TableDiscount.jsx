@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classes from "./TableDiscount.module.css";
 import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import AddDiscountModal from "../AddDiscountModal/AddDiscountModal";
+import { useNavigate } from "react-router-dom";
 
 const TableDiscount = () => {
+  const addDiscountModalRef = useRef();
   const [discountList, setDiscountList] = useState([]);
   const [filterDiscountList, setFilterDiscountList] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("Tất cả");
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
   const discountPerPage = 4;
 
   const lastDiscountIndex = currentPage * discountPerPage;
@@ -17,18 +21,22 @@ const TableDiscount = () => {
     lastDiscountIndex
   );
 
+  const handleDiscount = async () => {
+    const response = await fetch(
+      "http://mahika.foundation:8080/swp/api/discount"
+    );
+    const data = await response.json();
+    setDiscountList(data);
+    setSelectedFilter("Tất cả");
+    setFilterDiscountList(data);
+  };
   useEffect(() => {
-    const handleDiscount = async () => {
-      const response = await fetch(
-        "http://mahika.foundation:8080/swp/api/discount"
-      );
-      const data = await response.json();
-      setDiscountList(data);
-      setFilterDiscountList(data);
-    };
-
     handleDiscount();
   }, []);
+
+  const handleClick = (discount) => {
+    navigate("/managerdiscountdetail", { state: { discount } });
+  };
 
   function handleFilter(filterStatus) {
     setSelectedFilter(filterStatus);
@@ -41,6 +49,15 @@ const TableDiscount = () => {
         })
       );
     }
+  }
+
+  function handleAdd() {
+    addDiscountModalRef.current.showModal();
+  }
+
+  function handleHide() {
+    handleDiscount();
+    addDiscountModalRef.current.close();
   }
 
   let skeletonRowList = [];
@@ -56,15 +73,19 @@ const TableDiscount = () => {
 
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
+      <AddDiscountModal ref={addDiscountModalRef} onClose={handleHide} />
       <div className="w-10/12 h-5/6 mx-auto">
         <div className="text-3xl font-medium py-10 flex justify-between">
           <p>Danh sách mã khuyến mãi</p>
-          <button className="h-15 w-40 rounded bg-blue-600 hover:bg-blue-700 text-slate-100 text-xl">
+          <button
+            onClick={handleAdd}
+            className="h-15 w-40 rounded bg-blue-600 hover:bg-blue-700 text-slate-100 text-xl"
+          >
             + Thêm mã
           </button>
         </div>
 
-        <div className="bg-white border-2 rounded-xl">
+        <div className="bg-white border-2 rounded-xl drop-shadow-xl">
           <div>
             {["Tất cả", "Đang áp dụng", "Chưa áp dụng", "Ngừng áp dụng"].map(
               (status) => (
@@ -114,7 +135,11 @@ const TableDiscount = () => {
                         : classes["status-closed"];
 
                     return (
-                      <tr className={classes.tr} key={discount.code}>
+                      <tr
+                        className={classes.tr}
+                        key={discount.code}
+                        onClick={() => handleClick(discount)}
+                      >
                         <td className={classes.td}>
                           <input type="checkbox" name="allSelect" />
                         </td>
@@ -133,7 +158,7 @@ const TableDiscount = () => {
             </tbody>
           </table>
           <Pagination
-            totalInvoice={discountList.length}
+            totalInvoice={filterDiscountList.length}
             invoicePerPage={discountPerPage}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
