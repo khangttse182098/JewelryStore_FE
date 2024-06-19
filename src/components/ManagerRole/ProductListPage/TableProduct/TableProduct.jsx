@@ -144,9 +144,12 @@ const TableProduct = () => {
                       </p>
                       <select
                         onChange={handleClick}
+                        defaultValue=""
                         className="border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none"
                       >
-                        <option>Chọn thao tác</option>
+                        <option value="" disabled>
+                          Chọn thao tác
+                        </option>
                         <option>Xóa sản phẩm</option>
                       </select>
                     </div>

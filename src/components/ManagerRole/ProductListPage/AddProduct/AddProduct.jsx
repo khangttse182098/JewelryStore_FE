@@ -1,15 +1,70 @@
 import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 
 const AddProduct = () => {
   const [counterList, setCounterList] = useState([]);
   const [goldList, setGoldList] = useState([]);
   const [imageType, setImageType] = useState([]);
   const [diamondCriteria, setDiamondCriteria] = useState([]);
+  const [categoryName, setCategoryName] = useState([]);
   const [selectedDiamond, setSelectedDiamond] = useState(null);
+  const [materialId, setMaterialId] = useState(null);
   const counterControllerRef = useRef();
   const goldControllerRef = useRef();
   const diamondControllerRef = useRef();
   const imageControllerRef = useRef();
+  const categoryControllerRef = useRef();
+  const { register, handleSubmit } = useForm();
+
+  //---------------------------SubmitForm--------------------
+  async function onSubmit(submitData) {
+    const requestBody = {
+      ...submitData,
+      ["counterId"]: Number(submitData.counterId),
+      ["materialId"]: materialId,
+      ["gemCost"]: Number(submitData.gemCost),
+      ["gemId"]: Number(submitData.gemId),
+      ["materialCost"]: Number(submitData.materialCost),
+      ["materialWeight"]: Number(submitData.materialWeight),
+      ["priceRate"]: Number(submitData.priceRate),
+      ["productionCost"]: Number(submitData.productionCost),
+    };
+    console.log(requestBody);
+    try {
+      const res = await fetch("http://mahika.foundation:8080/swp/api/product", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function handleSetId(materialId) {
+    console.log(materialId);
+    setMaterialId(Number(materialId));
+  }
+  //---------------------------CategoryName------------------
+  useEffect(() => {
+    categoryControllerRef.current?.abort();
+    categoryControllerRef.current = new AbortController();
+    const signal = categoryControllerRef.current.signal;
+    const handleCategoryName = async () => {
+      try {
+        const response = await fetch(
+          "http://mahika.foundation:8080/swp/api/product-category/category-name",
+          { signal }
+        );
+        const dataCategory = await response.json();
+        setCategoryName(dataCategory);
+      } catch (err) {}
+    };
+    handleCategoryName();
+  }, []);
 
   //---------------------------GoldType----------------------
   useEffect(() => {
@@ -23,6 +78,7 @@ const AddProduct = () => {
           { signal }
         );
         const dataGold = await response.json();
+        console.log(dataGold);
         setGoldList(dataGold);
       } catch (err) {}
     };
@@ -92,7 +148,10 @@ const AddProduct = () => {
   };
 
   return (
-    <form className="grid grid-cols-2 gap-2 p-4">
+    <form
+      className="grid grid-cols-2 gap-2 p-4"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       {/* Section Product */}
       <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
         <h2 className="font-semibold text-xl">Chi tiết sản phẩm</h2>
@@ -100,33 +159,68 @@ const AddProduct = () => {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label>Mã sản phẩm</label>
-            <input className="w-full border rounded p-2" type="text" />
+            <input
+              className="w-full border rounded p-2"
+              {...register("productCode")}
+            />
           </div>
           <div>
             <label>Loại vàng</label>
-            <select className="w-full border rounded p-2">
-              <option>Chọn loại vàng</option>
+            <select
+              className="w-full border rounded p-2"
+              {...register("materialId")}
+              defaultValue=""
+            >
+              <option value="">Chọn loại vàng</option>
               {goldList.map((type) => {
-                return <option key={type.id}>{type.name}</option>;
+                return (
+                  <option key={type.id} onClick={() => handleSetId(type.id)}>
+                    {type.name}
+                  </option>
+                );
               })}
             </select>
           </div>
           <div>
             <label>Tên sản phẩm</label>
-            <input className="w-full border rounded p-2" type="text" />
+            <input
+              className="w-full border rounded p-2"
+              {...register("productName")}
+            />
           </div>
           <div>
             <label>Khối lượng vàng</label>
-            <input className="w-full border rounded p-2" type="text" />
+            <input
+              className="w-full border rounded p-2"
+              type="number"
+              {...register("materialWeight")}
+            />
           </div>
           <div>
             <label>Loại sản phẩm</label>
-            <input className="w-full border rounded p-2" type="text" />
+            <select
+              className="w-full border rounded p-2"
+              {...register("productCategoryName")}
+              defaultValue=""
+            >
+              <option value="" disabled>
+                Chọn loại sản phẩm
+              </option>
+              {categoryName.map((category) => {
+                return <option>{category}</option>;
+              })}
+            </select>
           </div>
           <div>
             <label>Quầy số</label>
-            <select className="w-full border rounded p-2">
-              <option>Chọn quầy</option>
+            <select
+              className="w-full border rounded p-2"
+              {...register("counterId")}
+              defaultValue=""
+            >
+              <option value="" disabled>
+                Chọn quầy
+              </option>
               {counterList.map((counter) => {
                 return (
                   <option key={counter.counterNo}>{counter.counterNo}</option>
@@ -148,8 +242,14 @@ const AddProduct = () => {
         </div>
         <div className="mt-4">
           <label>Danh mục</label> <br />
-          <select className="w-72 border rounded p-2">
-            <option>Chọn danh mục</option>
+          <select
+            className="w-72 border rounded p-2"
+            {...register("subCategoryType")}
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Chọn danh mục
+            </option>
             {imageType.map((type) => {
               return (
                 <option key={type.productCategoryId}>
@@ -168,24 +268,33 @@ const AddProduct = () => {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label>Giá đá</label>
-            <input className="w-full border rounded p-2" type="text" />
+            <input
+              className="w-full border rounded p-2"
+              {...register("gemCost")}
+            />
           </div>
           <div>
             <label>Giá gia công</label>
-            <input className="w-full border rounded p-2" type="text" />
+            <input
+              className="w-full border rounded p-2"
+              {...register("productionCost")}
+            />
           </div>
           <div>
             <label>Giá nguyên liệu</label>
-            <input className="w-full border rounded p-2" type="text" />
+            <input
+              className="w-full border rounded p-2"
+              {...register("materialCost")}
+            />
           </div>
           <div>
             <label>Tỉ lệ áp giá</label>
-            <input className="w-full border rounded p-2" type="text" />
+            <input
+              className="w-full border rounded p-2"
+              {...register("priceRate")}
+            />
           </div>
         </div>
-        <button className="w-1/3 h-8 border rounded-md bg-[#0088FF] text-white font-semibold mx-44 my-5">
-          Lưu
-        </button>
       </div>
 
       {/* Section Diamond */}
@@ -197,9 +306,13 @@ const AddProduct = () => {
             <label>Tên kim cương</label>
             <select
               className="w-full border rounded p-2"
+              {...register("gemId")}
               onChange={handleDiamondSelect}
+              defaultValue=""
             >
-              <option>Chọn tên kim cương</option>
+              <option value="" disabled>
+                Chọn tên kim cương
+              </option>
               {diamondCriteria.map((diamond) => {
                 return (
                   <option key={diamond.gemId} value={diamond.gemId}>
@@ -256,6 +369,12 @@ const AddProduct = () => {
           </div>
         </div>
       </div>
+      <button
+        type="submit"
+        className="w-1/3 h-8 border rounded-md bg-[#0088FF] text-white font-semibold mx-96"
+      >
+        Lưu
+      </button>
     </form>
   );
 };
