@@ -8,6 +8,22 @@ const DetailDiscount = ({ discount }) => {
   const { register, handleSubmit } = useForm();
   const doneModalRef = useRef();
 
+  async function handleDelete() {
+    try {
+      const res = await fetch(
+        `http://mahika.foundation:8080/swp/api/discount/delete-${discount.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const onSubmit = async (submitData) => {
     const reqBody = {
       ...submitData,
@@ -67,6 +83,13 @@ const DetailDiscount = ({ discount }) => {
           className="p-5 w-[60%] mx-auto mb-5 rounded bg-blue-500 hover:bg-blue-600 text-2xl font-medium text-slate-200"
         >
           Sửa
+        </button>
+        <button
+          type="submit"
+          className="p-5 w-[60%] mx-auto mb-5 rounded bg-red-500 hover:bg-red-600 text-2xl font-medium text-slate-200"
+          onClick={handleDelete}
+        >
+          Xóa
         </button>
       </form>
     </>

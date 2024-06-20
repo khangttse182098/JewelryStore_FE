@@ -46,6 +46,10 @@
   @apply text-center p-2 cursor-pointer hover:bg-[#eff7fd];
 }
 
+.selectedTr {
+  @apply bg-[#eff7fd];
+}
+
 .th,
 .td {
   @apply text-base;

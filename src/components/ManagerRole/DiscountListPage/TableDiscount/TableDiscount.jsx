@@ -4,10 +4,13 @@ import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Paginatio
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import AddDiscountModal from "../AddDiscountModal/AddDiscountModal";
 import { useNavigate } from "react-router-dom";
+import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 
 const TableDiscount = () => {
   const addDiscountModalRef = useRef();
+  const doneModelRef = useRef();
   const [discountList, setDiscountList] = useState([]);
+  const [select, setSelect] = useState(false);
   const [filterDiscountList, setFilterDiscountList] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("Tất cả");
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,6 +33,7 @@ const TableDiscount = () => {
     setSelectedFilter("Tất cả");
     setFilterDiscountList(data);
   };
+
   useEffect(() => {
     handleDiscount();
   }, []);
@@ -38,32 +42,67 @@ const TableDiscount = () => {
     navigate("/managerdiscountdetail", { state: { discount } });
   };
 
-  function handleFilter(filterStatus) {
+  const handleFilter = (filterStatus) => {
     setSelectedFilter(filterStatus);
     if (filterStatus === "Tất cả") {
       setFilterDiscountList(discountList);
     } else {
       setFilterDiscountList(
-        discountList.filter((discount) => {
-          return discount.status === filterStatus;
-        })
+        discountList.filter((discount) => discount.status === filterStatus)
       );
     }
-  }
+  };
 
-  function handleAdd() {
+  const handleAdd = () => {
     addDiscountModalRef.current.showModal();
-  }
+  };
 
-  function handleHide() {
+  const handleHide = () => {
     handleDiscount();
     addDiscountModalRef.current.close();
+  };
+
+  const handleCheckbox = (event) => {
+    const { name, checked } = event.target;
+    if (name === "allSelect") {
+      setSelect(checked);
+      const tempDiscount = discountList.map((discount) => ({
+        ...discount,
+        isChecked: checked,
+      }));
+      setDiscountList(tempDiscount);
+      setFilterDiscountList(tempDiscount);
+    } else {
+      const tempDiscount = discountList.map((discount) =>
+        discount.code === name ? { ...discount, isChecked: checked } : discount
+      );
+      setDiscountList(tempDiscount);
+      setFilterDiscountList(tempDiscount);
+    }
+  };
+
+  async function handleDeleteAll() {
+    let idString = "";
+    discountList.map((discount) => {
+      idString = idString.concat(discount.id + ", ");
+    });
+    idString = idString.trim();
+    idString = idString.slice(0, idString.length - 1);
+    try {
+      console.log(idString);
+      const res = await fetch(
+        `http://mahika.foundation:8080/swp/api/discount/delete-${idString}`,
+        { method: "DELETE" }
+      );
+      handleOpen();
+      handleDiscount();
+    } catch (error) {}
   }
 
   let skeletonRowList = [];
   for (let index = 0; index < discountPerPage; index++) {
     skeletonRowList.push(
-      <tr>
+      <tr key={index}>
         <td colSpan="6">
           <Skeleton className={classes["td-skeleton"]} />
         </td>
@@ -71,8 +110,17 @@ const TableDiscount = () => {
     );
   }
 
+  function handleOpen() {
+    doneModelRef.current.showModal();
+  }
+
+  function handleClose() {
+    doneModelRef.current.close();
+  }
+
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
+      <DoneModal ref={doneModelRef} handleClose={handleClose} />
       <AddDiscountModal ref={addDiscountModalRef} onClose={handleHide} />
       <div className="w-10/12 h-5/6 mx-auto">
         <div className="text-3xl font-medium py-10 flex justify-between">
@@ -110,17 +158,47 @@ const TableDiscount = () => {
               placeholder="Tìm kiếm khuyến mãi"
             />
           </div>
-          <table className="w-full border-collapse">
+          <table className="group w-full border-collapse">
             <thead>
               <tr className={classes.tr}>
                 <th className={classes.th}>
-                  <input type="checkbox" name="allSelect" />
+                  <input
+                    type="checkbox"
+                    name="allSelect"
+                    onChange={handleCheckbox}
+                    checked={select}
+                  />
                 </th>
-                <th className={classes.th}>Mã khuyễn mãi</th>
-                <th className={classes.th}>Phần trăm</th>
-                <th className={classes.th}>Trạng thái</th>
-                <th className={classes.th}>Ngày bắt đầu</th>
-                <th className={classes.th}>Ngày kết thúc</th>
+
+                {select ? (
+                  <th colSpan="5" className={classes.th}>
+                    <div className="flex">
+                      <p className="font-normal pr-2">
+                        Đã chọn <b>tất cả</b> mã khuyến mãi trên trang này
+                      </p>
+                      <select
+                        onChange={handleClick}
+                        defaultValue=""
+                        className="border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none"
+                      >
+                        <option value="" disabled>
+                          Chọn thao tác
+                        </option>
+                        <option onClick={handleDeleteAll}>
+                          Xóa mã khuyến mãi
+                        </option>
+                      </select>
+                    </div>
+                  </th>
+                ) : (
+                  <>
+                    <th className={classes.th}>Mã khuyến mãi</th>
+                    <th className={classes.th}>Phần trăm</th>
+                    <th className={classes.th}>Trạng thái</th>
+                    <th className={classes.th}>Ngày bắt đầu</th>
+                    <th className={classes.th}>Ngày kết thúc</th>
+                  </>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -136,12 +214,22 @@ const TableDiscount = () => {
 
                     return (
                       <tr
-                        className={classes.tr}
+                        className={`${classes.tr} ${
+                          select && classes.selectedTr
+                        }`}
                         key={discount.code}
                         onClick={() => handleClick(discount)}
                       >
                         <td className={classes.td}>
-                          <input type="checkbox" name="allSelect" />
+                          <input
+                            type="checkbox"
+                            name={discount.code}
+                            onChange={(event) => {
+                              handleCheckbox(event);
+                            }}
+                            onClick={(event) => event.stopPropagation()}
+                            checked={discount.isChecked || false}
+                          />
                         </td>
                         <td className={classes.td}>{discount.code}</td>
                         <td className={classes.td}>{`${discount.value}%`}</td>
