@@ -3,6 +3,7 @@ import classes from "./TableStaff.module.css";
 import { formatter } from "../../../../util/formatter";
 import PaginationStaffList from "./../PaginationStaffList/PaginationStaffList";
 import AddStaffModal from "../AddStaffModal/AddStaffModal";
+import { Link, useNavigate } from "react-router-dom";
 
 const TableStaff = () => {
   const [staffList, setStaffList] = useState([]);
@@ -15,6 +16,10 @@ const TableStaff = () => {
   const [showModal, setShowModal] = useState(false);
   const staffInputFormRef = useRef();
   const [select, setSelect] = useState(false);
+  const navigate = useNavigate();
+  const ids = [];
+  const deleteCode = staffList.map((staff) => ids.push(staff.id));
+
   useEffect(() => {
     const handleStaff = async () => {
       const response = await fetch(
@@ -37,12 +42,46 @@ const TableStaff = () => {
       setFilterStaff(statusStaff);
     }
   };
+  const handleDelete = () => {
+    fetch("http://mahika.foundation:8080/swp/api/user/delete-{id}", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(deleteCode),
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => console.log(error));
+  };
+
   function handleClick() {
     staffInputFormRef.current.showModal();
   }
   function handleHide() {
     staffInputFormRef.current.close();
   }
+  function handleNavigate(list) {
+    navigate("/managerstaffdetail", { state: { list } });
+  }
+
+  const handleCheckbox = (event) => {
+    const { name, checked } = event.target;
+    if (name === "allSelect") {
+      setSelect(checked);
+      const tempStaff = staffList.map((staff) => {
+        return { ...staff, isChecked: checked };
+      });
+      setStaffList(tempStaff);
+    } else {
+      const tempStaff = staffList.map((staff) => {
+        return staff.id === name ? { ...staff, isChecked: checked } : staff;
+      });
+      setStaffList(tempStaff);
+    }
+  };
+
   return (
     <Fragment>
       <AddStaffModal onClose={handleHide} ref={staffInputFormRef} />
@@ -100,15 +139,45 @@ const TableStaff = () => {
           </div>
           <table className="w-full border-collapse">
             <thead>
-              <tr className={classes.tr}>
+              <tr className={classes.tr} onChange={handleCheckbox}>
                 <th className={classes.th}>
-                  <input type="checkbox" name="allSelect" />
+                  <input
+                    type="checkbox"
+                    name="allSelect"
+                    onChange={handleCheckbox}
+                    checked={select}
+                  />
                 </th>
-                <th className={classes.th}>Tên nhân viên</th>
-                <th className={classes.th}>Vị trí</th>
-                <th className={classes.th}>Số điện thoại</th>
-                <th className={classes.th}>Doanh thu cá nhân</th>
-                <th className={classes.th}>Trạng thái</th>
+                {select && (
+                  <>
+                    <th colSpan="6" className={classes.th}>
+                      <div className="flex">
+                        <p className="font-normal pr-2">
+                          Đã chọn <b>tất cả</b> sản phẩm trên trang này
+                        </p>
+                        <select
+                          onClick={handleDelete}
+                          defaultValue=""
+                          className="border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none"
+                        >
+                          <option value="" disabled>
+                            Chọn thao tác
+                          </option>
+                          <option onClick={handleDelete}>Xóa sản phẩm</option>
+                        </select>
+                      </div>
+                    </th>
+                  </>
+                )}
+                {!select && (
+                  <>
+                    <th className={classes.th}>Tên nhân viên</th>
+                    <th className={classes.th}>Vị trí</th>
+                    <th className={classes.th}>Số điện thoại</th>
+                    <th className={classes.th}>Doanh thu cá nhân</th>
+                    <th className={classes.th}>Trạng thái</th>
+                  </>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -121,9 +190,21 @@ const TableStaff = () => {
                     : classes["status-closed"];
 
                 return (
-                  <tr className={classes.tr} key={staff.fullName}>
+                  <tr
+                    className={`${classes.tr} ${
+                      staff?.isChecked ? classes.select : ""
+                    }`}
+                    key={staff.id}
+                    onClick={() => handleNavigate(staff)}
+                  >
                     <td className={classes.td}>
-                      <input type="checkbox" name="allSelect" />
+                      <input
+                        type="checkbox"
+                        name={staff.id}
+                        onChange={handleCheckbox}
+                        checked={staff?.isChecked || false}
+                        onClick={(event) => event.stopPropagation()}
+                      />
                     </td>
                     <td className={classes.td}>{staff.fullName}</td>
                     <td className={classes.td}>{staff.role}</td>
