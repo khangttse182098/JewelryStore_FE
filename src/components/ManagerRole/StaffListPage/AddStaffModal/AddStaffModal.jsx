@@ -18,7 +18,7 @@ const AddStaffModal = forwardRef(({ onClose }, ref) => {
         },
         body: JSON.stringify(submitBody),
       });
-      onClose();
+
       handleOpen();
     } catch (error) {
       console.log(error);
