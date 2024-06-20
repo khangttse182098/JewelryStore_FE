@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import classes from "./TableProduct.module.css";
 import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
-import DeleteProduct from "../DeleteProduct/DeleteProduct";
 import { Link, useNavigate } from "react-router-dom";
 import ImageLoader from "../../../../util/ImageLoader";
+import Red from "/assets/red.png";
+import Green from "/assets/green.png";
 
 const TableProduct = () => {
   const controllerRef = useRef();
@@ -13,8 +14,24 @@ const TableProduct = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productPerPage, setProductPerPage] = useState(4);
   const [select, setSelect] = useState(false);
+  const ids = [];
   const navigate = useNavigate();
-  const TabelProductRef = useRef();
+  const deleteCode = productList.map((product) => ids.push(product.id));
+
+  //-------------------------handleDelete--------------------
+  const handleDelete = () => {
+    fetch("http://mahika.foundation:8080/swp/api/product", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(deleteCode),
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => console.log(error));
+  };
 
   //------------------------Get list products--------------------
   useEffect(() => {
@@ -42,15 +59,6 @@ const TableProduct = () => {
   function handleAdd() {
     navigate("/manageraddproduct");
   }
-
-  //----------------------------HandleModalRef----------------------
-  const handleClick = () => {
-    TabelProductRef.current.showModal();
-  };
-
-  const handleHide = () => {
-    TabelProductRef.current.close();
-  };
 
   //----------------------------Pagination---------------------------
   const lastProductIndex = currentPage * productPerPage;
@@ -98,7 +106,6 @@ const TableProduct = () => {
 
   return (
     <div className="w-10/12 h-5/6 ">
-      <DeleteProduct ref={TabelProductRef} handleHide={handleHide} />
       <div className="text-3xl font-medium py-9">
         <p>Danh sách sản phẩm</p>
       </div>
@@ -138,20 +145,20 @@ const TableProduct = () => {
               </th>
               {select && (
                 <>
-                  <th colspan="6" className={classes.th}>
+                  <th colSpan="6" className={classes.th}>
                     <div className="flex">
                       <p className="font-normal pr-2">
                         Đã chọn <b>tất cả</b> sản phẩm trên trang này
                       </p>
                       <select
-                        onChange={handleClick}
+                        onClick={handleDelete}
                         defaultValue=""
                         className="border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none"
                       >
                         <option value="" disabled>
                           Chọn thao tác
                         </option>
-                        <option>Xóa sản phẩm</option>
+                        <option onClick={handleDelete}>Xóa sản phẩm</option>
                       </select>
                     </div>
                   </th>
@@ -165,6 +172,7 @@ const TableProduct = () => {
                   <th className={classes.th}>Loại sản phẩm</th>
                   <th className={classes.th}>Quầy</th>
                   <th className={classes.th}>Ngày khởi tạo</th>
+                  <th className={classes.th}> </th>
                 </>
               )}
             </tr>
@@ -201,6 +209,13 @@ const TableProduct = () => {
                   <td className={classes.td}>{product.categoryName}</td>
                   <td className={classes.td}>{product.counterNo}</td>
                   <td className={classes.td}>{product.createdDate}</td>
+                  <td className={classes.td}>
+                    {product.isSold === 1 ? (
+                      <img src={Red} alt="Sold" />
+                    ) : (
+                      <img src={Green} alt="Not Sold" />
+                    )}
+                  </td>
                 </tr>
               );
             })}

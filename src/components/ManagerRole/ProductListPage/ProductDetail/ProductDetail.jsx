@@ -3,13 +3,23 @@ import { formatter } from "../../../../util/formatter";
 import DeleteProduct from "../DeleteProduct/DeleteProduct";
 
 const ProductDetail = ({ product }) => {
-  const productInfor = product.list;
+  const productInfor = product;
   const [diamondCriteria, setDiamondCriteria] = useState([]);
   const [selectedDiamond, setSelectedDiamond] = useState({});
+  const [counterList, setCounterList] = useState([]);
+  const [selectedCounter, setSelectedCounter] = useState(
+    productInfor.counterNo
+  );
+  const [materialList, setMaterialList] = useState([]);
+  const [selectedMaterial, setSelectedMaterial] = useState(
+    productInfor.materialName
+  );
+  console.log(selectedMaterial);
   const ids = [productInfor.id];
-  console.log(ids);
   const ProductDetailRef = useRef();
   const diamondControllerRef = useRef();
+  const counterControllerRef = useRef();
+  const materialControllerRef = useRef();
 
   const handleClick = () => {
     ProductDetailRef.current.showModal();
@@ -18,6 +28,51 @@ const ProductDetail = ({ product }) => {
   const handleHide = () => {
     ProductDetailRef.current.close();
   };
+
+  //-----------------------Material information------------------
+  useEffect(() => {
+    materialControllerRef.current?.abort();
+    materialControllerRef.current = new AbortController();
+    const signal = materialControllerRef.current.signal;
+    const handleMaterial = async () => {
+      try {
+        const response = await fetch(
+          "http://mahika.foundation:8080/swp/api/material",
+          { signal }
+        );
+        const dataMaterial = await response.json();
+        setMaterialList(dataMaterial);
+      } catch (err) {}
+    };
+    handleMaterial();
+  }, []);
+
+  const handleMaterialChange = (event) => {
+    setSelectedMaterial(event.target.value);
+  };
+
+  //-----------------------Counter information------------------
+  useEffect(() => {
+    counterControllerRef.current?.abort();
+    counterControllerRef.current = new AbortController();
+    const signal = counterControllerRef.current.signal;
+    const handleCounter = async () => {
+      try {
+        const response = await fetch(
+          "http://mahika.foundation:8080/swp/api/counter",
+          { signal }
+        );
+        const dataCounter = await response.json();
+        setCounterList(dataCounter);
+      } catch (err) {}
+    };
+    handleCounter();
+  }, []);
+
+  const handleCounterChange = (event) => {
+    setSelectedCounter(event.target.value);
+  };
+
   //-----------------------Diamond information------------------
   useEffect(() => {
     diamondControllerRef.current?.abort();
@@ -35,6 +90,14 @@ const ProductDetail = ({ product }) => {
     };
     handleDiamond();
   }, []);
+
+  const handleDiamondSelect = (event) => {
+    const selectedId = event.target.value;
+    const diamond = diamondCriteria.find(
+      (selectedDiamond) => selectedDiamond.gemId === parseInt(selectedId)
+    );
+    setSelectedDiamond(diamond);
+  };
 
   useEffect(() => {
     if (productInfor.gemName) {
@@ -58,13 +121,19 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={productInfor.productCode}
+                defaultValue={productInfor.productCode}
               />
             </div>
             <div>
               <label>Loại vàng</label>
-              <select className="w-full border rounded p-2">
-                <option>{productInfor.materialName}</option>
+              <select
+                className="w-full border rounded p-2"
+                value={selectedMaterial}
+                onChange={handleMaterialChange}
+              >
+                {materialList.map((material) => {
+                  return <option key={material.id}>{material.name}</option>;
+                })}
               </select>
             </div>
             <div>
@@ -72,7 +141,7 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={productInfor.productName}
+                defaultValue={productInfor.productName}
               />
             </div>
             <div>
@@ -80,7 +149,7 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={productInfor.materialWeight}
+                defaultValue={productInfor.materialWeight}
               />
             </div>
             <div>
@@ -88,13 +157,19 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={productInfor.categoryName}
+                defaultValue={productInfor.categoryName}
               />
             </div>
             <div>
               <label>Quầy số</label>
-              <select className="w-full border rounded p-2">
-                <option>{productInfor.counterNo}</option>
+              <select
+                className="w-full border rounded p-2"
+                value={selectedCounter}
+                onChange={handleCounterChange}
+              >
+                {counterList.map((counter) => {
+                  return <option key={counter.id}>{counter.counterNo}</option>;
+                })}
               </select>
             </div>
           </div>
@@ -128,7 +203,7 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={formatter.format(productInfor.price)}
+                defaultValue={formatter.format(productInfor.price)}
               />
             </div>
             <div>
@@ -136,7 +211,7 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={formatter.format(productInfor.gemCost)}
+                defaultValue={formatter.format(productInfor.gemCost)}
               />
             </div>
             <div>
@@ -144,7 +219,7 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={formatter.format(productInfor.productionCost)}
+                defaultValue={formatter.format(productInfor.productionCost)}
               />
             </div>
             <div>
@@ -152,7 +227,7 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={formatter.format(productInfor.materialCost)}
+                defaultValue={formatter.format(productInfor.materialCost)}
               />
             </div>
             <div>
@@ -160,7 +235,7 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={productInfor.priceRate + "%"}
+                defaultValue={productInfor.priceRate + "%"}
               />
             </div>
           </div>
@@ -175,11 +250,12 @@ const ProductDetail = ({ product }) => {
               <label>Tên kim cương</label>
               <select
                 className="w-full border rounded p-2"
-                value={productInfor.gemName}
+                defaultValue={productInfor.gemName}
+                onChange={handleDiamondSelect}
               >
                 <option>Chọn tên kim cương</option>
                 {diamondCriteria.map((diamond) => (
-                  <option key={diamond.gemId} value={diamond.gemName}>
+                  <option key={diamond.gemId} defaultValue={diamond.gemName}>
                     {diamond.gemName}
                   </option>
                 ))}
@@ -233,7 +309,7 @@ const ProductDetail = ({ product }) => {
             type="submit"
             className="w-1/3 h-8 border rounded-md bg-[#0088FF] text-white font-semibold"
           >
-            Lưu
+            Sửa
           </button>
           <DeleteProduct
             ref={ProductDetailRef}

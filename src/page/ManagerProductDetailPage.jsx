@@ -15,7 +15,7 @@ const ManagerProductDetailPage = () => {
         <div className="col-span-5">
           <ManagerHeader />
           <div className="w-full flex justify-center">
-            <ProductDetail product={state} />
+            <ProductDetail product={state.list} />
           </div>
         </div>
       </div>
