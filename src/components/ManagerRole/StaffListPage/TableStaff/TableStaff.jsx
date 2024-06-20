@@ -14,6 +14,7 @@ const TableStaff = () => {
   const currentStaff = filterStaff.slice(firstStaffIndex, lastStaffIndex);
   const [showModal, setShowModal] = useState(false);
   const staffInputFormRef = useRef();
+  const [select, setSelect] = useState(false);
   useEffect(() => {
     const handleStaff = async () => {
       const response = await fetch(

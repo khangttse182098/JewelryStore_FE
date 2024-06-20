@@ -8,7 +8,7 @@ const AddStaffModal = forwardRef(({ onClose }, ref) => {
   const doneModalRef = useRef();
 
   async function onSubmit(submitData) {
-    const submitBody = { ...submitData, ["phone"]: Number(submitData.phone) };
+    const submitBody = { ...submitData, submitData };
 
     try {
       await fetch("http://mahika.foundation:8080/swp/api/user", {
