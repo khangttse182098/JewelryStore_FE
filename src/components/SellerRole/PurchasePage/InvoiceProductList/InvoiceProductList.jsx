@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import { useContext } from "react";
-import RingImg from "/assets/ring.png";
+import { useContext, useState } from "react";
 import classes from "./InvoiceProductList.module.css";
 import { ProductSellInvoiceContext } from "../../../../context/ProductSellInvoiceContext";
 import { ProductSellListContext } from "../../../../context/ProductSellListContext";
 import { formatter } from "../../../../util/formatter";
+import ImageLoader from "../../../../util/ImageLoader";
 
 const InvoiceProductList = ({ product }) => {
   const { addItemToSellInvoice } = useContext(ProductSellInvoiceContext);
@@ -17,12 +17,15 @@ const InvoiceProductList = ({ product }) => {
 
   return (
     <div className={classes.container}>
-      <h1 className={classes.h1}>{product.productName}</h1>
       <div className={classes["content-container"]}>
         <div className={classes["img-container"]}>
-          <img src={RingImg} alt="ring img" />
+          <ImageLoader
+            URL={product.productImage}
+            skeletonStyle={classes["img-skeleton"]}
+          />
         </div>
         <div className={classes["product-info"]}>
+          <h1 className={classes.h1}>{product.productName}</h1>
           <p>Mã sản phẩm: {product.productCode}</p>
           <p>
             Chất liệu:{""}
@@ -35,7 +38,7 @@ const InvoiceProductList = ({ product }) => {
           <p>Giá:{formatter.format(product.price)}</p>
         </div>
         <button className={classes.button} onClick={handleClick}>
-          Mua lại
+          +
         </button>
       </div>
     </div>

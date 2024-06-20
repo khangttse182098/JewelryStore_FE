@@ -98,6 +98,12 @@ body {
   font-weight: 400;
 }
 
+.td-skeleton {
+  border-bottom: none;
+  cursor: pointer;
+  height: 53px;
+}
+
 .checkbox {
   padding-left: 37px;
 }
@@ -127,4 +133,41 @@ body {
   border-style: solid;
   border-bottom-color: #2661ec;
   opacity: 0.9;
+}
+
+.status-received-delivered {
+  width: 160px;
+  height: 35px;
+  padding: 5px;
+  margin: 0 auto;
+  background-color: #eae2f0;
+  outline-color: #876fca;
+  color: #7506e4;
+  outline-style: solid;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.status-success {
+  padding: 5px;
+  width: 153px;
+  margin: 20px;
+  background-color: #f3fcf9;
+  outline-color: #9fedcf;
+  color: #0db473;
+  outline-style: solid;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.status-inProgress {
+  padding: 5px;
+  width: 160px;
+  margin: 20px;
+  background-color: #fffbf2;
+  outline-color: #ffdf9b;
+  color: #e49c06;
+  outline-style: solid;
+  border-radius: 20px;
+  font-weight: 500;
 }

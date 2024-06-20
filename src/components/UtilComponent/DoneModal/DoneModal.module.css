@@ -3,61 +3,75 @@
   display: block;
   margin: 100px auto 0;
   font-size: 18px;
-  border-style: black;
+  border-radius: 20px;
 }
 .btn-modal:hover {
   background-color: #4caf50;
 }
 
-.modal,
-.overlay {
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: fixed;
-}
-
-.overlay {
-  background: rgba(49, 49, 49, 0.8);
-}
 .modal-content {
   position: absolute;
   top: 40%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -30%);
   line-height: 1.4;
   background: #f1f1f1;
-  border-radius: 10px;
+  border-radius: 20px;
   width: 500px;
-  height: 350px;
+  height: 360px;
+  border: none;
 }
+
+.modal-content[open] {
+  animation: show-to-screen 0.5s ease-out;
+}
+
+.model-content[close] {
+  animation: close-from-screen 0.5s ease-in;
+}
+
 .upper-content {
   position: relative;
   background-color: #02bc7d;
-  border-radius: 10px 10px 0 0;
+  border-radius: 20px;
 
   height: 250px;
 }
 .icon {
-  width: 150px;
-  margin: auto;
+  @apply mx-40 w-40;
 }
 .text {
-  color: #ffffff;
-  margin-left: 215px;
-  margin-top: 10px;
+  @apply text-slate-200 mx-44 mt-5 text-xl font-semibold;
 }
 .close-modal {
+  font-weight: 500;
+  font-size: 20px;
   width: 100px;
   height: 50px;
   background-color: #02bc7d;
   margin-top: 25px;
-  margin-left: 200px;
+  margin-left: 185px;
   color: #ffffff;
+  border-radius: 10px;
 }
 .close-modal:hover {
   background-color: #01a46f;
+}
+
+@keyframes show-to-screen {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes close-from-screen {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

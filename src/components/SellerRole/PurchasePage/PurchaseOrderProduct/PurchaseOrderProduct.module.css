@@ -4,17 +4,19 @@
   border-radius: 90px;
   background-color: #dfd8d8;
   margin-bottom: 63px;
-  justify-self: flex-start;
+  display: flex;
+  align-items: center;
 }
 
 .content-container {
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
 .img-container {
-  width: 73px;
-  height: 73px;
+  width: 95px;
+  height: 95px;
 }
 
 .img-container img {
@@ -23,11 +25,12 @@
 }
 
 .product-info {
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .h1 {
-  font-size: 25px;
+  margin-top: 10px;
+  font-size: 15px;
   text-align: center;
 }
 
