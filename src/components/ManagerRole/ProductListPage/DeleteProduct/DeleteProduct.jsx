@@ -8,15 +8,19 @@ const DeleteProduct = forwardRef(function DeleteProduct(
   const navigate = useNavigate();
   //-------------------------deleteCode---------------------
   const handleDelete = () => {
-    fetch(`http://mahika.foundation:8080/swp/api/product/${deleteCode}`, {
+    fetch("http://mahika.foundation:8080/swp/api/product", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(deleteCode), // Ensure proper JSON structure
     })
       .then((res) => res.json())
+      .then(() => {
+        handleHide();
+        navigate("/managerproductlist");
+      })
       .catch((error) => console.log(error));
-    navigate("/managerproductlist");
   };
 
   return (

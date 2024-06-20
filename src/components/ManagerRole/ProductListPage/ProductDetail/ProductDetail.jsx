@@ -4,11 +4,11 @@ import DeleteProduct from "../DeleteProduct/DeleteProduct";
 
 const ProductDetail = ({ product }) => {
   const productInfor = product.list;
-  console.log(productInfor);
   const [diamondCriteria, setDiamondCriteria] = useState([]);
   const [selectedDiamond, setSelectedDiamond] = useState({});
+  const ids = [productInfor.id];
+  console.log(ids);
   const ProductDetailRef = useRef();
-  const ids = productInfor.id;
   const diamondControllerRef = useRef();
 
   const handleClick = () => {

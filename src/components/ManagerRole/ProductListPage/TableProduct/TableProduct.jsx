@@ -3,6 +3,7 @@ import classes from "./TableProduct.module.css";
 import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
 import DeleteProduct from "../DeleteProduct/DeleteProduct";
 import { Link, useNavigate } from "react-router-dom";
+import ImageLoader from "../../../../util/ImageLoader";
 
 const TableProduct = () => {
   const controllerRef = useRef();
@@ -137,7 +138,7 @@ const TableProduct = () => {
               </th>
               {select && (
                 <>
-                  <th colspan="5" className={classes.th}>
+                  <th colspan="6" className={classes.th}>
                     <div className="flex">
                       <p className="font-normal pr-2">
                         Đã chọn <b>tất cả</b> sản phẩm trên trang này
@@ -184,13 +185,17 @@ const TableProduct = () => {
                       name={product.productCode}
                       onChange={handleCheckbox}
                       checked={product?.isChecked || false}
+                      onClick={(event) => event.stopPropagation()}
                     />
                   </td>
-                  <img
-                    src={product.productImage}
-                    className="w-28 h-20"
-                    alt="Jewelry"
-                  />
+                  <td className={classes.td}>
+                    <ImageLoader
+                      URL={product.productImage}
+                      imgStyle="w-28 h-20"
+                      skeletonStyle="w-28 h-20"
+                      alt="Jewelry"
+                    />
+                  </td>
                   <td className={classes.td}>{product.productCode}</td>
                   <td className={classes.td}>{product.productName}</td>
                   <td className={classes.td}>{product.categoryName}</td>
