@@ -44,7 +44,6 @@ select {
 button {
   outline: none;
   color: inherit;
-
   padding: 0;
   cursor: pointer;
 }

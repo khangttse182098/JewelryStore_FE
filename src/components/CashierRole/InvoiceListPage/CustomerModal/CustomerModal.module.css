@@ -1,0 +1,89 @@
+.container {
+  font-family: "Montserrat";
+  width: 863px;
+  height: 430px;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.hr {
+  width: 820px;
+}
+
+.form-container {
+  margin-top: 23px;
+}
+
+.first-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 55px;
+}
+
+.second-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.input-field {
+  font-size: 20px;
+}
+
+.radio-field {
+  font-size: 20px;
+  width: 360px;
+  height: 50px;
+}
+
+.range {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.box {
+  width: 360px;
+  height: 50px;
+  border: #a6abb2 solid 1px;
+  border-radius: 5px;
+}
+
+.close {
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.position-button {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  width: 182px;
+  height: 50px;
+  background: none;
+  color: white;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  outline: inherit;
+  background-color: #0088ff;
+  border-radius: 5px;
+}

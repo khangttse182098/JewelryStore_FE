@@ -18,7 +18,7 @@ const AddStaffModal = forwardRef(({ onClose }, ref) => {
         },
         body: JSON.stringify(submitBody),
       });
-
+      onClose();
       handleOpen();
     } catch (error) {
       console.log(error);
@@ -36,13 +36,13 @@ const AddStaffModal = forwardRef(({ onClose }, ref) => {
       <DoneModal ref={doneModalRef} handleClose={handleClose} />
       <dialog
         ref={ref}
-        className="fixed w-full h-full inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center"
+        className=" w-2/5 translate-x-3/4 absolute inset-y-44 inset-x-auto rounded drop-shadow-xl"
       >
         <form
-          className="w-2/5 px-6 h-auto flex flex-col  bg-white rounded-lg border-solid border-gray-200"
+          className="flex flex-col gap-10 h-full"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <h3 className=" flex flex-col justify-center items-center text-3xl mt-10 font-semibold">
+          <h3 className=" text-center mt-5 text-3xl font-semibold">
             Nhập thông tin nhân viên mới
           </h3>
           <div className="flex flex-col justify-center items-center  ">
@@ -84,7 +84,6 @@ const AddStaffModal = forwardRef(({ onClose }, ref) => {
             <button
               className="mt-10 mb-10 bg-blue-600 w-52 h-10 rounded-lg hover:bg-blue-900 text-white"
               type="submit"
-              onClick={handleOpen}
             >
               Thêm nhân viên mới
             </button>

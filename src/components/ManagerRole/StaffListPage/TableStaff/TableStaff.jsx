@@ -40,10 +40,11 @@ const TableStaff = () => {
     staffInputFormRef.current.showModal();
   }
   function handleHide() {
-    customerInputFormRef.current.close();
+    staffInputFormRef.current.close();
   }
   return (
     <Fragment>
+      <AddStaffModal onClose={handleHide} ref={staffInputFormRef} />
       <div className="w-10/12 h-5/6 mx-auto">
         <div className="text-3xl font-medium py-10">
           <p>Danh sách nhân viên</p>
@@ -147,7 +148,6 @@ const TableStaff = () => {
           />
         </div>
       </div>
-      <AddStaffModal handleHide={handleHide} ref={staffInputFormRef} />
     </Fragment>
   );
 };
