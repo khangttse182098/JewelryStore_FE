@@ -1,14 +1,20 @@
 import classes from "./StaffDetail.module.css";
 import Pen from "../../../../../public/assets/pen.png";
+import React, { useRef } from "react";
+import { useForm } from "react-hook-form";
+import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 
-const StaffDetail = () => {
+const StaffDetail = ({ staff }) => {
+  const { register, handleSubmit } = useForm();
+  const doneModalRef = useRef();
+
   return (
     <>
       {/* Personal Ìnormation */}
       <div className="p-4 w-full">
         <div className="bg-white shadow-md p-4 rounded-md">
           <h2 className="font-semibold text-3xl">Thông tin cá nhân</h2>
-
+          <div>alo</div>
           <div className="grid grid-cols-3 gap-3 text-center mt-4 mb-4">
             <div>
               <label className="text-xl text-gray-700">Họ và tên</label>
@@ -46,111 +52,6 @@ const StaffDetail = () => {
         <div className="bg-white shadow-md p-4 rounded-md mt-4 ">
           <h2 className="font-semibold text-3xl">Hóa đơn gần đây</h2>
           <div className="overflow-y-scroll max-h-[430px]">
-            <div className="grid grid-cols-4 gap-3 text-center mt-10 mb-10">
-              <div>
-                <div className="text-2xl mt-3">INV301</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">17/05/2024 15:04</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">5,000,000đ</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">Đã thanh toán</div>
-              </div>
-            </div>
-            <hr className="w-full my-2" />
-            <div className="grid grid-cols-4 gap-3 text-center mt-10 mb-10">
-              <div>
-                <div className="text-2xl mt-3">INV301</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">17/05/2024 15:04</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">5,000,000đ</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">Đã thanh toán</div>
-              </div>
-            </div>
-            <hr className="w-full my-2" />
-            <div className="grid grid-cols-4 gap-3 text-center mt-10 mb-10">
-              <div>
-                <div className="text-2xl mt-3">INV301</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">17/05/2024 15:04</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">5,000,000đ</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">Đã thanh toán</div>
-              </div>
-            </div>
-            <hr className="w-full my-2" />
-            <div className="grid grid-cols-4 gap-3 text-center mt-10 mb-10">
-              <div>
-                <div className="text-2xl mt-3">INV301</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">17/05/2024 15:04</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">5,000,000đ</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">Đã thanh toán</div>
-              </div>
-            </div>
-            <hr className="w-full my-2" />
-            <div className="grid grid-cols-4 gap-3 text-center mt-10 mb-10">
-              <div>
-                <div className="text-2xl mt-3">INV301</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">17/05/2024 15:04</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">5,000,000đ</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">Đã thanh toán</div>
-              </div>
-            </div>
-            <hr className="w-full my-2" />
-            <div className="grid grid-cols-4 gap-3 text-center mt-10 mb-10">
-              <div>
-                <div className="text-2xl mt-3">INV301</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">17/05/2024 15:04</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">5,000,000đ</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">Đã thanh toán</div>
-              </div>
-            </div>
-            <hr className="w-full my-2" />
-            <div className="grid grid-cols-4 gap-3 text-center mt-10 mb-10">
-              <div>
-                <div className="text-2xl mt-3">INV301</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">17/05/2024 15:04</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">5,000,000đ</div>
-              </div>
-              <div>
-                <div className="text-2xl mt-3">Đã thanh toán</div>
-              </div>
-            </div>
-            <hr className="w-full my-2" />
             <div className="grid grid-cols-4 gap-3 text-center mt-10 mb-10">
               <div>
                 <div className="text-2xl mt-3">INV301</div>
