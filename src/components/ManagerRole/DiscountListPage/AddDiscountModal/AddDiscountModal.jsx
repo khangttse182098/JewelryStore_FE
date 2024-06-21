@@ -3,10 +3,13 @@ import { useForm } from "react-hook-form";
 import classes from "./AddDiscountModal.module.css";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 import { formatDate } from "../../../../util/formateDate";
+import ErrorModal from "../../../UtilComponent/ErrorModal/ErrorModal";
 
 const AddDiscountModal = forwardRef(({ onClose }, ref) => {
   const { register, handleSubmit } = useForm();
   const doneModalRef = useRef();
+  const errorModalRef = useRef();
+  const [errorMsg, setErrorMsg] = useState(null);
 
   async function onSubmit(submitData) {
     const requestBody = {
@@ -17,7 +20,7 @@ const AddDiscountModal = forwardRef(({ onClose }, ref) => {
     };
     console.log(requestBody);
     try {
-      await fetch(
+      const res = await fetch(
         "http://mahika.foundation:8080/swp/api/discount/information",
         {
           method: "POST",
@@ -27,10 +30,17 @@ const AddDiscountModal = forwardRef(({ onClose }, ref) => {
           body: JSON.stringify(requestBody),
         }
       );
-      onClose();
-      handleOpen();
+      const obj = await res.json();
+      if (!obj.data) {
+        onClose();
+        handleOpenErrorModal();
+        setErrorMsg(obj.message);
+      } else {
+        onClose();
+        handleOpen();
+      }
     } catch (error) {
-      console.log(error);
+      console.log("Loi rrrr");
     }
   }
 
@@ -42,9 +52,22 @@ const AddDiscountModal = forwardRef(({ onClose }, ref) => {
     doneModalRef.current.close();
   }
 
+  function handleOpenErrorModal() {
+    errorModalRef.current.showModal();
+  }
+
+  function handleCLoseErrorModal() {
+    errorModalRef.current.close();
+  }
+
   return (
     <>
       <DoneModal ref={doneModalRef} handleClose={handleClose} />
+      <ErrorModal
+        ref={errorModalRef}
+        handleClose={handleCLoseErrorModal}
+        msg={errorMsg}
+      />
       <dialog
         ref={ref}
         className="h-1/2 w-1/2 absolute inset-y-44 inset-x-auto rounded drop-shadow-xl"
