@@ -192,9 +192,7 @@ const TableInvoice = () => {
                         />
                       </td>
                       <td className={classes.td}>{list.invoiceCode}</td>
-                      <td className={classes.td}>
-                        {new Date(list.createdDate).toLocaleString()}
-                      </td>
+                      <td className={classes.td}>{list.createdDate}</td>
                       <td className={classes.td}>{list.customerName}</td>
                       <td className={classes.td}>{list.invoiceType}</td>
                       <td className={classes.td}>{list.staffName}</td>

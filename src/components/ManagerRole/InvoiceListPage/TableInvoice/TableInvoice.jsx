@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import classes from "./TableInvoice.module.css";
 import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
+import { useNavigate } from "react-router-dom";
 
 const TableProduct = () => {
   const controllerRef = useRef();
@@ -10,6 +11,7 @@ const TableProduct = () => {
   const [select, setSelect] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderPerPage, setOrderPerPage] = useState(4);
+  const navigate = useNavigate();
 
   //------------------------Get list orders--------------------
   useEffect(() => {
@@ -71,6 +73,10 @@ const TableProduct = () => {
     }
   };
 
+  function handleNavigate(order) {
+    navigate("/managerinvoicedetail", { state: { order } });
+  }
+
   return (
     <div className="w-10/12 h-5/6 ">
       <div className="text-3xl font-medium py-9">
@@ -124,6 +130,9 @@ const TableProduct = () => {
                     order?.isChecked ? classes.select : ""
                   }`}
                   key={order.invoiceCode}
+                  onClick={() => {
+                    handleNavigate(order);
+                  }}
                 >
                   <td className={classes.td}>
                     <input
