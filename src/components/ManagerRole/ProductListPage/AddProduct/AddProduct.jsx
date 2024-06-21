@@ -8,6 +8,7 @@ const AddProduct = () => {
   const [diamondCriteria, setDiamondCriteria] = useState([]);
   const [categoryName, setCategoryName] = useState([]);
   const [selectedDiamond, setSelectedDiamond] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [materialId, setMaterialId] = useState(null);
   const counterControllerRef = useRef();
   const goldControllerRef = useRef();
@@ -18,6 +19,20 @@ const AddProduct = () => {
 
   //---------------------------SubmitForm--------------------
   async function onSubmit(submitData) {
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    try {
+      const res = await fetch(
+        "http://mahika.foundation:8080/swp/api/file/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await res.json();
+    } catch (error) {
+      console.log(error);
+    }
     const requestBody = {
       ...submitData,
       ["counterId"]: Number(submitData.counterId),
@@ -28,6 +43,7 @@ const AddProduct = () => {
       ["materialWeight"]: Number(submitData.materialWeight),
       ["priceRate"]: Number(submitData.priceRate),
       ["productionCost"]: Number(submitData.productionCost),
+      ["file"]: selectedFile,
     };
     console.log(requestBody);
     try {
@@ -48,6 +64,14 @@ const AddProduct = () => {
     console.log(materialId);
     setMaterialId(Number(materialId));
   }
+
+  //---------------------------SubmitFileImage---------------
+  const handleFileChange = (event) => {
+    let file = event.target.files[0];
+    file = new File([file], file.name, { type: file.type });
+    setSelectedFile(file);
+  };
+
   //---------------------------CategoryName------------------
   useEffect(() => {
     categoryControllerRef.current?.abort();
@@ -207,7 +231,7 @@ const AddProduct = () => {
                 Chọn loại sản phẩm
               </option>
               {categoryName.map((category) => {
-                return <option>{category}</option>;
+                return <option key={category}>{category}</option>;
               })}
             </select>
           </div>
@@ -235,10 +259,14 @@ const AddProduct = () => {
       <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
         <div className="flex justify-between">
           <h2 className="text-xl font-semibold mb-4">Ảnh sản phẩm</h2>
-          <p className="text-[#0088FF] cursor-pointer">Thêm ảnh</p>
         </div>
         <div className="flex flex-col items-center justify-center border-dashed border-2 border-gray-300 p-4 rounded">
-          <input className="mt-4 cursor-pointer" type="file" />
+          <input
+            className="mt-4 cursor-pointer"
+            type="file"
+            name="upfile"
+            onChange={handleFileChange}
+          />
         </div>
         <div className="mt-4">
           <label>Danh mục</label> <br />
