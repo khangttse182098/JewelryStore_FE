@@ -15,6 +15,7 @@ import ManagerStaffPage from "./page/ManagerStaffPage";
 import ManagerDiscountDetailPage from "./page/ManagerDiscountDetailPage";
 import ManagerMaterialPage from "./page/ManagerMaterialPage";
 import ManagerMaterialDetailPage from "./page/ManagerMaterialDetailPage";
+import ManagerMaterialHistoryPage from "./page/ManagerMaterialHistoryPage";
 
 function App() {
   return (
@@ -39,6 +40,10 @@ function App() {
         <Route
           path="/managermaterialdetail"
           element={<ManagerMaterialDetailPage />}
+        />
+        <Route
+          path="/managermaterialhistory"
+          element={<ManagerMaterialHistoryPage />}
         />
       </Routes>
     </SkeletonTheme>

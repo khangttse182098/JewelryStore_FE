@@ -4,10 +4,12 @@ import { useForm } from "react-hook-form";
 import { formatDate } from "../../../../util/formateDate";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 import toDatetimeLocal from "../../../../util/toDateTimeLocal";
+import { useNavigate } from "react-router-dom";
 
 const DetailMaterial = ({ material }) => {
   const { register, handleSubmit } = useForm();
   const doneModalRef = useRef();
+  const navigate = useNavigate();
   const onSubmit = async (submitData) => {
     const reqBody = {
       materialId: material.id,
@@ -37,6 +39,7 @@ const DetailMaterial = ({ material }) => {
   }
   function handleClose() {
     doneModalRef.current.close();
+    navigate(-1);
   }
   return (
     <>
@@ -102,7 +105,7 @@ const DetailMaterial = ({ material }) => {
               type="submit"
               className="p-5 w-[40%] mx-auto mb-5 rounded bg-blue-500 hover:bg-blue-600 text-2xl font-medium text-slate-200 col-span-2"
             >
-              Sửa
+              Thêm
             </button>
           </div>
         </div>
