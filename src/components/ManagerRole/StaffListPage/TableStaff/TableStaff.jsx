@@ -43,7 +43,7 @@ const TableStaff = () => {
     }
   };
   const handleDelete = () => {
-    fetch("http://mahika.foundation:8080/swp/api/user/delete-{id}", {
+    fetch(`http://mahika.foundation:8080/swp/api/user/delete-${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -62,8 +62,8 @@ const TableStaff = () => {
   function handleHide() {
     staffInputFormRef.current.close();
   }
-  function handleNavigate(list) {
-    navigate("/managerstaffdetail", { state: { list } });
+  function handleNavigate(staff) {
+    navigate("/managerstaffdetail", { state: { staff } });
   }
 
   const handleCheckbox = (event) => {
