@@ -14,6 +14,7 @@ import ManagerDiscountPage from "./page/ManagerDiscountPage";
 import ManagerStaffPage from "./page/ManagerStaffPage";
 import ManagerDiscountDetailPage from "./page/ManagerDiscountDetailPage";
 import ManagerStaffDetailPage from "./page/ManagerStaffDetailPage";
+import ManagerCustomerPage from "./page/ManagerCustomerPage";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           path="/managerstaffdetail"
           element={<ManagerStaffDetailPage />}
         />
+        <Route path="/managercustomerlist" element={<ManagerCustomerPage />} />
       </Routes>
     </SkeletonTheme>
   );
