@@ -35,7 +35,7 @@ const SignInForm = () => {
           navigate("/invoicelist");
           setIsWrong(false);
         } else if (data.roleCode === "MANAGER") {
-          navigate("/managerproductlist");
+          navigate("/manager/chart");
           setIsWrong(false);
         } else {
           setIsWrong(true);

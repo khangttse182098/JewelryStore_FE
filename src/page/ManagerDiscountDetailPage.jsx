@@ -11,7 +11,7 @@ const ManagerDiscountDetailPage = () => {
     <>
       <div className="grid grid-cols-6 grid-rows-none gap-0">
         <div className="col-span-1">
-          <ManagerSidebar />
+          <ManagerSidebar activePage="Khuyến mãi" />
         </div>
         <div className="col-span-5 flex flex-col">
           <ManagerHeader />
