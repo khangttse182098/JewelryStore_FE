@@ -17,8 +17,9 @@ const ManagerSidebar = ({ activePage }) => {
       <div className="font-normal text-xl text-slate-50 flex flex-col pl-1 pt-8 ">
         <button
           className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
-            activePage === "Danh sách hóa đơn" && classes.active
+            activePage === "Hóa đơn" && classes.active
           }`}
+          onClick={() => navigate("/managerinvoicelist")}
         >
           <img src={InvoiceList} alt="Invoice icon" className="pl-4" />
           <p>Hóa đơn</p>

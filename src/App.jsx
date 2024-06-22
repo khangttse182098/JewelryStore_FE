@@ -20,6 +20,8 @@ import ManagerMaterialDetailPage from "./page/ManagerMaterialDetailPage";
 import ManagerMaterialHistoryPage from "./page/ManagerMaterialHistoryPage";
 import TestChart from "./components/ManagerRole/Dashboard/DashboardChart";
 import DashBoardPage from "./page/DashBoardPage";
+import ManagerInvoicePage from "./page/ManagerInvoicePage";
+import ManagerInvoiceDetailPage from "./page/ManagerInvoiceDetailPage";
 
 function App() {
   return (
@@ -55,6 +57,11 @@ function App() {
           element={<ManagerMaterialHistoryPage />}
         />
         <Route path="/manager/chart" element={<DashBoardPage />} />
+        <Route path="/managerinvoicelist" element={<ManagerInvoicePage />} />
+        <Route
+          path="/managerinvoicedetail"
+          element={<ManagerInvoiceDetailPage />}
+        />
       </Routes>
     </SkeletonTheme>
   );
