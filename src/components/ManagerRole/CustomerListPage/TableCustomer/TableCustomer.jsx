@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const TableCustomer = () => {
   const [customerList, setCustomerList] = useState([]);
-  const [filterCustomer, setFilterCustomer] = useState([]);
+  const [filterCustomer, setFilterCustomer] = useState([...customerList]);
   const [currentPage, setCurrentPage] = useState(1);
   const [customerPerPage, setCustomerPerPage] = useState(5);
   const lastCustomerIndex = currentPage * customerPerPage;
@@ -16,6 +16,7 @@ const TableCustomer = () => {
     lastCustomerIndex
   );
   const navigate = useNavigate();
+  const [searchField, setSearchField] = useState("");
 
   useEffect(() => {
     const handleCustomer = async () => {
@@ -36,6 +37,21 @@ const TableCustomer = () => {
       setFilterCustomer([...customerList]);
     }
   };
+
+  const handleSearch = (event) => {
+    const searchFieldString = event.target.value.toLowerCase();
+    setSearchField(searchFieldString);
+  };
+
+  useEffect(() => {
+    const newFilterCustomer = customerList.filter((customer) => {
+      return (
+        customer.fullName.toLowerCase().includes(searchField) ||
+        customer.phoneNumber.toLowerCase().includes(searchField)
+      );
+    });
+    setFilterCustomer(newFilterCustomer);
+  }, [searchField, customerList]);
 
   function handleNavigate(customer) {
     navigate("/managercustomerdetail", { state: { customer } });
@@ -70,6 +86,7 @@ const TableCustomer = () => {
               className="h-37 w-583 rounded-10 border-double border-[#dfd8d8] outline-none pl-11"
               type="search"
               placeholder="Tìm kiếm khách hàng"
+              onChange={handleSearch}
             />
           </div>
           <table className="w-full border-collapse">
