@@ -38,7 +38,7 @@ const TableCustomer = () => {
   };
 
   function handleNavigate(customer) {
-    navigate("/managercustomerlist", { state: { customer } });
+    navigate("/managercustomerdetail", { state: { customer } });
   }
 
   return (
