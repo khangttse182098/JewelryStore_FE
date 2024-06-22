@@ -8,7 +8,7 @@ import { RepurchaseContext } from "../../../../context/RepurchaseContext";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 
 const CustomerInputForm = forwardRef(function CustomerInputForm(
-  { handleHide, isPurchase },
+  { handleHide, isPurchase, discountId },
   ref
 ) {
   const { itemPurchase, setItemPurchase } = useContext(ProductPurchaseContext);
@@ -32,6 +32,7 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
   });
 
   const sellOrderBody = {
+    discountId,
     productId: [...productIdList],
     fullName: customerInfor.fullName,
     phoneNumber: customerInfor.phoneNumber,
