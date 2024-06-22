@@ -19,6 +19,7 @@ const TableStaff = () => {
   const navigate = useNavigate();
   const ids = [];
   const deleteCode = staffList.map((staff) => ids.push(staff.id));
+  const [searchField, setSearchField] = useState("");
 
   useEffect(() => {
     const handleStaff = async () => {
@@ -82,6 +83,22 @@ const TableStaff = () => {
     }
   };
 
+  const handleSearch = (event) => {
+    const searchFieldString = event.target.value.toLowerCase();
+    setSearchField(searchFieldString);
+  };
+
+  useEffect(() => {
+    const newFilterStaff = staffList.filter((staff) => {
+      return (
+        staff.fullName.toLowerCase().includes(searchField) ||
+        staff.phone.toLowerCase().includes(searchField) ||
+        staff.role.toLowerCase().includes(searchField)
+      );
+    });
+    setFilterStaff(newFilterStaff);
+  }, [searchField, staffList]);
+
   return (
     <Fragment>
       <AddStaffModal onClose={handleHide} ref={staffInputFormRef} />
@@ -129,6 +146,7 @@ const TableStaff = () => {
               className="h-37 w-583 rounded-10 border-double border-[#dfd8d8] outline-none pl-11"
               type="search"
               placeholder="Tìm kiếm nhân viên"
+              onChange={handleSearch}
             />
             <button
               className="w-40 h-10 bg-blue-600 rounded-md text-white ml-10 hover:bg-blue-900 text-xl"
