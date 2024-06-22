@@ -16,6 +16,8 @@ import ManagerDiscountDetailPage from "./page/ManagerDiscountDetailPage";
 import ManagerMaterialPage from "./page/ManagerMaterialPage";
 import ManagerMaterialDetailPage from "./page/ManagerMaterialDetailPage";
 import ManagerMaterialHistoryPage from "./page/ManagerMaterialHistoryPage";
+import TestChart from "./components/ManagerRole/Dashboard/DashboardChart";
+import DashBoardPage from "./page/DashBoardPage";
 
 function App() {
   return (
@@ -45,6 +47,7 @@ function App() {
           path="/managermaterialhistory"
           element={<ManagerMaterialHistoryPage />}
         />
+        <Route path="/manager/chart" element={<DashBoardPage />} />
       </Routes>
     </SkeletonTheme>
   );

@@ -75,7 +75,7 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
   }
 
   const URL = !isPurchase
-    ? "http://mahika.foundation:8080/swp/api/sell-order"
+    ? "http://mahika.foundation:8080/swp/api/sell-order/information"
     : "http://mahika.foundation:8080/swp/api/purchase-order/no-invoice";
 
   const REQ_BODY = !isPurchase ? sellOrderBody : purchaseOrderBody;

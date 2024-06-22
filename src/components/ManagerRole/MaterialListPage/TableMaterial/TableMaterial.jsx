@@ -45,10 +45,10 @@ const TableMaterial = () => {
     addMaterialModalRef.current.showModal();
   };
 
-  // const handleHide = () => {
-  //   handleMaterial();
-  //   addMaterialModalRef.current.close();
-  // };
+  const handleHide = () => {
+    handleMaterial();
+    addMaterialModalRef.current.close();
+  };
 
   let skeletonRowList = [];
   for (let index = 0; index < materialPerPage; index++) {
@@ -61,10 +61,6 @@ const TableMaterial = () => {
     );
   }
 
-  // function handleOpen() {
-  //   doneModelRef.current.showModal();
-  // }
-
   function handleClose() {
     doneModelRef.current.close();
   }
@@ -72,6 +68,7 @@ const TableMaterial = () => {
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
       <DoneModal ref={doneModelRef} handleClose={handleClose} />
+      <AddMaterialModal ref={addMaterialModalRef} onClose={handleHide} />
       <div className="w-10/12 h-5/6 mx-auto">
         <div className="text-3xl font-medium py-10 flex justify-between">
           <p>Giá vàng thời điểm</p>
