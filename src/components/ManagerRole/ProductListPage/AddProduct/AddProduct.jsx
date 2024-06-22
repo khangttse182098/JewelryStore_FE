@@ -9,7 +9,6 @@ const AddProduct = () => {
   const [categoryName, setCategoryName] = useState([]);
   const [selectedDiamond, setSelectedDiamond] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [materialId, setMaterialId] = useState(null);
   const counterControllerRef = useRef();
   const goldControllerRef = useRef();
   const diamondControllerRef = useRef();
@@ -36,7 +35,7 @@ const AddProduct = () => {
     const requestBody = {
       ...submitData,
       ["counterId"]: Number(submitData.counterId),
-      ["materialId"]: materialId,
+      ["materialId"]: Number(submitData.materialId),
       ["gemCost"]: Number(submitData.gemCost),
       ["gemId"]: Number(submitData.gemId),
       ["materialCost"]: Number(submitData.materialCost),
@@ -58,11 +57,6 @@ const AddProduct = () => {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  function handleSetId(materialId) {
-    console.log(materialId);
-    setMaterialId(Number(materialId));
   }
 
   //---------------------------SubmitFileImage---------------
@@ -195,10 +189,12 @@ const AddProduct = () => {
               {...register("materialId")}
               defaultValue=""
             >
-              <option value="">Chọn loại vàng</option>
+              <option value="" disabled>
+                Chọn loại vàng
+              </option>
               {goldList.map((type) => {
                 return (
-                  <option key={type.id} onClick={() => handleSetId(type.id)}>
+                  <option value={type.id} key={type.id}>
                     {type.name}
                   </option>
                 );

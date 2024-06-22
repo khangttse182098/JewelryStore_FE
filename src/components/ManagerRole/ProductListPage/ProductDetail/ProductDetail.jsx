@@ -4,8 +4,9 @@ import DeleteProduct from "../DeleteProduct/DeleteProduct";
 
 const ProductDetail = ({ product }) => {
   const productInfor = product;
+  // console.log(productInfor);
   const [diamondCriteria, setDiamondCriteria] = useState([]);
-  const [selectedDiamond, setSelectedDiamond] = useState({});
+  const [selectedDiamond, setSelectedDiamond] = useState(productInfor.gemName);
   const [counterList, setCounterList] = useState([]);
   const [selectedCounter, setSelectedCounter] = useState(
     productInfor.counterNo
@@ -14,7 +15,6 @@ const ProductDetail = ({ product }) => {
   const [selectedMaterial, setSelectedMaterial] = useState(
     productInfor.materialName
   );
-  console.log(selectedMaterial);
   const ids = [productInfor.id];
   const ProductDetailRef = useRef();
   const diamondControllerRef = useRef();
@@ -29,6 +29,17 @@ const ProductDetail = ({ product }) => {
     ProductDetailRef.current.close();
   };
 
+  useEffect(() => {
+    if (selectedMaterial) {
+      setSelectedMaterial(selectedMaterial);
+    }
+  }, [selectedMaterial]);
+
+  useEffect(() => {
+    if (selectedCounter) {
+      setSelectedCounter(selectedCounter);
+    }
+  }, [selectedCounter]);
   //-----------------------Material information------------------
   useEffect(() => {
     materialControllerRef.current?.abort();
@@ -46,10 +57,6 @@ const ProductDetail = ({ product }) => {
     };
     handleMaterial();
   }, []);
-
-  const handleMaterialChange = (event) => {
-    setSelectedMaterial(event.target.value);
-  };
 
   //-----------------------Counter information------------------
   useEffect(() => {
@@ -69,10 +76,6 @@ const ProductDetail = ({ product }) => {
     handleCounter();
   }, []);
 
-  const handleCounterChange = (event) => {
-    setSelectedCounter(event.target.value);
-  };
-
   //-----------------------Diamond information------------------
   useEffect(() => {
     diamondControllerRef.current?.abort();
@@ -91,10 +94,11 @@ const ProductDetail = ({ product }) => {
     handleDiamond();
   }, []);
 
+  //Define what is the current gem name of the product
   const handleDiamondSelect = (event) => {
-    const selectedId = event.target.value;
+    const selectedName = event.target.value;
     const diamond = diamondCriteria.find(
-      (selectedDiamond) => selectedDiamond.gemId === parseInt(selectedId)
+      (selectedDiamond) => selectedDiamond.gemName === selectedName
     );
     setSelectedDiamond(diamond);
   };
@@ -124,18 +128,34 @@ const ProductDetail = ({ product }) => {
                 defaultValue={productInfor.productCode}
               />
             </div>
-            <div>
-              <label>Loại vàng</label>
-              <select
-                className="w-full border rounded p-2"
-                value={selectedMaterial}
-                onChange={handleMaterialChange}
-              >
-                {materialList.map((material) => {
-                  return <option key={material.id}>{material.name}</option>;
-                })}
-              </select>
-            </div>
+            {selectedMaterial === null ? (
+              <div>
+                <label>Loại vàng</label>
+                <input
+                  value="Không có"
+                  className="w-full border rounded p-2"
+                  readOnly
+                />
+              </div>
+            ) : (
+              <div>
+                <label>Loại vàng</label>
+                <select
+                  className="w-full border rounded p-2"
+                  value={selectedMaterial}
+                  onChange={(event) => setSelectedMaterial(event.target.value)}
+                >
+                  <option>Chọn loại vàng</option>
+                  {materialList.map((material) => {
+                    return (
+                      <option key={material.id} value={material.name}>
+                        {material.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            )}
             <div>
               <label>Tên sản phẩm</label>
               <input
@@ -144,14 +164,21 @@ const ProductDetail = ({ product }) => {
                 defaultValue={productInfor.productName}
               />
             </div>
-            <div>
-              <label>Khối lượng vàng</label>
-              <input
-                className="w-full border rounded p-2"
-                type="text"
-                defaultValue={productInfor.materialWeight}
-              />
-            </div>
+            {productInfor.materialWeight === null ? (
+              <div>
+                <label>Khối lượng vàng</label>
+                <input className="w-full border rounded p-2" value="Không có" />
+              </div>
+            ) : (
+              <div>
+                <label>Khối lượng vàng</label>
+                <input
+                  className="w-full border rounded p-2"
+                  type="text"
+                  defaultValue={productInfor.materialWeight}
+                />
+              </div>
+            )}
             <div>
               <label>Loại sản phẩm</label>
               <input
@@ -165,7 +192,7 @@ const ProductDetail = ({ product }) => {
               <select
                 className="w-full border rounded p-2"
                 value={selectedCounter}
-                onChange={handleCounterChange}
+                onChange={(event) => setSelectedCounter(event.target.value)}
               >
                 {counterList.map((counter) => {
                   return <option key={counter.id}>{counter.counterNo}</option>;
@@ -250,14 +277,14 @@ const ProductDetail = ({ product }) => {
               <label>Tên kim cương</label>
               <select
                 className="w-full border rounded p-2"
-                defaultValue={productInfor.gemName}
+                value={productInfor.gemName}
                 onChange={handleDiamondSelect}
               >
-                <option>Chọn tên kim cương</option>
+                <option value="" disabled>
+                  Chọn tên kim cương
+                </option>
                 {diamondCriteria.map((diamond) => (
-                  <option key={diamond.gemId} defaultValue={diamond.gemName}>
-                    {diamond.gemName}
-                  </option>
+                  <option key={diamond.gemId}>{diamond.gemName}</option>
                 ))}
               </select>
             </div>
@@ -266,8 +293,7 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={selectedDiamond?.origin || ""}
-                readOnly
+                defaultValue={selectedDiamond?.origin || ""}
               />
             </div>
             <div>
@@ -275,7 +301,7 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={selectedDiamond?.cut || ""}
+                defaultValue={selectedDiamond?.cut || ""}
               />
             </div>
             <div>
@@ -283,7 +309,7 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={selectedDiamond?.caratWeight || ""}
+                defaultValue={selectedDiamond?.caratWeight || ""}
               />
             </div>
             <div>
@@ -291,7 +317,7 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={selectedDiamond?.clarity || ""}
+                defaultValue={selectedDiamond?.clarity || ""}
               />
             </div>
             <div>
@@ -299,7 +325,7 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                value={selectedDiamond?.color || ""}
+                defaultValue={selectedDiamond?.color || ""}
               />
             </div>
           </div>
