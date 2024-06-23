@@ -17,9 +17,9 @@ const TableStaff = () => {
   const staffInputFormRef = useRef();
   const [select, setSelect] = useState(false);
   const navigate = useNavigate();
-  const ids = [];
-  const deleteCode = staffList.map((staff) => ids.push(staff.id));
   const [searchField, setSearchField] = useState("");
+  const [currentStatus, setCurrentStatus] = useState("Tất cả");
+  const [selectedIds, setSelectedIds] = useState([]);
 
   useEffect(() => {
     const handleStaff = async () => {
@@ -28,11 +28,11 @@ const TableStaff = () => {
       );
       const data = await response.json();
       setStaffList(data);
+      setFilterStaff(data);
     };
     handleStaff();
   }, []);
 
-  const [currentStatus, setCurrentStatus] = useState("Tất cả");
   const handleStatusOption = (event) => {
     const status = event.target.getAttribute("status");
     setCurrentStatus(status);
@@ -43,26 +43,35 @@ const TableStaff = () => {
       setFilterStaff(statusStaff);
     }
   };
-  const handleDelete = () => {
-    fetch(`http://mahika.foundation:8080/swp/api/user/delete-${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(deleteCode),
-    })
-      .then((res) => {
-        console.log(res);
+
+  const handleDelete = async () => {
+    const deletePromises = selectedIds.map((id) =>
+      fetch(`http://mahika.foundation:8080/swp/api/user/delete-${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .catch((error) => console.log(error));
+    );
+    await Promise.all(deletePromises);
+    setStaffList((prevList) =>
+      prevList.filter((staff) => !selectedIds.includes(staff.id))
+    );
+    setFilterStaff((prevList) =>
+      prevList.filter((staff) => !selectedIds.includes(staff.id))
+    );
+    setSelectedIds([]);
+    setSelect(false);
   };
 
   function handleClick() {
     staffInputFormRef.current.showModal();
   }
+
   function handleHide() {
     staffInputFormRef.current.close();
   }
+
   function handleNavigate(staff) {
     navigate("/managerstaffdetail", { state: { staff } });
   }
@@ -71,15 +80,13 @@ const TableStaff = () => {
     const { name, checked } = event.target;
     if (name === "allSelect") {
       setSelect(checked);
-      const tempStaff = staffList.map((staff) => {
-        return { ...staff, isChecked: checked };
-      });
-      setStaffList(tempStaff);
+      setSelectedIds(checked ? filterStaff.map((staff) => staff.id) : []);
     } else {
-      const tempStaff = staffList.map((staff) => {
-        return staff.id === name ? { ...staff, isChecked: checked } : staff;
-      });
-      setStaffList(tempStaff);
+      setSelectedIds((prevSelectedIds) =>
+        checked
+          ? [...prevSelectedIds, name]
+          : prevSelectedIds.filter((id) => id !== name)
+      );
     }
   };
 
@@ -111,28 +118,20 @@ const TableStaff = () => {
           <div>
             <button
               className={`${"h-12 w-48 rounded-t-lg border-white border-b-2  bg-white text-center text-gray-500 font-montserrat text-base hover:border-b-2 hover:border-blue-600 hover:text-blue-600 cursor-pointer"}
-              ${currentStaff === "Tất cả" ? classes.current : ""}`}
+              ${currentStatus === "Tất cả" ? classes.current : ""}`}
               status="Tất cả"
               onClick={handleStatusOption}
             >
               Tất cả
             </button>
 
-            {["Đang làm việc"].map((status) => (
+            {["Đang làm việc", "Đang tạm nghỉ"].map((status) => (
               <button
                 key={status}
-                className="h-12 w-48 rounded-t-lg border-white border-b-2  bg-white text-center text-gray-500 font-montserrat text-base hover:border-b-2 hover:border-blue-600 hover:text-blue-600 cursor-pointer"
-                status="Đang làm việc"
-                onClick={handleStatusOption}
-              >
-                {status}
-              </button>
-            ))}
-            {["Đang tạm nghỉ"].map((status) => (
-              <button
-                key={status}
-                className="h-12 w-48 rounded-t-lg border-white border-b-2  bg-white text-center text-gray-500 font-montserrat text-base hover:border-b-2 hover:border-blue-600 hover:text-blue-600 cursor-pointer"
-                status="Đang tạm nghỉ"
+                className={`h-12 w-48 rounded-t-lg border-white border-b-2  bg-white text-center text-gray-500 font-montserrat text-base hover:border-b-2 hover:border-blue-600 hover:text-blue-600 cursor-pointer ${
+                  currentStatus === status ? classes.current : ""
+                }`}
+                status={status}
                 onClick={handleStatusOption}
               >
                 {status}
@@ -157,7 +156,7 @@ const TableStaff = () => {
           </div>
           <table className="w-full border-collapse">
             <thead>
-              <tr className={classes.tr} onChange={handleCheckbox}>
+              <tr className={classes.tr}>
                 <th className={classes.th}>
                   <input
                     type="checkbox"
@@ -166,28 +165,21 @@ const TableStaff = () => {
                     checked={select}
                   />
                 </th>
-                {select && (
-                  <>
-                    <th colSpan="6" className={classes.th}>
-                      <div className="flex">
-                        <p className="font-normal pr-2">
-                          Đã chọn <b>tất cả</b> sản phẩm trên trang này
-                        </p>
-                        <select
-                          onClick={handleDelete}
-                          defaultValue=""
-                          className="border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none"
-                        >
-                          <option value="" disabled>
-                            Chọn thao tác
-                          </option>
-                          <option onClick={handleDelete}>Xóa sản phẩm</option>
-                        </select>
-                      </div>
-                    </th>
-                  </>
-                )}
-                {!select && (
+                {selectedIds.length > 0 ? (
+                  <th colSpan="5" className={classes.th}>
+                    <div className="flex">
+                      <p className="font-normal pr-2">
+                        Đã chọn <b>{selectedIds.length}</b> nhân viên
+                      </p>
+                      <button
+                        onClick={handleDelete}
+                        className="border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none px-2"
+                      >
+                        Xóa nhân viên
+                      </button>
+                    </div>
+                  </th>
+                ) : (
                   <>
                     <th className={classes.th}>Tên nhân viên</th>
                     <th className={classes.th}>Vị trí</th>
@@ -210,7 +202,7 @@ const TableStaff = () => {
                 return (
                   <tr
                     className={`${classes.tr} ${
-                      staff?.isChecked ? classes.select : ""
+                      selectedIds.includes(staff.id) ? classes.select : ""
                     }`}
                     key={staff.id}
                     onClick={() => handleNavigate(staff)}
@@ -220,7 +212,7 @@ const TableStaff = () => {
                         type="checkbox"
                         name={staff.id}
                         onChange={handleCheckbox}
-                        checked={staff?.isChecked || false}
+                        checked={selectedIds.includes(staff.id)}
                         onClick={(event) => event.stopPropagation()}
                       />
                     </td>
@@ -251,4 +243,5 @@ const TableStaff = () => {
     </Fragment>
   );
 };
+
 export default TableStaff;
