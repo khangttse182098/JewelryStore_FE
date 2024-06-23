@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { formatter } from "../../../../util/formatter";
 import DeleteProduct from "../DeleteProduct/DeleteProduct";
+import { useForm } from "react-hook-form";
 
 const ProductDetail = ({ product }) => {
   const productInfor = product;
-  // console.log(productInfor);
+  console.log(productInfor);
   const [diamondCriteria, setDiamondCriteria] = useState([]);
   const [selectedDiamond, setSelectedDiamond] = useState(productInfor.gemName);
   const [counterList, setCounterList] = useState([]);
   const [selectedCounter, setSelectedCounter] = useState(
     productInfor.counterNo
   );
+  const id = productInfor.id;
   const [materialList, setMaterialList] = useState([]);
   const [selectedMaterial, setSelectedMaterial] = useState(
     productInfor.materialName
@@ -20,6 +22,50 @@ const ProductDetail = ({ product }) => {
   const diamondControllerRef = useRef();
   const counterControllerRef = useRef();
   const materialControllerRef = useRef();
+  const { register, handleSubmit } = useForm();
+
+  async function onSubmit(submitData) {
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    try {
+      const res = await fetch(
+        "http://mahika.foundation:8080/swp/api/file/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await res.json();
+    } catch (error) {
+      console.log(error);
+    }
+    const requestBody = {
+      ...submitData,
+      ["id"]: Number(id),
+      ["counterId"]: Number(submitData.counterId),
+      ["materialId"]: Number(submitData.materialId),
+      ["gemCost"]: Number(submitData.gemCost),
+      ["gemId"]: Number(submitData.gemId),
+      ["materialCost"]: Number(submitData.materialCost),
+      ["materialWeight"]: Number(submitData.materialWeight),
+      ["priceRate"]: Number(submitData.priceRate),
+      ["productionCost"]: Number(submitData.productionCost),
+      ["file"]: selectedFile,
+    };
+    console.log(requestBody);
+    try {
+      const res = await fetch("http://mahika.foundation:8080/swp/api/product", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleClick = () => {
     ProductDetailRef.current.showModal();
@@ -114,7 +160,10 @@ const ProductDetail = ({ product }) => {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-2 p-4">
+      <form
+        className="grid grid-cols-2 gap-2 p-4"
+        onClick={handleSubmit(onSubmit)}
+      >
         {/* Section Product */}
         <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
           <h2 className="font-semibold text-xl">Chi tiết sản phẩm</h2>
@@ -145,7 +194,7 @@ const ProductDetail = ({ product }) => {
                   value={selectedMaterial}
                   onChange={(event) => setSelectedMaterial(event.target.value)}
                 >
-                  <option>Chọn loại vàng</option>
+                  <option disabled>Chọn loại vàng</option>
                   {materialList.map((material) => {
                     return (
                       <option key={material.id} value={material.name}>
@@ -229,7 +278,7 @@ const ProductDetail = ({ product }) => {
               <label>Giá bán</label>
               <input
                 className="w-full border rounded p-2"
-                type="text"
+                readOnly
                 defaultValue={formatter.format(productInfor.price)}
               />
             </div>
@@ -273,21 +322,32 @@ const ProductDetail = ({ product }) => {
           <h2 className="font-semibold text-xl">Thông tin kim cương</h2>
           <hr className="w-full my-2" />
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label>Tên kim cương</label>
-              <select
-                className="w-full border rounded p-2"
-                value={productInfor.gemName}
-                onChange={handleDiamondSelect}
-              >
-                <option value="" disabled>
-                  Chọn tên kim cương
-                </option>
-                {diamondCriteria.map((diamond) => (
-                  <option key={diamond.gemId}>{diamond.gemName}</option>
-                ))}
-              </select>
-            </div>
+            {selectedDiamond === null ? (
+              <div>
+                <label>Tên kim cương</label>
+                <input
+                  className="w-full border rounded p-2"
+                  value="Không có"
+                  disabled
+                />
+              </div>
+            ) : (
+              <div>
+                <label>Tên kim cương</label>
+                <select
+                  className="w-full border rounded p-2"
+                  value={productInfor.gemName}
+                  onChange={handleDiamondSelect}
+                >
+                  <option value="" disabled>
+                    Chọn tên kim cương
+                  </option>
+                  {diamondCriteria.map((diamond) => (
+                    <option key={diamond.gemId}>{diamond.gemName}</option>
+                  ))}
+                </select>
+              </div>
+            )}
             <div>
               <label>Nguồn gốc</label>
               <input
@@ -344,13 +404,12 @@ const ProductDetail = ({ product }) => {
           />
           <button
             onClick={handleClick}
-            type="submit"
             className="w-1/3 h-8 border rounded-md bg-red-500 text-white font-semibold"
           >
             Xóa
           </button>
         </div>
-      </div>
+      </form>
     </>
   );
 };
