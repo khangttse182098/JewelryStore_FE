@@ -1,0 +1,28 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.button {
+  width: 24px;
+  height: 27px;
+  border-radius: 50px;
+  font-weight: 400;
+  font-size: 17px;
+  font-family: "Montserrat";
+  color: black;
+  cursor: pointer;
+  background-color: #efeded;
+  margin: 10px 10px;
+}
+
+.active {
+  background-color: #0088ff;
+  color: white;
+}
+
+.active-status {
+  background-color: #c3a06d;
+  color: white;
+}

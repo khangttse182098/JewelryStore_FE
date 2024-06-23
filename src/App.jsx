@@ -15,6 +15,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import ManagerDiscountPage from "./page/ManagerDiscountPage";
 import ManagerStaffPage from "./page/ManagerStaffPage";
 import ManagerDiscountDetailPage from "./page/ManagerDiscountDetailPage";
+import ManagerStaffDetailPage from "./page/ManagerStaffDetailPage";
 import ManagerMaterialPage from "./page/ManagerMaterialPage";
 import ManagerMaterialDetailPage from "./page/ManagerMaterialDetailPage";
 import ManagerMaterialHistoryPage from "./page/ManagerMaterialHistoryPage";
@@ -51,6 +52,10 @@ function App() {
         <Route
           path="/managerdiscountdetail"
           element={<ManagerDiscountDetailPage />}
+        />
+        <Route
+          path="/managerstaffdetail"
+          element={<ManagerStaffDetailPage />}
         />
         <Route path="/managermateriallist" element={<ManagerMaterialPage />} />
         <Route
