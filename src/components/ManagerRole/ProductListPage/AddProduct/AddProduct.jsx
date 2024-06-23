@@ -146,7 +146,7 @@ const AddProduct = () => {
     const handleDiamond = async () => {
       try {
         const response = await fetch(
-          "http://mahika.foundation:8080/swp/api/gem/product",
+          "http://mahika.foundation:8080/swp/api/gem",
           { signal }
         );
         const dataDiamond = await response.json();
