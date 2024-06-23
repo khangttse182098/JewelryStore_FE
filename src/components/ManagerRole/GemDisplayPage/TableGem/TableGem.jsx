@@ -33,7 +33,7 @@ const TableGem = () => {
 
   //-----------------------------HandleNavigate---------------------
   function handleNavigate(gem) {
-    //   navigate("/managerproductdetail", { state: { gem } });
+    navigate("/managergemhistory", { state: { gem } });
   }
 
   //----------------------------Pagination---------------------------
@@ -73,11 +73,11 @@ const TableGem = () => {
             placeholder="Tìm kiếm kim cương"
             onChange={handleSearch}
           />
-          <Link to="#">
+          {/* <Link to="#">
             <button className="w-32 h-9 rounded-md bg-[#0088FF] text-white">
               + Thêm mới
             </button>
-          </Link>
+          </Link> */}
         </div>
         <table className="w-full border-collapse">
           <thead>
@@ -94,7 +94,7 @@ const TableGem = () => {
                 <tr
                   className={classes.tr}
                   key={gem.id}
-                  onClick={handleNavigate}
+                  onClick={() => handleNavigate(gem)}
                 >
                   <td className={classes.td}>{gem.name}</td>
                   <td className={classes.td}>

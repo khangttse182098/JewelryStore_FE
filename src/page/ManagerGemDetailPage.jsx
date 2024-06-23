@@ -1,9 +1,9 @@
 import ManagerHeader from "../components/ManagerRole/UtilsComponent/ManagerHeader/ManagerHeader";
 import ManagerSidebar from "../components/ManagerRole/UtilsComponent/ManagerSidebar/ManagerSidebar";
-import GemHistory from "../components/ManagerRole/GemDisplayPage/GemHistory/GemHistory";
+import DetailGem from "../components/ManagerRole/GemDisplayPage/DetailGem/DetailGem";
 import { useLocation } from "react-router-dom";
 
-const ManagerGemHistoryPage = () => {
+const ManagerGemDetailPage = () => {
   const location = useLocation();
   const { state } = location;
   return (
@@ -15,7 +15,7 @@ const ManagerGemHistoryPage = () => {
         <div className="col-span-5">
           <ManagerHeader />
           <div className="w-full flex justify-center">
-            <GemHistory gem={state.gem} />
+            <DetailGem gem={state.gem} />
           </div>
         </div>
       </div>
@@ -23,4 +23,4 @@ const ManagerGemHistoryPage = () => {
   );
 };
 
-export default ManagerGemHistoryPage;
+export default ManagerGemDetailPage;

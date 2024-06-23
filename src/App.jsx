@@ -14,6 +14,8 @@ import ManagerProductDetailPage from "./page/ManagerProductDetailPage";
 import ManagerAddProductPage from "./page/ManageAddProductPage";
 import { SkeletonTheme } from "react-loading-skeleton";
 import ManagerGemPage from "./page/ManagerGemPage";
+import ManagerGemHistoryPage from "./page/ManagerGemHistoryPage";
+import ManagerGemDetailPage from "./page/ManagerGemDetailPage";
 
 function App() {
   return (
@@ -35,6 +37,11 @@ function App() {
         />
         <Route path="/manageraddproduct" element={<ManagerAddProductPage />} />
         <Route path="/managergemlist" element={<ManagerGemPage />} />
+        <Route path="/managergemhistory" element={<ManagerGemHistoryPage />} />
+        <Route
+          path="/managergemdetail"
+          element={<ManagerGemDetailPage />}
+        />
       </Routes>
     </SkeletonTheme>
   );
