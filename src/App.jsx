@@ -47,7 +47,7 @@ function App() {
           path="/managermaterialhistory"
           element={<ManagerMaterialHistoryPage />}
         />
-        <Route path="/manager/chart" element={<DashBoardPage />} />
+        <Route path="/manager/dashboard" element={<DashBoardPage />} />
       </Routes>
     </SkeletonTheme>
   );

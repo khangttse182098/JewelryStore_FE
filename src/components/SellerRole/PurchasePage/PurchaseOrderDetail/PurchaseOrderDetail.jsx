@@ -17,6 +17,7 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
   const { userId } = useContext(LoggedInUserContext);
   const [price, setPrice] = useState(0);
   const [totalDiscountPrice, setTotalDiscountPrice] = useState(0);
+  const [purchaseDiscountPrice, setPurchaseDiscountPrice] = useState(null);
   const doneModalRef = useRef();
 
   useEffect(() => {
@@ -31,37 +32,40 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
     productId: [...productSellInvoiceListId],
   };
   // receive price from BE
-  const handleFetch = () => {
-    fetch(
-      "http://mahika.foundation:8080/swp/api/purchase-order/product-price",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reqBodySellInvoicePrice),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setItemSellInvoice(
-          itemSellInvoice.reduce((acc, curr) => {
-            const resInvoice = data.find(
-              (element) => element.productId === curr.id
-            );
-            return [
-              ...acc,
-              {
-                ...curr,
-                price: resInvoice.purchasePrice,
-              },
-            ];
-          }, [])
-        );
-      });
-  };
 
   useEffect(() => {
+    const handleFetch = () => {
+      fetch(
+        "http://mahika.foundation:8080/swp/api/purchase-order/product-price",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(reqBodySellInvoicePrice),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setItemSellInvoice(
+            itemSellInvoice.reduce((acc, curr) => {
+              const resInvoice = data.find(
+                (element) => element.productId === curr.id
+              );
+              setPurchaseDiscountPrice(resInvoice.discountPrice);
+              return [
+                ...acc,
+                {
+                  ...curr,
+                  price: resInvoice.purchasePrice,
+                  discountPrice: resInvoice.discountPrice,
+                },
+              ];
+            }, [])
+          );
+        });
+    };
+
     handleFetch();
   }, [itemSellList]);
 
@@ -71,7 +75,7 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
         return acc + curr.discountPrice;
       }, 0)
     );
-  }, [itemSellList]);
+  }, [itemSellList, purchaseDiscountPrice]);
 
   // send purhchase order to BE
   const reqBody = {

@@ -58,10 +58,7 @@ const DetailDiscount = ({ discount }) => {
   return (
     <>
       <DoneModal ref={doneModalRef} handleClose={handleClose} />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="h-full border-2 flex flex-col"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="h-4/5 flex flex-col">
         <h1 className="text-4xl mt-16 ml-16 font-medium">{discount.code}</h1>
         <div className="w-full flex flex-grow">
           <div className="h-1/2 w-3/4">
@@ -76,21 +73,23 @@ const DetailDiscount = ({ discount }) => {
               register={register}
               discount={discount}
             />
+            <div className="mt-10 ml-10">
+              <button
+                type="submit"
+                className="p-5 w-[20%]  mb-5 rounded bg-blue-500 hover:bg-blue-600 text-2xl font-medium text-slate-200"
+              >
+                Sửa
+              </button>
+              <button
+                type="submit"
+                className="p-5 w-[20%] ml-5 mb-5 rounded bg-red-500 hover:bg-red-600 text-2xl font-medium text-slate-200"
+                onClick={handleDelete}
+              >
+                Xóa
+              </button>
+            </div>
           </div>
         </div>
-        <button
-          type="submit"
-          className="p-5 w-[60%] mx-auto mb-5 rounded bg-blue-500 hover:bg-blue-600 text-2xl font-medium text-slate-200"
-        >
-          Sửa
-        </button>
-        <button
-          type="submit"
-          className="p-5 w-[60%] mx-auto mb-5 rounded bg-red-500 hover:bg-red-600 text-2xl font-medium text-slate-200"
-          onClick={handleDelete}
-        >
-          Xóa
-        </button>
       </form>
     </>
   );
