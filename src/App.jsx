@@ -44,6 +44,11 @@ function App() {
         <Route path="/managerdiscountlist" element={<ManagerDiscountPage />} />
         <Route path="/managerstafflist" element={<ManagerStaffPage />} />
         <Route
+          path="/managerproductdetail"
+          element={<ManagerProductDetailPage />}
+        />
+        <Route path="/manageraddproduct" element={<ManagerAddProductPage />} />
+        <Route
           path="/managerdiscountdetail"
           element={<ManagerDiscountDetailPage />}
         />
@@ -56,6 +61,7 @@ function App() {
           path="/managermaterialhistory"
           element={<ManagerMaterialHistoryPage />}
         />
+        <Route path="/manager/dashboard" element={<DashBoardPage />} />
         <Route path="/manager/chart" element={<DashBoardPage />} />
         <Route path="/managerinvoicelist" element={<ManagerInvoicePage />} />
         <Route

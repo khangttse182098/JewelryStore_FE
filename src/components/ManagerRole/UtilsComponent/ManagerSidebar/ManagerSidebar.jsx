@@ -3,6 +3,8 @@ import Product from "/assets/product.png";
 import Customer from "/assets/customer.png";
 import Disount from "/assets/discount.png";
 import Staff from "/assets/staff.png";
+import Dashboard from "/assets/dashboardIcon.png";
+import Material from "/assets/materialIcon.png";
 import classes from "./ManagerSidebar.module.css";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +19,16 @@ const ManagerSidebar = ({ activePage }) => {
       <div className="font-normal text-xl text-slate-50 flex flex-col pl-1 pt-8 ">
         <button
           className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
-            activePage === "Hóa đơn" && classes.active
+            activePage === "Thống kê" && classes.active
+          }`}
+          onClick={() => navigate("/manager/dashboard")}
+        >
+          <img src={Dashboard} alt="Staff icon" className="pl-4" />
+          <p>Thống kê</p>
+        </button>
+        <button
+          className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
+            activePage === "Danh sách hóa đơn" && classes.active
           }`}
           onClick={() => navigate("/managerinvoicelist")}
         >
@@ -65,7 +76,7 @@ const ManagerSidebar = ({ activePage }) => {
           }`}
           onClick={() => navigate("/managermateriallist")}
         >
-          <img src={Staff} alt="Staff icon" className="pl-4" />
+          <img src={Material} alt="Staff icon" className="pl-4" />
           <p>Giá vàng</p>
         </button>
       </div>
