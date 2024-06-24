@@ -48,6 +48,7 @@ const ManagerSidebar = ({ activePage }) => {
           className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
             activePage === "Khách hàng" && classes.active
           }`}
+          onClick={() => navigate("/managercustomerlist")}
         >
           <img src={Customer} alt="Customer icon" className="pl-4" />
           <p>Khách hàng</p>

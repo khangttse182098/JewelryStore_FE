@@ -36,7 +36,7 @@ const AddStaffModal = forwardRef(({ onClose }, ref) => {
       <DoneModal ref={doneModalRef} handleClose={handleClose} />
       <dialog
         ref={ref}
-        className=" w-2/5 translate-x-3/4 absolute inset-y-44 inset-x-auto rounded drop-shadow-xl"
+        className=" w-2/5 absolute inset-y-44 inset-x-auto rounded drop-shadow-xl"
       >
         <form
           className="flex flex-col gap-10 h-full"

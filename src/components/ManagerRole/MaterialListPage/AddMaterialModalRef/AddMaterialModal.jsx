@@ -31,14 +31,9 @@ const AddMaterialModal = forwardRef(({ onClose }, ref) => {
         }
       );
       const obj = await res.json();
-      if (!obj.data) {
-        onClose();
-        handleOpenErrorModal();
-        setErrorMsg(obj.message);
-      } else {
-        onClose();
-        handleOpen();
-      }
+
+      onClose();
+      handleOpen();
     } catch (error) {
       console.log(error);
     }

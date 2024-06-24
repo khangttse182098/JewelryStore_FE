@@ -23,6 +23,8 @@ import TestChart from "./components/ManagerRole/Dashboard/DashboardChart";
 import DashBoardPage from "./page/DashBoardPage";
 import ManagerInvoicePage from "./page/ManagerInvoicePage";
 import ManagerInvoiceDetailPage from "./page/ManagerInvoiceDetailPage";
+import ManagerCustomerPage from "./page/ManagerCustomerPage";
+import ManagerCustomerDetailPage from "./page/ManagerCustomerDetailPage";
 
 function App() {
   return (
@@ -72,6 +74,11 @@ function App() {
         <Route
           path="/managerinvoicedetail"
           element={<ManagerInvoiceDetailPage />}
+        />
+        <Route path="/managercustomerlist" element={<ManagerCustomerPage />} />
+        <Route
+          path="/managercustomerdetail"
+          element={<ManagerCustomerDetailPage />}
         />
       </Routes>
     </SkeletonTheme>

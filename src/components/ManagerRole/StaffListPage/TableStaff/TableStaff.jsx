@@ -4,6 +4,8 @@ import { formatter } from "../../../../util/formatter";
 import PaginationStaffList from "./../PaginationStaffList/PaginationStaffList";
 import AddStaffModal from "../AddStaffModal/AddStaffModal";
 import { Link, useNavigate } from "react-router-dom";
+import { SkeletonTheme } from "react-loading-skeleton";
+import SkeletonRowList from "../../../UtilComponent/SkeletonRowList/SkeletonRowList";
 
 const TableStaff = () => {
   const [staffList, setStaffList] = useState([]);
@@ -107,7 +109,7 @@ const TableStaff = () => {
   }, [searchField, staffList]);
 
   return (
-    <Fragment>
+    <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
       <AddStaffModal onClose={handleHide} ref={staffInputFormRef} />
       <div className="w-10/12 h-5/6 mx-auto">
         <div className="text-3xl font-medium py-10">
@@ -191,45 +193,52 @@ const TableStaff = () => {
               </tr>
             </thead>
             <tbody>
-              {currentStaff.map((staff) => {
-                const statusClass =
-                  staff.status === "Đang tạm nghỉ"
-                    ? classes["status-inProgress"]
-                    : staff.status === "Đang làm việc"
-                    ? classes["status-success"]
-                    : classes["status-closed"];
+              {!currentStaff.length ? (
+                <SkeletonRowList
+                  amount={5}
+                  style="border-b-[#dddddd] h-20 font-[400] text-center border-b-0"
+                />
+              ) : (
+                currentStaff.map((staff) => {
+                  const statusClass =
+                    staff.status === "Đang tạm nghỉ"
+                      ? classes["status-inProgress"]
+                      : staff.status === "Đang làm việc"
+                      ? classes["status-success"]
+                      : classes["status-closed"];
 
-                return (
-                  <tr
-                    className={`${classes.tr} ${
-                      selectedIds.includes(staff.id) ? classes.select : ""
-                    }`}
-                    key={staff.id}
-                    onClick={() => handleNavigate(staff)}
-                  >
-                    <td className={classes.td}>
-                      <input
-                        type="checkbox"
-                        name={staff.id}
-                        onChange={handleCheckbox}
-                        checked={selectedIds.includes(staff.id)}
-                        onClick={(event) => event.stopPropagation()}
-                      />
-                    </td>
-                    <td className={classes.td}>{staff.fullName}</td>
-                    <td className={classes.td}>{staff.role}</td>
-                    <td className={classes.td}>{staff.phone}</td>
-                    <td className={classes.td}>
-                      {formatter.format(staff.personalIncome)}
-                    </td>
-                    <td className={classes.td}>
-                      <p className={`${statusClass} ${classes.status}`}>
-                        {staff.status}
-                      </p>
-                    </td>
-                  </tr>
-                );
-              })}
+                  return (
+                    <tr
+                      className={`${classes.tr} ${
+                        selectedIds.includes(staff.id) ? classes.select : ""
+                      }`}
+                      key={staff.id}
+                      onClick={() => handleNavigate(staff)}
+                    >
+                      <td className={classes.td}>
+                        <input
+                          type="checkbox"
+                          name={staff.id}
+                          onChange={handleCheckbox}
+                          checked={selectedIds.includes(staff.id)}
+                          onClick={(event) => event.stopPropagation()}
+                        />
+                      </td>
+                      <td className={classes.td}>{staff.fullName}</td>
+                      <td className={classes.td}>{staff.role}</td>
+                      <td className={classes.td}>{staff.phone}</td>
+                      <td className={classes.td}>
+                        {formatter.format(staff.personalIncome)}
+                      </td>
+                      <td className={classes.td}>
+                        <p className={`${statusClass} ${classes.status}`}>
+                          {staff.status}
+                        </p>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
           <PaginationStaffList
@@ -240,7 +249,7 @@ const TableStaff = () => {
           />
         </div>
       </div>
-    </Fragment>
+    </SkeletonTheme>
   );
 };
 

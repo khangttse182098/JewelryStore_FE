@@ -1,21 +1,18 @@
-import classes from "./StaffDetail.module.css";
 import Pen from "../../../../../public/assets/pen.png";
 import React, { useRef, useState, useEffect, useContext } from "react";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 import { useLocation } from "react-router-dom";
 import { formatter } from "../../../../util/formatter";
+import classes from "./CustomerDetail.module.css";
 
-const StaffDetail = () => {
+const CustomerDetail = () => {
   // const { register, handleSubmit } = useForm();
   const doneModalRef = useRef();
 
   const location = useLocation();
-  const { staff } = location.state || {}; // Kiểm tra nếu state tồn tại
+  const { customer } = location.state || {}; // Kiểm tra nếu state tồn tại
   const [orders, setOrders] = useState([]);
 
-  if (!staff) {
-    return <div>No staff data available</div>;
-  }
   const handleOrder = () => {
     fetch("http://mahika.foundation:8080/swp/api/order", {
       method: "GET",
@@ -26,7 +23,7 @@ const StaffDetail = () => {
       .then((res) => res.json())
       .then((data) => {
         const orderList = data.filter(
-          (order) => order.staffName === staff.fullName
+          (order) => order.customerId === customer.id
         );
 
         setOrders(orderList);
@@ -37,11 +34,21 @@ const StaffDetail = () => {
     handleOrder();
   }, []);
 
-  function averageIncome(average) {
-    if (staff.personalIncome !== 0)
-      return (average = staff.personalIncome / staff.sellOrderQuantity);
-    else return (average = 0);
+  if (!customer) {
+    return <div>No customer data available</div>;
   }
+
+  //   const averageExpense = customer.expense / customer.quantityOrder;
+  //   if (customer.quantityOrder === 0) return averageExpense === 0;
+
+  function averageExpense(average) {
+    if (customer.quantityOrder === 0) {
+      return (average = 0);
+    } else {
+      return (average = customer.expense / customer.quantityOrder);
+    }
+  }
+
   return (
     <>
       {/* Personal Ìnormation */}
@@ -49,51 +56,59 @@ const StaffDetail = () => {
         <div className="bg-white shadow-md p-4 rounded-md">
           <h2 className="font-semibold text-3xl">Thông tin cá nhân</h2>
 
-          <div className="grid grid-cols-3 gap-3 text-center mt-4 mb-4">
+          <div className="grid grid-cols-4 gap-3 text-center mt-4 mb-4 h-[90px]">
             <div>
               <label className="text-xl text-gray-700">Họ và tên</label>
-              <div className="text-2xl mt-3 font-medium ">{staff.fullName}</div>
+              <div className="text-2xl mt-3 font-medium">
+                {customer.fullName}
+              </div>
             </div>
             <div>
               <label className="text-xl text-gray-700">Số điện thoại</label>
-              <div className="text-2xl mt-3 font-medium">{staff.phone}</div>
+              <div className="text-2xl mt-3 font-medium">
+                {customer.phoneNumber}
+              </div>
             </div>
             <div>
-              <label className="text-xl text-gray-700">Vị trí</label>
-              <div className="text-2xl mt-3 font-medium">{staff.role}</div>
+              <label className="text-xl text-gray-700">Địa chỉ</label>
+              <div className="text-2xl mt-3 font-medium">
+                {customer.address}
+              </div>
+            </div>
+            <div>
+              <label className="text-xl text-gray-700">Giới tính</label>
+              <div className="text-2xl mt-3 font-medium">{customer.gender}</div>
             </div>
           </div>
           <hr className="w-full my-2" />
-          <h2 className="font-semibold text-3xl">Doanh thu</h2>
+          <h2 className="font-semibold text-3xl">Chi tiêu cá nhân</h2>
           <div className="grid grid-cols-3 gap-3 text-center mt-4 mb-4">
             <div>
               <label className="text-xl text-gray-700">Số đơn hàng</label>
               <div className="text-2xl mt-3 font-medium">
-                {staff.sellOrderQuantity}
+                {customer.quantityOrder}
+              </div>
+            </div>
+            <div>
+              <label className="text-xl text-gray-700">Tổng chi tiêu</label>
+              <div className="text-2xl mt-3 font-medium">
+                {formatter.format(customer.expense)}
               </div>
             </div>
             <div>
               <label className="text-xl text-gray-700">
-                Tổng doanh thu cá nhân
+                Chi tiêu trung bình
               </label>
-              <div className="text-2xl mt-3 font-medium">
-                {formatter.format(staff.personalIncome)}
-              </div>
-            </div>
-            <div>
-              <label className="text-xl text-gray-700">
-                Doanh thu trung bình
-              </label>
-              <div className="text-2xl mt-3 font-medium">
-                {formatter.format(averageIncome())}
+              <div className="text-2xl mt-3 font-medium ">
+                {formatter.format(averageExpense())}
               </div>
             </div>
           </div>
         </div>
         {/* Recent invoice */}
         <div className="bg-white shadow-md p-4 rounded-md mt-4 ">
-          <h2 className="font-semibold text-3xl">Hóa đơn gần đây</h2>
-          <div className="overflow-y-scroll h-[423px]">
+          <h2 className="font-semibold text-3xl mb-5">Hóa đơn gần đây</h2>
+          <div className="overflow-y-scroll h-[383px]">
             {orders.length > 0 ? (
               orders.map((order, index) => {
                 const statusClass =
@@ -129,7 +144,7 @@ const StaffDetail = () => {
                 );
               })
             ) : (
-              <div className="text-red-600">Không có hóa đơn gần đây</div>
+              <div className="text-red-600">No recent invoices found</div>
             )}
           </div>
         </div>
@@ -137,4 +152,4 @@ const StaffDetail = () => {
     </>
   );
 };
-export default StaffDetail;
+export default CustomerDetail;
