@@ -12,6 +12,8 @@ import DropDownOrigin from "../Diamond/DiamondDropDown/DropDownOrigin/DropDownOr
 import DropDownCut from "../Diamond/DiamondDropDown/DropDownCut/DropDownCut";
 import DropDownColor from "../Diamond/DiamondDropDown/DropDownColor/DropDownColor";
 import DropDownClarity from "../Diamond/DiamondDropDown/DropDownClarity/DropDownClarity";
+import ErrorModal from "../../../UtilComponent/ErrorModal/ErrorModal";
+
 const Category = () => {
   const [listGold, setListGold] = useState([]);
   const [weight, setGoldWeight] = useState("");
@@ -27,6 +29,8 @@ const Category = () => {
   const [listCut, setListCut] = useState([]);
   const [listColor, setListColor] = useState([]);
   const [listClarity, setListClarity] = useState([]);
+  const [errorMsg, setErrorMsg] = useState("");
+  const errorModalRef = useRef();
 
   const criteriaItem = {
     listDiamondCriteria: [],
@@ -87,7 +91,10 @@ const Category = () => {
         addItemToPurchase(newInvoice);
         console.log(addItemToPurchase);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        errorModalRef.current.showModal();
+      });
   };
   const handleGold = () => {
     fetch(
@@ -163,6 +170,10 @@ const Category = () => {
     customerInputFormRef.current.close();
   }
 
+  const handleCloseErrorModal = () => {
+    errorModalRef.current.close();
+  };
+
   return (
     <>
       <CustomerInputForm
@@ -170,6 +181,12 @@ const Category = () => {
         handleHide={handleHide}
         isPurchase={true}
       />
+      <ErrorModal
+        ref={errorModalRef}
+        handleClose={handleCloseErrorModal}
+        msg={errorMsg}
+      />
+
       <div className={classes.container}>
         <div className={classes["left-container"]}>
           <h2 className={classes.title}>Mua lại sản phẩm</h2>
