@@ -16,6 +16,8 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
   const { itemSellList } = useContext(ProductSellListContext);
   const { userId } = useContext(LoggedInUserContext);
   const [price, setPrice] = useState(0);
+  const [totalDiscountPrice, setTotalDiscountPrice] = useState(0);
+  const [purchaseDiscountPrice, setPurchaseDiscountPrice] = useState(null);
   const doneModalRef = useRef();
 
   useEffect(() => {
@@ -30,33 +32,50 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
     productId: [...productSellInvoiceListId],
   };
   // receive price from BE
-  const handleFetch = () => {
-    fetch(
-      "http://mahika.foundation:8080/swp/api/purchase-order/product-price",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reqBodySellInvoicePrice),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setItemSellInvoice(
-          itemSellInvoice.reduce((acc, curr) => {
-            const resInvoice = data.find(
-              (element) => element.productId === curr.id
-            );
-            return [...acc, { ...curr, price: resInvoice.purchasePrice }];
-          }, [])
-        );
-      });
-  };
 
   useEffect(() => {
+    const handleFetch = () => {
+      fetch(
+        "http://mahika.foundation:8080/swp/api/purchase-order/product-price",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(reqBodySellInvoicePrice),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setItemSellInvoice(
+            itemSellInvoice.reduce((acc, curr) => {
+              const resInvoice = data.find(
+                (element) => element.productId === curr.id
+              );
+              setPurchaseDiscountPrice(resInvoice.discountPrice);
+              return [
+                ...acc,
+                {
+                  ...curr,
+                  price: resInvoice.purchasePrice,
+                  discountPrice: resInvoice.discountPrice,
+                },
+              ];
+            }, [])
+          );
+        });
+    };
+
     handleFetch();
   }, [itemSellList]);
+
+  useEffect(() => {
+    setTotalDiscountPrice(
+      itemSellInvoice.reduce((acc, curr) => {
+        return acc + curr.discountPrice;
+      }, 0)
+    );
+  }, [itemSellList, purchaseDiscountPrice]);
 
   // send purhchase order to BE
   const reqBody = {
@@ -88,23 +107,21 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
     <>
       <DoneModal ref={doneModalRef} handleClose={handleCloseDoneModal} />
       <div className={classes.container}>
-        <div className={classes.title}>Thông tin đơn hàng</div>
-        <div className={classes["container-order"]}>
-          {itemSellInvoice.map((product, productIndex) => {
-            return (
-              <PurchaseOrderProduct
-                sellOrderCode={sellOrderCode}
-                key={productIndex}
-                product={product}
-              />
-            );
-          })}
-        </div>
-        <div>
-          <div className={classes.frame}>
-            <p className={classes.p}>Chiết khấu</p>
-            <p className={classes.p}></p>
+        <di>
+          <div className={classes.title}>Thông tin đơn hàng</div>
+          <div className={classes["container-order"]}>
+            {itemSellInvoice.map((product, productIndex) => {
+              return (
+                <PurchaseOrderProduct
+                  sellOrderCode={sellOrderCode}
+                  key={productIndex}
+                  product={product}
+                />
+              );
+            })}
           </div>
+        </di>
+        <div className={classes["information-bar"]}>
           <div className={classes.frame}>
             <p className={classes.p}>Tổng số lượng</p>
             <p className={classes.p}>{itemSellInvoice.length ?? ""}</p>
@@ -116,13 +133,20 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
             </p>
           </div>
           <div className={classes.frame}>
-            <p className={classes.p}>Giảm giá</p>
-            <p className={classes.p}></p>
+            <p className={classes.p}>Chiết khấu</p>
+            <p className={classes.p}>
+              {itemSellInvoice.length
+                ? `+${formatter.format(totalDiscountPrice)}`
+                : ""}
+            </p>
           </div>
+
           <div className={classes.frame}>
             <p className={classes.total}>Thanh toán</p>
             <p className={classes.total}>
-              {itemSellInvoice.length ? formatter.format(price) : ""}
+              {itemSellInvoice.length
+                ? formatter.format(price + totalDiscountPrice)
+                : ""}
             </p>
           </div>
           <button className={classes.createInvoice} onClick={handleClick}>

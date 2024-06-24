@@ -29,11 +29,13 @@ const SignInForm = () => {
           data.roleCode && setUserId(data.userId);
         }
         if (data.roleCode === "SELLER") {
-          setIsWrong(false);
           navigate("/sellpage");
+          setIsWrong(false);
         } else if (data.roleCode === "CASHIER") {
-          setUserId(data.userId);
           navigate("/invoicelist");
+          setIsWrong(false);
+        } else if (data.roleCode === "MANAGER") {
+          navigate("/manager/chart");
           setIsWrong(false);
         } else {
           setIsWrong(true);

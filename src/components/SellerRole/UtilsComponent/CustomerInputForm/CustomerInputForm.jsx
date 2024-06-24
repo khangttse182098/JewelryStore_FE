@@ -8,7 +8,7 @@ import { RepurchaseContext } from "../../../../context/RepurchaseContext";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 
 const CustomerInputForm = forwardRef(function CustomerInputForm(
-  { handleHide, isPurchase },
+  { handleHide, isPurchase, discountId },
   ref
 ) {
   const { itemPurchase, setItemPurchase } = useContext(ProductPurchaseContext);
@@ -32,6 +32,7 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
   });
 
   const sellOrderBody = {
+    discountId,
     productId: [...productIdList],
     fullName: customerInfor.fullName,
     phoneNumber: customerInfor.phoneNumber,
@@ -74,7 +75,7 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
   }
 
   const URL = !isPurchase
-    ? "http://mahika.foundation:8080/swp/api/sell-order"
+    ? "http://mahika.foundation:8080/swp/api/sell-order/information"
     : "http://mahika.foundation:8080/swp/api/purchase-order/no-invoice";
 
   const REQ_BODY = !isPurchase ? sellOrderBody : purchaseOrderBody;

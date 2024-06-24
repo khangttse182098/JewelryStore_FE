@@ -17,10 +17,29 @@ const InvoiceDetail = forwardRef(function InvoiceDetail({ invoice }, ref) {
           </div>
           {/* invoice info */}
           <div className={classes.info}>
-            <p>Mã sản phẩm: {invoice.productCode}</p>
-            <p>Chất liệu: {invoice.materialName}</p>
-            <p>Nhân công: {invoice.productionCode}</p>
-            <p className={classes.price}>{formatter.format(invoice.price)}</p>
+            <p>
+              <b>Mã sản phẩm:</b> {invoice.productCode}
+            </p>
+            <p>
+              <b>Ngày tạo:</b> {new Date(invoice.createdDate).toLocaleString()}
+            </p>
+            <p>
+              <b>Quầy:</b> {invoice.counterNo}
+            </p>
+            <p>
+              <b>Loại trang sức:</b> {invoice.categoryName}
+            </p>
+            <p>
+              <b>Tên kim cương:</b>{" "}
+              {invoice.gemName ? invoice.gemName : "Không có"}
+            </p>
+            <p>
+              <b>Chất liệu:</b>{" "}
+              {invoice.materialName ? invoice.materialName : "Không có"}
+            </p>
+            <p className={classes.price}>
+              <b>Giá:</b> {formatter.format(invoice.price)}
+            </p>
           </div>
           {/* close button */}
           <form method="dialog">
