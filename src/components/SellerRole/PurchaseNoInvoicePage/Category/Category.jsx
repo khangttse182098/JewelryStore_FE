@@ -317,10 +317,7 @@ const Category = () => {
               <p className={classes.info}>Tổng tiền</p>
               <p className={classes.value}>{formatter.format(totalPrice)}</p>
             </div>
-            <div className={classes.framePromote}>
-              <p className={classes.info}>Ưu đãi</p>
-              <p className={classes.value}>0</p>
-            </div>
+
             <div className={classes.framePay}>
               <p className={classes.info}>Số tiền phải trả</p>
               <p className={classes.value}>{formatter.format(totalPrice)}</p>
