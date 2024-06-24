@@ -7,7 +7,9 @@ const ProductDetail = ({ product }) => {
   const productInfor = product;
   console.log(productInfor);
   const [categoryName, setCategoryName] = useState([]);
-  const [selectedCategoryName, setSelectedCategoryName] = useState([]);
+  const [selectedCategoryName, setSelectedCategoryName] = useState(
+    productInfor.productCategoryName
+  );
   const [diamondCriteria, setDiamondCriteria] = useState([]);
   const [selectedDiamond, setSelectedDiamond] = useState(null);
   const [imageType, setImageType] = useState([]);
@@ -32,48 +34,48 @@ const ProductDetail = ({ product }) => {
   const categoryControllerRef = useRef();
   const { register, handleSubmit } = useForm();
 
-  // async function onSubmit(submitData) {
-  //   const formData = new FormData();
-  //   formData.append("file", selectedFile);
-  //   try {
-  //     const res = await fetch(
-  //       "http://mahika.foundation:8080/swp/api/file/upload",
-  //       {
-  //         method: "POST",
-  //         body: formData,
-  //       }
-  //     );
-  //     const data = await res.json();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   const requestBody = {
-  //     ...submitData,
-  //     ["id"]: Number(id),
-  //     ["counterId"]: Number(submitData.counterId),
-  //     ["materialId"]: Number(submitData.materialId),
-  //     ["gemCost"]: Number(submitData.gemCost),
-  //     ["gemId"]: Number(submitData.gemId),
-  //     ["materialCost"]: Number(submitData.materialCost),
-  //     ["materialWeight"]: Number(submitData.materialWeight),
-  //     ["priceRate"]: Number(submitData.priceRate),
-  //     ["productionCost"]: Number(submitData.productionCost),
-  //     ["file"]: selectedFile,
-  //   };
-  //   console.log(requestBody);
-  //   try {
-  //     const res = await fetch("http://mahika.foundation:8080/swp/api/product", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(requestBody),
-  //     });
-  //     console.log(res);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  async function onSubmit(submitData) {
+    // const formData = new FormData();
+    // formData.append("file", selectedFile);
+    // try {
+    //   const res = await fetch(
+    //     "http://mahika.foundation:8080/swp/api/file/upload",
+    //     {
+    //       method: "POST",
+    //       body: formData,
+    //     }
+    //   );
+    //   const data = await res.json();
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    const requestBody = {
+      ...submitData,
+      id: Number(id),
+      ["counterId"]: Number(submitData.counterId),
+      ["materialId"]: Number(submitData.materialId),
+      ["gemCost"]: Number(submitData.gemCost),
+      ["gemId"]: Number(submitData.gemId),
+      ["materialCost"]: Number(submitData.materialCost),
+      ["materialWeight"]: Number(submitData.materialWeight),
+      ["priceRate"]: Number(submitData.priceRate),
+      ["productionCost"]: Number(submitData.productionCost),
+      // ["file"]: selectedFile,
+    };
+    console.log(requestBody);
+    try {
+      const res = await fetch("http://mahika.foundation:8080/swp/api/product", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleClick = () => {
     ProductDetailRef.current.showModal();
@@ -217,7 +219,7 @@ const ProductDetail = ({ product }) => {
     <>
       <form
         className="grid grid-cols-2 gap-2 p-4"
-        // onClick={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
       >
         {/* Section Product */}
         <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
@@ -247,8 +249,8 @@ const ProductDetail = ({ product }) => {
                 <select
                   className="w-full border rounded p-2"
                   value={selectedMaterial}
-                  // {...register("materialId")}
                   onChange={(event) => setSelectedMaterial(event.target.value)}
+                  // {...register("materialId")}
                 >
                   <option disabled>Chọn loại vàng</option>
                   {materialList.map((material) => {
@@ -279,18 +281,29 @@ const ProductDetail = ({ product }) => {
                 <label>Khối lượng vàng</label>
                 <input
                   className="w-full border rounded p-2"
-                  {...register("materialWeight")}
                   defaultValue={productInfor.materialWeight}
+                  {...register("materialWeight")}
                 />
               </div>
             )}
             <div>
               <label>Loại sản phẩm</label>
-              <input
+              <select
                 className="w-full border rounded p-2"
-                {...register("productCategoryName")}
-                defaultValue={productInfor.categoryName}
-              />
+                value={productInfor.categoryName}
+                // {...register("categoryName")}
+                onChange={(event) =>
+                  setSelectedCategoryName(event.target.value)
+                }
+              >
+                {categoryName.map((category) => {
+                  return (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
             <div>
               <label>Quầy số</label>
@@ -298,9 +311,14 @@ const ProductDetail = ({ product }) => {
                 className="w-full border rounded p-2"
                 value={selectedCounter}
                 onChange={(event) => setSelectedCounter(event.target.value)}
+                // {...register("counterId")}
               >
                 {counterList.map((counter) => {
-                  return <option key={counter.id}>{counter.counterNo}</option>;
+                  return (
+                    <option key={counter.id} value={counter.No}>
+                      {counter.counterNo}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -322,7 +340,7 @@ const ProductDetail = ({ product }) => {
             <select
               className="w-72 border rounded p-2"
               defaultValue={selectedImageType}
-              {...register("subCategoryType")}
+              // {...register("subCategoryType")}
               onChange={(event) => setSelectedImageType(event.target.value)}
             >
               {imageType.map((type) => {
@@ -353,32 +371,32 @@ const ProductDetail = ({ product }) => {
               <label>Giá đá</label>
               <input
                 className="w-full border rounded p-2"
-                {...register("gemCost")}
                 defaultValue={formatter.format(productInfor.gemCost)}
+                {...register("gemCost")}
               />
             </div>
             <div>
               <label>Giá gia công</label>
               <input
                 className="w-full border rounded p-2"
-                {...register("productionCost")}
                 defaultValue={formatter.format(productInfor.productionCost)}
+                {...register("productionCost")}
               />
             </div>
             <div>
               <label>Giá nguyên liệu</label>
               <input
                 className="w-full border rounded p-2"
-                {...register("materialCost")}
                 defaultValue={formatter.format(productInfor.materialCost)}
+                {...register("materialCost")}
               />
             </div>
             <div>
               <label>Tỉ lệ áp giá</label>
               <input
                 className="w-full border rounded p-2"
-                {...register("priceRate")}
                 defaultValue={productInfor.priceRate + "%"}
+                {...register("priceRate")}
               />
             </div>
           </div>
@@ -389,32 +407,21 @@ const ProductDetail = ({ product }) => {
           <h2 className="font-semibold text-xl">Thông tin kim cương</h2>
           <hr className="w-full my-2" />
           <div className="grid grid-cols-2 gap-4">
-            {selectedDiamond === null ? (
-              <div>
-                <label>Tên kim cương</label>
-                <input
-                  className="w-full border rounded p-2"
-                  value="Không có"
-                  disabled
-                />
-              </div>
-            ) : (
-              <div>
-                <label>Tên kim cương</label>
-                <select
-                  className="w-full border rounded p-2"
-                  value={selectedDiamond.gemName}
-                  onChange={handleDiamondSelect}
-                >
-                  <option value="" disabled>
-                    Chọn tên kim cương
+            <div>
+              <label>Tên kim cương</label>
+              <select
+                className="w-full border rounded p-2"
+                value={productInfor.gemName}
+                onChange={handleDiamondSelect}
+              >
+                <option>Chọn tên kim cương</option>
+                {diamondCriteria.map((diamond) => (
+                  <option key={diamond.gemId} value={diamond.gemName}>
+                    {diamond.gemName}
                   </option>
-                  {diamondCriteria.map((diamond) => (
-                    <option key={diamond.gemId}>{diamond.gemName}</option>
-                  ))}
-                </select>
-              </div>
-            )}
+                ))}
+              </select>
+            </div>
             <div>
               <label>Nguồn gốc</label>
               <input
@@ -470,6 +477,7 @@ const ProductDetail = ({ product }) => {
             deleteCode={ids}
           />
           <button
+            type="submit"
             onClick={handleClick}
             className="w-1/3 h-8 border rounded-md bg-red-500 text-white font-semibold"
           >
