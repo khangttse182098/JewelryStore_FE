@@ -9,7 +9,7 @@ const ProductDetail = ({ product }) => {
   const [categoryName, setCategoryName] = useState([]);
   const [selectedCategoryName, setSelectedCategoryName] = useState([]);
   const [diamondCriteria, setDiamondCriteria] = useState([]);
-  const [selectedDiamond, setSelectedDiamond] = useState(productInfor.gemName);
+  const [selectedDiamond, setSelectedDiamond] = useState(null);
   const [imageType, setImageType] = useState([]);
   const [selectedImageType, setSelectedImageType] = useState(
     productInfor.subCategoryType
@@ -32,48 +32,48 @@ const ProductDetail = ({ product }) => {
   const categoryControllerRef = useRef();
   const { register, handleSubmit } = useForm();
 
-  async function onSubmit(submitData) {
-    // const formData = new FormData();
-    // formData.append("file", selectedFile);
-    // try {
-    //   const res = await fetch(
-    //     "http://mahika.foundation:8080/swp/api/file/upload",
-    //     {
-    //       method: "POST",
-    //       body: formData,
-    //     }
-    //   );
-    //   const data = await res.json();
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    const requestBody = {
-      ...submitData,
-      ["id"]: Number(id),
-      ["counterId"]: Number(submitData.counterId),
-      ["materialId"]: Number(submitData.materialId),
-      ["gemCost"]: Number(submitData.gemCost),
-      ["gemId"]: Number(submitData.gemId),
-      ["materialCost"]: Number(submitData.materialCost),
-      ["materialWeight"]: Number(submitData.materialWeight),
-      ["priceRate"]: Number(submitData.priceRate),
-      ["productionCost"]: Number(submitData.productionCost),
-      // ["file"]: selectedFile,
-    };
-    console.log(requestBody);
-    try {
-      const res = await fetch("http://mahika.foundation:8080/swp/api/product", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async function onSubmit(submitData) {
+  //   const formData = new FormData();
+  //   formData.append("file", selectedFile);
+  //   try {
+  //     const res = await fetch(
+  //       "http://mahika.foundation:8080/swp/api/file/upload",
+  //       {
+  //         method: "POST",
+  //         body: formData,
+  //       }
+  //     );
+  //     const data = await res.json();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   const requestBody = {
+  //     ...submitData,
+  //     ["id"]: Number(id),
+  //     ["counterId"]: Number(submitData.counterId),
+  //     ["materialId"]: Number(submitData.materialId),
+  //     ["gemCost"]: Number(submitData.gemCost),
+  //     ["gemId"]: Number(submitData.gemId),
+  //     ["materialCost"]: Number(submitData.materialCost),
+  //     ["materialWeight"]: Number(submitData.materialWeight),
+  //     ["priceRate"]: Number(submitData.priceRate),
+  //     ["productionCost"]: Number(submitData.productionCost),
+  //     ["file"]: selectedFile,
+  //   };
+  //   console.log(requestBody);
+  //   try {
+  //     const res = await fetch("http://mahika.foundation:8080/swp/api/product", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(requestBody),
+  //     });
+  //     console.log(res);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   const handleClick = () => {
     ProductDetailRef.current.showModal();
@@ -211,13 +211,13 @@ const ProductDetail = ({ product }) => {
       } catch (err) {}
     };
     handleImageType();
-  });
+  }, []);
 
   return (
     <>
       <form
         className="grid grid-cols-2 gap-2 p-4"
-        onClick={handleSubmit(onSubmit)}
+        // onClick={handleSubmit(onSubmit)}
       >
         {/* Section Product */}
         <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
@@ -246,8 +246,8 @@ const ProductDetail = ({ product }) => {
                 <label>Loại vàng</label>
                 <select
                   className="w-full border rounded p-2"
-                  defaultvalue={selectedMaterial}
-                  {...register("materialId")}
+                  value={selectedMaterial}
+                  // {...register("materialId")}
                   onChange={(event) => setSelectedMaterial(event.target.value)}
                 >
                   <option disabled>Chọn loại vàng</option>
@@ -296,8 +296,7 @@ const ProductDetail = ({ product }) => {
               <label>Quầy số</label>
               <select
                 className="w-full border rounded p-2"
-                defaultValue={selectedCounter}
-                {...register("counterId")}
+                value={selectedCounter}
                 onChange={(event) => setSelectedCounter(event.target.value)}
               >
                 {counterList.map((counter) => {
@@ -306,7 +305,7 @@ const ProductDetail = ({ product }) => {
               </select>
             </div>
           </div>
-        </div>
+        </div>  
 
         {/* Section Image  */}
         <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
@@ -404,11 +403,12 @@ const ProductDetail = ({ product }) => {
                 <label>Tên kim cương</label>
                 <select
                   className="w-full border rounded p-2"
-                  defaultValue={productInfor.gemName}
-                  {...register("gemId")}
+                  value={selectedDiamond.gemName}
                   onChange={handleDiamondSelect}
                 >
-                  <option value="">Chọn tên kim cương</option>
+                  <option value="" disabled>
+                    Chọn tên kim cương
+                  </option>
                   {diamondCriteria.map((diamond) => (
                     <option key={diamond.gemId}>{diamond.gemName}</option>
                   ))}
