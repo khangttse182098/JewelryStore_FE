@@ -305,7 +305,7 @@ const ProductDetail = ({ product }) => {
               </select>
             </div>
           </div>
-        </div>  
+        </div>
 
         {/* Section Image  */}
         <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">

@@ -2,7 +2,7 @@
   border-style: solid;
   border-bottom-color: #2661ec;
   color: #2661ec;
-  border-width: 2px;
+  border-width: 1px;
   border-top: none;
   background-color: #ffffff;
   cursor: pointer;
@@ -77,4 +77,7 @@
 
 .status-inProgress {
   @apply bg-[#fffbf2] outline-[#ffdf9b]  text-[#e49c06];
+}
+hr {
+  width: 100%;
 }

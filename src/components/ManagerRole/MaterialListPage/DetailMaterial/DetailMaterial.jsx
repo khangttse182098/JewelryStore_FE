@@ -12,6 +12,7 @@ const DetailMaterial = ({ material }) => {
   const navigate = useNavigate();
   const onSubmit = async (submitData) => {
     const reqBody = {
+      ...submitData,
       materialId: material.id,
       ["effectDate"]: formatDate(submitData.effectDate),
       ["buyPrice"]: Number(submitData.buyPrice),
@@ -62,6 +63,7 @@ const DetailMaterial = ({ material }) => {
                 name="goldName"
                 className="py-5 pl-3 w-4/5 ml-11 border-2 border-[#d2d4d8] focus:outline-none bg-transparent rounded-lg"
                 placeholder="Nhập loại vàng"
+                {...register("goldName")}
                 defaultValue={material.goldName}
                 readOnly
               />

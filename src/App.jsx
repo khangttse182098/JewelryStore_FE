@@ -15,6 +15,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import ManagerDiscountPage from "./page/ManagerDiscountPage";
 import ManagerStaffPage from "./page/ManagerStaffPage";
 import ManagerDiscountDetailPage from "./page/ManagerDiscountDetailPage";
+import ManagerStaffDetailPage from "./page/ManagerStaffDetailPage";
 import ManagerMaterialPage from "./page/ManagerMaterialPage";
 import ManagerMaterialDetailPage from "./page/ManagerMaterialDetailPage";
 import ManagerMaterialHistoryPage from "./page/ManagerMaterialHistoryPage";
@@ -22,6 +23,8 @@ import TestChart from "./components/ManagerRole/Dashboard/DashboardChart";
 import DashBoardPage from "./page/DashBoardPage";
 import ManagerInvoicePage from "./page/ManagerInvoicePage";
 import ManagerInvoiceDetailPage from "./page/ManagerInvoiceDetailPage";
+import ManagerCustomerPage from "./page/ManagerCustomerPage";
+import ManagerCustomerDetailPage from "./page/ManagerCustomerDetailPage";
 
 function App() {
   return (
@@ -44,8 +47,17 @@ function App() {
         <Route path="/managerdiscountlist" element={<ManagerDiscountPage />} />
         <Route path="/managerstafflist" element={<ManagerStaffPage />} />
         <Route
+          path="/managerproductdetail"
+          element={<ManagerProductDetailPage />}
+        />
+        <Route path="/manageraddproduct" element={<ManagerAddProductPage />} />
+        <Route
           path="/managerdiscountdetail"
           element={<ManagerDiscountDetailPage />}
+        />
+        <Route
+          path="/managerstaffdetail"
+          element={<ManagerStaffDetailPage />}
         />
         <Route path="/managermateriallist" element={<ManagerMaterialPage />} />
         <Route
@@ -56,11 +68,17 @@ function App() {
           path="/managermaterialhistory"
           element={<ManagerMaterialHistoryPage />}
         />
+        <Route path="/manager/dashboard" element={<DashBoardPage />} />
         <Route path="/manager/chart" element={<DashBoardPage />} />
         <Route path="/managerinvoicelist" element={<ManagerInvoicePage />} />
         <Route
           path="/managerinvoicedetail"
           element={<ManagerInvoiceDetailPage />}
+        />
+        <Route path="/managercustomerlist" element={<ManagerCustomerPage />} />
+        <Route
+          path="/managercustomerdetail"
+          element={<ManagerCustomerDetailPage />}
         />
       </Routes>
     </SkeletonTheme>

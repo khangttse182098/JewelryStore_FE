@@ -5,6 +5,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import AddDiscountModal from "../AddDiscountModal/AddDiscountModal";
 import { useNavigate } from "react-router-dom";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
+import SkeletonRowList from "../../../UtilComponent/SkeletonRowList/SkeletonRowList";
 
 const TableDiscount = () => {
   const addDiscountModalRef = useRef();
@@ -202,47 +203,49 @@ const TableDiscount = () => {
               </tr>
             </thead>
             <tbody>
-              {!currentDiscount.length
-                ? skeletonRowList
-                : currentDiscount.map((discount) => {
-                    const statusClass =
-                      discount.status === "Chưa áp dụng"
-                        ? classes["status-inProgress"]
-                        : discount.status === "Đang áp dụng"
-                        ? classes["status-success"]
-                        : classes["status-closed"];
+              {!currentDiscount.length ? (
+                <SkeletonRowList amount={4} style={classes["td-skeleton"]} />
+              ) : (
+                currentDiscount.map((discount) => {
+                  const statusClass =
+                    discount.status === "Chưa áp dụng"
+                      ? classes["status-inProgress"]
+                      : discount.status === "Đang áp dụng"
+                      ? classes["status-success"]
+                      : classes["status-closed"];
 
-                    return (
-                      <tr
-                        className={`${classes.tr} ${
-                          select && classes.selectedTr
-                        }`}
-                        key={discount.code}
-                        onClick={() => handleClick(discount)}
-                      >
-                        <td className={classes.td}>
-                          <input
-                            type="checkbox"
-                            name={discount.code}
-                            onChange={(event) => {
-                              handleCheckbox(event);
-                            }}
-                            onClick={(event) => event.stopPropagation()}
-                            checked={discount.isChecked || false}
-                          />
-                        </td>
-                        <td className={classes.td}>{discount.code}</td>
-                        <td className={classes.td}>{`${discount.value}%`}</td>
-                        <td className={classes.td}>
-                          <p className={`${statusClass} ${classes.status}`}>
-                            {discount.status}
-                          </p>
-                        </td>
-                        <td className={classes.td}>{discount.startDate}</td>
-                        <td className={classes.td}>{discount.endDate}</td>
-                      </tr>
-                    );
-                  })}
+                  return (
+                    <tr
+                      className={`${classes.tr} ${
+                        select && classes.selectedTr
+                      }`}
+                      key={discount.code}
+                      onClick={() => handleClick(discount)}
+                    >
+                      <td className={classes.td}>
+                        <input
+                          type="checkbox"
+                          name={discount.code}
+                          onChange={(event) => {
+                            handleCheckbox(event);
+                          }}
+                          onClick={(event) => event.stopPropagation()}
+                          checked={discount.isChecked || false}
+                        />
+                      </td>
+                      <td className={classes.td}>{discount.code}</td>
+                      <td className={classes.td}>{`${discount.value}%`}</td>
+                      <td className={classes.td}>
+                        <p className={`${statusClass} ${classes.status}`}>
+                          {discount.status}
+                        </p>
+                      </td>
+                      <td className={classes.td}>{discount.startDate}</td>
+                      <td className={classes.td}>{discount.endDate}</td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
           <Pagination
