@@ -246,7 +246,7 @@ const ProductDetail = ({ product }) => {
                 <label>Loại vàng</label>
                 <select
                   className="w-full border rounded p-2"
-                  defaultvalue={selectedMaterial}
+                  value={selectedMaterial}
                   {...register("materialId")}
                   onChange={(event) => setSelectedMaterial(event.target.value)}
                 >
@@ -296,7 +296,7 @@ const ProductDetail = ({ product }) => {
               <label>Quầy số</label>
               <select
                 className="w-full border rounded p-2"
-                defaultValue={selectedCounter}
+                value={selectedCounter}
                 {...register("counterId")}
                 onChange={(event) => setSelectedCounter(event.target.value)}
               >
@@ -404,7 +404,7 @@ const ProductDetail = ({ product }) => {
                 <label>Tên kim cương</label>
                 <select
                   className="w-full border rounded p-2"
-                  defaultValue={productInfor.gemName}
+                  value={productInfor.gemName}
                   {...register("gemId")}
                   onChange={handleDiamondSelect}
                 >
