@@ -60,7 +60,7 @@
 }
 
 .current {
-  @apply text-[#2661ec] font-semibold border-b-[#2661ec] opacity-90;
+  @apply font-semibold text-blue-600;
 }
 
 .status {

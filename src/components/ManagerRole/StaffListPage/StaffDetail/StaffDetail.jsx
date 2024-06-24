@@ -4,6 +4,8 @@ import React, { useRef, useState, useEffect, useContext } from "react";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 import { useLocation } from "react-router-dom";
 import { formatter } from "../../../../util/formatter";
+import UpdateIcon from "../../../../../public/assets/pen.png";
+import EditStaffModal from "../EditStaffModal/EditStaffModal";
 
 const StaffDetail = () => {
   // const { register, handleSubmit } = useForm();
@@ -12,6 +14,7 @@ const StaffDetail = () => {
   const location = useLocation();
   const { staff } = location.state || {}; // Kiểm tra nếu state tồn tại
   const [orders, setOrders] = useState([]);
+  const staffInputFormRef = useRef();
 
   if (!staff) {
     return <div>No staff data available</div>;
@@ -42,12 +45,34 @@ const StaffDetail = () => {
       return (average = staff.personalIncome / staff.sellOrderQuantity);
     else return (average = 0);
   }
+
+  function handleClick() {
+    staffInputFormRef.current.showModal();
+  }
+
+  function handleHide() {
+    staffInputFormRef.current.close();
+  }
+
   return (
     <>
+      <EditStaffModal
+        staff={staff}
+        onClose={handleHide}
+        ref={staffInputFormRef}
+      />
       {/* Personal Ìnormation */}
       <div className="p-4 w-full">
         <div className="bg-white shadow-md p-4 rounded-md">
-          <h2 className="font-semibold text-3xl">Thông tin cá nhân</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="font-semibold text-3xl">Thông tin cá nhân</h2>
+            <img
+              src={UpdateIcon}
+              alt="UpdateIcon"
+              className="w-[20px]"
+              onClick={handleClick}
+            />
+          </div>
 
           <div className="grid grid-cols-3 gap-3 text-center mt-4 mb-4">
             <div>
