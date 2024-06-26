@@ -12,7 +12,7 @@ const DoneModal = forwardRef(function DoneModal({ handleClose }, ref) {
         </div>
         <div className={classes["lower-content"]}>
           <button className={classes["close-modal"]} onClick={handleClose}>
-            CLOSE
+            Close
           </button>
         </div>
       </dialog>

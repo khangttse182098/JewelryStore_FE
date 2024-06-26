@@ -1,0 +1,80 @@
+.button {
+  @apply h-12 w-48 bg-white text-center box-border text-gray-500 font-["Montserrat"] text-base hover:box-border hover:text-blue-600 hover:border-b-2 hover:border-blue-600 cursor-pointer;
+}
+
+.selectedFilter {
+  @apply box-border text-blue-600 border-b-2 border-blue-600;
+}
+
+.search-container {
+  margin-top: 19px;
+  margin-bottom: 28px;
+  margin-left: 42.5px;
+}
+
+.search {
+  width: 583px;
+  height: 37px;
+  border-radius: 10px;
+  border-style: double;
+  border-color: #dfd8d8;
+  outline: none;
+  padding-left: 39.5px;
+}
+
+.img {
+  margin-right: 17px;
+}
+
+.th {
+  @apply border-b border-[#dddddd] text-center p-4 h-10 bg-[#f4f6f8] font-semibold;
+}
+
+.td {
+  @apply border-b-[#dddddd] h-10 font-[400] text-center;
+}
+
+.td-skeleton {
+  @apply border-b-[#dddddd] h-20 font-[400] text-center border-b-0;
+}
+
+.checkbox {
+  padding-left: 37px;
+}
+
+.tr {
+  @apply text-center p-2 cursor-pointer hover:bg-[#eff7fd];
+}
+
+.selectedTr {
+  @apply bg-[#eff7fd];
+}
+
+.th,
+.td {
+  @apply text-base;
+}
+
+.select {
+  background-color: #eff7fd;
+}
+
+.current {
+  @apply text-[#2661ec] font-semibold border-b-[#2661ec] opacity-90;
+}
+
+.status {
+  @apply p-2 w-40 my-5 mx-auto outline rounded-[20px] font-semibold;
+}
+
+.status-closed {
+  @apply bg-[#eae2f0] outline-[#876fca]  text-[#7506e4];
+}
+
+.status-success {
+  @apply bg-[#f3fcf9] outline-[#9fedcf]  text-[#0db473];
+}
+
+.status-inProgress {
+  @apply bg-[#fffbf2] outline-[#ffdf9b]  text-[#e49c06];
+}

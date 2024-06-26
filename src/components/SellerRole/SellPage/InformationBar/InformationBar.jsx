@@ -66,7 +66,7 @@ const InformationBar = () => {
           <p className={classes.p}>{`Khuyến mại ${
             itemPurchase.length ? `${discountInfo[0].value}%` : ""
           }`}</p>
-          <p className={classes.p}>
+          <p className={`${classes.p} text-[#1D9B25]`}>
             {itemPurchase.length ? `-${formatter.format(discountPrice)}` : ""}
           </p>
         </div>
