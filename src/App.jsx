@@ -5,7 +5,6 @@ import CashierPage from "./page/CashierPage";
 import PurchasePage from "./page/PurchasePage/PurchasePage";
 import CustomerListPage from "./page/CustomerListPage";
 import StatusSellerPage from "./page/StatusSellerPage";
-import CashierStatusPage from "./page/CashierStatusPage";
 import "./util/reset.css";
 import CashierInvoiceDetailPage from "./page/CashierInvoiceDetailPage";
 import RepurchasePage from "./page/RepurchasePage";
@@ -20,6 +19,14 @@ import ManagerGemInforPage from "./page/ManagerGemInforPage";
 import ManagerGemAddPage from "./page/ManagerGemAddPage";
 import ManagerGemInforDetailPage from "./page/ManagerGemInforDetailPage";
 import ManagerGemAddPricePage from "./page/ManagerGemAddPricePage";
+import ManagerDiscountPage from "./page/ManagerDiscountPage";
+import ManagerStaffPage from "./page/ManagerStaffPage";
+import ManagerDiscountDetailPage from "./page/ManagerDiscountDetailPage";
+import ManagerMaterialPage from "./page/ManagerMaterialPage";
+import ManagerMaterialDetailPage from "./page/ManagerMaterialDetailPage";
+import ManagerMaterialHistoryPage from "./page/ManagerMaterialHistoryPage";
+import TestChart from "./components/ManagerRole/Dashboard/DashboardChart";
+import DashBoardPage from "./page/DashBoardPage";
 
 function App() {
   return (
@@ -33,7 +40,6 @@ function App() {
         <Route path="/statuslist" element={<StatusSellerPage />} />
         <Route path="/invoicedetail" element={<CashierInvoiceDetailPage />} />
         <Route path="/repurchasepage" element={<RepurchasePage />} />
-        <Route path="/statuslistcashier" element={<CashierStatusPage />} />
         <Route path="/managerproductlist" element={<ManagerProductPage />} />
         <Route
           path="/managerproductdetail"
@@ -53,6 +59,22 @@ function App() {
           element={<ManagerGemInforDetailPage />}
         />
         <Route path="/manageraddgem" element={<ManagerGemAddPage />} />
+        <Route path="/managerdiscountlist" element={<ManagerDiscountPage />} />
+        <Route path="/managerstafflist" element={<ManagerStaffPage />} />
+        <Route
+          path="/managerdiscountdetail"
+          element={<ManagerDiscountDetailPage />}
+        />
+        <Route path="/managermateriallist" element={<ManagerMaterialPage />} />
+        <Route
+          path="/managermaterialdetail"
+          element={<ManagerMaterialDetailPage />}
+        />
+        <Route
+          path="/managermaterialhistory"
+          element={<ManagerMaterialHistoryPage />}
+        />
+        <Route path="/manager/chart" element={<DashBoardPage />} />
       </Routes>
     </SkeletonTheme>
   );

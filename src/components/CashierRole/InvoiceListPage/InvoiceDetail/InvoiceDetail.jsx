@@ -10,15 +10,18 @@ import InvoiceDetailModal from "../InvoiceDetailModal/InvoiceDetailModal";
 import ImageLoader from "../../../../util/ImageLoader";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
+import CustomerModal from "../CustomerModal/CustomerModal";
 
 const InvoiceDetail = ({ invoice }) => {
   const InvoiceDetailModalRef = useRef();
+  const CustomerModalRef = useRef();
   const doneModalRef = useRef();
 
   const {
     productResponseDTOList,
     diamondCriteriaResponseDTOS,
     materialResponseDTOList,
+    discountValue,
   } = invoice.list;
 
   const [selectedItem, setSelectedItem] = useState(null);
@@ -28,6 +31,8 @@ const InvoiceDetail = ({ invoice }) => {
   const { invoiceCode, customerName, status, totalPrice, customerId } =
     invoice.list;
   const [renderStatus, setRenderStatus] = useState(status);
+  const [totalNumber, setTotalNumber] = useState(0);
+  const [discountProduct, setDiscountProduct] = useState(0);
 
   const handleClick = (item, type) => {
     setSelectedItem({ item, type });
@@ -38,28 +43,6 @@ const InvoiceDetail = ({ invoice }) => {
     InvoiceDetailModalRef.current.close();
   };
 
-  const handleFund = (event) => {
-    event.preventDefault();
-    const input = event.target;
-    const value = input.value;
-    // Save the caret position
-    const caretPosition = input.selectionStart;
-    // Parse the input value to a number
-    const pay = parseInt(value.replace(/[^0-9]/g, ""), 10) || 0;
-    const fund = pay - totalPrice;
-    // Format the number back to currency format
-    const formattedPay = formatter.format(pay);
-    // Update the input value with the formatted currency
-    setPayPrice(formattedPay);
-    setFund(fund);
-    // Calculate the new caret position
-    const newCaretPosition = formattedPay.length - value.length + caretPosition;
-    // Set the new caret position
-    setTimeout(() => {
-      input.setSelectionRange(newCaretPosition, newCaretPosition);
-    }, 0);
-  };
-
   const handleFetchCustomer = () => {
     fetch(`http://mahika.foundation:8080/swp/api/customer/list-${customerId}`)
       .then((res) => res.json())
@@ -67,6 +50,18 @@ const InvoiceDetail = ({ invoice }) => {
         console.log(customer);
         return setCustomer(customer);
       });
+  };
+
+  const onChangeCustomer = (updatedCustomer) => {
+    setCustomer(updatedCustomer);
+  };
+
+  const handleOpenCustomerModal = () => {
+    CustomerModalRef.current.showModal();
+  };
+
+  const handleCloseCustomerModal = () => {
+    CustomerModalRef.current.close();
   };
 
   const handleFetchPurchase = () => {
@@ -85,6 +80,25 @@ const InvoiceDetail = ({ invoice }) => {
   useEffect(() => {
     handleFetchCustomer();
   }, []);
+
+  useEffect(() => {
+    if (productResponseDTOList) {
+      productResponseDTOList.map((product) =>
+        setDiscountProduct((prev) => prev + product.discountPrice)
+      );
+      setTotalNumber((prev) => prev + productResponseDTOList.length);
+    }
+    if (materialResponseDTOList) {
+      setTotalNumber((prev) => prev + materialResponseDTOList.length);
+    }
+    if (diamondCriteriaResponseDTOS) {
+      setTotalNumber((prev) => prev + diamondCriteriaResponseDTOS.length);
+    }
+  }, [
+    productResponseDTOList,
+    materialResponseDTOList,
+    diamondCriteriaResponseDTOS,
+  ]);
 
   function handleOpenDoneModal() {
     doneModalRef.current.showModal();
@@ -188,6 +202,12 @@ const InvoiceDetail = ({ invoice }) => {
               </tbody>
             </table>
 
+            <CustomerModal
+              ref={CustomerModalRef}
+              customer={customer}
+              handleHide={handleCloseCustomerModal}
+              onChangeCustomer={onChangeCustomer}
+            />
             <div className={classes["customer-detail"]}>
               <div className={classes["customer-title-container"]}>
                 <p>Khách hàng</p>
@@ -196,6 +216,7 @@ const InvoiceDetail = ({ invoice }) => {
                     className={classes["img-pen"]}
                     src={PenImg}
                     alt="pen-logo"
+                    onClick={handleOpenCustomerModal}
                   />
                 </div>
               </div>
@@ -203,14 +224,14 @@ const InvoiceDetail = ({ invoice }) => {
                 style={{
                   width: "419px",
                   marginLeft: "23px",
-                  marginBottom: "10px",
+                  marginBottom: "20px",
                 }}
               />
               <div className={classes["customer-info"]}>
                 <div className={classes["customer-name"]}>
                   <p className={classes["customer-info-title"]}>Họ và tên: </p>
                   <p>
-                    {customerName || (
+                    {customer.fullName || (
                       <Skeleton style={{ width: "150px", height: "10px" }} />
                     )}
                   </p>
@@ -264,33 +285,39 @@ const InvoiceDetail = ({ invoice }) => {
                 {renderStatus}
               </div>
               <div className={classes["status-name-containter"]}>
+                <div className={classes.highlight}>Tổng số lượng</div>
+                <div className={classes["status-value"]}>{totalNumber}</div>
+              </div>
+              <div className={classes["status-name-containter"]}>
                 <div className={classes.highlight}>Tổng tiền hàng</div>
                 <div className={classes["status-value"]}>
                   {formatter.format(totalPrice)}
                 </div>
               </div>
               <div className={classes["status-name-containter"]}>
-                <div className={classes.highlight}>Khách đã trả</div>
-                <input
-                  className={classes["status-value"]}
-                  onChange={handleFund}
-                  placeholder="Nhập tiền khách hàng trả"
-                  value={payPrice}
-                />
+                <div className={classes.highlight}>
+                  Khuyễn mãi {discountValue}%
+                </div>
+                <div className={classes["status-value"]}>
+                  -{formatter.format(discountProduct)}
+                </div>
               </div>
               <div className={classes["status-name-containter"]}>
-                <div className={classes.highlight}>Tiền hoàn lại khách</div>
+                <div className={classes.highlight}>Thanh toán</div>
                 <div className={classes["status-value"]}>
-                  {formatter.format(fund)}
+                  {formatter.format(totalPrice - discountProduct)}
                 </div>
               </div>
             </div>
-            <button
-              className={classes["purchase-button"]}
-              onClick={handleFetchPurchase}
-            >
-              Thanh Toán
-            </button>
+
+            <div className={classes.dropdown}>
+              <button className={classes.dropbtn}>Thanh toán</button>
+              <div className={classes["dropdown-content"]}>
+                <a onClick={handleFetchPurchase}>Tiền mặt</a>
+                <a onClick={handleFetchPurchase}>Chuyển khoản</a>
+                <a onClick={handleFetchPurchase}>Thẻ tín dụng</a>
+              </div>
+            </div>
           </div>
         </div>
       </SkeletonTheme>

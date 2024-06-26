@@ -48,7 +48,7 @@ const TableGemInfor = () => {
   return (
     <div className="w-10/12 h-5/6 ">
       <div className="text-3xl font-medium py-9">
-        <p>Danh sách sản phẩm</p>
+        <p>Danh sách kim cương</p>
       </div>
       <div className="bg-white border-2 rounded-xl">
         <div>
