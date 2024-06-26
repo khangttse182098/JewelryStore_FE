@@ -11,21 +11,21 @@ const EditStaffModal = forwardRef(({ staff, onClose }, ref) => {
     const reqBody = {
       ...submitData,
       id: staff.id,
-      fullName: staff.fullName,
-      phone: staff.phone,
-      role: staff.role,
+      userName: "",
+      password: "",
+      ["fullName"]: submitData.fullName,
+      ["phone"]: submitData.phone,
+      ["role"]: submitData.role,
     };
+    console.log(reqBody);
     try {
-      const res = await fetch(
-        "http://mahika.foundation:8080/swp/api/discount/information",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(reqBody),
-        }
-      );
+      const res = await fetch("http://mahika.foundation:8080/swp/api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reqBody),
+      });
       onClose();
       handleOpen();
     } catch (error) {}
@@ -57,6 +57,7 @@ const EditStaffModal = forwardRef(({ staff, onClose }, ref) => {
               <input
                 className="w-96 h-10 rounded-sm bg-gray-100"
                 {...register("fullName")}
+                defaultValue={staff.fullName}
               />
             </div>
             <div className="block mt-5">
@@ -64,6 +65,7 @@ const EditStaffModal = forwardRef(({ staff, onClose }, ref) => {
               <input
                 className="w-96 h-10 rounded-sm bg-gray-100"
                 {...register("phone")}
+                defaultValue={staff.phone}
               />
             </div>
 
@@ -72,6 +74,7 @@ const EditStaffModal = forwardRef(({ staff, onClose }, ref) => {
               <input
                 className="w-96 h-10 rounded-sm bg-gray-100"
                 {...register("role")}
+                defaultValue={staff.role}
               />
             </div>
             <button

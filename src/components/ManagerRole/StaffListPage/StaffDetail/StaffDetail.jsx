@@ -1,6 +1,6 @@
 import classes from "./StaffDetail.module.css";
 import Pen from "../../../../../public/assets/pen.png";
-import React, { useRef, useState, useEffect, useContext } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 import { useLocation } from "react-router-dom";
 import { formatter } from "../../../../util/formatter";
@@ -8,9 +8,7 @@ import UpdateIcon from "../../../../../public/assets/pen.png";
 import EditStaffModal from "../EditStaffModal/EditStaffModal";
 
 const StaffDetail = () => {
-  // const { register, handleSubmit } = useForm();
   const doneModalRef = useRef();
-
   const location = useLocation();
   const { staff } = location.state || {}; // Kiểm tra nếu state tồn tại
   const [orders, setOrders] = useState([]);
@@ -19,6 +17,7 @@ const StaffDetail = () => {
   if (!staff) {
     return <div>No staff data available</div>;
   }
+
   const handleOrder = () => {
     fetch("http://mahika.foundation:8080/swp/api/order", {
       method: "GET",
@@ -33,9 +32,11 @@ const StaffDetail = () => {
         );
 
         setOrders(orderList);
+        console.log(orderList);
       })
       .catch((error) => console.log(error));
   };
+
   useEffect(() => {
     handleOrder();
   }, []);
@@ -61,7 +62,7 @@ const StaffDetail = () => {
         onClose={handleHide}
         ref={staffInputFormRef}
       />
-      {/* Personal Ìnormation */}
+      {/* Personal Information */}
       <div className="p-4 w-full">
         <div className="bg-white shadow-md p-4 rounded-md">
           <div className="flex justify-between items-center">
@@ -128,7 +129,10 @@ const StaffDetail = () => {
                     ? classes["status-success"]
                     : classes["status-closed"];
                 return (
-                  <div className="grid grid-cols-4 gap-3 text-center mt-12 mb-12">
+                  <div
+                    key={order.invoiceCode}
+                    className="grid grid-cols-4 gap-3 text-center mt-12 mb-12"
+                  >
                     <div>
                       <div className="text-2xl mt-3 font-medium">
                         {order.invoiceCode}
@@ -147,7 +151,6 @@ const StaffDetail = () => {
                     <div>
                       <div className={`${statusClass} ${classes.status}`}>
                         {order.status}
-                        {/* status */}
                       </div>
                     </div>
                   </div>
@@ -162,4 +165,5 @@ const StaffDetail = () => {
     </>
   );
 };
+
 export default StaffDetail;
