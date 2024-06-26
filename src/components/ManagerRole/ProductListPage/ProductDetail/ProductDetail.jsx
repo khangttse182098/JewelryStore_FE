@@ -20,6 +20,51 @@ const ProductDetail = ({ product }) => {
   const diamondControllerRef = useRef();
   const counterControllerRef = useRef();
   const materialControllerRef = useRef();
+  const categoryControllerRef = useRef();
+  const { register, handleSubmit } = useForm();
+
+  async function onSubmit(submitData) {
+    // const formData = new FormData();
+    // formData.append("file", selectedFile);
+    // try {
+    //   const res = await fetch(
+    //     "http://mahika.foundation:8080/swp/api/file/upload",
+    //     {
+    //       method: "POST",
+    //       body: formData,
+    //     }
+    //   );
+    //   const data = await res.json();
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    const requestBody = {
+      ...submitData,
+      id: Number(id),
+      ["counterId"]: Number(submitData.counterId),
+      ["materialId"]: Number(submitData.materialId),
+      ["gemCost"]: Number(submitData.gemCost),
+      ["gemId"]: Number(submitData.gemId),
+      ["materialCost"]: Number(submitData.materialCost),
+      ["materialWeight"]: Number(submitData.materialWeight),
+      ["priceRate"]: Number(submitData.priceRate),
+      ["productionCost"]: Number(submitData.productionCost),
+      // ["file"]: selectedFile,
+    };
+    console.log(requestBody);
+    try {
+      const res = await fetch("http://mahika.foundation:8080/swp/api/product", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleClick = () => {
     ProductDetailRef.current.showModal();
@@ -110,7 +155,10 @@ const ProductDetail = ({ product }) => {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-2 p-4">
+      <form
+        className="grid grid-cols-2 gap-2 p-4"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {/* Section Product */}
         <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
           <h2 className="font-semibold text-xl">Chi tiết sản phẩm</h2>
@@ -124,18 +172,35 @@ const ProductDetail = ({ product }) => {
                 defaultValue={productInfor.productCode}
               />
             </div>
-            <div>
-              <label>Loại vàng</label>
-              <select
-                className="w-full border rounded p-2"
-                value={selectedMaterial}
-                onChange={handleMaterialChange}
-              >
-                {materialList.map((material) => {
-                  return <option key={material.id}>{material.name}</option>;
-                })}
-              </select>
-            </div>
+            {selectedMaterial === null ? (
+              <div>
+                <label>Loại vàng</label>
+                <input
+                  value="Không có"
+                  className="w-full border rounded p-2"
+                  readOnly
+                />
+              </div>
+            ) : (
+              <div>
+                <label>Loại vàng</label>
+                <select
+                  className="w-full border rounded p-2"
+                  value={selectedMaterial}
+                  onChange={(event) => setSelectedMaterial(event.target.value)}
+                  // {...register("materialId")}
+                >
+                  <option disabled>Chọn loại vàng</option>
+                  {materialList.map((material) => {
+                    return (
+                      <option key={material.id} value={material.name}>
+                        {material.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            )}
             <div>
               <label>Tên sản phẩm</label>
               <input
@@ -144,31 +209,54 @@ const ProductDetail = ({ product }) => {
                 defaultValue={productInfor.productName}
               />
             </div>
-            <div>
-              <label>Khối lượng vàng</label>
-              <input
-                className="w-full border rounded p-2"
-                type="text"
-                defaultValue={productInfor.materialWeight}
-              />
-            </div>
+            {productInfor.materialWeight === null ? (
+              <div>
+                <label>Khối lượng vàng</label>
+                <input className="w-full border rounded p-2" value="Không có" />
+              </div>
+            ) : (
+              <div>
+                <label>Khối lượng vàng</label>
+                <input
+                  className="w-full border rounded p-2"
+                  defaultValue={productInfor.materialWeight}
+                  {...register("materialWeight")}
+                />
+              </div>
+            )}
             <div>
               <label>Loại sản phẩm</label>
-              <input
+              <select
                 className="w-full border rounded p-2"
-                type="text"
-                defaultValue={productInfor.categoryName}
-              />
+                value={productInfor.categoryName}
+                // {...register("categoryName")}
+                onChange={(event) =>
+                  setSelectedCategoryName(event.target.value)
+                }
+              >
+                {categoryName.map((category) => {
+                  return (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
             <div>
               <label>Quầy số</label>
               <select
                 className="w-full border rounded p-2"
                 value={selectedCounter}
-                onChange={handleCounterChange}
+                onChange={(event) => setSelectedCounter(event.target.value)}
+                // {...register("counterId")}
               >
                 {counterList.map((counter) => {
-                  return <option key={counter.id}>{counter.counterNo}</option>;
+                  return (
+                    <option key={counter.id} value={counter.No}>
+                      {counter.counterNo}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -187,8 +275,19 @@ const ProductDetail = ({ product }) => {
           />
           <div className="mt-4">
             <label>Danh mục</label> <br />
-            <select className="w-72 border rounded p-2">
-              <option>{productInfor.subCategoryType}</option>
+            <select
+              className="w-72 border rounded p-2"
+              defaultValue={selectedImageType}
+              // {...register("subCategoryType")}
+              onChange={(event) => setSelectedImageType(event.target.value)}
+            >
+              {imageType.map((type) => {
+                return (
+                  <option key={type.productCategoryId}>
+                    {type.subCategoryType}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>
@@ -210,32 +309,32 @@ const ProductDetail = ({ product }) => {
               <label>Giá đá</label>
               <input
                 className="w-full border rounded p-2"
-                type="text"
                 defaultValue={formatter.format(productInfor.gemCost)}
+                {...register("gemCost")}
               />
             </div>
             <div>
               <label>Giá gia công</label>
               <input
                 className="w-full border rounded p-2"
-                type="text"
                 defaultValue={formatter.format(productInfor.productionCost)}
+                {...register("productionCost")}
               />
             </div>
             <div>
               <label>Giá nguyên liệu</label>
               <input
                 className="w-full border rounded p-2"
-                type="text"
                 defaultValue={formatter.format(productInfor.materialCost)}
+                {...register("materialCost")}
               />
             </div>
             <div>
               <label>Tỉ lệ áp giá</label>
               <input
                 className="w-full border rounded p-2"
-                type="text"
                 defaultValue={productInfor.priceRate + "%"}
+                {...register("priceRate")}
               />
             </div>
           </div>
@@ -255,7 +354,7 @@ const ProductDetail = ({ product }) => {
               >
                 <option>Chọn tên kim cương</option>
                 {diamondCriteria.map((diamond) => (
-                  <option key={diamond.gemId} defaultValue={diamond.gemName}>
+                  <option key={diamond.gemId} value={diamond.gemName}>
                     {diamond.gemName}
                   </option>
                 ))}
@@ -317,14 +416,14 @@ const ProductDetail = ({ product }) => {
             deleteCode={ids}
           />
           <button
-            onClick={handleClick}
             type="submit"
+            onClick={handleClick}
             className="w-1/3 h-8 border rounded-md bg-red-500 text-white font-semibold"
           >
             Xóa
           </button>
         </div>
-      </div>
+      </form>
     </>
   );
 };
