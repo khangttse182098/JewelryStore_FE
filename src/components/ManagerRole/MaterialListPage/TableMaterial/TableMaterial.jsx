@@ -16,7 +16,7 @@ const TableMaterial = () => {
   const [selectedFilter, setSelectedFilter] = useState("Tất cả");
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
-  const materialPerPage = 4;
+  const materialPerPage = 10;
 
   const lastDiscountIndex = currentPage * materialPerPage;
   const firstDiscountIndex = lastDiscountIndex - materialPerPage;
