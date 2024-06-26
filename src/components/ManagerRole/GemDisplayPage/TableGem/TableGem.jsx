@@ -66,11 +66,6 @@ const TableGem = () => {
             placeholder="Tìm kiếm kim cương"
             onChange={handleSearch}
           />
-          <Link to="/manageraddgemprice">
-            <button className="w-36 h-9 rounded-md bg-[#0088FF] text-white">
-              + Thêm mới giá
-            </button>
-          </Link>
         </div>
         <table className="w-full border-collapse">
           <thead>

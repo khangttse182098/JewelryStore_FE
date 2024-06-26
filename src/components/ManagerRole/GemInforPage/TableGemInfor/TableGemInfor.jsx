@@ -6,6 +6,7 @@ import { formatter } from "../../../../util/formatter";
 const TableGemInfor = () => {
   const controllerRef = useRef();
   const [gemList, setGemList] = useState([]);
+  console.log(gemList);
   const [searchField, setSearchField] = useState("");
   const [filterGem, setFilterGem] = useState([...gemList]);
   const navigate = useNavigate();
@@ -89,7 +90,9 @@ const TableGemInfor = () => {
                 <tr
                   className={classes.tr}
                   key={gem.id}
-                  onClick={() => handleNavigate(gem)}
+                  onClick={(event) => {
+                    handleNavigate(gem);
+                  }}
                 >
                   <td className={classes.td}>{gem.gemName}</td>
                   <td className={classes.td}>{gem.gemCode}</td>
@@ -98,9 +101,27 @@ const TableGemInfor = () => {
                   <td className={classes.td}>{gem.caratWeight}</td>
                   <td className={classes.td}>{gem.cut}</td>
                   <td className={classes.td}>{gem.clarity}</td>
-                  <td className={classes.td}>
-                    {formatter.format(gem.sellPrice)}
-                  </td>
+                  {gem.sellPrice === 0 ? (
+                    <button
+                      onClick={(event) => {
+                        navigate("/manageraddgemprice", {
+                          state: {
+                            gem: {
+                              ...gem,
+                            },
+                          },
+                        }),
+                          event.stopPropagation();
+                      }}
+                      className="w-36 h-7 rounded-md bg-[#0088FF] text-white"
+                    >
+                      + Thêm giá
+                    </button>
+                  ) : (
+                    <td className={classes.td}>
+                      {formatter.format(gem.sellPrice)}
+                    </td>
+                  )}
                 </tr>
               );
             })}

@@ -10,7 +10,7 @@ const ManagerGemHistoryPage = () => {
     <>
       <div className="grid grid-cols-6 grid-rows-none gap-0">
         <div className="col-span-1">
-          <ManagerSidebar />
+          <ManagerSidebar activePage="Giá kim cương" />
         </div>
         <div className="col-span-5">
           <ManagerHeader />

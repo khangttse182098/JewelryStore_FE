@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 const GemInforDetail = ({ gem }) => {
+  const navigate = useNavigate();
   return (
     <div className="grid gap-2 p-4">
       <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
@@ -8,7 +11,7 @@ const GemInforDetail = ({ gem }) => {
           <div>
             <label>Tên kim cương</label>
             <input
-              className="w-full border rounded p-2"
+              className="bg-slate-200 w-full border rounded p-2"
               value={gem.gemName}
               readOnly
             />
@@ -16,7 +19,7 @@ const GemInforDetail = ({ gem }) => {
           <div>
             <label>Nguồn gốc</label>
             <input
-              className="w-full border rounded p-2"
+              className="bg-slate-200 w-full border rounded p-2"
               value={gem.origin}
               readOnly
             />
@@ -24,7 +27,7 @@ const GemInforDetail = ({ gem }) => {
           <div>
             <label>Màu sắc</label>
             <input
-              className="w-full border rounded p-2"
+              className="bg-slate-200 w-full border rounded p-2"
               value={gem.color}
               readOnly
             />
@@ -32,7 +35,7 @@ const GemInforDetail = ({ gem }) => {
           <div>
             <label>Độ tinh khiết</label>
             <input
-              className="w-full border rounded p-2"
+              className="bg-slate-200 w-full border rounded p-2"
               value={gem.clarity}
               readOnly
             />
@@ -40,7 +43,7 @@ const GemInforDetail = ({ gem }) => {
           <div>
             <label>Trọng lượng (g)</label>
             <input
-              className="w-full border rounded p-2"
+              className="bg-slate-200 w-full border rounded p-2"
               value={gem.caratWeight}
               readOnly
             />
@@ -48,7 +51,7 @@ const GemInforDetail = ({ gem }) => {
           <div>
             <label>Giác cắt</label>
             <input
-              className="w-full border rounded p-2"
+              className="bg-slate-200 w-full border rounded p-2"
               value={gem.cut}
               readOnly
             />
@@ -56,7 +59,7 @@ const GemInforDetail = ({ gem }) => {
           <div>
             <label>Phần trăm cắt</label>
             <input
-              className="w-full border rounded p-2"
+              className="bg-slate-200 w-full border rounded p-2"
               value={gem.proportions}
               readOnly
             />
@@ -64,7 +67,7 @@ const GemInforDetail = ({ gem }) => {
           <div>
             <label>Độ nhẵn</label>
             <input
-              className="w-full border rounded p-2"
+              className="bg-slate-200 w-full border rounded p-2"
               value={gem.polish}
               readOnly
             />
@@ -72,7 +75,7 @@ const GemInforDetail = ({ gem }) => {
           <div>
             <label>Độ cân đối</label>
             <input
-              className="w-full border rounded p-2"
+              className="bg-slate-200 w-full border rounded p-2"
               value={gem.symmetry}
               readOnly
             />
@@ -80,12 +83,18 @@ const GemInforDetail = ({ gem }) => {
           <div>
             <label>Độ sáng</label>
             <input
-              className="w-full border rounded p-2"
+              className="bg-slate-200 w-full border rounded p-2"
               value={gem.fluorescence}
               readOnly
             />
           </div>
         </div>
+        <button
+          onClick={() => navigate("/managergeminforlist")}
+          className="w-1/3 h-8 border rounded-md bg-[#0088FF] text-white font-semibold mx-64 mt-5"
+        >
+          Quay lại
+        </button>
       </div>
     </div>
   );
