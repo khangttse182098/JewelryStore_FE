@@ -213,6 +213,7 @@ const Category = () => {
               selectedValue={name}
               onChange={(e) => setGoldType(e)}
             />
+
             <button
               className={classes["add-goldInvoice"]}
               disabled={!name || !weight}

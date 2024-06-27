@@ -65,3 +65,74 @@
 .button:hover {
   background-color: #a58657;
 }
+
+@media (max-width: 1280px) {
+  .invoice {
+    background-color: #dfd8d8;
+    width: 500px;
+    height: 170px;
+    border-radius: 50px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .detail {
+    display: block;
+    margin-top: 20px;
+    font-size: large;
+    width: 350px;
+  }
+  .origin {
+    display: block;
+    /* float: left; */
+    /* width: 50%; */
+  }
+  .cut {
+    display: block;
+    /* margin-left: 100px; */
+    /* float: right;
+    width: 40%; */
+  }
+  .color {
+    width: 500px;
+    display: block;
+    margin-top: 33px;
+  }
+  .carat {
+    width: 500px;
+    display: block;
+    margin-top: 5px;
+  }
+  .clarity {
+    margin-top: 5px;
+    width: 50%;
+    display: block;
+    float: left;
+  }
+  .price {
+    width: 50%;
+    display: block;
+    float: right;
+    margin-top: 5px;
+  }
+
+  .button {
+    background-color: #c3a06d;
+    width: 70px;
+    height: 70px;
+    font-size: 50px;
+    font-weight: 500;
+    border-radius: 50%;
+    margin-top: 50px;
+
+    color: inherit;
+    border: none;
+
+    cursor: pointer;
+    /* outline: inherit; */
+    margin-left: 35px;
+  }
+  .button:hover {
+    background-color: #a58657;
+  }
+}

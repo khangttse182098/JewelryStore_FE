@@ -52,3 +52,14 @@
   height: 30px;
   visibility: hidden;
 }
+
+@media (max-width: 1280px) {
+  .logo-center {
+    align-items: center;
+    width: 100px;
+  }
+  .header {
+    height: 70px;
+    width: 100%;
+  }
+}
