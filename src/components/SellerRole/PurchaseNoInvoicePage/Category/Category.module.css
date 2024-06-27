@@ -398,12 +398,12 @@ hr {
   }
 
   .head-frame-gold {
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 600;
   }
   .head-frame-diamond {
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 600;
   }
   .gold-weight {
     float: left;
@@ -442,21 +442,6 @@ hr {
     font-size: 15px;
     font-weight: 500;
   }
-
-  /* .add-diamondInvoice {
-    margin-top: 40px;
-    margin-bottom: 20px;
-    width: 220px;
-    height: 40px;
-    border-radius: 22.5px;
-    background-color: #c3a06d;
-    border-color: #c3a06d;
-    cursor: pointer;
-    outline: none;
-    border-style: double;
-    font-size: 15px;
-    font-weight: 500;
-  } */
 
   .add-goldInvoice:hover {
     background-color: #a58657;
