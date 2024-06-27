@@ -1,22 +1,18 @@
+import classes from "./TableGemInfor.module.css";
 import { useEffect, useRef, useState } from "react";
-import classes from "./TableGem.module.css";
-import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { formatter } from "../../../../util/formatter";
+import Pagination from "../../../../components/CashierRole/UtilsComponent/Pagination/Pagination";
 
-const TableGem = () => {
+const TableGemInfor = () => {
   const controllerRef = useRef();
   const [gemList, setGemList] = useState([]);
+  console.log(gemList);
   const [searchField, setSearchField] = useState("");
   const [filterGem, setFilterGem] = useState([...gemList]);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [gemPerPage, setGemPerPage] = useState(7);
-
-  //------------------------Pagination-----------------------
-  const lastGemIndex = currentPage * gemPerPage;
-  const firstGemIndex = lastGemIndex - gemPerPage;
-  const currentGem = filterGem.slice(firstGemIndex, lastGemIndex);
 
   //------------------------Get list gems--------------------
   useEffect(() => {
@@ -26,7 +22,7 @@ const TableGem = () => {
     const handleGem = async () => {
       try {
         const response = await fetch(
-          "http://mahika.foundation:8080/swp/api/diamond-price/history",
+          "http://mahika.foundation:8080/swp/api/diamond-price",
           { signal }
         );
         const data = await response.json();
@@ -38,7 +34,7 @@ const TableGem = () => {
 
   //-----------------------------HandleNavigate---------------------
   function handleNavigate(gem) {
-    navigate("/managergemhistory", { state: { gem } });
+    navigate("/managergeminfordetail", { state: { gem } });
   }
   //----------------------------Search-------------------------------
   const handleSearch = (event) => {
@@ -48,16 +44,24 @@ const TableGem = () => {
 
   useEffect(() => {
     const newFilterGem = gemList.filter((gem) => {
-      return gem.origin.toLowerCase().includes(searchField);
+      return (
+        gem.gemName.toLowerCase().includes(searchField) ||
+        gem.gemCode.toLowerCase().includes(searchField) ||
+        gem.origin.toLowerCase().includes(searchField)
+      );
     });
     setFilterGem(newFilterGem);
   }, [searchField, gemList]);
 
-  console.log(filterGem);
+  //---------------------------Pagination--------------------
+  const lastGemIndex = currentPage * gemPerPage;
+  const firstGemIndex = lastGemIndex - gemPerPage;
+  const currentGem = filterGem.slice(firstGemIndex, lastGemIndex);
+
   return (
-    <div className="w-10/12 h-5/6 ">
+    <div className="w-11/12 h-5/6 ">
       <div className="text-3xl font-medium py-5">
-        <p>Giá kim cương</p>
+        <p>Danh sách kim cương</p>
       </div>
       <div className="bg-white border-2 rounded-xl">
         <div>
@@ -73,18 +77,23 @@ const TableGem = () => {
             placeholder="Tìm kiếm kim cương"
             onChange={handleSearch}
           />
+          <Link to="/manageraddgem">
+            <button className="w-32 h-9 rounded-md bg-[#0088FF] text-white">
+              + Thêm mới
+            </button>
+          </Link>
         </div>
         <table className="w-full border-collapse">
           <thead>
             <tr className={classes.tr}>
+              <th className={classes.th}>Tên kim cương</th>
+              <th className={classes.th}>Mã kim cương</th>
               <th className={classes.th}>Nguồn gốc</th>
               <th className={classes.th}>Màu sắc</th>
-              <th className={classes.th}>Độ tinh khiết</th>
+              <th className={classes.th}>Trọng lượng carat (g)</th>
               <th className={classes.th}>Giác cắt</th>
-              <th className={classes.th}>Trọng lượng (g)</th>
-              <th className={classes.th}>Giá mua</th>
+              <th className={classes.th}>Độ tinh khiết</th>
               <th className={classes.th}>Giá bán</th>
-              <th className={classes.th}>Thời điểm</th>
             </tr>
           </thead>
           <tbody>
@@ -93,23 +102,38 @@ const TableGem = () => {
                 <tr
                   className={classes.tr}
                   key={gem.id}
-                  onClick={() => handleNavigate(gem)}
+                  onClick={(event) => {
+                    handleNavigate(gem);
+                  }}
                 >
+                  <td className={classes.td}>{gem.gemName}</td>
+                  <td className={classes.td}>{gem.gemCode}</td>
                   <td className={classes.td}>{gem.origin}</td>
                   <td className={classes.td}>{gem.color}</td>
-                  <td className={classes.td}>{gem.clarity}</td>
+                  <td className={classes.td}>{gem.caratWeight}</td>
                   <td className={classes.td}>{gem.cut}</td>
-                  <td className={classes.td}>
-                    {gem.caratWeightFrom} - {gem.caratWeightTo}
-                  </td>
-
-                  <td className={classes.td}>
-                    {formatter.format(gem.buyPrice)}
-                  </td>
-                  <td className={classes.td}>
-                    {formatter.format(gem.sellPrice)}
-                  </td>
-                  <td className={classes.td}>{gem.effectDate}</td>
+                  <td className={classes.td}>{gem.clarity}</td>
+                  {gem.sellPrice === 0 ? (
+                    <button
+                      onClick={(event) => {
+                        navigate("/manageraddgemprice", {
+                          state: {
+                            gem: {
+                              ...gem,
+                            },
+                          },
+                        }),
+                          event.stopPropagation();
+                      }}
+                      className="w-36 h-7 rounded-md bg-[#0088FF] text-white"
+                    >
+                      + Thêm giá
+                    </button>
+                  ) : (
+                    <td className={classes.td}>
+                      {formatter.format(gem.sellPrice)}
+                    </td>
+                  )}
                 </tr>
               );
             })}
@@ -126,4 +150,4 @@ const TableGem = () => {
   );
 };
 
-export default TableGem;
+export default TableGemInfor;

@@ -5,6 +5,7 @@ import Disount from "/assets/discount.png";
 import Staff from "/assets/staff.png";
 import Dashboard from "/assets/dashboardIcon.png";
 import Material from "/assets/materialIcon.png";
+import Diamond from "/assets/diamond.png";
 import classes from "./ManagerSidebar.module.css";
 import { useNavigate } from "react-router-dom";
 
@@ -79,6 +80,24 @@ const ManagerSidebar = ({ activePage }) => {
         >
           <img src={Material} alt="Staff icon" className="pl-4" />
           <p>Giá vàng</p>
+        </button>
+        <button
+          className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
+            activePage === "Thông tin kim cương" && classes.active
+          }`}
+          onClick={() => navigate("/managergeminforlist")}
+        >
+          <img src={Diamond} alt="Staff icon" className="pl-4" />
+          <p>Thông tin kim cương</p>
+        </button>
+        <button
+          className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
+            activePage === "Giá kim cương" && classes.active
+          }`}
+          onClick={() => navigate("/managergemlist")}
+        >
+          <img src={Diamond} alt="Staff icon" className="pl-4" />
+          <p>Giá kim cương</p>
         </button>
       </div>
     </div>
