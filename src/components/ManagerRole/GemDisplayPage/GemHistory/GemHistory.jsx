@@ -39,7 +39,7 @@ const GemHistory = ({ gem }) => {
 
   return (
     <div className="w-10/12 h-5/6 ">
-      <div className="text-3xl font-medium py-9">
+      <div className="text-3xl font-medium py-5">
         <p>Lịch sử giá</p>
       </div>
       <div className="bg-white border-2 rounded-xl">
@@ -83,6 +83,13 @@ const GemHistory = ({ gem }) => {
         </table>
         <div className="text-right mr-28">
           <button
+            className="h-10 w-40 mt-4 rounded bg-[#0088FF] hover:bg-[#0a73ce]
+          text-slate-100 text-xl mr-3"
+            onClick={() => navigate("/managergemlist")}
+          >
+            Quay lại
+          </button>
+          <button
             onClick={() =>
               navigate("/managergemdetail", {
                 state: {
@@ -92,7 +99,7 @@ const GemHistory = ({ gem }) => {
                 },
               })
             }
-            className="h-10 w-40 mt-5  rounded bg-[#0088FF] hover:bg-[#0a73ce] text-slate-100 text-xl"
+            className="h-10 w-40 mt-4  rounded bg-[#0088FF] hover:bg-[#0a73ce] text-slate-100 text-xl"
           >
             Cập nhật giá
           </button>

@@ -64,7 +64,7 @@ const DetailGem = ({ gem }) => {
                 </label>
                 <input
                   name="origin"
-                  className="py-5 pl-3 w-4/5 ml-11 border-2 border-[#d2d4d8] focus:outline-none bg-transparent rounded-lg bg-slate-200"
+                  className="py-5 pl-3 w-4/5 ml-11 border-2 border-[#d2d4d8] focus:outline-none rounded-lg bg-slate-200"
                   placeholder="Nhập loại kim cương"
                   defaultValue={gem.origin}
                   readOnly
@@ -76,7 +76,7 @@ const DetailGem = ({ gem }) => {
                 </label>
                 <input
                   name="color"
-                  className="bg-slate-200 py-5 pl-3 w-4/5 ml-11 border-2 border-[#d2d4d8] focus:outline-none bg-transparent rounded-lg"
+                  className="bg-slate-200 py-5 pl-3 w-4/5 ml-11 border-2 border-[#d2d4d8] focus:outline-none rounded-lg"
                   placeholder="Nhập loại kim cương"
                   defaultValue={gem.color}
                   readOnly
@@ -88,7 +88,7 @@ const DetailGem = ({ gem }) => {
                 </label>
                 <input
                   name="cut"
-                  className="bg-slate-200 py-5 pl-3 w-4/5 ml-11 border-2 border-[#d2d4d8] focus:outline-none bg-transparent rounded-lg"
+                  className="bg-slate-200 py-5 pl-3 w-4/5 ml-11 border-2 border-[#d2d4d8] focus:outline-none rounded-lg"
                   placeholder="Nhập loại kim cương"
                   defaultValue={gem.cut}
                   readOnly
@@ -100,7 +100,7 @@ const DetailGem = ({ gem }) => {
                 </label>
                 <input
                   name="clarity"
-                  className="bg-slate-200 py-5 pl-3 w-4/5 ml-11 border-2 border-[#d2d4d8] focus:outline-none bg-transparent rounded-lg"
+                  className="bg-slate-200 py-5 pl-3 w-4/5 ml-11 border-2 border-[#d2d4d8] focus:outline-none rounded-lg"
                   placeholder="Nhập loại kim cương"
                   defaultValue={gem.clarity}
                   readOnly
@@ -112,7 +112,7 @@ const DetailGem = ({ gem }) => {
                 </label>
                 <input
                   name="caratWeightFrom"
-                  className="bg-slate-200 py-5 pl-3 w-4/5 ml-11 border-2 border-[#d2d4d8] focus:outline-none bg-transparent rounded-lg"
+                  className="bg-slate-200 py-5 pl-3 w-4/5 ml-11 border-2 border-[#d2d4d8] focus:outline-none rounded-lg"
                   placeholder="Nhập loại kim cương"
                   defaultValue={gem.caratWeightFrom}
                   readOnly
@@ -124,7 +124,7 @@ const DetailGem = ({ gem }) => {
                 </label>
                 <input
                   name="caratWeightTo"
-                  className="bg-slate-200 py-5 pl-3 w-4/5 ml-11 border-2 border-[#d2d4d8] focus:outline-none bg-transparent rounded-lg"
+                  className="bg-slate-200 py-5 pl-3 w-4/5 ml-11 border-2 border-[#d2d4d8] focus:outline-none rounded-lg"
                   placeholder="Nhập loại kim cương"
                   defaultValue={gem.caratWeightTo}
                   readOnly

@@ -2,6 +2,7 @@ import classes from "./TableGemInfor.module.css";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { formatter } from "../../../../util/formatter";
+import Pagination from "../../../../components/CashierRole/UtilsComponent/Pagination/Pagination";
 
 const TableGemInfor = () => {
   const controllerRef = useRef();
@@ -10,6 +11,8 @@ const TableGemInfor = () => {
   const [searchField, setSearchField] = useState("");
   const [filterGem, setFilterGem] = useState([...gemList]);
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [gemPerPage, setGemPerPage] = useState(7);
 
   //------------------------Get list gems--------------------
   useEffect(() => {
@@ -41,14 +44,23 @@ const TableGemInfor = () => {
 
   useEffect(() => {
     const newFilterGem = gemList.filter((gem) => {
-      return gem.gemName.toLowerCase().includes(searchField);
+      return (
+        gem.gemName.toLowerCase().includes(searchField) ||
+        gem.gemCode.toLowerCase().includes(searchField) ||
+        gem.origin.toLowerCase().includes(searchField)
+      );
     });
     setFilterGem(newFilterGem);
   }, [searchField, gemList]);
 
+  //---------------------------Pagination--------------------
+  const lastGemIndex = currentPage * gemPerPage;
+  const firstGemIndex = lastGemIndex - gemPerPage;
+  const currentGem = filterGem.slice(firstGemIndex, lastGemIndex);
+
   return (
-    <div className="w-10/12 h-5/6 ">
-      <div className="text-3xl font-medium py-9">
+    <div className="w-11/12 h-5/6 ">
+      <div className="text-3xl font-medium py-5">
         <p>Danh sách kim cương</p>
       </div>
       <div className="bg-white border-2 rounded-xl">
@@ -85,7 +97,7 @@ const TableGemInfor = () => {
             </tr>
           </thead>
           <tbody>
-            {filterGem.map((gem) => {
+            {currentGem.map((gem) => {
               return (
                 <tr
                   className={classes.tr}
@@ -127,6 +139,12 @@ const TableGemInfor = () => {
             })}
           </tbody>
         </table>
+        <Pagination
+          totalInvoice={gemList.length}
+          invoicePerPage={gemPerPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );

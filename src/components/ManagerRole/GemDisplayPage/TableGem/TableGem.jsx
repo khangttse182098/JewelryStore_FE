@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import classes from "./TableGem.module.css";
 import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { formatter } from "../../../../util/formatter";
 
 const TableGem = () => {
@@ -10,6 +10,13 @@ const TableGem = () => {
   const [searchField, setSearchField] = useState("");
   const [filterGem, setFilterGem] = useState([...gemList]);
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [gemPerPage, setGemPerPage] = useState(7);
+
+  //------------------------Pagination-----------------------
+  const lastGemIndex = currentPage * gemPerPage;
+  const firstGemIndex = lastGemIndex - gemPerPage;
+  const currentGem = filterGem.slice(firstGemIndex, lastGemIndex);
 
   //------------------------Get list gems--------------------
   useEffect(() => {
@@ -49,7 +56,7 @@ const TableGem = () => {
   console.log(filterGem);
   return (
     <div className="w-10/12 h-5/6 ">
-      <div className="text-3xl font-medium py-9">
+      <div className="text-3xl font-medium py-5">
         <p>Giá kim cương</p>
       </div>
       <div className="bg-white border-2 rounded-xl">
@@ -81,7 +88,7 @@ const TableGem = () => {
             </tr>
           </thead>
           <tbody>
-            {filterGem.map((gem) => {
+            {currentGem.map((gem) => {
               return (
                 <tr
                   className={classes.tr}
@@ -108,6 +115,12 @@ const TableGem = () => {
             })}
           </tbody>
         </table>
+        <Pagination
+          totalInvoice={gemList.length}
+          invoicePerPage={gemPerPage}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );
