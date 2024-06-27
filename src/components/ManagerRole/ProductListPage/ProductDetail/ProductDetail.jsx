@@ -286,7 +286,7 @@ const ProductDetail = ({ product }) => {
             )}
             <div>
               <label>Loại sản phẩm</label>
-              <input
+              <select
                 className="w-full border rounded p-2"
                 {...register("productCategoryName")}
                 defaultValue={productInfor.categoryName}
@@ -301,7 +301,11 @@ const ProductDetail = ({ product }) => {
                 onChange={(event) => setSelectedCounter(event.target.value)}
               >
                 {counterList.map((counter) => {
-                  return <option key={counter.id}>{counter.counterNo}</option>;
+                  return (
+                    <option key={counter.id} value={counter.No}>
+                      {counter.counterNo}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -356,6 +360,7 @@ const ProductDetail = ({ product }) => {
                 className="w-full border rounded p-2"
                 {...register("gemCost")}
                 defaultValue={formatter.format(productInfor.gemCost)}
+                {...register("gemCost")}
               />
             </div>
             <div>
@@ -364,6 +369,7 @@ const ProductDetail = ({ product }) => {
                 className="w-full border rounded p-2"
                 {...register("productionCost")}
                 defaultValue={formatter.format(productInfor.productionCost)}
+                {...register("productionCost")}
               />
             </div>
             <div>
@@ -372,6 +378,7 @@ const ProductDetail = ({ product }) => {
                 className="w-full border rounded p-2"
                 {...register("materialCost")}
                 defaultValue={formatter.format(productInfor.materialCost)}
+                {...register("materialCost")}
               />
             </div>
             <div>
@@ -380,6 +387,7 @@ const ProductDetail = ({ product }) => {
                 className="w-full border rounded p-2"
                 {...register("priceRate")}
                 defaultValue={productInfor.priceRate + "%"}
+                {...register("priceRate")}
               />
             </div>
           </div>
@@ -470,6 +478,7 @@ const ProductDetail = ({ product }) => {
             deleteCode={ids}
           />
           <button
+            type="submit"
             onClick={handleClick}
             className="w-1/3 h-8 border rounded-md bg-red-500 text-white font-semibold"
           >

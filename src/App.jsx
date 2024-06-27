@@ -12,6 +12,13 @@ import ManagerProductPage from "./page/ManagerProductPage";
 import ManagerProductDetailPage from "./page/ManagerProductDetailPage";
 import ManagerAddProductPage from "./page/ManageAddProductPage";
 import { SkeletonTheme } from "react-loading-skeleton";
+import ManagerGemPage from "./page/ManagerGemPage";
+import ManagerGemHistoryPage from "./page/ManagerGemHistoryPage";
+import ManagerGemDetailPage from "./page/ManagerGemDetailPage";
+import ManagerGemInforPage from "./page/ManagerGemInforPage";
+import ManagerGemAddPage from "./page/ManagerGemAddPage";
+import ManagerGemInforDetailPage from "./page/ManagerGemInforDetailPage";
+import ManagerGemAddPricePage from "./page/ManagerGemAddPricePage";
 import ManagerDiscountPage from "./page/ManagerDiscountPage";
 import ManagerStaffPage from "./page/ManagerStaffPage";
 import ManagerDiscountDetailPage from "./page/ManagerDiscountDetailPage";
@@ -44,6 +51,19 @@ function App() {
           element={<ManagerProductDetailPage />}
         />
         <Route path="/manageraddproduct" element={<ManagerAddProductPage />} />
+        <Route path="/managergemlist" element={<ManagerGemPage />} />
+        <Route
+          path="/manageraddgemprice"
+          element={<ManagerGemAddPricePage />}
+        />
+        <Route path="/managergemhistory" element={<ManagerGemHistoryPage />} />
+        <Route path="/managergemdetail" element={<ManagerGemDetailPage />} />
+        <Route path="managergeminforlist" element={<ManagerGemInforPage />} />
+        <Route
+          path="/managergeminfordetail"
+          element={<ManagerGemInforDetailPage />}
+        />
+        <Route path="/manageraddgem" element={<ManagerGemAddPage />} />
         <Route path="/managerdiscountlist" element={<ManagerDiscountPage />} />
         <Route path="/managerstafflist" element={<ManagerStaffPage />} />
         <Route
