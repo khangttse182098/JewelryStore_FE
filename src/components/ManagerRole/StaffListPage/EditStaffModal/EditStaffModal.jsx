@@ -11,8 +11,8 @@ const EditStaffModal = forwardRef(({ staff, onClose }, ref) => {
     const reqBody = {
       ...submitData,
       id: staff.id,
-      userName: staff.userName,
-      password: staff.password,
+      userName: "",
+      password: "",
       ["fullName"]: submitData.fullName,
       ["phone"]: submitData.phone,
       ["role"]: submitData.role,

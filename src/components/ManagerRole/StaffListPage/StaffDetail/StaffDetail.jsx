@@ -27,9 +27,7 @@ const StaffDetail = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        const orderList = data.filter(
-          (order) => order.staffName === staff.fullName
-        );
+        const orderList = data.filter((order) => order.userId === staff.id);
 
         setOrders(orderList);
         console.log(orderList);
