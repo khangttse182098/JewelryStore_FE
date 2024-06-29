@@ -2,16 +2,25 @@ import { useEffect, useRef, useState } from "react";
 import { formatter } from "../../../../util/formatter";
 import DeleteProduct from "../DeleteProduct/DeleteProduct";
 import { useForm } from "react-hook-form";
+import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
+import { useNavigate } from "react-router-dom";
 
 const ProductDetail = ({ product }) => {
   const productInfor = product;
   console.log(productInfor);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const fileInputRef = useRef(null);
   const [categoryName, setCategoryName] = useState([]);
   const [selectedCategoryName, setSelectedCategoryName] = useState(
-    productInfor.productCategoryName
+    productInfor.categoryName
   );
   const [diamondCriteria, setDiamondCriteria] = useState([]);
   const [selectedDiamond, setSelectedDiamond] = useState(null);
+  const [selectedDiamondId, setSelectedDiamondId] = useState(
+    productInfor.gemId
+  );
+  const [selectedDiamondCriteria, setSelectedDiamondCriteria] =
+    useState(selectedDiamond);
   const [imageType, setImageType] = useState([]);
   const [selectedImageType, setSelectedImageType] = useState(
     productInfor.subCategoryType
@@ -25,6 +34,9 @@ const ProductDetail = ({ product }) => {
   const [selectedMaterial, setSelectedMaterial] = useState(
     productInfor.materialName
   );
+  const [selectedMaterialId, setSelectedMaterialId] = useState(
+    productInfor.materialId
+  );
   const ids = [productInfor.id];
   const imageControllerRef = useRef();
   const ProductDetailRef = useRef();
@@ -32,35 +44,39 @@ const ProductDetail = ({ product }) => {
   const counterControllerRef = useRef();
   const materialControllerRef = useRef();
   const categoryControllerRef = useRef();
+  const doneModalRef = useRef();
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
 
   async function onSubmit(submitData) {
-    // const formData = new FormData();
-    // formData.append("file", selectedFile);
-    // try {
-    //   const res = await fetch(
-    //     "http://mahika.foundation:8080/swp/api/file/upload",
-    //     {
-    //       method: "POST",
-    //       body: formData,
-    //     }
-    //   );
-    //   const data = await res.json();
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    try {
+      const res = await fetch(
+        "http://mahika.foundation:8080/swp/api/file/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await res.json();
+    } catch (error) {
+      console.log(error);
+    }
     const requestBody = {
       ...submitData,
       id: Number(id),
-      ["counterId"]: Number(submitData.counterId),
-      ["materialId"]: Number(submitData.materialId),
-      ["gemCost"]: Number(submitData.gemCost),
-      ["gemId"]: Number(submitData.gemId),
-      ["materialCost"]: Number(submitData.materialCost),
-      ["materialWeight"]: Number(submitData.materialWeight),
-      ["priceRate"]: Number(submitData.priceRate),
-      ["productionCost"]: Number(submitData.productionCost),
-      // ["file"]: selectedFile,
+      ["productCategoryName"]: selectedCategoryName,
+      counterId: Number(selectedCounter),
+      gemId: Number(selectedDiamondId),
+      materialId: Number(selectedMaterialId),
+      gemCost: Number(submitData.gemCost),
+      materialCost: Number(submitData.materialCost),
+      materialWeight: Number(submitData.materialWeight),
+      priceRate: Number(submitData.priceRate),
+      productionCost: Number(submitData.productionCost),
+      subCategoryType: selectedImageType,
+      ["file"]: selectedFile,
     };
     console.log(requestBody);
     try {
@@ -72,9 +88,19 @@ const ProductDetail = ({ product }) => {
         body: JSON.stringify(requestBody),
       });
       console.log(res);
+      handleOpen();
     } catch (error) {
       console.log(error);
     }
+  }
+
+  function handleOpen() {
+    doneModalRef.current.showModal();
+  }
+
+  function handleClose() {
+    doneModalRef.current.close();
+    navigate(-1);
   }
 
   const handleClick = () => {
@@ -85,29 +111,13 @@ const ProductDetail = ({ product }) => {
     ProductDetailRef.current.close();
   };
 
-  useEffect(() => {
-    if (selectedMaterial) {
-      setSelectedMaterial(selectedMaterial);
-    }
-  }, [selectedMaterial]);
+  //---------------------------SubmitFileImage---------------
+  const handleFileChange = (event) => {
+    let file = event.target.files[0];
+    file = new File([file], file.name, { type: file.type });
+    setSelectedFile(file);
+  };
 
-  useEffect(() => {
-    if (selectedCounter) {
-      setSelectedCounter(selectedCounter);
-    }
-  }, [selectedCounter]);
-
-  useEffect(() => {
-    if (selectedImageType) {
-      setSelectedImageType(selectedImageType);
-    }
-  }, [selectedImageType]);
-
-  useEffect(() => {
-    if (selectedCategoryName) {
-      setSelectedCategoryName(selectedCategoryName);
-    }
-  }, [selectedCategoryName]);
   //-----------------------Category--------------------------
   useEffect(() => {
     categoryControllerRef.current?.abort();
@@ -179,24 +189,23 @@ const ProductDetail = ({ product }) => {
     handleDiamond();
   }, []);
 
-  //Define what is the current gem name of the product
-  const handleDiamondSelect = (event) => {
-    const selectedName = event.target.value;
-    const diamond = diamondCriteria.find(
-      (selectedDiamond) => selectedDiamond.gemName === selectedName
-    );
-    setSelectedDiamond(diamond);
-  };
-
   useEffect(() => {
-    if (productInfor.gemName) {
-      const selectedDiamond = diamondCriteria.find(
-        (diamond) => diamond.gemName === productInfor.gemName
+    if (selectedDiamondId) {
+      const selectedDiamondDetail = diamondCriteria.find(
+        (diamond) => diamond.gemId === selectedDiamondId
       );
-      setSelectedDiamond(selectedDiamond || {});
+      setSelectedDiamond(selectedDiamondDetail);
+      setSelectedDiamondCriteria(selectedDiamondDetail);
     }
-  }, [productInfor.gemName, diamondCriteria]);
+  }, [selectedDiamondId, diamondCriteria]);
 
+  const handleDiamondChange = (event) => {
+    const selectDiamond = diamondCriteria.find(
+      (diamond) => diamond.gemId === parseInt(event.target.value)
+    );
+    setSelectedDiamond(selectDiamond);
+    setSelectedDiamondId(event.target.value);
+  };
   //--------------------------Image----------------------------
   useEffect(() => {
     imageControllerRef.current?.abort();
@@ -217,6 +226,7 @@ const ProductDetail = ({ product }) => {
 
   return (
     <>
+      <DoneModal ref={doneModalRef} handleClose={handleClose} />
       <form
         className="grid grid-cols-2 gap-2 p-4"
         onSubmit={handleSubmit(onSubmit)}
@@ -229,6 +239,7 @@ const ProductDetail = ({ product }) => {
             <div>
               <label>Mã sản phẩm</label>
               <input
+                name="productCode"
                 className="w-full border rounded p-2"
                 {...register("productCode")}
                 defaultValue={productInfor.productCode}
@@ -247,15 +258,22 @@ const ProductDetail = ({ product }) => {
               <div>
                 <label>Loại vàng</label>
                 <select
+                  name="materialId"
                   className="w-full border rounded p-2"
-                  value={selectedMaterial}
-                  onChange={(event) => setSelectedMaterial(event.target.value)}
-                  // {...register("materialId")}
+                  value={selectedMaterialId}
+                  {...register("materialId")}
+                  onChange={(event) => {
+                    const selectMaterial = materialList.find((material) => {
+                      material.id === event.target.value;
+                    });
+                    setSelectedMaterial(selectMaterial);
+                    setSelectedMaterialId(event.target.value);
+                  }}
                 >
                   <option disabled>Chọn loại vàng</option>
                   {materialList.map((material) => {
                     return (
-                      <option key={material.id} value={material.name}>
+                      <option key={material.id} value={material.id}>
                         {material.name}
                       </option>
                     );
@@ -266,6 +284,7 @@ const ProductDetail = ({ product }) => {
             <div>
               <label>Tên sản phẩm</label>
               <input
+                name="productName"
                 className="w-full border rounded p-2"
                 {...register("productName")}
                 defaultValue={productInfor.productName}
@@ -280,6 +299,7 @@ const ProductDetail = ({ product }) => {
               <div>
                 <label>Khối lượng vàng</label>
                 <input
+                  name="materialWeight"
                   className="w-full border rounded p-2"
                   defaultValue={productInfor.materialWeight}
                   {...register("materialWeight")}
@@ -289,9 +309,10 @@ const ProductDetail = ({ product }) => {
             <div>
               <label>Loại sản phẩm</label>
               <select
+                name="productCategoryName"
                 className="w-full border rounded p-2"
-                value={productInfor.categoryName}
-                // {...register("categoryName")}
+                value={selectedCategoryName}
+                {...register("productCategoryName")}
                 onChange={(event) =>
                   setSelectedCategoryName(event.target.value)
                 }
@@ -308,14 +329,15 @@ const ProductDetail = ({ product }) => {
             <div>
               <label>Quầy số</label>
               <select
+                name="counterId"
                 className="w-full border rounded p-2"
                 value={selectedCounter}
+                {...register("counterId")}
                 onChange={(event) => setSelectedCounter(event.target.value)}
-                // {...register("counterId")}
               >
                 {counterList.map((counter) => {
                   return (
-                    <option key={counter.id} value={counter.No}>
+                    <option key={counter.id} value={counter.id}>
                       {counter.counterNo}
                     </option>
                   );
@@ -329,7 +351,19 @@ const ProductDetail = ({ product }) => {
         <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
           <div className="flex justify-between">
             <h2 className="text-xl font-semibold mb-4">Ảnh sản phẩm</h2>
-            <p className="text-[#0088FF] cursor-pointer">Thêm ảnh</p>
+            <p
+              className="text-[#0088FF] cursor-pointer"
+              onClick={() => fileInputRef.current.click()}
+            >
+              Thêm ảnh
+            </p>
+            <input
+              type="file"
+              name="upfile"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
           </div>
           <img
             src={productInfor.productImage}
@@ -338,14 +372,18 @@ const ProductDetail = ({ product }) => {
           <div className="mt-4">
             <label>Danh mục</label> <br />
             <select
+              name="subCategoryType"
               className="w-72 border rounded p-2"
-              defaultValue={selectedImageType}
-              // {...register("subCategoryType")}
+              value={selectedImageType}
+              {...register("subCategoryType")}
               onChange={(event) => setSelectedImageType(event.target.value)}
             >
               {imageType.map((type) => {
                 return (
-                  <option key={type.productCategoryId}>
+                  <option
+                    key={type.productCategoryId}
+                    value={type.subCategoryType}
+                  >
                     {type.subCategoryType}
                   </option>
                 );
@@ -370,32 +408,36 @@ const ProductDetail = ({ product }) => {
             <div>
               <label>Giá đá</label>
               <input
+                name="gemCost"
                 className="w-full border rounded p-2"
-                defaultValue={formatter.format(productInfor.gemCost)}
+                defaultValue={productInfor.gemCost}
                 {...register("gemCost")}
               />
             </div>
             <div>
               <label>Giá gia công</label>
               <input
+                name="productionCost"
                 className="w-full border rounded p-2"
-                defaultValue={formatter.format(productInfor.productionCost)}
+                defaultValue={productInfor.productionCost}
                 {...register("productionCost")}
               />
             </div>
             <div>
               <label>Giá nguyên liệu</label>
               <input
+                name="materialCost"
                 className="w-full border rounded p-2"
-                defaultValue={formatter.format(productInfor.materialCost)}
+                defaultValue={productInfor.materialCost}
                 {...register("materialCost")}
               />
             </div>
             <div>
-              <label>Tỉ lệ áp giá</label>
+              <label>Tỉ lệ áp giá (%)</label>
               <input
+                name="priceRate"
                 className="w-full border rounded p-2"
-                defaultValue={productInfor.priceRate + "%"}
+                defaultValue={productInfor.priceRate}
                 {...register("priceRate")}
               />
             </div>
@@ -410,13 +452,15 @@ const ProductDetail = ({ product }) => {
             <div>
               <label>Tên kim cương</label>
               <select
+                name="gemId"
                 className="w-full border rounded p-2"
-                value={productInfor.gemName}
-                onChange={handleDiamondSelect}
+                value={selectedDiamondId}
+                {...register("gemId")}
+                onChange={handleDiamondChange}
               >
                 <option>Chọn tên kim cương</option>
                 {diamondCriteria.map((diamond) => (
-                  <option key={diamond.gemId} value={diamond.gemName}>
+                  <option key={diamond.gemId} value={diamond.gemId}>
                     {diamond.gemName}
                   </option>
                 ))}
@@ -427,7 +471,11 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                defaultValue={selectedDiamond?.origin || ""}
+                value={
+                  selectedDiamond
+                    ? selectedDiamond.origin
+                    : selectedDiamondCriteria
+                }
               />
             </div>
             <div>
@@ -435,7 +483,11 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                defaultValue={selectedDiamond?.cut || ""}
+                value={
+                  selectedDiamond
+                    ? selectedDiamond.cut
+                    : selectedDiamondCriteria
+                }
               />
             </div>
             <div>
@@ -443,7 +495,11 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                defaultValue={selectedDiamond?.caratWeight || ""}
+                value={
+                  selectedDiamond
+                    ? selectedDiamond.caratWeight
+                    : selectedDiamondCriteria
+                }
               />
             </div>
             <div>
@@ -451,7 +507,11 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                defaultValue={selectedDiamond?.clarity || ""}
+                value={
+                  selectedDiamond
+                    ? selectedDiamond.clarity
+                    : selectedDiamondCriteria
+                }
               />
             </div>
             <div>
@@ -459,7 +519,11 @@ const ProductDetail = ({ product }) => {
               <input
                 className="w-full border rounded p-2"
                 type="text"
-                defaultValue={selectedDiamond?.color || ""}
+                value={
+                  selectedDiamond
+                    ? selectedDiamond.color
+                    : selectedDiamondCriteria
+                }
               />
             </div>
           </div>
