@@ -3,13 +3,9 @@ import { forwardRef, useState } from "react";
 import classes from "./InvoiceDetail.module.css";
 import { createPortal } from "react-dom";
 import { formatter } from "../../../../util/formatter";
-import loadImg from "../../../../util/loadImg";
+import ImageLoader from "../../../../util/ImageLoader";
 
 const InvoiceDetail = forwardRef(function InvoiceDetail({ invoice }, ref) {
-  const [image, setImage] = useState(null);
-  if (image === null) {
-    loadImg(invoice.productCode, setImage);
-  }
   return createPortal(
     <dialog ref={ref} className={classes["modal-container"]}>
       <div className={classes["invoice-container"]}>
@@ -17,14 +13,33 @@ const InvoiceDetail = forwardRef(function InvoiceDetail({ invoice }, ref) {
         {/* image */}
         <div className={classes["info-container"]}>
           <div className={classes["img-container"]}>
-            <img src={image} alt="ring" />
+            <ImageLoader URL={invoice.productImage} />
           </div>
           {/* invoice info */}
           <div className={classes.info}>
-            <p>Mã sản phẩm: {invoice.productCode}</p>
-            <p>Chất liệu: {invoice.materialName}</p>
-            <p>Nhân công: {invoice.productionCode}</p>
-            <p className={classes.price}>{formatter.format(invoice.price)}</p>
+            <p>
+              <b>Mã sản phẩm:</b> {invoice.productCode}
+            </p>
+            <p>
+              <b>Ngày tạo:</b> {new Date(invoice.createdDate).toLocaleString()}
+            </p>
+            <p>
+              <b>Quầy:</b> {invoice.counterNo}
+            </p>
+            <p>
+              <b>Loại trang sức:</b> {invoice.categoryName}
+            </p>
+            <p>
+              <b>Tên kim cương:</b>{" "}
+              {invoice.gemName ? invoice.gemName : "Không có"}
+            </p>
+            <p>
+              <b>Chất liệu:</b>{" "}
+              {invoice.materialName ? invoice.materialName : "Không có"}
+            </p>
+            <p className={classes.price}>
+              <b>Giá:</b> {formatter.format(invoice.price)}
+            </p>
           </div>
           {/* close button */}
           <form method="dialog">

@@ -65,6 +65,9 @@ h6 {
 }
 
 /* left-container */
+.selection-title {
+  font-weight: 700;
+}
 .left-container {
   float: left;
   width: 60%;
@@ -102,10 +105,12 @@ hr {
 }
 
 .head-frame-gold {
-  font-size: 20px;
+  font-size: 30px;
+  font-weight: 700;
 }
 .head-frame-diamond {
-  font-size: 20px;
+  font-size: 30px;
+  font-weight: 700;
 }
 .gold-weight {
   float: left;
@@ -117,14 +122,16 @@ hr {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
 .input-field {
   margin-top: 20px;
   width: 350px;
   height: 56px;
   border-radius: 10px;
   border-color: #dfd8d8;
-  border-style: double;
+  border-style: solid;
   outline: none;
+  font-size: 20px;
 }
 
 .add-goldInvoice {
@@ -139,11 +146,23 @@ hr {
   outline: none;
   border-style: double;
   cursor: pointer;
+  font-size: 20px;
+  font-weight: 500;
 }
 .add-goldInvoice:hover {
   background-color: #a58657;
   border-color: #a58657;
 }
+/* .gold-weight {
+  float: left;
+  width: 50%;
+  margin-left: 100px;
+  margin-top: 20px;
+}
+.gold-type {
+  margin-top: 20px;
+  margin-bottom: 20px;
+} */
 .origin {
   float: left;
   width: 50%;
@@ -151,8 +170,8 @@ hr {
   margin-top: 20px;
 }
 .cut {
-  margin-top: 20px;
   margin-bottom: 20px;
+  margin-top: 20px;
 }
 .color-dmd {
   float: left;
@@ -178,6 +197,8 @@ hr {
   cursor: pointer;
   outline: none;
   border-style: double;
+  font-size: 20px;
+  font-weight: 500;
 }
 .add-diamondInvoice:hover {
   background-color: #a58657;
@@ -199,7 +220,7 @@ hr {
   margin-bottom: 10px;
 }
 .content-right::-webkit-scrollbar {
-  width: 12px; /* width of the entire scrollbar */
+  width: 7px; /* width of the entire scrollbar */
 }
 .content-right::-webkit-scrollbar-track {
   background: #bbbbbb; /* color of the tracking area */
@@ -262,6 +283,8 @@ hr {
   border-color: #c3a06d;
   outline: none;
   border-style: double;
+  font-weight: 700;
+  font-size: 20px;
 }
 .createInvoice:hover {
   background-color: #a58657;
@@ -272,4 +295,5 @@ hr {
 }
 .value {
   margin-right: 10px;
+  font-weight: 600;
 }

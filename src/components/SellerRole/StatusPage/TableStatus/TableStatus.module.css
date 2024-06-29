@@ -1,6 +1,6 @@
 .container {
   font-family: "Montserrat";
-  width: 1300px;
+  width: 1600px;
   height: 477px;
   background-color: #ffffff;
   margin-left: 200px;
@@ -108,4 +108,30 @@
 .td {
   font-size: 17px;
   padding: 10px;
+}
+
+.status-success {
+  width: 160px;
+  height: 35px;
+  padding: 5px;
+  margin: 0 auto;
+  background-color: #f3fcf9;
+  outline-color: #9fedcf;
+  color: #0db473;
+  outline-style: solid;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.status-delivered {
+  width: 160px;
+  height: 35px;
+  padding: 5px;
+  margin: 0 auto;
+  background-color: #eae2f0;
+  outline-color: #876fca;
+  color: #7506e4;
+  outline-style: solid;
+  border-radius: 20px;
+  font-weight: 500;
 }

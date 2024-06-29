@@ -1,12 +1,14 @@
 .option {
   background-color: #dfd8d8;
-  width: 141px;
   height: 69px;
   border: 1px;
   border-radius: 21px;
   color: inherit;
   cursor: pointer;
-  margin: 0 10px;
+}
+
+.option:hover {
+  background-color: #b0aaaa;
 }
 
 .option-content {
@@ -18,4 +20,5 @@
 
 .active {
   background-color: #c3a06d;
+  pointer-events: none;
 }

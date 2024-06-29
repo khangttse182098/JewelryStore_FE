@@ -1,11 +1,13 @@
 .container {
   height: 812px;
   margin-left: 158px;
+  margin-right: 60px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .container-order {
+  height: 400px;
   display: block;
   overflow-y: scroll;
 }
@@ -13,6 +15,8 @@
   text-align: center;
   font-size: 30px;
   font-weight: 500;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 .frame {
   background-color: #dfd8d8;
@@ -29,6 +33,24 @@
   margin-left: 11px;
   margin-right: 26px;
   font-size: 20px;
+}
+
+.difference-price-negative {
+  font-weight: 700;
+  margin-top: 8px;
+  margin-left: 11px;
+  margin-right: 26px;
+  font-size: 20px;
+  color: red;
+}
+
+.difference-price {
+  font-weight: 700;
+  margin-top: 8px;
+  margin-left: 11px;
+  margin-right: 26px;
+  font-size: 20px;
+  color: #1d9b25;
 }
 
 .total {
@@ -55,4 +77,8 @@
 
 .createInvoice:hover {
   background-color: #a38458;
+}
+
+.information-bar {
+  justify-self: flex-end;
 }

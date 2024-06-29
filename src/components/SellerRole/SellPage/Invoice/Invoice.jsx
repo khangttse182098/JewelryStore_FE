@@ -1,19 +1,24 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useRef } from "react";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import classes from "./Invoice.module.css";
-import "./Invoice.module.css";
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
 import InvoiceDetail from "../InvoiceDetail/InvoiceDetail";
 import { formatter } from "../../../../util/formatter";
-import loadImg from "../../../../util/loadImg";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import ImageLoader from "../../../../util/ImageLoader";
 
 const Invoice = ({ invoice }) => {
-  const { productName, productCode, materialName, categoryName, price } =
-    invoice;
+  const {
+    productName,
+    productCode,
+    productImage,
+    materialName,
+    categoryName,
+    price,
+  } = invoice;
   const { removeItemFromProductList, productList } = useContext(
     ProductPurchaseListContext
   );
@@ -29,31 +34,28 @@ const Invoice = ({ invoice }) => {
     InvoiceDetailRef.current.showModal();
   }
 
-  const [image, setImage] = useState(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
-  if (image === null) {
-    loadImg(productCode, setImage);
-  }
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    setImageError(false);
+  };
+
+  const handleImageError = () => {
+    setImageLoaded(true);
+    setImageError(true);
+  };
 
   return (
     <>
       <InvoiceDetail invoice={invoice} ref={InvoiceDetailRef} />
       <div key={productCode} className={classes["container-invoice"]}>
-        <div>
-          {image !== null ? (
-            <img className={classes.img} src={image} alt="Diamond Ring 14K" />
-          ) : (
-            <Skeleton
-              circle
-              style={{
-                marginTop: "38px",
-                marginLeft: "27px",
-                marginRight: "29px",
-                width: "95px",
-                height: "95px",
-              }}
-            />
-          )}
+        <div className={classes.img}>
+          <ImageLoader
+            URL={productImage}
+            skeletonStyle={classes["img-skeleton"]}
+          />
         </div>
         <div onClick={handleShowProductDetail}>
           <p className={classes.tittle}>{productName}</p>
@@ -63,7 +65,7 @@ const Invoice = ({ invoice }) => {
           <p className={classes["second-paragraph"]}>
             Chất liệu: {materialName}
           </p>
-          <p className={classes["third-paragraph"]}>Loại đá: {categoryName}</p>
+          <p className={classes["third-paragraph"]}>Danh mục: {categoryName}</p>
           <p className={classes["fourth-paragraph"]}>
             {formatter.format(price)}
           </p>

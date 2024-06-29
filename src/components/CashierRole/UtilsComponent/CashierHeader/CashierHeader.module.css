@@ -19,6 +19,8 @@
   /* margin-right: 500px; */
   float: left;
   margin-left: 50px;
+  background-color: #243853;
+  border-radius: 50%;
 }
 .text-logo {
   margin-top: 10px;
@@ -27,7 +29,7 @@
 }
 .name {
   font-size: 25px;
-  margin-left: 700px;
+  margin-left: 600px;
   text-decoration: black;
 }
 .arrow-down-icon {

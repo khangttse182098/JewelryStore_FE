@@ -1,0 +1,15 @@
+.status {
+  @apply p-2 w-40 my-3 mx-auto outline rounded-[20px] font-semibold;
+}
+
+.status-closed {
+  @apply bg-[#eae2f0] outline-[#876fca]  text-[#7506e4];
+}
+
+.status-success {
+  @apply bg-[#f3fcf9] outline-[#9fedcf]  text-[#0db473];
+}
+
+.status-inProgress {
+  @apply bg-[#fffbf2] outline-[#ffdf9b]  text-[#e49c06];
+}
