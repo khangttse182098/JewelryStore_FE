@@ -5,6 +5,7 @@ import { ProductSelectionProvider } from "../context/ProductSelectionContext";
 import { ProductPurchaseProvider } from "../context/ProductPurchaseContext";
 import { ProductPurchaseListProvider } from "../context/ProductPurchaseListContext";
 import { LoggedInUserContext } from "../context/LoggedInUserContext";
+import NotAllowed from "../components/UtilComponent/NotAllowed/NotAllowed";
 const SellerPage = () => {
   const { userRole } = useContext(LoggedInUserContext);
   const renderContent =
@@ -18,9 +19,9 @@ const SellerPage = () => {
         </ProductSelectionProvider>
       </ProductPurchaseProvider>
     ) : (
-      <h1>Mày phải đăng nhập đã!</h1>
+      <NotAllowed />
     );
-  return <div>{renderContent}</div>;
+  return <>{renderContent}</>;
 };
 
 export default SellerPage;
