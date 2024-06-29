@@ -109,7 +109,7 @@ const TableProduct = () => {
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
       <div className="w-10/12 h-5/6 ">
-        <div className="text-3xl font-medium py-9">
+        <div className="text-3xl font-medium py-5">
           <p>Danh sách sản phẩm</p>
         </div>
         <div className="bg-white border-2 rounded-xl">
