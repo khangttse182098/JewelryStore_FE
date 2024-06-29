@@ -136,6 +136,9 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
     <>
       <DoneModal ref={doneModalRef} handleClose={handleCloseDoneModal} />
       <dialog ref={ref} className={classes.container}>
+        <p onClick={handleHide} className="cursor-pointer flex justify-end">
+          &times;
+        </p>
         <p>Nhập thông tin khách hàng</p>
         <div className={classes["info-container"]}>
           <div>
