@@ -1,13 +1,3 @@
-.container {
-  font-family: "Montserrat";
-  width: 1600px;
-  height: 477px;
-  background-color: #ffffff;
-  margin-left: 200px;
-  margin-top: 70px;
-  /* padding-top: 200px; */
-  position: absolute;
-}
 
 .title {
   font-size: xx-large;

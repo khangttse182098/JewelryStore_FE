@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import LoginPage from "./page/LoginPage";
 import SellerPage from "./page/SellerPage";
 import CashierPage from "./page/CashierPage";
+import CashierProductPage from "./page/CashierProductPage";
+import CashierProductDetailPage from "./page/CashierProductDetailPage";
 import PurchasePage from "./page/PurchasePage/PurchasePage";
 import CustomerListPage from "./page/CustomerListPage";
 import StatusSellerPage from "./page/StatusSellerPage";
@@ -40,6 +42,11 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/sellpage" element={<SellerPage />} />
         <Route path="/invoicelist" element={<CashierPage />} />
+        <Route path="/cashierproductlist" element={<CashierProductPage />} />
+        <Route
+          path="/cashierproductdetail"
+          element={<CashierProductDetailPage />}
+        />
         <Route path="/purchasepage" element={<PurchasePage />} />
         <Route path="/customerlist" element={<CustomerListPage />} />
         <Route path="/statuslist" element={<StatusSellerPage />} />

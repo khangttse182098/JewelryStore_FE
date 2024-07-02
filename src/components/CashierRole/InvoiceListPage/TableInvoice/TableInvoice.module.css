@@ -2,17 +2,6 @@ body {
   background-color: #efeded;
 }
 
-.container {
-  font-family: "Montserrat";
-  width: 1500px;
-  height: 477px;
-  background-color: #ffffff;
-
-  margin-left: 300px;
-  margin-top: 120px;
-  /* padding-top: 200px; */
-  position: absolute;
-}
 .title {
   font-size: xx-large;
   font-weight: normal;

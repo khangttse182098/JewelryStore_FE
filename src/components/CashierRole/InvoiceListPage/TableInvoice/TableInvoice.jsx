@@ -105,7 +105,7 @@ const TableInvoice = () => {
 
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
-      <div className={classes.container}>
+      <div className="py-10">
         <div className={classes.title}>
           <p>Danh sách hóa đơn</p>
         </div>

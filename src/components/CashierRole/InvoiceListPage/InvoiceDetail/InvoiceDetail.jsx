@@ -119,8 +119,8 @@ const InvoiceDetail = ({ invoice }) => {
       )}
       <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
         <DoneModal ref={doneModalRef} handleClose={handleCloseDoneModal} />
-        <div className={classes.container}>
-          <div className={classes.title}>Chi tiết hóa đơn</div>
+        <div>
+          <div className="text-2xl font-semibold ml-10">Chi tiết hóa đơn</div>
           <div className={classes["table-container"]}>
             <table
               cellspacing="0"
