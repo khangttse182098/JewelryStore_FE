@@ -47,7 +47,11 @@ const TableGemInfor = () => {
       return (
         gem.gemName.toLowerCase().includes(searchField) ||
         gem.gemCode.toLowerCase().includes(searchField) ||
-        gem.origin.toLowerCase().includes(searchField)
+        gem.origin.toLowerCase().includes(searchField) ||
+        gem.color.toLowerCase().includes(searchField) ||
+        gem.caratWeight.includes(searchField) ||
+        gem.cut.toLowerCase().includes(searchField) ||
+        gem.clarity.toLowerCase().includes(searchField)
       );
     });
     setFilterGem(newFilterGem);
@@ -60,7 +64,7 @@ const TableGemInfor = () => {
 
   return (
     <div className="w-11/12 h-5/6 ">
-      <div className="text-3xl font-medium py-5">
+      <div className="text-3xl font-medium py-7">
         <p>Danh sách kim cương</p>
       </div>
       <div className="bg-white border-2 rounded-xl">

@@ -8,36 +8,16 @@
   cursor: pointer;
 }
 
-.search-container {
-  margin-top: 19px;
-  margin-bottom: 28px;
-  margin-left: 42.5px;
-}
-
-.search {
-  width: 583px;
-  height: 37px;
-  border-radius: 10px;
-  border-style: double;
-  border-color: #dfd8d8;
-  outline: none;
-  padding-left: 39.5px;
-}
-
 .img {
   margin-right: 17px;
 }
 
 .th {
-  @apply border-b border-[#dddddd] text-center p-4 h-10 bg-[#f4f6f8] font-semibold;
+  @apply border-b border-[#dddddd] text-center p-1 h-10 bg-[#f4f6f8] font-semibold;
 }
 
 .td {
-  border-bottom: #dddddd;
-  height: 80px;
-  font-weight: 400;
-  text-align: center;
-  font-size: x-large;
+  @apply border-b border-[#dddddd] h-14 font-[400] text-center;
 }
 
 .td-skeleton {

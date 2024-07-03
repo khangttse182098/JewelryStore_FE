@@ -49,7 +49,8 @@ const TableCustomer = () => {
     const newFilterCustomer = customerList.filter((customer) => {
       return (
         customer.fullName.toLowerCase().includes(searchField) ||
-        customer.phoneNumber.toLowerCase().includes(searchField)
+        customer.phoneNumber.toLowerCase().includes(searchField) ||
+        customer.address.toLowerCase().includes(searchField)
       );
     });
     setFilterCustomer(newFilterCustomer);
@@ -62,17 +63,16 @@ const TableCustomer = () => {
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
       <div className="w-10/12 h-5/6 mx-auto">
-        <div className="text-3xl font-medium py-10">
+        <div className="text-3xl font-medium py-7">
           <p>Danh sách khách hàng</p>
         </div>
-
         <div className="bg-white border-2 border-white rounded-xl shadow-lg">
           <div>
             {["Tất cả"].map((status) => (
               <button
                 key={status}
                 className={
-                  "h-12 w-48 rounded-t-lg bg-white text-center font-montserrat text-base border-b-2 border-blue-600 text-blue-600"
+                  "h-12 w-48 rounded-t-lg bg-white text-center font-montserrat text-base border-b-4 border-blue-600 text-blue-600"
                 }
                 status="Tất cả"
                 onClick={handleStatusOption}
@@ -83,9 +83,9 @@ const TableCustomer = () => {
           </div>
 
           <hr />
-          <div className="mt-5 mb-7">
+          <div className="mt-3 mb-3">
             <input
-              className="h-37 w-583 rounded-10 border-double border-[#dfd8d8] outline-none pl-11"
+              className="h-9 w-96 rounded-md border border-[#dfd8d8] outline-none pl-11 ml-14 mr-4"
               type="search"
               placeholder="Tìm kiếm khách hàng"
               onChange={handleSearch}
@@ -111,9 +111,7 @@ const TableCustomer = () => {
               ) : (
                 currentCustomer.map((customer) => (
                   <tr
-                    className={`${classes.tr} ${
-                      customer.isChecked ? classes.select : ""
-                    }`}
+                    className={classes.tr}
                     key={customer.id}
                     onClick={() => handleNavigate(customer)}
                   >

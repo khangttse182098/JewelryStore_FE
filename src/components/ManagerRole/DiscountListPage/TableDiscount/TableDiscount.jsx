@@ -10,6 +10,7 @@ import SkeletonRowList from "../../../UtilComponent/SkeletonRowList/SkeletonRowL
 const TableDiscount = () => {
   const addDiscountModalRef = useRef();
   const doneModelRef = useRef();
+  const [searchField, setSearchField] = useState();
   const [discountList, setDiscountList] = useState([]);
   const [select, setSelect] = useState(false);
   const [filterDiscountList, setFilterDiscountList] = useState([]);
@@ -17,6 +18,24 @@ const TableDiscount = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const discountPerPage = 4;
+
+  const handleSearch = (event) => {
+    const searchFieldString = event.target.value.toLowerCase();
+    setSearchField(searchFieldString);
+  };
+
+  useEffect(() => {
+    const newFilterDiscount = discountList.filter((discount) => {
+      return (
+        discount.code.toLowerCase().includes(searchField) ||
+        discount.value.includes(searchField) ||
+        discount.status.toLowerCase().includes(searchField) ||
+        discount.startDate.includes(searchField) ||
+        discount.endDate.includes(searchField)
+      );
+    });
+    setFilterDiscountList(newFilterDiscount);
+  }, [searchField]);
 
   const lastDiscountIndex = currentPage * discountPerPage;
   const firstDiscountIndex = lastDiscountIndex - discountPerPage;
@@ -124,7 +143,7 @@ const TableDiscount = () => {
       <DoneModal ref={doneModelRef} handleClose={handleClose} />
       <AddDiscountModal ref={addDiscountModalRef} onClose={handleHide} />
       <div className="w-10/12 h-5/6 mx-auto">
-        <div className="text-3xl font-medium py-10 flex justify-between">
+        <div className="text-3xl font-medium py-7 flex justify-between">
           <p>Danh sách mã khuyến mãi</p>
           <button
             onClick={handleAdd}
@@ -157,6 +176,7 @@ const TableDiscount = () => {
               className="h-9 w-96 rounded-lg border-2 border-gray-300 outline-none pl-4 ml-14"
               type="search"
               placeholder="Tìm kiếm khuyến mãi"
+              onChange={handleSearch}
             />
           </div>
           <table className="group w-full border-collapse">

@@ -8,6 +8,7 @@ const TableGem = () => {
   const controllerRef = useRef();
   const [gemList, setGemList] = useState([]);
   const [searchField, setSearchField] = useState("");
+  const [searchCarat, setSearchCarat] = useState("");
   const [filterGem, setFilterGem] = useState([...gemList]);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,17 +47,33 @@ const TableGem = () => {
     setSearchField(searchFieldString);
   };
 
+  const handleSearchCaratWeight = (event) => {
+    setSearchCarat(event.target.value);
+  };
+
   useEffect(() => {
     const newFilterGem = gemList.filter((gem) => {
-      return gem.origin.toLowerCase().includes(searchField);
+      const textSearch =
+        gem.origin.toLowerCase().includes(searchField) ||
+        gem.color.toLowerCase().includes(searchField) ||
+        gem.cut.toLowerCase().includes(searchField) ||
+        gem.clarity.toLowerCase().includes(searchField) ||
+        gem.effectDate.toLowerCase().includes(searchField);
+
+      const caratWeightSearch =
+        searchCarat === "" ||
+        (parseFloat(searchCarat) >= gem.caratWeightFrom &&
+          parseFloat(searchCarat) <= gem.caratWeightTo);
+
+      return textSearch && caratWeightSearch;
     });
     setFilterGem(newFilterGem);
-  }, [searchField, gemList]);
+  }, [searchField, searchCarat, gemList]);
 
   console.log(filterGem);
   return (
     <div className="w-10/12 h-5/6 ">
-      <div className="text-3xl font-medium py-5">
+      <div className="text-3xl font-medium py-7">
         <p>Giá kim cương</p>
       </div>
       <div className="bg-white border-2 rounded-xl">
@@ -72,6 +89,12 @@ const TableGem = () => {
             type="search"
             placeholder="Tìm kiếm kim cương"
             onChange={handleSearch}
+          />
+          <input
+            className="h-9 w-96 rounded-md border border-[#dfd8d8] outline-none pl-11 ml-14 mr-4"
+            type="search"
+            placeholder="Kim cương trong trọng lượng khoảng"
+            onChange={handleSearchCaratWeight}
           />
         </div>
         <table className="w-full border-collapse">

@@ -1,4 +1,4 @@
-.button:hover {
+/* .button:hover {
   border-style: solid;
   border-bottom-color: #2661ec;
   color: #2661ec;
@@ -6,7 +6,7 @@
   border-top: none;
   background-color: #ffffff;
   cursor: pointer;
-}
+} */
 
 .search-container {
   margin-top: 19px;
@@ -16,6 +16,10 @@
 
 .img {
   margin-right: 17px;
+}
+
+.button {
+  @apply h-[50px] w-[200px] text-[15px] cursor-pointer;
 }
 
 .th {
@@ -50,7 +54,7 @@
 }
 
 .current {
-  @apply text-[#2661ec] font-semibold border-b-[#2661ec] opacity-90;
+  @apply border-b-4 border-[#0088FF] text-center text-[#0088FF] opacity-90;
 }
 
 .status {

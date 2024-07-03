@@ -12,11 +12,27 @@ const TableMaterial = () => {
   const addMaterialModalRef = useRef();
   const doneModelRef = useRef();
   const [materialList, setMaterialList] = useState([]);
+  const [searchField, setSearchField] = useState();
   const [filterMaterialList, setFilterMaterialList] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("Tất cả");
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
-  const materialPerPage = 4;
+  const materialPerPage = 5;
+
+  const handleSearch = (event) => {
+    const searchFieldString = event.target.value.toLowerCase();
+    setSearchField(searchFieldString);
+  };
+
+  useEffect(() => {
+    const newFilterMaterial = materialList.filter((material) => {
+      return (
+        material.goldName.toLowerCase().includes(searchField) ||
+        material.effectDate.includes(searchField)
+      );
+    });
+    setFilterMaterialList(newFilterMaterial);
+  }, [searchField]);
 
   const lastDiscountIndex = currentPage * materialPerPage;
   const firstDiscountIndex = lastDiscountIndex - materialPerPage;
@@ -70,7 +86,7 @@ const TableMaterial = () => {
       <DoneModal ref={doneModelRef} handleClose={handleClose} />
       <AddMaterialModal ref={addMaterialModalRef} onClose={handleHide} />
       <div className="w-10/12 h-5/6 mx-auto">
-        <div className="text-3xl font-medium py-10 flex justify-between">
+        <div className="text-3xl font-medium py-7 flex justify-between">
           <p>Giá vàng thời điểm</p>
           <button
             onClick={handleAdd}
@@ -94,6 +110,7 @@ const TableMaterial = () => {
               className="h-9 w-96 rounded-lg border-2 border-gray-300 outline-none pl-4 ml-14"
               type="search"
               placeholder="Tìm kiếm loại vàng"
+              onChange={handleSearch}
             />
           </div>
           <table className="group w-full border-collapse">
@@ -133,7 +150,7 @@ const TableMaterial = () => {
             </tbody>
           </table>
           <Pagination
-            totalInvoice={filterMaterialList.length}
+            totalInvoice={materialList.length}
             invoicePerPage={materialPerPage}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}

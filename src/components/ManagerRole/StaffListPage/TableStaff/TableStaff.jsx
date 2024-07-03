@@ -112,10 +112,9 @@ const TableStaff = () => {
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
       <AddStaffModal onClose={handleHide} ref={staffInputFormRef} />
       <div className="w-10/12 h-5/6 mx-auto">
-        <div className="text-3xl font-medium py-10">
+        <div className="text-3xl font-medium py-7">
           <p>Danh sách nhân viên</p>
         </div>
-
         <div className="bg-white border-2 border-white rounded-xl shadow-lg">
           <div>
             <button

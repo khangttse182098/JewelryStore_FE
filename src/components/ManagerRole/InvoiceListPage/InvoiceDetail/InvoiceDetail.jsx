@@ -11,6 +11,7 @@ import InvoiceDetailModal from "../InvoiceDetailModal/InvoiceDetailModal";
 import CustomerModal from "../../../CashierRole/InvoiceListPage/CustomerModal/CustomerModal";
 
 const InvoiceDetail = ({ order }) => {
+  console.log(order);
   const InvoiceDetailModalRef = useRef();
   const CustomerModalRef = useRef();
   const doneModalRef = useRef();
@@ -19,14 +20,35 @@ const InvoiceDetail = ({ order }) => {
     productResponseDTOList,
     diamondCriteriaResponseDTOS,
     materialResponseDTOList,
+    discountValue,
   } = order;
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [customer, setCustomer] = useState({});
-  const [payPrice, setPayPrice] = useState("");
-  const [fund, setFund] = useState("");
+  const [totalNumber, setTotalNumber] = useState(0);
+  const [discountProduct, setDiscountProduct] = useState(0);
+  console.log(totalNumber);
   const { invoiceCode, customerName, status, totalPrice, customerId } = order;
   const [renderStatus, setRenderStatus] = useState(status);
+
+  useEffect(() => {
+    if (productResponseDTOList) {
+      productResponseDTOList.map((product) =>
+        setDiscountProduct((prev) => prev + product.discountPrice)
+      );
+      setTotalNumber((prev) => prev + productResponseDTOList.length);
+    }
+    if (materialResponseDTOList) {
+      setTotalNumber((prev) => prev + materialResponseDTOList.length);
+    }
+    if (diamondCriteriaResponseDTOS) {
+      setTotalNumber((prev) => prev + diamondCriteriaResponseDTOS.length);
+    }
+  }, [
+    productResponseDTOList,
+    materialResponseDTOList,
+    diamondCriteriaResponseDTOS,
+  ]);
 
   const handleClick = (item, type) => {
     setSelectedItem({ item, type });
@@ -37,33 +59,10 @@ const InvoiceDetail = ({ order }) => {
     InvoiceDetailModalRef.current.close();
   };
 
-  const handleFund = (event) => {
-    event.preventDefault();
-    const input = event.target;
-    const value = input.value;
-    // Save the caret position
-    const caretPosition = input.selectionStart;
-    // Parse the input value to a number
-    const pay = parseInt(value.replace(/[^0-9]/g, ""), 10) || 0;
-    const fund = pay - totalPrice;
-    // Format the number back to currency format
-    const formattedPay = formatter.format(pay);
-    // Update the input value with the formatted currency
-    setPayPrice(formattedPay);
-    setFund(fund);
-    // Calculate the new caret position
-    const newCaretPosition = formattedPay.length - value.length + caretPosition;
-    // Set the new caret position
-    setTimeout(() => {
-      input.setSelectionRange(newCaretPosition, newCaretPosition);
-    }, 0);
-  };
-
   const handleFetchCustomer = () => {
     fetch(`http://mahika.foundation:8080/swp/api/customer/list-${customerId}`)
       .then((res) => res.json())
       .then((customer) => {
-        console.log(customer);
         return setCustomer(customer);
       });
   };
@@ -118,88 +117,84 @@ const InvoiceDetail = ({ order }) => {
         <DoneModal ref={doneModalRef} handleClose={handleCloseDoneModal} />
         <div className="grid grid-cols-2 gap-2 p-4">
           <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
-            <h2 className="font-semibold text-xl">Chi tiết hóa đơn</h2>
-            <div className={classes["table-container"]}>
-              <table
-                cellspacing="0"
-                cellpadding="0"
-                className={classes["product-list"]}
-              >
-                <thead>
-                  <tr className={classes["invoice-title"]}>{invoiceCode}</tr>
-                  <tr className={classes["invoice-props"]}>
-                    <th>Sản phẩm</th>
-                    <th>Tên sản phẩm</th>
-                    <th>Giá</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {productResponseDTOList !== null
-                    ? productResponseDTOList.map((order, index) => {
-                        return (
-                          <tr
-                            className={classes["row-container"]}
-                            key={index}
-                            onClick={() => handleClick(order, "product")}
-                          >
-                            <td className={classes["img-container"]}>
-                              <ImageLoader
-                                URL={order.productImage}
-                                imgStyle={classes.img}
-                                skeletonStyle={classes["img-skeleton"]}
-                              />
-                            </td>
-                            <td>{order.productName}</td>
-                            <td>{formatter.format(order.price)}</td>
-                          </tr>
-                        );
-                      })
-                    : undefined}
-                  {diamondCriteriaResponseDTOS !== null
-                    ? diamondCriteriaResponseDTOS.map((order, index) => {
-                        return (
-                          <tr
-                            className={classes["row-container"]}
-                            key={index}
-                            onClick={() => handleClick(order, "diamond")}
-                          >
-                            <td className={classes["img-container"]}>
-                              <img
-                                className={classes.img}
-                                src={diamondImg}
-                                alt="ring"
-                              />
-                            </td>
-                            <td>Kim cương</td>
-                            <td>{formatter.format(order.price)}</td>
-                          </tr>
-                        );
-                      })
-                    : undefined}
-                  {materialResponseDTOList !== null
-                    ? materialResponseDTOList.map((order, index) => {
-                        return (
-                          <tr
-                            className={classes["row-container"]}
-                            key={index}
-                            onClick={() => handleClick(order, "material")}
-                          >
-                            <td className={classes["img-container"]}>
-                              <img
-                                className={classes.img}
-                                src={Gold}
-                                alt="ring"
-                              />
-                            </td>
-                            <td>Vàng</td>
-                            <td>{formatter.format(order.price)}</td>
-                          </tr>
-                        );
-                      })
-                    : undefined}
-                </tbody>
-              </table>
-            </div>
+            <h2 className="font-semibold text-2xl">Chi tiết hóa đơn</h2>
+            <hr className="w-full my-2" />
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="font-medium text-xl">{invoiceCode}</tr>
+                <tr className={classes["invoice-props"]}>
+                  <th>Sản phẩm</th>
+                  <th>Tên sản phẩm</th>
+                  <th>Giá</th>
+                </tr>
+              </thead>
+              <tbody>
+                {productResponseDTOList !== null
+                  ? productResponseDTOList.map((order, index) => {
+                      return (
+                        <tr
+                          className={classes["row-container"]}
+                          key={index}
+                          onClick={() => handleClick(order, "product")}
+                        >
+                          <td className={classes["img-container"]}>
+                            <ImageLoader
+                              URL={order.productImage}
+                              imgStyle="w-28 h-20"
+                              skeletonStyle="w-28 h-20"
+                              alt="Jewelry"
+                            />
+                          </td>
+                          <td>{order.productName}</td>
+                          <td>{formatter.format(order.price)}</td>
+                        </tr>
+                      );
+                    })
+                  : undefined}
+                {diamondCriteriaResponseDTOS !== null
+                  ? diamondCriteriaResponseDTOS.map((order, index) => {
+                      return (
+                        <tr
+                          className={classes["row-container"]}
+                          key={index}
+                          onClick={() => handleClick(order, "diamond")}
+                        >
+                          <td className={classes["img-container"]}>
+                            <img
+                              className={classes.img}
+                              src={diamondImg}
+                              alt="ring"
+                            />
+                          </td>
+                          <td>Kim cương</td>
+                          <td>{formatter.format(order.price)}</td>
+                        </tr>
+                      );
+                    })
+                  : undefined}
+                {materialResponseDTOList !== null
+                  ? materialResponseDTOList.map((order, index) => {
+                      return (
+                        <tr
+                          className={classes["row-container"]}
+                          key={index}
+                          onClick={() => handleClick(order, "material")}
+                        >
+                          <td className={classes["img-container"]}>
+                            <img
+                              className={classes.img}
+                              src={Gold}
+                              alt="ring"
+                            />
+                          </td>
+                          <td>Vàng</td>
+                          <td>{formatter.format(order.price)}</td>
+                        </tr>
+                      );
+                    })
+                  : undefined}
+              </tbody>
+            </table>
           </div>
 
           <CustomerModal
@@ -209,24 +204,18 @@ const InvoiceDetail = ({ order }) => {
             onChangeCustomer={onChangeCustomer}
           />
           <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
-            <div className={classes["customer-title-container"]}>
-              <p>Khách hàng</p>
+            <div className="flex justify-between">
+              <p className="font-semibold text-2xl">Khách hàng</p>
               <div>
                 <img
-                  className={classes["img-pen"]}
+                  className="w-6 cursor-pointer"
                   src={PenImg}
                   alt="pen-logo"
                   onClick={handleOpenCustomerModal}
                 />
               </div>
             </div>
-            <hr
-              style={{
-                width: "419px",
-                marginLeft: "23px",
-                marginBottom: "10px",
-              }}
-            />
+            <hr className="w-full my-2" />
             <div className={classes["customer-info"]}>
               <div className={classes["customer-name"]}>
                 <p className={classes["customer-info-title"]}>Họ và tên: </p>
@@ -274,8 +263,8 @@ const InvoiceDetail = ({ order }) => {
 
           {/* status */}
           <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
-            <div className={classes["purchase-contatiner"]}>
-              <div className={classes["status-container"]}>
+            <div>
+              <div>
                 <div
                   className={`${
                     renderStatus === "Chưa thanh toán"
@@ -286,24 +275,27 @@ const InvoiceDetail = ({ order }) => {
                   {renderStatus}
                 </div>
                 <div className={classes["status-name-containter"]}>
+                  <div className={classes.highlight}>Tổng số lượng</div>
+                  <div className={classes["status-value"]}>{totalNumber}</div>
+                </div>
+                <div className={classes["status-name-containter"]}>
                   <div className={classes.highlight}>Tổng tiền hàng</div>
                   <div className={classes["status-value"]}>
                     {formatter.format(totalPrice)}
                   </div>
                 </div>
                 <div className={classes["status-name-containter"]}>
-                  <div className={classes.highlight}>Khách đã trả</div>
-                  <input
-                    className={classes["status-value"]}
-                    onChange={handleFund}
-                    placeholder="Nhập tiền khách hàng trả"
-                    value={payPrice}
-                  />
+                  <div className={classes.highlight}>
+                    Khuyến mãi {discountValue}%
+                  </div>
+                  <div className={classes["status-value"]}>
+                    -{formatter.format(discountProduct)}
+                  </div>
                 </div>
                 <div className={classes["status-name-containter"]}>
-                  <div className={classes.highlight}>Tiền hoàn lại khách</div>
+                  <div className={classes.highlight}>Thanh toán</div>
                   <div className={classes["status-value"]}>
-                    {formatter.format(fund)}
+                    {formatter.format(totalPrice - discountProduct)}
                   </div>
                 </div>
               </div>

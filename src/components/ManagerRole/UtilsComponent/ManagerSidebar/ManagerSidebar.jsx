@@ -88,7 +88,7 @@ const ManagerSidebar = ({ activePage }) => {
           onClick={() => navigate("/managergeminforlist")}
         >
           <img src={Diamond} alt="Staff icon" className="pl-4" />
-          <p>Thông tin kim cương</p>
+          <p>Danh sách kim cương</p>
         </button>
         <button
           className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
