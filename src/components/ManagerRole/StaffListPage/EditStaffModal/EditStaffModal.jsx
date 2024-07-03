@@ -13,9 +13,6 @@ const EditStaffModal = forwardRef(({ staff, onClose }, ref) => {
       id: staff.id,
       userName: "",
       password: "",
-      ["fullName"]: submitData.fullName,
-      ["phone"]: submitData.phone,
-      ["role"]: submitData.role,
     };
     console.log(reqBody);
     try {
@@ -26,7 +23,7 @@ const EditStaffModal = forwardRef(({ staff, onClose }, ref) => {
         },
         body: JSON.stringify(reqBody),
       });
-      onClose();
+      onClose(reqBody);
       handleOpen();
     } catch (error) {}
   };

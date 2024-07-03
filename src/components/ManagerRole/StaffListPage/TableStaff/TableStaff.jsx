@@ -3,7 +3,7 @@ import classes from "./TableStaff.module.css";
 import { formatter } from "../../../../util/formatter";
 import PaginationStaffList from "./../PaginationStaffList/PaginationStaffList";
 import AddStaffModal from "../AddStaffModal/AddStaffModal";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const TableStaff = () => {
   const [staffList, setStaffList] = useState([]);
@@ -22,16 +22,21 @@ const TableStaff = () => {
   const [selectedIds, setSelectedIds] = useState([]);
 
   useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
     const handleStaff = async () => {
       const response = await fetch(
         "http://mahika.foundation:8080/swp/api/user"
       );
       const data = await response.json();
-      setStaffList(data);
-      setFilterStaff(data);
+      let temp = data?.map((e) => ({ ...e, isChecked: false })) || [];
+      setStaffList(temp);
+      setFilterStaff(temp);
     };
-    handleStaff();
-  }, []);
+    return await handleStaff();
+  };
 
   const handleStatusOption = (event) => {
     const status = event.target.getAttribute("status");
@@ -45,21 +50,18 @@ const TableStaff = () => {
   };
 
   const handleDelete = async () => {
-    const deletePromises = selectedIds.map((id) =>
-      fetch(`http://mahika.foundation:8080/swp/api/user/delete-${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+    const deletePromises = selectedIds.map(
+      async (id) =>
+        await fetch(`http://mahika.foundation:8080/swp/api/user/delete-${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
     );
     await Promise.all(deletePromises);
-    setStaffList((prevList) =>
-      prevList.filter((staff) => !selectedIds.includes(staff.id))
-    );
-    setFilterStaff((prevList) =>
-      prevList.filter((staff) => !selectedIds.includes(staff.id))
-    );
+    await getData();
+    // clear filter's parameters
     setSelectedIds([]);
     setSelect(false);
   };
@@ -70,6 +72,7 @@ const TableStaff = () => {
 
   function handleHide() {
     staffInputFormRef.current.close();
+    getData();
   }
 
   function handleNavigate(staff) {
@@ -78,15 +81,31 @@ const TableStaff = () => {
 
   const handleCheckbox = (event) => {
     const { name, checked } = event.target;
-    if (name === "allSelect") {
-      setSelect(checked);
-      setSelectedIds(checked ? filterStaff.map((staff) => staff.id) : []);
+    const tempStaff = filterStaff.map((staff) => {
+      if (staff.id == name) {
+        if (checked) {
+          setSelectedIds((prevIds) => [...prevIds, staff.id]);
+        } else {
+          setSelectedIds((prevIds) => prevIds.filter((id) => id !== staff.id));
+        }
+        return { ...staff, isChecked: checked };
+      }
+      return staff;
+    });
+    setFilterStaff(tempStaff);
+  };
+
+  const handleCheckAll = (event) => {
+    const { name, checked } = event.target;
+    setSelect(checked);
+    const tempStaff = filterStaff.map((staff) => {
+      return { ...staff, isChecked: checked };
+    });
+    setFilterStaff(tempStaff);
+    if (checked) {
+      setSelectedIds(filterStaff.map((staff) => staff.id));
     } else {
-      setSelectedIds((prevSelectedIds) =>
-        checked
-          ? [...prevSelectedIds, name]
-          : prevSelectedIds.filter((id) => id !== name)
-      );
+      setSelectedIds([]);
     }
   };
 
@@ -142,7 +161,7 @@ const TableStaff = () => {
           <hr />
           <div className="mt-5 mb-7 ">
             <input
-              className="h-37 w-583 rounded-10 border-double border-[#dfd8d8] outline-none pl-11"
+              className="h-9 w-96 rounded-md border border-[#dfd8d8] outline-none pl-11 ml-14 mr-4"
               type="search"
               placeholder="Tìm kiếm nhân viên"
               onChange={handleSearch}
@@ -157,34 +176,62 @@ const TableStaff = () => {
           <table className="w-full border-collapse">
             <thead>
               <tr className={classes.tr}>
-                <th className={classes.th}>
+                <th className={`${classes["table-header"]} ${classes.th}`}>
                   <input
                     type="checkbox"
                     name="allSelect"
-                    onChange={handleCheckbox}
+                    onChange={handleCheckAll}
                     checked={select}
+                    key={selectedIds.length}
                   />
                 </th>
-                {selectedIds.length > 0 ? (
-                  <th colSpan="5" className={classes.th}>
-                    <div className="flex">
-                      <p className="font-normal pr-2">
-                        Đã chọn <b>{selectedIds.length}</b> nhân viên
-                      </p>
-                      <button
-                        onClick={handleDelete}
-                        className="border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none px-2"
-                      >
-                        Xóa nhân viên
-                      </button>
-                    </div>
-                  </th>
+                {select ? (
+                  <>
+                    <th colSpan="6" className={classes.th}>
+                      <div className="flex">
+                        <p className="font-normal pr-2">
+                          Đã chọn <b>tất cả</b> nhân viên trên trang này
+                        </p>
+                        <select
+                          onChange={(e) =>
+                            e.target.value === "delete" && handleDelete()
+                          }
+                          defaultValue=""
+                          className="border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none"
+                        >
+                          <option value="">Chọn thao tác</option>
+                          <option value="delete">Xóa nhân viên</option>
+                        </select>
+                      </div>
+                    </th>
+                  </>
+                ) : selectedIds.length ? (
+                  <>
+                    <th colSpan="6" className={classes.th}>
+                      <div className="flex">
+                        <p className="font-normal pr-2">
+                          Đã chọn <b>{selectedIds.length}</b> nhân viên trên
+                          trang này
+                        </p>
+                        <select
+                          onChange={(e) =>
+                            e.target.value === "delete" && handleDelete()
+                          }
+                          defaultValue=""
+                          className="border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none"
+                        >
+                          <option value="">Chọn thao tác</option>
+                          <option value="delete">Xóa nhân viên</option>
+                        </select>
+                      </div>
+                    </th>
+                  </>
                 ) : (
                   <>
-                    <th className={classes.th}>Tên nhân viên</th>
-                    <th className={classes.th}>Vị trí</th>
+                    <th className={classes.th}>Họ và tên</th>
+                    <th className={classes.th}>Vị trí làm việc</th>
                     <th className={classes.th}>Số điện thoại</th>
-                    <th className={classes.th}>Doanh thu cá nhân</th>
+                    <th className={classes.th}>Doanh thu</th>
                     <th className={classes.th}>Trạng thái</th>
                   </>
                 )}
@@ -202,27 +249,47 @@ const TableStaff = () => {
                 return (
                   <tr
                     className={`${classes.tr} ${
-                      selectedIds.includes(staff.id) ? classes.select : ""
+                      staff?.isChecked ? classes.select : ""
                     }`}
                     key={staff.id}
-                    onClick={() => handleNavigate(staff)}
                   >
                     <td className={classes.td}>
                       <input
                         type="checkbox"
                         name={staff.id}
-                        onChange={handleCheckbox}
-                        checked={selectedIds.includes(staff.id)}
-                        onClick={(event) => event.stopPropagation()}
+                        onClick={handleCheckbox}
+                        onChange={(event) => event.stopPropagation()}
+                        checked={staff?.isChecked}
                       />
                     </td>
-                    <td className={classes.td}>{staff.fullName}</td>
-                    <td className={classes.td}>{staff.role}</td>
-                    <td className={classes.td}>{staff.phone}</td>
-                    <td className={classes.td}>
+                    <td
+                      className={classes.td}
+                      onClick={() => handleNavigate(staff)}
+                    >
+                      {staff.fullName}
+                    </td>
+                    <td
+                      className={classes.td}
+                      onClick={() => handleNavigate(staff)}
+                    >
+                      {staff.role}
+                    </td>
+                    <td
+                      className={classes.td}
+                      onClick={() => handleNavigate(staff)}
+                    >
+                      {staff.phone}
+                    </td>
+                    <td
+                      className={classes.td}
+                      onClick={() => handleNavigate(staff)}
+                    >
                       {formatter.format(staff.personalIncome)}
                     </td>
-                    <td className={classes.td}>
+                    <td
+                      className={classes.td}
+                      onClick={() => handleNavigate(staff)}
+                    >
                       <p className={`${statusClass} ${classes.status}`}>
                         {staff.status}
                       </p>

@@ -11,10 +11,11 @@ const StaffDetail = () => {
   const doneModalRef = useRef();
   const location = useLocation();
   const { staff } = location.state || {}; // Kiểm tra nếu state tồn tại
+  const [objStaff, setObjStaff] = useState(staff);
   const [orders, setOrders] = useState([]);
   const staffInputFormRef = useRef();
 
-  if (!staff) {
+  if (!objStaff) {
     return <div>No staff data available</div>;
   }
 
@@ -27,7 +28,7 @@ const StaffDetail = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        const orderList = data.filter((order) => order.userId === staff.id);
+        const orderList = data.filter((order) => order.userId === objStaff.id);
 
         setOrders(orderList);
         console.log(orderList);
@@ -40,8 +41,8 @@ const StaffDetail = () => {
   }, []);
 
   function averageIncome(average) {
-    if (staff.personalIncome !== 0)
-      return (average = staff.personalIncome / staff.sellOrderQuantity);
+    if (objStaff.personalIncome !== 0)
+      return (average = objStaff.personalIncome / objStaff.sellOrderQuantity);
     else return (average = 0);
   }
 
@@ -49,15 +50,21 @@ const StaffDetail = () => {
     staffInputFormRef.current.showModal();
   }
 
-  function handleHide() {
+  function handleClose(submitData) {
+    setObjStaff((o) => ({
+      ...o,
+      fullName: submitData.fullName,
+      phone: submitData.phone,
+      role: submitData.role,
+    }));
     staffInputFormRef.current.close();
   }
 
   return (
     <>
       <EditStaffModal
-        staff={staff}
-        onClose={handleHide}
+        staff={objStaff}
+        onClose={handleClose}
         ref={staffInputFormRef}
       />
       {/* Personal Information */}
@@ -76,15 +83,17 @@ const StaffDetail = () => {
           <div className="grid grid-cols-3 gap-3 text-center mt-4 mb-4">
             <div>
               <label className="text-xl text-gray-700">Họ và tên</label>
-              <div className="text-2xl mt-3 font-medium ">{staff.fullName}</div>
+              <div className="text-2xl mt-3 font-medium ">
+                {objStaff.fullName}
+              </div>
             </div>
             <div>
               <label className="text-xl text-gray-700">Số điện thoại</label>
-              <div className="text-2xl mt-3 font-medium">{staff.phone}</div>
+              <div className="text-2xl mt-3 font-medium">{objStaff.phone}</div>
             </div>
             <div>
               <label className="text-xl text-gray-700">Vị trí</label>
-              <div className="text-2xl mt-3 font-medium">{staff.role}</div>
+              <div className="text-2xl mt-3 font-medium">{objStaff.role}</div>
             </div>
           </div>
           <hr className="w-full my-2" />
@@ -93,7 +102,7 @@ const StaffDetail = () => {
             <div>
               <label className="text-xl text-gray-700">Số đơn hàng</label>
               <div className="text-2xl mt-3 font-medium">
-                {staff.sellOrderQuantity}
+                {objStaff.sellOrderQuantity}
               </div>
             </div>
             <div>
@@ -101,7 +110,7 @@ const StaffDetail = () => {
                 Tổng doanh thu cá nhân
               </label>
               <div className="text-2xl mt-3 font-medium">
-                {formatter.format(staff.personalIncome)}
+                {formatter.format(objStaff.personalIncome)}
               </div>
             </div>
             <div>
