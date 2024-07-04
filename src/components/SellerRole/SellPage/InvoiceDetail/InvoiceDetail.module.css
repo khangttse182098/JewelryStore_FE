@@ -5,7 +5,7 @@
   height: 550px;
   border-radius: 20px;
   font-family: "Montserrat";
-  transform: translate(50%, 50%);
+  transform: translate(50%, 30%);
 }
 
 .modal-container[open] {
@@ -24,7 +24,7 @@
   background-color: #dfd8d8;
   width: 835px;
   height: 469px;
-  transform: translate(13px, 18px);
+  transform: translate(3%, 10%);
   border-radius: 90px;
   position: relative;
 }
@@ -100,5 +100,127 @@
     /* transform: translateY(0); */
     top: 0.1%;
     opacity: 1;
+  }
+}
+
+@media (max-width: 1600px) {
+  .modal-container {
+    overflow: hidden;
+    background-color: #dac3a1;
+    width: 900px;
+    height: 550px;
+    border-radius: 20px;
+    font-family: "Montserrat";
+    transform: translate(40%, 30%);
+  }
+
+  .modal-container[open] {
+    animation: slide-in-from-top 0.35s ease-out;
+  }
+
+  .modal-container::backdrop {
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .invoice-container {
+    background-color: #dfd8d8;
+    width: 835px;
+    height: 469px;
+    transform: translate(3%, 10%);
+    border-radius: 90px;
+    position: relative;
+  }
+
+  .title {
+    font-weight: 500;
+    font-size: 40px;
+    position: absolute;
+    left: 90px;
+  }
+
+  .info-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    transform: translate(0, 150px);
+  }
+
+  .img-container {
+    width: 204px;
+    height: 211px;
+    margin-bottom: 50px;
+  }
+
+  .img-container img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .info {
+    width: 380px;
+    height: 184px;
+    font-size: 22px;
+    transform: translate(0, -30px);
+  }
+
+  .price {
+    font-size: 25px;
+    color: #c3a06d;
+  }
+
+  .close-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 132px;
+    height: 134px;
+    outline: none;
+    background: #c3a06d;
+    font-family: "Montserrat";
+    font-size: 120px;
+    font-weight: 500;
+    border-radius: 50%;
+    transform: rotate(45deg);
+    color: inherit;
+    border: none;
+    cursor: pointer;
+    outline: inherit;
+    margin-bottom: 40px;
+  }
+
+  .close-button:hover {
+    background: #9b815b;
+  }
+
+  @keyframes slide-in-from-top {
+    0% {
+      /* transform: translateY(-15%); */
+      top: -550px;
+      opacity: 0;
+    }
+    100% {
+      /* transform: translateY(0); */
+      top: 0.1%;
+      opacity: 1;
+    }
+  }
+}
+@media (max-width: 1400px) {
+  .modal-container {
+    transform: translate(27%, 30%);
+  }
+}
+@media (max-width: 1330px) {
+  .modal-container {
+    transform: translate(25%, 30%);
+  }
+}
+@media (max-width: 1280) {
+  .modal-container {
+    transform: translate(25%, 30%);
   }
 }

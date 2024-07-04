@@ -21,3 +21,26 @@
   width: 55px;
 }
 
+@media (max-width: 1600px) {
+  .search-box {
+    width: 750px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .search-box {
+    width: 700px;
+  }
+}
+
+@media (max-width: 1330px) {
+  .search-box {
+    width: 650px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .search-box {
+    width: 600px;
+  }
+}

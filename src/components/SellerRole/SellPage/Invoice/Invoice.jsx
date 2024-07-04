@@ -57,7 +57,7 @@ const Invoice = ({ invoice }) => {
             skeletonStyle={classes["img-skeleton"]}
           />
         </div>
-        <div onClick={handleShowProductDetail}>
+        <div onClick={handleShowProductDetail} className={classes.content}>
           <p className={classes.tittle}>{productName}</p>
           <p className={classes["first-paragraph"]}>
             Mã sản phẩm: {productCode}

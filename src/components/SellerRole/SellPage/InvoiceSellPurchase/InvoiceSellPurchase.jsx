@@ -28,7 +28,7 @@ const InvoiceSellPurchase = ({ itemToPurchase }) => {
       <div className={classes.img}>
         <ImageLoader URL={productImage} />
       </div>
-      <div>
+      <div className={classes.content}>
         <p className={classes.tittle}>{productName}</p>
         <p className={classes["first-paragraph"]}>Mã sản phẩm: {productCode}</p>
         <p className={classes["second-paragraph"]}>Chất liệu: {materialName}</p>
