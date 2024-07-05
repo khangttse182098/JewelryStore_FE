@@ -4,13 +4,14 @@ import { formatter } from "../../../../util/formatter";
 import PaginationCustomerList from "./../PaginationCustomerList/PaginationCustomerList";
 import { useNavigate } from "react-router-dom";
 import SkeletonRowList from "../../../UtilComponent/SkeletonRowList/SkeletonRowList";
-import { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const TableCustomer = () => {
   const [customerList, setCustomerList] = useState([]);
   const [filterCustomer, setFilterCustomer] = useState([...customerList]);
   const [currentPage, setCurrentPage] = useState(1);
   const [customerPerPage, setCustomerPerPage] = useState(5);
+  const [isLoading, setIsLoading] = useState(true);
   const lastCustomerIndex = currentPage * customerPerPage;
   const firstCustomerIndex = lastCustomerIndex - customerPerPage;
   const currentCustomer = filterCustomer.slice(
@@ -27,7 +28,8 @@ const TableCustomer = () => {
       );
       const data = await response.json();
       setCustomerList(data);
-      setFilterCustomer(data); // Update filterCustomer when data is fetched
+      setFilterCustomer(data);
+      setIsLoading(false);
     };
     handleCustomer();
   }, []);
@@ -50,7 +52,9 @@ const TableCustomer = () => {
       return (
         customer.fullName.toLowerCase().includes(searchField) ||
         customer.phoneNumber.toLowerCase().includes(searchField) ||
-        customer.address.toLowerCase().includes(searchField)
+        customer.address.toLowerCase().includes(searchField) ||
+        customer.quantityOrder.toString().toLowerCase().includes(searchField) ||
+        customer.expense.toString().toLowerCase().includes(searchField)
       );
     });
     setFilterCustomer(newFilterCustomer);
@@ -58,6 +62,17 @@ const TableCustomer = () => {
 
   function handleNavigate(customer) {
     navigate("/managercustomerdetail", { state: { customer } });
+  }
+
+  let skeletonRowList = [];
+  for (let index = 0; index < customerPerPage; index++) {
+    skeletonRowList.push(
+      <tr key={index}>
+        <td colSpan="5">
+          <Skeleton className={classes["td-skeleton"]} />
+        </td>
+      </tr>
+    );
   }
 
   return (
@@ -72,7 +87,7 @@ const TableCustomer = () => {
               <button
                 key={status}
                 className={
-                  "h-12 w-48 rounded-t-lg bg-white text-center font-montserrat text-base border-b-4 border-blue-600 text-blue-600"
+                  "h-12 w-48 rounded-t-lg bg-white text-center font-montserrat text-base border-b-4 border-blue-600 text-[#2661ec] font-semibold"
                 }
                 status="Tất cả"
                 onClick={handleStatusOption}
@@ -102,12 +117,17 @@ const TableCustomer = () => {
               </tr>
             </thead>
             <tbody>
-              {!currentCustomer.length ? (
-                <SkeletonRowList
-                  amount={5}
-                  style="border-b-[#dddddd] h-20 font-[400] text-center border-b-0"
-                  col={7}
-                />
+              {isLoading ? (
+                skeletonRowList
+              ) : !currentCustomer.length ? (
+                <tr>
+                  <td
+                    colSpan="5"
+                    className="font-medium text-red-500 text-center h-32"
+                  >
+                    Không tìm thấy kết quả cho "{searchField}"
+                  </td>
+                </tr>
               ) : (
                 currentCustomer.map((customer) => (
                   <tr

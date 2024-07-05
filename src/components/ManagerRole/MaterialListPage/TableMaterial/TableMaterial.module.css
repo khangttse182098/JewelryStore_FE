@@ -3,7 +3,7 @@
 }
 
 .selectedFilter {
-  @apply box-border text-blue-600 border-b-4 border-blue-600;
+  @apply box-border text-blue-600 border-b-4 border-blue-600 font-semibold;
 }
 
 .search-container {

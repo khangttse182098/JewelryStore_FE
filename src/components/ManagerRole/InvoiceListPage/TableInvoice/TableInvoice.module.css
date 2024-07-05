@@ -19,7 +19,7 @@
 }
 
 .button {
-  @apply h-[50px] w-[200px] text-[15px] cursor-pointer;
+  @apply h-12 w-48 bg-white text-center box-border text-gray-500 font-["Montserrat"] text-base hover:box-border hover:text-blue-600 hover:border-b-2 hover:border-blue-600 cursor-pointer;
 }
 
 .th {
@@ -54,7 +54,7 @@
 }
 
 .current {
-  @apply border-b-4 border-[#0088FF] text-center text-[#0088FF] opacity-90;
+  @apply text-[#2661ec] font-semibold border-b-[#2661ec] opacity-90 border-b-4;
 }
 
 .status {

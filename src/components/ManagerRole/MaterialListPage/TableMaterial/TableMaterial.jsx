@@ -16,6 +16,7 @@ const TableMaterial = () => {
   const [filterMaterialList, setFilterMaterialList] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("Tất cả");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const materialPerPage = 5;
 
@@ -51,6 +52,7 @@ const TableMaterial = () => {
     setMaterialList(data);
     setSelectedFilter("Tất cả");
     setFilterMaterialList(data);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -123,30 +125,41 @@ const TableMaterial = () => {
               </tr>
             </thead>
             <tbody>
-              {!currentMaterial.length
-                ? skeletonRowList
-                : currentMaterial.map((material) => {
-                    return (
-                      <tr
-                        onClick={() =>
-                          navigate("/managermaterialhistory", {
-                            state: { material },
-                          })
-                        }
-                        className={`${classes.tr}`}
-                        key={material.goldName}
-                      >
-                        <td className={classes.td}>{material.goldName}</td>
-                        <td className={classes.td}>
-                          {formatter.format(material.buyPrice)}
-                        </td>
-                        <td className={classes.td}>
-                          {formatter.format(material.sellPrice)}
-                        </td>
-                        <td className={classes.td}>{material.effectDate}</td>
-                      </tr>
-                    );
-                  })}
+              {isLoading ? (
+                skeletonRowList
+              ) : !currentMaterial.length ? (
+                <tr>
+                  <td
+                    colSpan="4"
+                    className="font-medium text-red-500 text-center h-32"
+                  >
+                    Không tìm thấy kết quả cho "{searchField}"
+                  </td>
+                </tr>
+              ) : (
+                currentMaterial.map((material) => {
+                  return (
+                    <tr
+                      onClick={() =>
+                        navigate("/managermaterialhistory", {
+                          state: { material },
+                        })
+                      }
+                      className={`${classes.tr}`}
+                      key={material.goldName}
+                    >
+                      <td className={classes.td}>{material.goldName}</td>
+                      <td className={classes.td}>
+                        {formatter.format(material.buyPrice)}
+                      </td>
+                      <td className={classes.td}>
+                        {formatter.format(material.sellPrice)}
+                      </td>
+                      <td className={classes.td}>{material.effectDate}</td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
           <Pagination

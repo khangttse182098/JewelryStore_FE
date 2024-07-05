@@ -13,6 +13,7 @@ const TableDiscount = () => {
   const [searchField, setSearchField] = useState();
   const [discountList, setDiscountList] = useState([]);
   const [select, setSelect] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [filterDiscountList, setFilterDiscountList] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("Tất cả");
   const [currentPage, setCurrentPage] = useState(1);
@@ -52,6 +53,7 @@ const TableDiscount = () => {
     setDiscountList(data);
     setSelectedFilter("Tất cả");
     setFilterDiscountList(data);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -223,8 +225,17 @@ const TableDiscount = () => {
               </tr>
             </thead>
             <tbody>
-              {!currentDiscount.length ? (
-                <SkeletonRowList amount={4} style={classes["td-skeleton"]} />
+              {isLoading ? (
+                skeletonRowList
+              ) : !currentDiscount.length ? (
+                <tr>
+                  <td
+                    colSpan="6"
+                    className="font-medium text-red-500 text-center h-32"
+                  >
+                    Không tìm thấy kết quả cho "{searchField}"
+                  </td>
+                </tr>
               ) : (
                 currentDiscount.map((discount) => {
                   const statusClass =

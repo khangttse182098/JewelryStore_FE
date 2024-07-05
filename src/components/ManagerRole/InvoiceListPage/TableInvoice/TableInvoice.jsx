@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import classes from "./TableInvoice.module.css";
 import Pagination from "../../../CashierRole/UtilsComponent/Pagination/Pagination";
 import { useNavigate } from "react-router-dom";
-import { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import SkeletonRowList from "../../../UtilComponent/SkeletonRowList/SkeletonRowList";
 
 const TableProduct = () => {
@@ -11,6 +11,7 @@ const TableProduct = () => {
   const [searchField, setSearchField] = useState("");
   const [filterOrder, setFilterOrder] = useState([...orderList]);
   const [status, setStatus] = useState("Tất cả");
+  const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [orderPerPage, setOrderPerPage] = useState(4);
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ const TableProduct = () => {
         );
         const data = await response.json();
         setOrderList(data);
+        setIsLoading(false);
       } catch (err) {}
     };
     handleProduct();
@@ -72,6 +74,17 @@ const TableProduct = () => {
 
   function handleNavigate(order) {
     navigate("/managerinvoicedetail", { state: { order } });
+  }
+
+  let skeletonRowList = [];
+  for (let index = 0; index < orderPerPage; index++) {
+    skeletonRowList.push(
+      <tr key={index}>
+        <td colSpan="7">
+          <Skeleton className={classes["td-skeleton"]} />
+        </td>
+      </tr>
+    );
   }
 
   return (
@@ -140,12 +153,17 @@ const TableProduct = () => {
               </tr>
             </thead>
             <tbody>
-              {!currentOrder.length ? (
-                <SkeletonRowList
-                  amount={5}
-                  style="border-b-[#dddddd] h-20 font-[400] text-center border-b-0"
-                  col={7}
-                />
+              {isLoading ? (
+                skeletonRowList
+              ) : !currentOrder.length ? (
+                <tr>
+                  <td
+                    colSpan="7"
+                    className="font-medium text-red-500 text-center h-32"
+                  >
+                    Không tìm thấy kết quả cho "{searchField}"
+                  </td>
+                </tr>
               ) : (
                 currentOrder.map((order) => {
                   const statusClass =
