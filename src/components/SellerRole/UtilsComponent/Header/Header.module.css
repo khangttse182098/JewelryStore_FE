@@ -73,4 +73,9 @@
     height: 70px;
     width: 100%;
   }
+
+  .logo {
+    width: 100px;
+    margin-top: 0px;
+  }
 }
