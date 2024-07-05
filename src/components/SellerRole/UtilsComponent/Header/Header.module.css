@@ -52,3 +52,9 @@
   height: 30px;
   visibility: hidden;
 }
+
+@media (max-width: 1566px) {
+  .header {
+    width: 1600px;
+  }
+}
