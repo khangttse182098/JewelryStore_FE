@@ -35,12 +35,12 @@
 
 @media (max-width: 1330px) {
   .search-box {
-    width: 650px;
+    width: 600px;
   }
 }
 
 @media (max-width: 1280px) {
   .search-box {
-    width: 600px;
+    width: 550px;
   }
 }
