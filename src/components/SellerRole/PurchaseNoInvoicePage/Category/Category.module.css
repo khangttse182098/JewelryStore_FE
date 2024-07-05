@@ -166,7 +166,7 @@ hr {
 .origin {
   float: left;
   width: 50%;
-  margin-left: 100px;
+  margin-left: 70px;
   margin-top: 20px;
 }
 .cut {
@@ -176,7 +176,7 @@ hr {
 .color-dmd {
   float: left;
   width: 50%;
-  margin-left: 100px;
+  margin-left: 70px;
 }
 .carat-weight {
   margin-bottom: 20px;
@@ -184,7 +184,7 @@ hr {
 .clarity {
   float: left;
   width: 50%;
-  margin-left: 100px;
+  margin-left: 70px;
 }
 .add-diamondInvoice {
   margin-top: 50px;

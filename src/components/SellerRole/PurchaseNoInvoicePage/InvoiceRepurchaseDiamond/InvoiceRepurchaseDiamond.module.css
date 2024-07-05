@@ -152,6 +152,7 @@
     background-color: #a58657;
   }
 }
+
 @media (max-width: 1540px) {
   .invoice {
     background-color: #dfd8d8;
