@@ -135,7 +135,9 @@ const TableGemInfor = () => {
                     </button>
                   ) : (
                     <td className={classes.td}>
-                      {formatter.format(gem.sellPrice)}
+                      {gem.sellPrice === Number(gem.sellPrice)
+                        ? formatter.format(gem.sellPrice)
+                        : gem.sellPrice}
                     </td>
                   )}
                 </tr>
