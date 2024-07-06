@@ -18,7 +18,7 @@ const TableDiscount = () => {
   const [selectedFilter, setSelectedFilter] = useState("Tất cả");
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
-  const discountPerPage = 4;
+  const discountPerPage = 5;
 
   const handleSearch = (event) => {
     const searchFieldString = event.target.value.toLowerCase();

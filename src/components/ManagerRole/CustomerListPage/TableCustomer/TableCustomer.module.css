@@ -13,11 +13,11 @@
 }
 
 .th {
-  @apply border-b border-[#dddddd] text-center p-1 h-10 bg-[#f4f6f8] font-semibold;
+  @apply border-b border-[#dddddd] text-center p-4 h-10 bg-[#f4f6f8] font-semibold;
 }
 
 .td {
-  @apply border-b border-[#dddddd] h-14 font-[400] text-center;
+  @apply border-b border-[#dddddd] h-20 font-[400] text-center;
 }
 
 .td-skeleton {

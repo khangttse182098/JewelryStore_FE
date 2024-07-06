@@ -13,7 +13,7 @@ const TableProduct = () => {
   const [searchField, setSearchField] = useState("");
   const [filterProduct, setFilterProduct] = useState([...productList]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productPerPage, setProductPerPage] = useState(4);
+  const [productPerPage, setProductPerPage] = useState(5);
   const [isLoading, setIsLoading] = useState(true);
   const [select, setSelect] = useState(false);
   const ids = [];
@@ -136,7 +136,7 @@ const TableProduct = () => {
             </button>
           </div>
           <hr />
-          <div className="mt-3 mb-3">
+          <div className="my-5">
             <input
               className="h-9 w-96 rounded-md border border-[#dfd8d8] outline-none pl-11 ml-14 mr-4"
               type="search"

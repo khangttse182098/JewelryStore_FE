@@ -13,7 +13,7 @@ const TableProduct = () => {
   const [status, setStatus] = useState("Tất cả");
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [orderPerPage, setOrderPerPage] = useState(4);
+  const [orderPerPage, setOrderPerPage] = useState(5);
   const navigate = useNavigate();
 
   //------------------------Get status-------------------------
@@ -133,7 +133,7 @@ const TableProduct = () => {
             </button>
           </div>
           <hr />
-          <div className="mt-3 mb-3">
+          <div className="my-5">
             <input
               className="h-9 w-96 rounded-md border border-[#dfd8d8] outline-none pl-11 ml-14 mr-4"
               type="search"

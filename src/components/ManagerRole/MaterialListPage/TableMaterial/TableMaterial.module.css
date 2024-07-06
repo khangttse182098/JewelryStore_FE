@@ -31,7 +31,7 @@
 }
 
 .td {
-  @apply border-b border-[#dddddd] h-10 font-[400] text-center;
+  @apply border-b border-[#dddddd] h-20 font-[400] text-center;
 }
 
 .td-skeleton {

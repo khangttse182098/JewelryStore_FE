@@ -14,7 +14,7 @@ const TableGemInfor = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const [gemPerPage, setGemPerPage] = useState(7);
+  const [gemPerPage, setGemPerPage] = useState(5);
 
   //------------------------Get list gems--------------------
   useEffect(() => {
@@ -89,7 +89,7 @@ const TableGemInfor = () => {
             </button>
           </div>
           <hr />
-          <div className="mt-3 mb-3">
+          <div className="my-5">
             <input
               className="h-9 w-96 rounded-md border border-[#dfd8d8] outline-none pl-11 ml-14 mr-4"
               type="search"
