@@ -40,7 +40,6 @@ const TableCustomer = () => {
       .then((dataInvoice) => setCustomerList(dataInvoice))
       .catch((error) => console.log(error));
   };
-
   useEffect(() => {
     handleInvoice();
   }, [phoneNumber]);

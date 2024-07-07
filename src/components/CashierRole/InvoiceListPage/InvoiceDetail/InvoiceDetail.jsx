@@ -296,7 +296,7 @@ const InvoiceDetail = ({ invoice }) => {
               </div>
               <div className={classes["status-name-containter"]}>
                 <div className={classes.highlight}>
-                  Khuyễn mãi {discountValue}%
+                  Khuyến mãi {discountValue}%
                 </div>
                 <div className={classes["status-value"]}>
                   -{formatter.format(discountProduct)}

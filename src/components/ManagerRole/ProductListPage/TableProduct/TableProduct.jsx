@@ -5,8 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ImageLoader from "../../../../util/ImageLoader";
 import Red from "/assets/red.png";
 import Green from "/assets/green.png";
-import SkeletonRowList from "../../../UtilComponent/SkeletonRowList/SkeletonRowList";
-import { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const TableProduct = () => {
   const controllerRef = useRef();
@@ -14,7 +13,8 @@ const TableProduct = () => {
   const [searchField, setSearchField] = useState("");
   const [filterProduct, setFilterProduct] = useState([...productList]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productPerPage, setProductPerPage] = useState(4);
+  const [productPerPage, setProductPerPage] = useState(5);
+  const [isLoading, setIsLoading] = useState(true);
   const [select, setSelect] = useState(false);
   const ids = [];
   const navigate = useNavigate();
@@ -48,6 +48,7 @@ const TableProduct = () => {
         );
         const data = await response.json();
         setProductList(data);
+        setIsLoading(false);
       } catch (err) {}
     };
     handleProduct();
@@ -81,7 +82,9 @@ const TableProduct = () => {
       return (
         product.productCode.toLowerCase().includes(searchField) ||
         product.productName.toLowerCase().includes(searchField) ||
-        product.categoryName.toLowerCase().includes(searchField)
+        product.categoryName.toLowerCase().includes(searchField) ||
+        product.counterNo.toLowerCase().includes(searchField) ||
+        product.createdDate.toLowerCase().includes(searchField)
       );
     });
     setFilterProduct(newFilterProduct);
@@ -106,23 +109,34 @@ const TableProduct = () => {
     }
   };
 
+  let skeletonRowList = [];
+  for (let index = 0; index < productPerPage; index++) {
+    skeletonRowList.push(
+      <tr key={index}>
+        <td colSpan="7">
+          <Skeleton className={classes["td-skeleton"]} />
+        </td>
+      </tr>
+    );
+  }
+
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
       <div className="w-10/12 h-5/6 ">
-        <div className="text-3xl font-medium py-5">
+        <div className="text-3xl font-medium py-7">
           <p>Danh sách sản phẩm</p>
         </div>
         <div className="bg-white border-2 rounded-xl">
           <div>
             <button
               onChange={handleAdd}
-              className="h-[50px] w-[200px] border-b-4 border-[#0088FF] text-center text-[#0088FF] font-montserrat text-[15px] cursor-pointer"
+              className="h-[50px] w-[200px] border-b-4 border-b-[#2661ec]  text-center text-[#2661ec] font-semibold font-montserrat  cursor-pointer"
             >
               Tất cả
             </button>
           </div>
           <hr />
-          <div className="mt-3 mb-3">
+          <div className="my-5">
             <input
               className="h-9 w-96 rounded-md border border-[#dfd8d8] outline-none pl-11 ml-14 mr-4"
               type="search"
@@ -181,12 +195,17 @@ const TableProduct = () => {
               </tr>
             </thead>
             <tbody>
-              {!currentProduct.length ? (
-                <SkeletonRowList
-                  amount={4}
-                  style="border-b-[#dddddd] h-20 font-[400] text-center border-b-0"
-                  col={8}
-                />
+              {isLoading ? (
+                skeletonRowList
+              ) : !currentProduct.length ? (
+                <tr>
+                  <td
+                    colSpan="7"
+                    className="font-medium text-red-500 text-center h-32"
+                  >
+                    Không tìm thấy kết quả cho "{searchField}"
+                  </td>
+                </tr>
               ) : (
                 currentProduct.map((product) => {
                   return (

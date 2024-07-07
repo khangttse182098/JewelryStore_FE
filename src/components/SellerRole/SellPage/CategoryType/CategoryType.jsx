@@ -53,12 +53,13 @@ const CategoryType = () => {
   //for filter through all products if the productname match in the searchField the setFilterProduct to newFilterProduct
   //whenever products and searchField change
   useEffect(() => {
+    console.log(searchField);
     const newFilterProduct = products.filter((product) => {
       return (
-        product.productName.toLowerCase().includes(searchField) ||
-        product.productCode.toLowerCase().includes(searchField) ||
-        product.materialName.toLowerCase().includes(searchField) ||
-        product.categoryName.toLowerCase().includes(searchField)
+        product.productName?.toLowerCase().includes(searchField) ||
+        product.productCode?.toLowerCase().includes(searchField) ||
+        product.materialName?.toLowerCase().includes(searchField) ||
+        product.categoryName?.toLowerCase().includes(searchField)
       );
     });
     setProductList(newFilterProduct);
@@ -66,6 +67,7 @@ const CategoryType = () => {
 
   //knowing when user type in and set search field to what user type
   const onSearchChange = (event) => {
+    console.log("It's changing!");
     const searchFieldString = event.target.value.toLowerCase();
     setSearchField(searchFieldString);
   };

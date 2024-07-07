@@ -65,6 +65,22 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
     },
   };
 
+  async function handleSearchCustomerByPhone(phoneNumber) {
+    if (phoneNumber.length === 10) {
+      const res = await fetch(
+        `http://64.227.1.44:8080/swp/api/customer/list?phoneNumber=${phoneNumber}`
+      );
+      const customerData = await res.json();
+      if (customerData.length) {
+        setCustomerInfor({
+          address: customerData[0].address,
+          fullName: customerData[0].fullName,
+          phoneNumber: customerData[0].phoneNumber,
+        });
+      }
+    }
+  }
+
   function handleChange(customerAttribute, event) {
     setCustomerInfor((prevCustomerInfor) => {
       return {
@@ -145,7 +161,10 @@ const CustomerInputForm = forwardRef(function CustomerInputForm(
             <input
               type="text"
               value={customerInfor.phoneNumber}
-              onChange={(event) => handleChange("phoneNumber", event)}
+              onChange={(event) => {
+                handleChange("phoneNumber", event);
+                handleSearchCustomerByPhone(event.target.value);
+              }}
               required
             />
           </div>

@@ -39,7 +39,7 @@ const GemHistory = ({ gem }) => {
 
   return (
     <div className="w-10/12 h-5/6 ">
-      <div className="text-3xl font-medium py-5">
+      <div className="text-3xl font-medium py-7">
         <p>Lịch sử giá</p>
       </div>
       <div className="bg-white border-2 rounded-xl">
