@@ -81,7 +81,7 @@ const DashboardChart = () => {
       <div className="h-2/3 w-4/5 ml-20 mt-16">
         <Bar
           data={{
-            labels: revenueList.sellCreatedDateList,
+            labels: revenueList.createdDateList,
             datasets: [
               {
                 label: "Doanh thu (VNĐ)",
@@ -99,6 +99,53 @@ const DashboardChart = () => {
                 ],
                 borderWidth: 1,
                 data: revenueList.sellTotalPriceList,
+              },
+            ],
+          }}
+          options={{
+            circumference: 360,
+
+            plugins: {
+              legend: {
+                display: true,
+                position: "bottom",
+                labels: {
+                  boxWidth: 20,
+                },
+
+                maxHeight: 200,
+                maxWidth: 500,
+              },
+            },
+          }}
+        />
+
+        <Bar
+          data={{
+            labels: [
+              "Trần Thái Khang",
+              "Phạm Hoàng Phúc",
+              "Lê Đức Minh",
+              "Hoàng Nguyên Khang",
+              "Võ Nguyên Khoa",
+            ],
+            datasets: [
+              {
+                label: "Doanh thu (VNĐ)",
+                backgroundColor: [
+                  "rgba(255, 99, 132, 0.2)",
+                  "rgba(255, 159, 64, 0.2)",
+                  "rgba(255, 205, 86, 0.2)",
+                  "rgba(75, 192, 192, 0.2)",
+                ],
+                borderColor: [
+                  "rgb(255, 99, 132)",
+                  "rgb(255, 159, 64)",
+                  "rgb(255, 205, 86)",
+                  "rgb(75, 192, 192)",
+                ],
+                borderWidth: 1,
+                data: [100000, 200000, 300000, 400000, 500000],
               },
             ],
           }}

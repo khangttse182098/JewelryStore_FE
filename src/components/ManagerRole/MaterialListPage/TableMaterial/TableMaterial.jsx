@@ -18,7 +18,7 @@ const TableMaterial = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const materialPerPage = 5;
+  const materialPerPage = 10;
 
   const handleSearch = (event) => {
     const searchFieldString = event.target.value.toLowerCase();
