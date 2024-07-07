@@ -28,7 +28,7 @@ const CashierHeader = () => {
   }, []);
 
   return (
-    <div className="bg-white flex justify-between p-3">
+    <div className="bg-white flex justify-normal p-3">
       <div className="flex">
         <img src={MahikaLogoImg} alt="Mahika Logo" />
         <img src={MahikaLogoText} alt="Mahika Logo" className="h-12 mt-3" />
@@ -36,7 +36,7 @@ const CashierHeader = () => {
 
       <div className={classes.name}>
         {cashierName.map((name, index) => (
-          <p key={index}>{name}</p>
+          <p key={index}></p>
         ))}
       </div>
       <DropDownAccount className={classes.dropdown} />
