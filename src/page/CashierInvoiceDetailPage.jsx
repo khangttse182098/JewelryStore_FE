@@ -4,9 +4,12 @@ import CashierSidebar from "../components/CashierRole/UtilsComponent/CashierSide
 import InvoiceDetail from "../components/CashierRole/InvoiceListPage/InvoiceDetail/InvoiceDetail";
 import { LoggedInUserContext } from "../context/LoggedInUserContext";
 import NotAllowed from "../components/UtilComponent/NotAllowed/NotAllowed";
+import { useLocation } from "react-router-dom";
 
 const CashierInvoiceDetailPage = () => {
   const { userRole } = useContext(LoggedInUserContext);
+  const location = useLocation();
+  const { state } = location;
 
   const renderContent =
     userRole === "CASHIER" ? (
