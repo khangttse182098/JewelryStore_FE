@@ -1,9 +1,9 @@
-import classes from "./CashierHeader.module.css";
-import MahikaLogoImg from "/assets/img-logo.png";
+import MahikaLogoImg from "/assets/managerLogo.png";
 import MahikaLogoText from "/assets/text-logo.png";
 import DropDownAccount from "../DropDownAccount/DropDownAccount";
 import React, { useState, useEffect, useContext } from "react";
 import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
+import classes from "./CashierHeader.module.css";
 
 const CashierHeader = () => {
   const [cashierName, setCashierName] = useState([]);
@@ -28,18 +28,10 @@ const CashierHeader = () => {
   }, []);
 
   return (
-    <div className={classes.header}>
-      <div className={classes.logo}>
-        <img
-          src={MahikaLogoImg}
-          alt="Mahika Logo"
-          className={classes["img-logo"]}
-        />
-        <img
-          src={MahikaLogoText}
-          alt="Mahika Logo"
-          className={classes["text-logo"]}
-        />
+    <div className="bg-white flex justify-between p-3">
+      <div className="flex">
+        <img src={MahikaLogoImg} alt="Mahika Logo" />
+        <img src={MahikaLogoText} alt="Mahika Logo" className="h-12 mt-3" />
       </div>
 
       <div className={classes.name}>

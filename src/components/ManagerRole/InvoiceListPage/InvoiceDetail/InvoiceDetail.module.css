@@ -1,0 +1,139 @@
+.row-container:hover {
+  background-color: #eff7fd;
+  cursor: pointer;
+}
+
+.title {
+  margin-top: 27px;
+  margin-left: 52px;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.table-container {
+  margin-left: 37px;
+  display: flex;
+}
+
+.product-list {
+  width: 734px;
+  height: 364px;
+  background-color: white;
+  text-align: center;
+  border-radius: 10px;
+  margin-top: 42px;
+}
+
+.invoice-props {
+  background-color: #f4f6f8;
+}
+
+.img-skeleton {
+  margin-left: 5px;
+  height: 90%;
+}
+
+.customer-detail {
+  margin: 19px;
+  width: 471px;
+  height: 387px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.customer-title-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 37px;
+}
+
+.customer-title-container p {
+  font-size: 30px;
+  font-weight: 500;
+  margin-left: 23px;
+  margin-right: 202px;
+  padding-top: 30px;
+}
+
+.customer-title-container div {
+  width: 39px;
+  height: 20px;
+}
+
+.customer-name,
+.customer-gender,
+.customer-phone,
+.customer-address {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.customer-name > p,
+.customer-gender > p,
+.customer-phone > p,
+.customer-address > p {
+  margin: 9px;
+}
+
+.customer-info-title {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+
+
+.highlight {
+  font-weight: 500;
+  font-size: 17px;
+  margin-left: 30px;
+}
+
+.status-success {
+  padding: 5px;
+  width: 153px;
+  margin: 20px;
+  background-color: #f3fcf9;
+  outline-color: #9fedcf;
+  color: #0db473;
+  outline-style: solid;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.status-inProgress {
+  padding: 5px;
+  width: 160px;
+  margin: 20px;
+  background-color: #fffbf2;
+  outline-color: #ffdf9b;
+  color: #e49c06;
+  outline-style: solid;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.status-name-containter {
+  display: flex;
+  justify-content: space-between;
+}
+
+.status-value {
+  margin-right: 30px;
+  text-align: center;
+}
+
+.purchase-button {
+  margin-top: 50px;
+  margin-right: 200px;
+  width: 182px;
+  height: 50px;
+  background-color: #0088ff;
+  color: white;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.purchase-button:hover {
+  background-color: #005fb3;
+}

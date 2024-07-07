@@ -11,7 +11,7 @@ const defaultFormField = {
 const SignInForm = () => {
   const [formField, setFormField] = useState(defaultFormField);
   const [isWrong, setIsWrong] = useState(false);
-  const { setUserId } = useContext(LoggedInUserContext);
+  const { setUserId, setUserRole } = useContext(LoggedInUserContext);
   const { username, password } = formField;
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
@@ -26,14 +26,19 @@ const SignInForm = () => {
       .then((res) => res.json())
       .then((data) => {
         {
+          localStorage.setItem("userId", data.userId);
+          localStorage.setItem("roleCode", data.roleCode);
           data.roleCode && setUserId(data.userId);
+          data.roleCode && setUserRole(data.roleCode);
         }
         if (data.roleCode === "SELLER") {
-          setIsWrong(false);
           navigate("/sellpage");
+          setIsWrong(false);
         } else if (data.roleCode === "CASHIER") {
-          setUserId(data.userId);
           navigate("/invoicelist");
+          setIsWrong(false);
+        } else if (data.roleCode === "MANAGER") {
+          navigate("/manager/chart");
           setIsWrong(false);
         } else {
           setIsWrong(true);

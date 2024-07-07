@@ -21,3 +21,17 @@
   width: 55px;
 }
 
+.barcode-scanner {
+  position: absolute;
+  top: 7px;
+  left: 750px;
+  margin: 0;
+  height: 50px;
+  width: 50px;
+  opacity: 0.3;
+}
+
+.barcode-scanner:hover {
+  opacity: 1;
+  cursor: pointer;
+}

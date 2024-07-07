@@ -6,12 +6,13 @@ import DropDownCounter from "../DropDownCounter/DropDownCounter";
 import InvoiceList from "../InvoiceList/InvoiceList";
 import InformationBar from "../InformationBar/InformationBar";
 import InvoiceSellPurchase from "../InvoiceSellPurchase/InvoiceSellPurchase";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { ProductSelectionContext } from "../../../../context/ProductSelectionContext";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
 
 const CategoryType = () => {
+  const controllerRef = useRef();
   //select category type
   const [activeOption, setActiveOption] = useState("");
 
@@ -37,7 +38,7 @@ const CategoryType = () => {
   useEffect(() => {
     const counterID = selectedCounter === "Chọn quầy" ? "" : selectedCounter;
     fetch(
-      `http://mahika.foundation:8080/swp/api/product?counter_id=${counterID}&category_name=${selectedCategoryName}`
+      `http://mahika.foundation:8080/swp/api/product?is_available=true&counter_id=${counterID}&category_name=${selectedCategoryName}`
     )
       .then((res) => res.json())
       .then((dataProduct) => {
@@ -52,14 +53,21 @@ const CategoryType = () => {
   //for filter through all products if the productname match in the searchField the setFilterProduct to newFilterProduct
   //whenever products and searchField change
   useEffect(() => {
+    console.log(searchField);
     const newFilterProduct = products.filter((product) => {
-      return product.productName.toLowerCase().includes(searchField);
+      return (
+        product.productName?.toLowerCase().includes(searchField) ||
+        product.productCode?.toLowerCase().includes(searchField) ||
+        product.materialName?.toLowerCase().includes(searchField) ||
+        product.categoryName?.toLowerCase().includes(searchField)
+      );
     });
     setProductList(newFilterProduct);
   }, [products, searchField]);
 
   //knowing when user type in and set search field to what user type
   const onSearchChange = (event) => {
+    console.log("It's changing!");
     const searchFieldString = event.target.value.toLowerCase();
     setSearchField(searchFieldString);
   };
@@ -68,19 +76,21 @@ const CategoryType = () => {
   //------------------------Get List Counter----------------------------
   const [listCounter, setListCounter] = useState([]);
 
-  const handleCounter = () => {
-    fetch("http://mahika.foundation:8080/swp/api/counter", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((dataCounter) => setListCounter(dataCounter))
-      .catch((error) => console.log(error));
-  };
-
   useEffect(() => {
+    controllerRef.current?.abort();
+    controllerRef.current = new AbortController();
+    const signal = controllerRef.current.signal;
+    const handleCounter = async () => {
+      try {
+        const response = await fetch(
+          "http://mahika.foundation:8080/swp/api/counter",
+          { signal }
+        );
+        const counterData = await response.json();
+        setListCounter(counterData);
+      } catch (error) {}
+    };
+
     handleCounter();
   }, []);
   //-------------------------------------------------------------------

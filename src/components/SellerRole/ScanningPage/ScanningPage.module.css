@@ -1,0 +1,15 @@
+.container {
+  margin: auto auto;
+  border-radius: 10px;
+}
+
+.container::backdrop {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.close {
+  cursor: pointer;
+  font-size: 50px;
+  display: flex;
+  justify-content: flex-end;
+}

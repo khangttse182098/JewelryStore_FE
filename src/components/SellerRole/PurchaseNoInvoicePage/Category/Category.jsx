@@ -8,17 +8,26 @@ import InvoiceRepurchaseDiamond from "../InvoiceRepurchaseDiamond/InvoiceRepurch
 import { RepurchaseContext } from "../../../../context/RepurchaseContext";
 import { formatter } from "../../../../util/formatter";
 import CustomerInputForm from "../../UtilsComponent/CustomerInputForm/CustomerInputForm";
+import DropDownOrigin from "../Diamond/DiamondDropDown/DropDownOrigin/DropDownOrigin";
+import DropDownCut from "../Diamond/DiamondDropDown/DropDownCut/DropDownCut";
+import DropDownColor from "../Diamond/DiamondDropDown/DropDownColor/DropDownColor";
+import DropDownClarity from "../Diamond/DiamondDropDown/DropDownClarity/DropDownClarity";
 const Category = () => {
   const [listGold, setListGold] = useState([]);
-  const [weight, setGoldWeight] = useState(0);
+  const [weight, setGoldWeight] = useState("");
   const [name, setGoldType] = useState("");
-  const [diamondOrigin, setDiamondOrigin] = useState();
+  const [diamondOrigin, setDiamondOrigin] = useState("");
   const [diamondCut, setDiamondCut] = useState("");
   const [diamondColor, setDiamondColor] = useState("");
-  const [diamondCaratWeight, setDiamondCaratWeight] = useState(0);
+  const [diamondCaratWeight, setDiamondCaratWeight] = useState("");
   const [diamondClarity, setDiamondClarity] = useState("");
   const { itemPurchase, addItemToPurchase } = useContext(RepurchaseContext);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [listOrigin, setListOrigin] = useState([]);
+  const [listCut, setListCut] = useState([]);
+  const [listColor, setListColor] = useState([]);
+  const [listClarity, setListClarity] = useState([]);
+
   const criteriaItem = {
     listDiamondCriteria: [],
     listGoldCriteria: [],
@@ -54,6 +63,7 @@ const Category = () => {
 
     let newInvoice = { type, data };
     fetch(
+      // Api post material
       "http://mahika.foundation:8080/swp/api/purchase-order/material-gem-price",
       {
         method: "POST",
@@ -75,16 +85,21 @@ const Category = () => {
         };
         newInvoice = { ...newInvoice, data };
         addItemToPurchase(newInvoice);
+        console.log(addItemToPurchase);
       })
       .catch((error) => console.log(error));
   };
   const handleGold = () => {
-    fetch("http://mahika.foundation:8080/swp/api/material", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      // Api get gold type
+      "http://mahika.foundation:8080/swp/api/material",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((dataGold) => setListGold(dataGold))
       .catch((error) => console.log(error));
@@ -98,8 +113,42 @@ const Category = () => {
     return price;
   }
 
+  const handleDiamond = () => {
+    fetch(
+      // Api get diamond criteria
+      "http://mahika.foundation:8080/swp/api/diamond-criteria",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const { clarity, color, cut, origin } = data;
+        setListClarity(clarity);
+        setListColor(color);
+        setListCut(cut);
+        setListOrigin(origin);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  function handleCalculateTotalPrice() {
+    const price = itemPurchase.reduce(
+      (acc, curr) => (acc += Number(curr.data.price)),
+      0
+    );
+    return price;
+  }
+
   useEffect(() => {
     handleGold();
+  }, []);
+
+  useEffect(() => {
+    handleDiamond();
   }, []);
 
   useEffect(() => {
@@ -130,17 +179,17 @@ const Category = () => {
               <p className={classes["head-frame-gold"]}>Vàng</p>
             </div>
             <div className={classes["gold-weight"]}>
-              <p>Khối lượng</p>
+              <p className={classes["selection-title"]}>Khối lượng</p>
               <input
                 className={classes["input-field"]}
                 placeholder="Nhập khối lượng vàng.."
-                type="number"
+                type="text"
                 value={weight}
                 onChange={(e) => setGoldWeight(e.target.value)}
               />
             </div>
             <div className={classes["gold-type"]}>
-              <p>Loại vàng</p>
+              <p className={classes["selection-title"]}>Loại vàng</p>
             </div>
             <DropDownGold
               listGold={listGold}
@@ -166,55 +215,46 @@ const Category = () => {
             <div className={classes.frame1}>
               <p className={classes["head-frame-diamond"]}>Kim cương</p>
             </div>
-            <hr className={classes.line} />
             <div className={classes.origin}>
-              <p>Nguồn gốc</p>
-              <input
-                className={classes["input-field"]}
-                placeholder="Nhập nguồn gốc.."
-                type="text"
-                value={diamondOrigin}
-                onChange={(e) => setDiamondOrigin(e.target.value)}
+              <p className={classes["selection-title"]}>Nguồn gốc</p>
+              <DropDownOrigin
+                listOrigin={listOrigin}
+                selectedValue={diamondOrigin}
+                onChange={(e) => setDiamondOrigin(e)}
               />
             </div>
             <div className={classes.cut}>
-              <p>Giác cắt</p>
-              <input
-                className={classes["input-field"]}
-                placeholder="Nhập giác cắt.."
-                type="text"
-                value={diamondCut}
-                onChange={(e) => setDiamondCut(e.target.value)}
+              <p className={classes["selection-title"]}>Giác cắt</p>
+              <DropDownCut
+                listCut={listCut}
+                selectedValue={diamondCut}
+                onChange={(e) => setDiamondCut(e)}
               />
             </div>
             <div className={classes["color-dmd"]}>
-              <p>Màu sắc</p>
-              <input
-                className={classes["input-field"]}
-                placeholder="Nhập màu sắc.."
-                type="text"
-                value={diamondColor}
-                onChange={(e) => setDiamondColor(e.target.value)}
+              <p className={classes["selection-title"]}>Màu sắc</p>
+              <DropDownColor
+                listColor={listColor}
+                selectedValue={diamondColor}
+                onChange={(e) => setDiamondColor(e)}
               />
             </div>
             <div className={classes["carat-weight"]}>
-              <p>Trọng lượng (carat)</p>
+              <p className={classes["selection-title"]}>Trọng lượng (carat)</p>
               <input
                 className={classes["input-field"]}
                 placeholder="Nhập trọng lượng carat.."
-                type="number"
+                type="text"
                 value={diamondCaratWeight}
                 onChange={(e) => setDiamondCaratWeight(e.target.value)}
               />
             </div>
             <div className={classes.clarity}>
-              <p>Độ tinh khiết</p>
-              <input
-                className={classes["input-field"]}
-                placeholder="Nhập độ trong suốt.."
-                type="text"
-                value={diamondClarity}
-                onChange={(e) => setDiamondClarity(e.target.value)}
+              <p className={classes["selection-title"]}>Độ tinh khiết</p>
+              <DropDownClarity
+                listClarity={listClarity}
+                selectedValue={diamondClarity}
+                onChange={(e) => setDiamondClarity(e)}
               />
             </div>
             <button
