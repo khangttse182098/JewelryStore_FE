@@ -1,27 +1,18 @@
-import classes from "./CashierHeader.module.css";
-import MahikaLogoImg from "/assets/img-logo.png";
+import MahikaLogoImg from "/assets/managerLogo.png";
 import MahikaLogoText from "/assets/text-logo.png";
 import Arrow from "/assets/arrow-down-icon.png";
 
 const CashierHeader = () => {
   return (
-    <div className={classes.header}>
-      <div className={classes.logo}>
-        <img
-          src={MahikaLogoImg}
-          alt="Mahika Logo"
-          className={classes["img-logo"]}
-        />
-        <img
-          src={MahikaLogoText}
-          alt="Mahika Logo"
-          className={classes["text-logo"]}
-        />
+    <div className="bg-white flex justify-between p-3">
+      <div className="flex">
+        <img src={MahikaLogoImg} alt="Mahika Logo" />
+        <img src={MahikaLogoText} alt="Mahika Logo" className="h-12 mt-3" />
       </div>
-      <div className={classes.name}>
-        <p>Pham Hoang Phuc</p>
+      <div className="flex items-center mr-10">
+        <p className="text-lg font-medium mr-5">Pham Hoang Phuc</p>
+        <img src={Arrow} alt="Arrow" className="size-5" />
       </div>
-      <img src={Arrow} alt="Arrow" className={classes["arrow-down-icon"]} />
     </div>
   );
 };

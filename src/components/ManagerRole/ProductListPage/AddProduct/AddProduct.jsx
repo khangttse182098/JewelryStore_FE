@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const [counterList, setCounterList] = useState([]);
@@ -14,7 +16,18 @@ const AddProduct = () => {
   const diamondControllerRef = useRef();
   const imageControllerRef = useRef();
   const categoryControllerRef = useRef();
+  const doneModalRef = useRef();
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
+
+  function handleOpen() {
+    doneModalRef.current.showModal();
+  }
+
+  function handleClose() {
+    doneModalRef.current.close();
+    navigate(-1);
+  }
 
   //---------------------------SubmitForm--------------------
   async function onSubmit(submitData) {
@@ -54,6 +67,7 @@ const AddProduct = () => {
         body: JSON.stringify(requestBody),
       });
       console.log(res);
+      handleOpen();
     } catch (error) {
       console.log(error);
     }
@@ -166,240 +180,243 @@ const AddProduct = () => {
   };
 
   return (
-    <form
-      className="grid grid-cols-2 gap-2 p-4"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      {/* Section Product */}
-      <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
-        <h2 className="font-semibold text-xl">Chi tiết sản phẩm</h2>
-        <hr className="w-full my-2" />
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label>Mã sản phẩm</label>
-            <input
-              className="w-full border rounded p-2"
-              {...register("productCode")}
-            />
-          </div>
-          <div>
-            <label>Loại vàng</label>
-            <select
-              className="w-full border rounded p-2"
-              {...register("materialId")}
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Chọn loại vàng
-              </option>
-              {goldList.map((type) => {
-                return (
-                  <option value={type.id} key={type.id}>
-                    {type.name}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div>
-            <label>Tên sản phẩm</label>
-            <input
-              className="w-full border rounded p-2"
-              {...register("productName")}
-            />
-          </div>
-          <div>
-            <label>Khối lượng vàng</label>
-            <input
-              className="w-full border rounded p-2"
-              type="number"
-              {...register("materialWeight")}
-            />
-          </div>
-          <div>
-            <label>Loại sản phẩm</label>
-            <select
-              className="w-full border rounded p-2"
-              {...register("productCategoryName")}
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Chọn loại sản phẩm
-              </option>
-              {categoryName.map((category) => {
-                return <option key={category}>{category}</option>;
-              })}
-            </select>
-          </div>
-          <div>
-            <label>Quầy số</label>
-            <select
-              className="w-full border rounded p-2"
-              {...register("counterId")}
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Chọn quầy
-              </option>
-              {counterList.map((counter) => {
-                return (
-                  <option key={counter.counterNo}>{counter.counterNo}</option>
-                );
-              })}
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* Section Image  */}
-      <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
-        <div className="flex justify-between">
-          <h2 className="text-xl font-semibold mb-4">Ảnh sản phẩm</h2>
-        </div>
-        <div className="flex flex-col items-center justify-center border-dashed border-2 border-gray-300 p-4 rounded">
-          <input
-            className="mt-4 cursor-pointer"
-            type="file"
-            name="upfile"
-            onChange={handleFileChange}
-          />
-        </div>
-        <div className="mt-4">
-          <label>Danh mục</label> <br />
-          <select
-            className="w-72 border rounded p-2"
-            {...register("subCategoryType")}
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Chọn danh mục
-            </option>
-            {imageType.map((type) => {
-              return (
-                <option key={type.productCategoryId}>
-                  {type.subCategoryType}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-      </div>
-
-      {/* Section Price  */}
-      <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
-        <h2 className="font-semibold text-xl">Thông tin giá</h2>
-        <hr className="w-full my-2" />
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label>Giá đá</label>
-            <input
-              className="w-full border rounded p-2"
-              {...register("gemCost")}
-            />
-          </div>
-          <div>
-            <label>Giá gia công</label>
-            <input
-              className="w-full border rounded p-2"
-              {...register("productionCost")}
-            />
-          </div>
-          <div>
-            <label>Giá nguyên liệu</label>
-            <input
-              className="w-full border rounded p-2"
-              {...register("materialCost")}
-            />
-          </div>
-          <div>
-            <label>Tỉ lệ áp giá</label>
-            <input
-              className="w-full border rounded p-2"
-              {...register("priceRate")}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Section Diamond */}
-      <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
-        <h2 className="font-semibold text-xl">Thông tin kim cương</h2>
-        <hr className="w-full my-2" />
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label>Tên kim cương</label>
-            <select
-              className="w-full border rounded p-2"
-              {...register("gemId")}
-              onChange={handleDiamondSelect}
-              defaultValue=""
-            >
-              <option value="" disabled>
-                Chọn tên kim cương
-              </option>
-              {diamondCriteria.map((diamond) => {
-                return (
-                  <option key={diamond.gemId} value={diamond.gemId}>
-                    {diamond.gemName}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div>
-            <label>Nguồn gốc</label>
-            <input
-              className="w-full border rounded p-2"
-              type="text"
-              value={selectedDiamond?.origin || ""}
-              readOnly
-            />
-          </div>
-          <div>
-            <label>Giác cắt</label>
-            <input
-              className="w-full border rounded p-2"
-              type="text"
-              value={selectedDiamond?.cut || ""}
-              readOnly
-            />
-          </div>
-          <div>
-            <label>Carat</label>
-            <input
-              className="w-full border rounded p-2"
-              type="text"
-              value={selectedDiamond?.caratWeight || ""}
-              readOnly
-            />
-          </div>
-          <div>
-            <label>Độ tinh khiết</label>
-            <input
-              className="w-full border rounded p-2"
-              type="text"
-              value={selectedDiamond?.clarity || ""}
-              readOnly
-            />
-          </div>
-          <div>
-            <label>Màu sắc</label>
-            <input
-              className="w-full border rounded p-2"
-              type="text"
-              value={selectedDiamond?.color || ""}
-              readOnly
-            />
-          </div>
-        </div>
-      </div>
-      <button
-        type="submit"
-        className="w-1/3 h-8 border rounded-md bg-[#0088FF] text-white font-semibold mx-96"
+    <>
+      <DoneModal ref={doneModalRef} handleClose={handleClose} />
+      <form
+        className="grid grid-cols-2 gap-2 p-4"
+        onSubmit={handleSubmit(onSubmit)}
       >
-        Lưu
-      </button>
-    </form>
+        {/* Section Product */}
+        <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
+          <h2 className="font-semibold text-xl">Chi tiết sản phẩm</h2>
+          <hr className="w-full my-2" />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label>Mã sản phẩm</label>
+              <input
+                className="w-full border rounded p-2"
+                {...register("productCode")}
+              />
+            </div>
+            <div>
+              <label>Loại vàng</label>
+              <select
+                className="w-full border rounded p-2"
+                {...register("materialId")}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Chọn loại vàng
+                </option>
+                {goldList.map((type) => {
+                  return (
+                    <option value={type.id} key={type.id}>
+                      {type.name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div>
+              <label>Tên sản phẩm</label>
+              <input
+                className="w-full border rounded p-2"
+                {...register("productName")}
+              />
+            </div>
+            <div>
+              <label>Khối lượng vàng</label>
+              <input
+                className="w-full border rounded p-2"
+                type="number"
+                {...register("materialWeight")}
+              />
+            </div>
+            <div>
+              <label>Loại sản phẩm</label>
+              <select
+                className="w-full border rounded p-2"
+                {...register("productCategoryName")}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Chọn loại sản phẩm
+                </option>
+                {categoryName.map((category) => {
+                  return <option key={category}>{category}</option>;
+                })}
+              </select>
+            </div>
+            <div>
+              <label>Quầy số</label>
+              <select
+                className="w-full border rounded p-2"
+                {...register("counterId")}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Chọn quầy
+                </option>
+                {counterList.map((counter) => {
+                  return (
+                    <option key={counter.counterNo}>{counter.counterNo}</option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Section Image  */}
+        <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
+          <div className="flex justify-between">
+            <h2 className="text-xl font-semibold mb-4">Ảnh sản phẩm</h2>
+          </div>
+          <div className="flex flex-col items-center justify-center border-dashed border-2 border-gray-300 p-4 rounded">
+            <input
+              className="mt-4 cursor-pointer"
+              type="file"
+              name="upfile"
+              onChange={handleFileChange}
+            />
+          </div>
+          <div className="mt-4">
+            <label>Danh mục</label> <br />
+            <select
+              className="w-72 border rounded p-2"
+              {...register("subCategoryType")}
+              defaultValue=""
+            >
+              <option value="" disabled>
+                Chọn danh mục
+              </option>
+              {imageType.map((type) => {
+                return (
+                  <option key={type.productCategoryId}>
+                    {type.subCategoryType}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
+
+        {/* Section Price  */}
+        <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
+          <h2 className="font-semibold text-xl">Thông tin giá</h2>
+          <hr className="w-full my-2" />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label>Giá đá</label>
+              <input
+                className="w-full border rounded p-2"
+                {...register("gemCost")}
+              />
+            </div>
+            <div>
+              <label>Giá gia công</label>
+              <input
+                className="w-full border rounded p-2"
+                {...register("productionCost")}
+              />
+            </div>
+            <div>
+              <label>Giá nguyên liệu</label>
+              <input
+                className="w-full border rounded p-2"
+                {...register("materialCost")}
+              />
+            </div>
+            <div>
+              <label>Tỉ lệ áp giá</label>
+              <input
+                className="w-full border rounded p-2"
+                {...register("priceRate")}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Section Diamond */}
+        <div className="bg-white shadow-md p-4 rounded-md col-span-2 md:col-span-1">
+          <h2 className="font-semibold text-xl">Thông tin kim cương</h2>
+          <hr className="w-full my-2" />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label>Tên kim cương</label>
+              <select
+                className="w-full border rounded p-2"
+                {...register("gemId")}
+                onChange={handleDiamondSelect}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  Chọn tên kim cương
+                </option>
+                {diamondCriteria.map((diamond) => {
+                  return (
+                    <option key={diamond.gemId} value={diamond.gemId}>
+                      {diamond.gemName}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div>
+              <label>Nguồn gốc</label>
+              <input
+                className="w-full border rounded p-2"
+                type="text"
+                value={selectedDiamond?.origin || ""}
+                readOnly
+              />
+            </div>
+            <div>
+              <label>Giác cắt</label>
+              <input
+                className="w-full border rounded p-2"
+                type="text"
+                value={selectedDiamond?.cut || ""}
+                readOnly
+              />
+            </div>
+            <div>
+              <label>Carat</label>
+              <input
+                className="w-full border rounded p-2"
+                type="text"
+                value={selectedDiamond?.caratWeight || ""}
+                readOnly
+              />
+            </div>
+            <div>
+              <label>Độ tinh khiết</label>
+              <input
+                className="w-full border rounded p-2"
+                type="text"
+                value={selectedDiamond?.clarity || ""}
+                readOnly
+              />
+            </div>
+            <div>
+              <label>Màu sắc</label>
+              <input
+                className="w-full border rounded p-2"
+                type="text"
+                value={selectedDiamond?.color || ""}
+                readOnly
+              />
+            </div>
+          </div>
+        </div>
+        <button
+          type="submit"
+          className="w-1/3 h-8 border rounded-md bg-[#0088FF] text-white font-semibold mx-96"
+        >
+          Lưu
+        </button>
+      </form>
+    </>
   );
 };
 

@@ -1,4 +1,3 @@
-import classes from "./AddStaffModal.module.css";
 import React, { forwardRef, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
@@ -36,13 +35,19 @@ const AddStaffModal = forwardRef(({ onClose }, ref) => {
       <DoneModal ref={doneModalRef} handleClose={handleClose} />
       <dialog
         ref={ref}
-        className=" w-2/5 absolute inset-y-44 inset-x-auto rounded drop-shadow-xl"
+        className="w-2/5 fixed rounded translate-x-3/4 translate-y-7 drop-shadow-xl"
       >
         <form
-          className="flex flex-col gap-10 h-full"
+          className="flex flex-col h-full"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <h3 className=" text-center mt-5 text-3xl font-semibold">
+          <p
+            className="text-3xl font-semibold text-end mr-10 mt-3 text-red-500 cursor-pointer"
+            onClick={onClose}
+          >
+            &times;
+          </p>
+          <h3 className="text-center mt-5 text-3xl font-semibold">
             Nhập thông tin nhân viên mới
           </h3>
           <div className="flex flex-col justify-center items-center  ">

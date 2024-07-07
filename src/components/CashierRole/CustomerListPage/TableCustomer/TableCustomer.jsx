@@ -16,7 +16,7 @@ const TableCustomer = () => {
 
   //----------------------Pagination---------------------
   const [currentPage, setCurrentPage] = useState(1);
-  const [customerPerPage, setCustomerPerPage] = useState(4);
+  const [customerPerPage, setCustomerPerPage] = useState(5);
 
   const lastCustomerIndex = currentPage * customerPerPage;
   const firstCustomerIndex = lastCustomerIndex - customerPerPage;
@@ -49,7 +49,7 @@ const TableCustomer = () => {
   };
 
   return (
-    <div className={classes.container}>
+    <div>
       <div className={classes.title}>
         <p>Danh sách khách hàng</p>
       </div>
