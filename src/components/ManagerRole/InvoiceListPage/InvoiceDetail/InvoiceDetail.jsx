@@ -297,14 +297,6 @@ const InvoiceDetail = ({ order }) => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center p-4 rounded-md col-span-2 md:col-span-1">
-            <button
-              className={classes["purchase-button"]}
-              onClick={handleFetchPurchase}
-            >
-              Thanh Toán
-            </button>
-          </div>
         </div>
       </SkeletonTheme>
     </>
