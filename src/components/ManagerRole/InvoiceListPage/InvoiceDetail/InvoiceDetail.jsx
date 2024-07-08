@@ -161,7 +161,7 @@ const InvoiceDetail = ({ order }) => {
                         >
                           <td className={classes["img-container"]}>
                             <img
-                              className={classes.img}
+                              className="w-28 h-20"
                               src={diamondImg}
                               alt="ring"
                             />
@@ -181,11 +181,7 @@ const InvoiceDetail = ({ order }) => {
                           onClick={() => handleClick(order, "material")}
                         >
                           <td className={classes["img-container"]}>
-                            <img
-                              className={classes.img}
-                              src={Gold}
-                              alt="ring"
-                            />
+                            <img className="w-28 h-20" src={Gold} alt="ring" />
                           </td>
                           <td>Vàng</td>
                           <td>{formatter.format(order.price)}</td>
