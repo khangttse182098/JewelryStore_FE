@@ -145,21 +145,23 @@ const TableGemInfor = () => {
                       <td className={classes.td}>{gem.cut}</td>
                       <td className={classes.td}>{gem.clarity}</td>
                       {gem.sellPrice === 0 ? (
-                        <button
-                          onClick={(event) => {
-                            navigate("/manageraddgemprice", {
-                              state: {
-                                gem: {
-                                  ...gem,
+                        <td className={classes.td}>
+                          <button
+                            onClick={(event) => {
+                              navigate("/manageraddgemprice", {
+                                state: {
+                                  gem: {
+                                    ...gem,
+                                  },
                                 },
-                              },
-                            }),
-                              event.stopPropagation();
-                          }}
-                          className="w-36 h-7 rounded-md bg-[#0088FF] text-white"
-                        >
-                          + Thêm giá
-                        </button>
+                              }),
+                                event.stopPropagation();
+                            }}
+                            className="w-36 h-10 rounded-md bg-[#0088FF] text-white font-semibold"
+                          >
+                            + Thêm giá
+                          </button>
+                        </td>
                       ) : (
                         <td className={classes.td}>
                           {gem.sellPrice === Number(gem.sellPrice)

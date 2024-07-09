@@ -82,7 +82,7 @@ const ManagerSidebar = ({ activePage }) => {
           <p>Giá vàng</p>
         </button>
         <button
-          className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
+          className={`flex items-center gap-2 h-16 w-72 mb-8 rounded-3xl ${
             activePage === "Thông tin kim cương" && classes.active
           }`}
           onClick={() => navigate("/managergeminforlist")}
