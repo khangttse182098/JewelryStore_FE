@@ -46,7 +46,7 @@ const ManagerSidebar = ({ activePage }) => {
           <p>Sản phẩm</p>
         </button>
         <button
-          className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
+          className={`flex items-center gap-2 h-16 w-52 mb-8 rounded-3xl ${
             activePage === "Khách hàng" && classes.active
           }`}
           onClick={() => navigate("/managercustomerlist")}
@@ -82,7 +82,7 @@ const ManagerSidebar = ({ activePage }) => {
           <p>Giá vàng</p>
         </button>
         <button
-          className={`flex items-center gap-2 h-16 w-72 mb-8 rounded-3xl ${
+          className={`flex items-center gap-2 h-16 w-60 mb-8 rounded-3xl ${
             activePage === "Thông tin kim cương" && classes.active
           }`}
           onClick={() => navigate("/managergeminforlist")}
@@ -91,7 +91,7 @@ const ManagerSidebar = ({ activePage }) => {
           <p>Danh sách kim cương</p>
         </button>
         <button
-          className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
+          className={`flex items-center gap-2 h-16 w-60 mb-8 rounded-3xl ${
             activePage === "Giá kim cương" && classes.active
           }`}
           onClick={() => navigate("/managergemlist")}
