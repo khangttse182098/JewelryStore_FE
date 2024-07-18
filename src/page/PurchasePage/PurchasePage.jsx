@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import Header from "../../components/SellerRole/UtilsComponent/Header/Header";
-import classes from "./PurchasePage.module.css";
-import PurchaseOrderDetail from "../../components/SellerRole/PurchasePage/PurchaseOrderDetail/PurchaseOrderDetail";
-import InvoiceProductList from "../../components/SellerRole/PurchasePage/InvoiceProductList/InvoiceProductList";
+import classes from "./seller/purchasepage.module.css";
+import PurchaseOrderDetail from "../../components/SellerRole/seller/purchasepage/PurchaseOrderDetail/PurchaseOrderDetail";
+import InvoiceProductList from "../../components/SellerRole/seller/purchasepage/InvoiceProductList/InvoiceProductList";
 import { useState, useEffect, useContext, useRef } from "react";
 import { ProductSellListContext } from "../../context/ProductSellListContext";
-import SearchInvoice from "../../components/SellerRole/PurchasePage/SearchInvoice/SearchInvoice";
+import SearchInvoice from "../../components/SellerRole/seller/purchasepage/SearchInvoice/SearchInvoice";
 import { ProductSellInvoiceContext } from "../../context/ProductSellInvoiceContext";
 import { useNavigate } from "react-router-dom";
 import { LoggedInUserContext } from "../../context/LoggedInUserContext";
@@ -59,7 +59,7 @@ const PurchasePage = () => {
   const navigate = useNavigate();
 
   function handleClick() {
-    navigate("/repurchasepage");
+    navigate("/seller/repurchasepage");
   }
 
   useEffect(() => {

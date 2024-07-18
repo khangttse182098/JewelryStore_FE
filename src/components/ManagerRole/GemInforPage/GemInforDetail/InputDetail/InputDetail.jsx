@@ -91,7 +91,7 @@ const InputDetail = ({ gem }) => {
         </div>
         <div className="text-center">
           <button
-            onClick={() => navigate("/managergeminforlist")}
+            onClick={() => navigate("/manager/gem/infor/list")}
             className="w-64 h-14 border rounded-md bg-[#0088FF] text-white font-semibold text-lg mt-5"
           >
             Quay lại

@@ -1,6 +1,6 @@
 import CashierHeader from "../components/CashierRole/UtilsComponent/CashierHeader/CashierHeader";
 import CashierSidebar from "../components/CashierRole/UtilsComponent/CashierSidebar/CashierSidebar";
-import TableCustomer from "../components/CashierRole/CustomerListPage/TableCustomer/TableCustomer";
+import TableCustomer from "../components/CashierRole/cashier/customer/listPage/TableCustomer/TableCustomer";
 import { useContext } from "react";
 import { LoggedInUserContext } from "../context/LoggedInUserContext";
 import NotAllowed from "../components/UtilComponent/NotAllowed/NotAllowed";

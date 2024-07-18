@@ -9,16 +9,16 @@ const SidebarFunction = ({ icon, title }) => {
   const { setUserId, setUserRole } = useContext(LoggedInUserContext);
   function handleClick() {
     if (title === "Dịch vụ mua lại") {
-      navigate("/purchasepage");
+      navigate("/seller/purchasepage");
     } else if (title === "Đăng xuất") {
       localStorage.clear();
       setUserId(null);
       setUserRole(null);
-      navigate("/");
+      navigate("/login");
     } else if (title === "Dịch vụ bán") {
-      navigate("/sellpage");
+      navigate("/seller/sellpage");
     } else if (title === "Bảng sản phẩm") {
-      navigate("/statuslist");
+      navigate("/seller/status/list");
     }
   }
 

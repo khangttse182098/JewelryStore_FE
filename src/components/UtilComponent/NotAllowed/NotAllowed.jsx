@@ -14,7 +14,7 @@ const NotAllowed = () => {
         <div className={classes["lower-content"]}>
           <button
             className={classes["close-modal"]}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/login")}
           >
             Login
           </button>

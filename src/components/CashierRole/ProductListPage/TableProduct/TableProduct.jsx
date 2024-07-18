@@ -37,7 +37,7 @@ const TableProduct = () => {
 
   //-----------------------------HandleNavigate---------------------
   function handleNavigate(product) {
-    navigate("/cashierproductdetail", { state: { product } });
+    navigate("/cashier/product/detail", { state: { product } });
   }
 
   //----------------------------Pagination---------------------------

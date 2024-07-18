@@ -257,7 +257,7 @@ const AddGem = () => {
               Lưu
             </button>
             <button
-              onClick={(e) => navigate("/managergeminforlist")}
+              onClick={(e) => navigate("/manager/gem/infor/list")}
               className="w-1/3 h-8 border rounded-md bg-[#0088FF] text-white font-semibold mx-64"
             >
               Quay lại

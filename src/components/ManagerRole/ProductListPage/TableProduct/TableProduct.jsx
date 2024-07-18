@@ -56,11 +56,11 @@ const TableProduct = () => {
 
   //-----------------------------HandleNavigate---------------------
   function handleNavigate(list) {
-    navigate("/managerproductdetail", { state: { list } });
+    navigate("/manager/product/detail", { state: { list } });
   }
 
   function handleAdd() {
-    navigate("/manageraddproduct");
+    navigate("/manager/product/add");
   }
 
   //----------------------------Pagination---------------------------
@@ -143,7 +143,7 @@ const TableProduct = () => {
               placeholder="Tìm kiếm sản phẩm"
               onChange={handleSearch}
             />
-            <Link to="/manageraddproduct">
+            <Link to="/manager/product/add">
               <button className="w-32 h-9 rounded-md bg-[#0088FF] text-white">
                 + Thêm mới
               </button>

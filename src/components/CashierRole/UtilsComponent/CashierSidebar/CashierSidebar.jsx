@@ -17,7 +17,7 @@ const CashierSidebar = ({ activePage }) => {
           className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
             activePage === "Danh sách hóa đơn" && classes.active
           }`}
-          onClick={() => navigate("/invoicelist")}
+          onClick={() => navigate("/cashier/invoice/list")}
         >
           <img src={InvoiceList} alt="Staff icon" className="pl-4" />
           <p>Danh sách hóa đơn</p>
@@ -26,7 +26,7 @@ const CashierSidebar = ({ activePage }) => {
           className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
             activePage === "Sản phẩm" && classes.active
           }`}
-          onClick={() => navigate("/cashierproductlist")}
+          onClick={() => navigate("/cashier/product/list")}
         >
           <img src={Product} alt="Invoice icon" className="pl-4" />
           <p>Sản phẩm</p>
@@ -35,7 +35,7 @@ const CashierSidebar = ({ activePage }) => {
           className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
             activePage === "Khách hàng" && classes.active
           }`}
-          onClick={() => navigate("/customerlist")}
+          onClick={() => navigate("/cashier/customer/list")}
         >
           <img src={Customer} alt="Product icon" className="pl-4" />
           <p>Khách hàng</p>

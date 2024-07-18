@@ -78,7 +78,7 @@ const TableStaff = () => {
   }
 
   function handleNavigate(staff) {
-    navigate("/managerstaffdetail", { state: { staff } });
+    navigate("/manager/staff/detail", { state: { staff } });
   }
 
   const handleCheckbox = (event) => {

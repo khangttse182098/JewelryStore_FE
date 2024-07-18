@@ -73,7 +73,7 @@ const TableProduct = () => {
   const currentOrder = filterOrder.slice(firstOrderIndex, lastOrderIndex);
 
   function handleNavigate(order) {
-    navigate("/managerinvoicedetail", { state: { order } });
+    navigate("/manager/invoice/detail", { state: { order } });
   }
 
   let skeletonRowList = [];

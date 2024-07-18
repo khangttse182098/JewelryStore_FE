@@ -89,7 +89,7 @@ const TableInvoice = () => {
   };
   //----------------------------------------------------------------------
   function handleNavigate(list) {
-    navigate("/invoicedetail", { state: { list } });
+    navigate("/cashier/invoice/detail", { state: { list } });
   }
 
   let skeletonRowList = [];

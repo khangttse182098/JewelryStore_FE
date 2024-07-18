@@ -20,7 +20,7 @@ const DropDownAccount = () => {
       localStorage.clear();
       setUserId(null);
       setUserRole(null);
-      navigate("/");
+      navigate("/login");
     }
   }
 

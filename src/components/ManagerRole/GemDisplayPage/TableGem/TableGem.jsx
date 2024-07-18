@@ -42,7 +42,7 @@ const TableGem = () => {
 
   //-----------------------------HandleNavigate---------------------
   function handleNavigate(gem) {
-    navigate("/managergemhistory", { state: { gem } });
+    navigate("/manager/gem/history", { state: { gem } });
   }
   //----------------------------Search-------------------------------
   const handleSearch = (event) => {

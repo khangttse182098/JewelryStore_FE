@@ -61,7 +61,7 @@ const TableCustomer = () => {
   }, [searchField, customerList]);
 
   function handleNavigate(customer) {
-    navigate("/managercustomerdetail", { state: { customer } });
+    navigate("/manager/customer/detail", { state: { customer } });
   }
 
   let skeletonRowList = [];

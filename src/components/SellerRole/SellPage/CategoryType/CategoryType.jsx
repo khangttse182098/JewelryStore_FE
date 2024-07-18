@@ -3,7 +3,7 @@ import classes from "./CategoryType.module.css";
 import ButtonType from "../ButtonType/ButtonType";
 import SearchProduct from "../SearchProduct/SearchProduct";
 import DropDownCounter from "../DropDownCounter/DropDownCounter";
-import InvoiceList from "../InvoiceList/InvoiceList";
+import InvoiceList from "../cashier/invoice/list/cashier/invoice/list";
 import InformationBar from "../InformationBar/InformationBar";
 import InvoiceSellPurchase from "../InvoiceSellPurchase/InvoiceSellPurchase";
 import { useEffect, useState, useContext, useRef } from "react";

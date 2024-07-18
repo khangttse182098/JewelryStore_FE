@@ -61,7 +61,7 @@ const TableDiscount = () => {
   }, []);
 
   const handleClick = (discount) => {
-    navigate("/managerdiscountdetail", { state: { discount } });
+    navigate("/manager/discount/detail", { state: { discount } });
   };
 
   const handleFilter = (filterStatus) => {

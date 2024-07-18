@@ -210,7 +210,7 @@ const TableMaterial = () => {
                   return (
                     <tr
                       onClick={() =>
-                        navigate("/managermaterialhistory", {
+                        navigate("/manager/material/history", {
                           state: { material },
                         })
                       }

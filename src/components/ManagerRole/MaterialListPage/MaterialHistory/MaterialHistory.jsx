@@ -124,7 +124,7 @@ const MaterialHistory = ({ material }) => {
           <div className="text-right mr-28">
             <button
               onClick={() =>
-                navigate("/managermaterialdetail", {
+                navigate("/manager/material/detail", {
                   state: {
                     material: { ...materialHistory[0], ["id"]: material.id },
                   },

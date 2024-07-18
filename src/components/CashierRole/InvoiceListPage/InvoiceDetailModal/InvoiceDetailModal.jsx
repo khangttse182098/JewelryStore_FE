@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import classes from "./InvoiceDetailModal.module.css";
+import classes from "./cashier/invoice/detailModal.module.css";
 import { formatter } from "../../../../util/formatter";
 import diamondImg from "/assets/diamon.png";
 import Gold from "/assets/Gold.png";

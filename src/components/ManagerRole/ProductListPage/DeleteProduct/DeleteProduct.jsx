@@ -25,7 +25,7 @@ const DeleteProduct = forwardRef(function DeleteProduct(
     })
       .then((res) => {
         handleOpenDoneModal();
-        navigate("/managerproductlist");
+        navigate("/manager/product/list");
       })
       .catch((error) => console.log(error));
   };
