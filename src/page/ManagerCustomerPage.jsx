@@ -1,6 +1,6 @@
 import ManagerHeader from "../components/ManagerRole/UtilsComponent/ManagerHeader/ManagerHeader";
 import ManagerSidebar from "../components/ManagerRole/UtilsComponent/ManagerSidebar/ManagerSidebar";
-import TableCustomer from "../components/ManagerRole/cashier/customer/listPage/TableCustomer/TableCustomer";
+import TableCustomer from "../components/ManagerRole/CustomerListPage/TableCustomer/TableCustomer";
 import { useContext } from "react";
 import { LoggedInUserContext } from "../context/LoggedInUserContext";
 import NotAllowed from "../components/UtilComponent/NotAllowed/NotAllowed";

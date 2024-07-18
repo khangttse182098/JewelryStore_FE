@@ -1,6 +1,6 @@
 import ManagerHeader from "../components/ManagerRole/UtilsComponent/ManagerHeader/ManagerHeader";
 import ManagerSidebar from "../components/ManagerRole/UtilsComponent/ManagerSidebar/ManagerSidebar";
-import CustomerDetail from "../components/ManagerRole/cashier/customer/listPage/CustomerDetail/CustomerDetail";
+import CustomerDetail from "../components/ManagerRole/CustomerListPage/CustomerDetail/CustomerDetail";
 import { useContext } from "react";
 import { LoggedInUserContext } from "../context/LoggedInUserContext";
 

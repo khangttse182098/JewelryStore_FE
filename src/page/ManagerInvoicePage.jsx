@@ -1,6 +1,6 @@
 import ManagerHeader from "../components/ManagerRole/UtilsComponent/ManagerHeader/ManagerHeader";
 import ManagerSidebar from "../components/ManagerRole/UtilsComponent/ManagerSidebar/ManagerSidebar";
-import TableInvoice from "../components/ManagerRole/cashier/invoice/listPage/TableInvoice/TableInvoice";
+import TableInvoice from "../components/ManagerRole/InvoiceListPage/TableInvoice/TableInvoice";
 import { useContext } from "react";
 import { LoggedInUserContext } from "../context/LoggedInUserContext";
 import NotAllowed from "../components/UtilComponent/NotAllowed/NotAllowed";

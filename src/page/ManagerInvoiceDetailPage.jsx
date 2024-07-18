@@ -1,6 +1,6 @@
 import ManagerHeader from "../components/ManagerRole/UtilsComponent/ManagerHeader/ManagerHeader";
 import ManagerSidebar from "../components/ManagerRole/UtilsComponent/ManagerSidebar/ManagerSidebar";
-import InvoiceDetail from "../components/ManagerRole/cashier/invoice/listPage/cashier/invoice/detail/cashier/invoice/detail";
+import InvoiceDetail from "../components/ManagerRole/InvoiceListPage/InvoiceDetail/InvoiceDetail";
 import { useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { LoggedInUserContext } from "../context/LoggedInUserContext";

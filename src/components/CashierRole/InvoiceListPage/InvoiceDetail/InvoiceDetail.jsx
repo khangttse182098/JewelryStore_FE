@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState } from "react";
-import classes from "./cashier/invoice/detail.module.css";
+import classes from "./InvoiceDetail.module.css";
 import PenImg from "/assets/pen.png";
 import { formatter } from "../../../../util/formatter";
 import diamondImg from "/assets/diamon.png";
 import Gold from "/assets/Gold.png";
-import InvoiceDetailModal from "../cashier/invoice/detailModal/cashier/invoice/detailModal";
+import InvoiceDetailModal from "../InvoiceDetailModal/InvoiceDetailModal";
 import ImageLoader from "../../../../util/ImageLoader";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";

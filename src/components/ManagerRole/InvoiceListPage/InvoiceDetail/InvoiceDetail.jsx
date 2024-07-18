@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import classes from "./cashier/invoice/detail.module.css";
+import classes from "./InvoiceDetail.module.css";
 import PenImg from "/assets/pen.png";
 import { formatter } from "../../../../util/formatter";
 import diamondImg from "/assets/diamon.png";
@@ -7,8 +7,8 @@ import Gold from "/assets/Gold.png";
 import ImageLoader from "../../../../util/ImageLoader";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
-import InvoiceDetailModal from "../cashier/invoice/detailModal/cashier/invoice/detailModal";
-import CustomerModal from "../../../CashierRole/cashier/invoice/listPage/CustomerModal/CustomerModal";
+import InvoiceDetailModal from "../InvoiceDetailModal/InvoiceDetailModal";
+import CustomerModal from "../../../CashierRole/InvoiceListPage/CustomerModal/CustomerModal";
 
 const InvoiceDetail = ({ order }) => {
   console.log(order);

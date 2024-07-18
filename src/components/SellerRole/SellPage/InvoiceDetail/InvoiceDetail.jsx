@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { forwardRef, useState } from "react";
-import classes from "./cashier/invoice/detail.module.css";
+import classes from "./InvoiceDetail.module.css";
 import { createPortal } from "react-dom";
 import { formatter } from "../../../../util/formatter";
 import ImageLoader from "../../../../util/ImageLoader";

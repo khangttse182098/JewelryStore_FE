@@ -4,7 +4,7 @@ import { useState, useContext, useRef } from "react";
 import { ProductPurchaseContext } from "../../../../context/ProductPurchaseContext";
 import classes from "./Invoice.module.css";
 import { ProductPurchaseListContext } from "../../../../context/ProductPurchaseListContext";
-import InvoiceDetail from "../cashier/invoice/detail/cashier/invoice/detail";
+import InvoiceDetail from "../InvoiceDetail/InvoiceDetail";
 import { formatter } from "../../../../util/formatter";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
