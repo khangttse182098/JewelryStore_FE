@@ -4,9 +4,10 @@ body {
 
 .title {
   font-size: xx-large;
-  font-weight: normal;
+  font-weight: 500;
   background-color: #efeded;
-  padding-bottom: 10px;
+  padding-bottom: 28px;
+  padding-top: 28px;
 }
 
 .table-container {
@@ -42,8 +43,8 @@ body {
 }
 
 .search-container {
-  margin-top: 19px;
-  margin-bottom: 28px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   margin-left: 42.5px;
 }
 
@@ -139,7 +140,7 @@ body {
 
 .status-success {
   padding: 5px;
-  width: 153px;
+  width: 160px;
   margin: 20px;
   background-color: #f3fcf9;
   outline-color: #9fedcf;

@@ -39,7 +39,15 @@ const TableInvoice = () => {
 
   useEffect(() => {
     const newFilterInvoice = invoiceList.filter((invoice) => {
-      return invoice.invoiceCode.toLowerCase().includes(searchField);
+      return (
+        invoice.invoiceCode.toLowerCase().includes(searchField) ||
+        invoice.createdDate.toLowerCase().includes(searchField) ||
+        invoice.customerName.toLowerCase().includes(searchField) ||
+        invoice.invoiceType.toLowerCase().includes(searchField) ||
+        invoice.staffName.toLowerCase().includes(searchField) ||
+        invoice.totalPrice.toString().toLowerCase().includes(searchField) ||
+        invoice.status.toLowerCase().includes(searchField)
+      );
     });
     setFilterInvoice(newFilterInvoice);
   }, [searchField, invoiceList]);
@@ -105,7 +113,7 @@ const TableInvoice = () => {
 
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
-      <div className="py-10">
+      <div>
         <div className={classes.title}>
           <p>Danh sách hóa đơn</p>
         </div>
@@ -143,9 +151,9 @@ const TableInvoice = () => {
           <div className={classes["search-container"]}>
             <input
               onChange={handleSearch}
-              className={classes.search}
+              className="h-9 w-96 rounded-md border border-[#dfd8d8] outline-none pl-11"
               type="search"
-              placeholder="Tìm kiếm theo mã hóa đơn"
+              placeholder="Tìm kiếm sản phẩm"
             />
           </div>
           <table className={classes.table}>

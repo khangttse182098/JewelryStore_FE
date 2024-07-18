@@ -20,7 +20,7 @@ const CashierSidebar = ({ activePage }) => {
           onClick={() => navigate("/cashier/invoice/list")}
         >
           <img src={InvoiceList} alt="Staff icon" className="pl-4" />
-          <p>Danh sách hóa đơn</p>
+          <p>Hóa đơn</p>
         </button>
         <button
           className={`flex items-center gap-2 h-16 w-3/4 mb-8 rounded-3xl ${
