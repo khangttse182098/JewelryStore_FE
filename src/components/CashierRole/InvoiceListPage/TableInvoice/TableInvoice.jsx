@@ -8,7 +8,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const TableInvoice = () => {
   const [invoiceList, setInvoiceList] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleInvoice = () => {
@@ -19,8 +19,12 @@ const TableInvoice = () => {
       },
     })
       .then((res) => res.json())
-      .then((dataInvoice) => setInvoiceList(dataInvoice))
-      .catch((error) => console.log(error));
+      .then((dataInvoice) => {
+        setInvoiceList(dataInvoice), setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error), setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -173,45 +177,56 @@ const TableInvoice = () => {
               <th className={classes.th}>Thành tiền</th>
               <th className={classes.th}>Trạng thái thanh toán</th>
             </tr>
-            {!currentInvoice.length
-              ? skeletonRowList
-              : currentInvoice.map((list) => {
-                  return (
-                    <tr
-                      className={`${classes.tr} ${
-                        list?.isChecked ? classes.select : ""
-                      }`}
-                      key={list.invoiceCode}
-                      onClick={() => {
-                        handleNavigate(list);
-                      }}
-                    >
-                      <td className={classes.td}></td>
-                      <td className={classes.td}>{list.invoiceCode}</td>
-                      <td className={classes.td}>{list.createdDate}</td>
-                      <td className={classes.td}>{list.customerName}</td>
-                      <td className={classes.td}>{list.invoiceType}</td>
-                      <td className={classes.td}>{list.staffName}</td>
-                      <td className={classes.td}>
-                        {formatter.format(list.totalPrice)}
-                      </td>
-                      <td className={classes.td}>
-                        <p
-                          className={
-                            list.status === "Chưa thanh toán"
-                              ? classes["status-inProgress"]
-                              : list.status === "Đã thanh toán"
-                              ? classes["status-success"]
-                              : classes["status-received-delivered"]
-                          }
-                          style={{ marginLeft: "70px" }}
-                        >
-                          {list.status}
-                        </p>
-                      </td>
-                    </tr>
-                  );
-                })}
+            {isLoading ? (
+              skeletonRowList
+            ) : !currentInvoice.length ? (
+              <tr>
+                <td
+                  colSpan="7"
+                  className="font-medium text-red-500 text-center h-32"
+                >
+                  Không tìm thấy kết quả cho "{searchField}"
+                </td>
+              </tr>
+            ) : (
+              currentInvoice.map((list) => {
+                return (
+                  <tr
+                    className={`${classes.tr} ${
+                      list?.isChecked ? classes.select : ""
+                    }`}
+                    key={list.invoiceCode}
+                    onClick={() => {
+                      handleNavigate(list);
+                    }}
+                  >
+                    <td className={classes.td}></td>
+                    <td className={classes.td}>{list.invoiceCode}</td>
+                    <td className={classes.td}>{list.createdDate}</td>
+                    <td className={classes.td}>{list.customerName}</td>
+                    <td className={classes.td}>{list.invoiceType}</td>
+                    <td className={classes.td}>{list.staffName}</td>
+                    <td className={classes.td}>
+                      {formatter.format(list.totalPrice)}
+                    </td>
+                    <td className={classes.td}>
+                      <p
+                        className={
+                          list.status === "Chưa thanh toán"
+                            ? classes["status-inProgress"]
+                            : list.status === "Đã thanh toán"
+                            ? classes["status-success"]
+                            : classes["status-received-delivered"]
+                        }
+                        style={{ marginLeft: "70px" }}
+                      >
+                        {list.status}
+                      </p>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
           </table>
           <Pagination
             totalInvoice={invoiceList.length}

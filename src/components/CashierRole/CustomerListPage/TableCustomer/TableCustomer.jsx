@@ -9,7 +9,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 const TableCustomer = () => {
   const [searchField, setSearchField] = useState("");
   const [customerList, setCustomerList] = useState([]);
-  console.log(customerList);
+  const [isLoading, setIsLoading] = useState(true);
   const [filterCustomer, setFilterCustomer] = useState([...customerList]);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [status, setStatus] = useState("All");
@@ -32,6 +32,7 @@ const TableCustomer = () => {
   //------------------------------------------------------
 
   const handleInvoice = () => {
+    setIsLoading(true); // Set loading to true before fetching data
     fetch(`http://mahika.foundation:8080/swp/api/customer/list`, {
       method: "GET",
       headers: {
@@ -39,9 +40,16 @@ const TableCustomer = () => {
       },
     })
       .then((res) => res.json())
-      .then((dataInvoice) => setCustomerList(dataInvoice))
-      .catch((error) => console.log(error));
+      .then((dataInvoice) => {
+        setCustomerList(dataInvoice);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
   };
+
   useEffect(() => {
     handleInvoice();
   }, []);
@@ -113,21 +121,32 @@ const TableCustomer = () => {
               </tr>
             </thead>
             <tbody>
-              {!currentCustomer.length
-                ? skeletonRowList
-                : currentCustomer.map((list) => {
-                    return (
-                      <tr className={classes.tr} key={list.id}>
-                        <td className={classes.td}>{list.fullName}</td>
-                        <td className={classes.td}>{list.phoneNumber}</td>
-                        <td className={classes.td}>{list.address}</td>
-                        <td className={classes.td}>{list.quantityOrder}</td>
-                        <td className={classes.td}>
-                          {formatter.format(list.expense)}
-                        </td>
-                      </tr>
-                    );
-                  })}
+              {isLoading ? (
+                skeletonRowList
+              ) : !currentCustomer.length ? (
+                <tr>
+                  <td
+                    colSpan="5"
+                    className="font-medium text-red-500 text-center h-32"
+                  >
+                    Không tìm thấy kết quả cho "{searchField}"
+                  </td>
+                </tr>
+              ) : (
+                currentCustomer.map((list) => {
+                  return (
+                    <tr className={classes.tr} key={list.id}>
+                      <td className={classes.td}>{list.fullName}</td>
+                      <td className={classes.td}>{list.phoneNumber}</td>
+                      <td className={classes.td}>{list.address}</td>
+                      <td className={classes.td}>{list.quantityOrder}</td>
+                      <td className={classes.td}>
+                        {formatter.format(list.expense)}
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
           <Pagination
