@@ -84,7 +84,9 @@ const CategoryType = () => {
       try {
         const response = await fetch(
           "http://mahika.foundation:8080/swp/api/counter",
-          { signal }
+          {
+            signal,
+          }
         );
         const counterData = await response.json();
         setListCounter(counterData);

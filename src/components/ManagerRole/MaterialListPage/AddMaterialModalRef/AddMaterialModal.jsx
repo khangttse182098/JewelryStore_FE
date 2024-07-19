@@ -77,9 +77,7 @@ const AddMaterialModal = forwardRef(({ onClose }, ref) => {
           >
             &times;
           </p>
-          <h1 className="text-center text-xl font-medium">
-            Thêm loại vàng
-          </h1>
+          <h1 className="text-center text-xl font-medium">Thêm loại vàng</h1>
           <div className="flex grow flex-col ml-16 mr-16 justify-around ">
             <div className={classes["input-container"]}>
               <label className={classes.label}>Tên loại vàng</label>

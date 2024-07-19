@@ -37,7 +37,9 @@ const TableProduct = () => {
       try {
         const response = await fetch(
           "http://mahika.foundation:8080/swp/api/order",
-          { signal }
+          {
+            signal,
+          }
         );
         const data = await response.json();
         setOrderList(data);

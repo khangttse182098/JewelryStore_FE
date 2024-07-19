@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 const ManagerSidebar = ({ activePage }) => {
   const navigate = useNavigate();
   return (
-    <div className="w-75 h-full bg-sidebar-blue">
+    <div className="w-75 h-[142.857%] bg-sidebar-blue">
       <div className="p-8 py-8">
         <p className="font-semibold text-2xl text-white">Trang quản lý</p>
       </div>
