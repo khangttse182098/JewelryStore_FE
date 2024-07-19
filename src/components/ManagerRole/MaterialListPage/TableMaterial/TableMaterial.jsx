@@ -10,7 +10,6 @@ import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 const TableMaterial = () => {
   const addMaterialModalRef = useRef();
   const doneModelRef = useRef();
-  const [select, setSelect] = useState(false);
   const [materialList, setMaterialList] = useState([]);
   const [searchField, setSearchField] = useState("");
   const [filterMaterialList, setFilterMaterialList] = useState([]);
@@ -22,20 +21,6 @@ const TableMaterial = () => {
   const handleSearch = (event) => {
     const searchFieldString = event.target.value.toLowerCase();
     setSearchField(searchFieldString);
-  };
-
-  const handleDelete = () => {
-    // fetch("http://mahika.foundation:8080/swp/api/product", {
-    //   method: "DELETE",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(deleteCode),
-    // })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((error) => console.log(error));
   };
 
   useEffect(() => {
@@ -93,32 +78,6 @@ const TableMaterial = () => {
     doneModelRef.current.close();
   }
 
-  const handleCheckbox = (event) => {
-    const { name, checked } = event.target;
-    if (name === "allSelect") {
-      setSelect(checked);
-      const tempProduct = materialList.map((material) => {
-        return { ...material, isChecked: checked };
-      });
-      setMaterialList(tempProduct);
-      setFilterMaterialList(tempProduct);
-    } else {
-      const tempProduct = materialList.map((material) => {
-        return material.goldName === name
-          ? { ...material, isChecked: checked }
-          : material;
-      });
-      setMaterialList(tempProduct);
-      setFilterMaterialList(
-        tempProduct.filter(
-          (material) =>
-            material.goldName.toLowerCase().includes(searchField) ||
-            material.effectDate.includes(searchField)
-        )
-      );
-    }
-  };
-
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
       <DoneModal ref={doneModelRef} handleClose={handleClose} />
@@ -153,44 +112,11 @@ const TableMaterial = () => {
           </div>
           <table className="group w-full border-collapse">
             <thead>
-              <tr className={classes.tr} onChange={handleCheckbox}>
-                <th className={`${classes["table-header"]} ${classes.th}`}>
-                  <input
-                    type="checkbox"
-                    name="allSelect"
-                    onChange={handleCheckbox}
-                    checked={select}
-                  />
-                </th>
-                {select && (
-                  <>
-                    <th colSpan="6" className={classes.th}>
-                      <div className="flex">
-                        <p className="font-normal pr-2">
-                          Đã chọn <b>tất cả</b> loại vàng trên trang này
-                        </p>
-                        <select
-                          onClick={handleDelete}
-                          defaultValue=""
-                          className="border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none"
-                        >
-                          <option value="" disabled>
-                            Chọn thao tác
-                          </option>
-                          <option onClick={handleDelete}>Xóa loại vàng</option>
-                        </select>
-                      </div>
-                    </th>
-                  </>
-                )}
-                {!select && (
-                  <>
-                    <th className={classes.th}>Tên loại vàng</th>
-                    <th className={classes.th}>Giá mua</th>
-                    <th className={classes.th}>Giá bán</th>
-                    <th className={classes.th}>Ngày hiệu lực</th>
-                  </>
-                )}
+              <tr className={classes.tr}>
+                <th className={classes.th}>Tên loại vàng</th>
+                <th className={classes.th}>Giá mua</th>
+                <th className={classes.th}>Giá bán</th>
+                <th className={classes.th}>Ngày hiệu lực</th>
               </tr>
             </thead>
             <tbody>
@@ -217,15 +143,6 @@ const TableMaterial = () => {
                       className={`${classes.tr}`}
                       key={material.goldName}
                     >
-                      <td className={classes.td}>
-                        <input
-                          type="checkbox"
-                          name={material.goldName}
-                          onChange={handleCheckbox}
-                          checked={material?.isChecked || false}
-                          onClick={(event) => event.stopPropagation()}
-                        />
-                      </td>
                       <td className={classes.td}>{material.goldName}</td>
                       <td className={classes.td}>
                         {formatter.format(material.buyPrice)}
