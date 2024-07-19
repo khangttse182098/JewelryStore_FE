@@ -164,11 +164,6 @@ const TableInvoice = () => {
                   alt="Setting Icon"
                   className={`${classes.settingIcon} ${classes.img}`}
                 />
-                <input
-                  type="checkbox"
-                  onChange={handleCheckbox}
-                  name="allSelect"
-                />
               </th>
               <th className={classes.th}>Mã hóa đơn</th>
               <th className={classes.th}>Ngày tạo</th>
@@ -191,14 +186,7 @@ const TableInvoice = () => {
                         handleNavigate(list);
                       }}
                     >
-                      <td className={`${classes.checkbox} ${classes.td}`}>
-                        <input
-                          type="checkbox"
-                          name={list.invoiceCode}
-                          onChange={handleCheckbox}
-                          checked={list?.isChecked || false}
-                        />
-                      </td>
+                      <td className={classes.td}></td>
                       <td className={classes.td}>{list.invoiceCode}</td>
                       <td className={classes.td}>{list.createdDate}</td>
                       <td className={classes.td}>{list.customerName}</td>

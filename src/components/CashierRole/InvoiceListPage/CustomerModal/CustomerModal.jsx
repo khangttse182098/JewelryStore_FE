@@ -2,8 +2,8 @@ import { forwardRef, useState, useEffect } from "react";
 import classes from "./CustomerModal.module.css";
 
 const CustomerModal = forwardRef(
-  ({ handleHide, customer, onChangeCustomer }, ref) => {
-    const [customerInfor, setCustomerInfor] = useState({ ...customer });
+  ({ handleHide, customer, handleUpdateCustomer }, ref) => {
+    const [customerInfor, setCustomerInfor] = useState(customer);
 
     useEffect(() => {
       if (customer) {
@@ -20,11 +20,7 @@ const CustomerModal = forwardRef(
         },
         body: JSON.stringify(customerInfor),
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          onChangeCustomer(data);
-        })
+        .then(() => window.location.reload(false))
         .catch((err) => err);
       handleHide();
     }
