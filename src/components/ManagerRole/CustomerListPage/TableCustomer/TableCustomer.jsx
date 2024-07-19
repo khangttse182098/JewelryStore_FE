@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, useRef, Fragment } from "react";
 import classes from "./TableCustomer.module.css";
 import { formatter } from "../../../../util/formatter";
 import PaginationCustomerList from "./../PaginationCustomerList/PaginationCustomerList";
@@ -20,8 +20,19 @@ const TableCustomer = () => {
   );
   const navigate = useNavigate();
   const [searchField, setSearchField] = useState("");
-
+  const customerInputFormRef = useRef();
+  function handleClick() {
+    customerInputFormRef.current.showModal();
+  }
+  function handleHide() {
+    customerInputFormRef.current.close();
+    getData();
+  }
   useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
     const handleCustomer = async () => {
       const response = await fetch(
         "http://mahika.foundation:8080/swp/api/customer/list"
@@ -31,8 +42,8 @@ const TableCustomer = () => {
       setFilterCustomer(data);
       setIsLoading(false);
     };
-    handleCustomer();
-  }, []);
+    return await handleCustomer();
+  };
 
   const handleStatusOption = (event) => {
     const status = event.target.getAttribute("status");
@@ -77,6 +88,7 @@ const TableCustomer = () => {
 
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
+      <AddStaffModal onClose={handleHide} ref={customerInputFormRef} />
       <div className="w-10/12 h-5/6 mx-auto">
         <div className="text-3xl font-medium py-7">
           <p>Danh sách khách hàng</p>
@@ -105,6 +117,12 @@ const TableCustomer = () => {
               placeholder="Tìm kiếm khách hàng"
               onChange={handleSearch}
             />
+            <button
+              className="w-40 h-10 bg-blue-600 rounded-md text-white ml-10 hover:bg-blue-900 text-xl"
+              onClick={handleClick}
+            >
+              + Thêm mới
+            </button>
           </div>
           <table className="w-full border-collapse">
             <thead>
