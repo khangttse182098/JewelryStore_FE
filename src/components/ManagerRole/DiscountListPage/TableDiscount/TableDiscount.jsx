@@ -10,6 +10,7 @@ import SkeletonRowList from "../../../UtilComponent/SkeletonRowList/SkeletonRowL
 const TableDiscount = () => {
   const addDiscountModalRef = useRef();
   const doneModelRef = useRef();
+  const [isDisplay, setIsDisplay] = useState(null);
   const [searchField, setSearchField] = useState();
   const [discountList, setDiscountList] = useState([]);
   const [select, setSelect] = useState(false);
@@ -61,7 +62,7 @@ const TableDiscount = () => {
   }, []);
 
   const handleClick = (discount) => {
-    navigate("/managerdiscountdetail", { state: { discount } });
+    navigate("/manager/discount/detail", { state: { discount } });
   };
 
   const handleFilter = (filterStatus) => {
@@ -94,12 +95,14 @@ const TableDiscount = () => {
       }));
       setDiscountList(tempDiscount);
       setFilterDiscountList(tempDiscount);
+      setIsDisplay(checked);
     } else {
       const tempDiscount = discountList.map((discount) =>
         discount.code === name ? { ...discount, isChecked: checked } : discount
       );
       setDiscountList(tempDiscount);
       setFilterDiscountList(tempDiscount);
+      setIsDisplay(tempDiscount.some((discount) => discount.isChecked));
     }
   };
 
@@ -194,7 +197,7 @@ const TableDiscount = () => {
                 </th>
 
                 {select ? (
-                  <th colSpan="5" className={classes.th}>
+                  <th colSpan="6" className={classes.th}>
                     <div className="flex">
                       <p className="font-normal pr-2">
                         Đã chọn <b>tất cả</b> mã khuyến mãi trên trang này
@@ -254,15 +257,17 @@ const TableDiscount = () => {
                       onClick={() => handleClick(discount)}
                     >
                       <td className={classes.td}>
-                        <input
-                          type="checkbox"
-                          name={discount.code}
-                          onChange={(event) => {
-                            handleCheckbox(event);
-                          }}
-                          onClick={(event) => event.stopPropagation()}
-                          checked={discount.isChecked || false}
-                        />
+                        {isDisplay && (
+                          <input
+                            type="checkbox"
+                            name={discount.code}
+                            onChange={(event) => {
+                              handleCheckbox(event);
+                            }}
+                            onClick={(event) => event.stopPropagation()}
+                            checked={discount.isChecked || false}
+                          />
+                        )}
                       </td>
                       <td className={classes.td}>{discount.code}</td>
                       <td className={classes.td}>{`${discount.value}%`}</td>

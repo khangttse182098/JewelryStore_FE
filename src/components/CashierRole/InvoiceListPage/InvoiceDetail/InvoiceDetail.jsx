@@ -16,6 +16,7 @@ const InvoiceDetail = ({ invoice }) => {
   const InvoiceDetailModalRef = useRef();
   const CustomerModalRef = useRef();
   const doneModalRef = useRef();
+  console.log(invoice);
 
   const {
     productResponseDTOList,
@@ -75,6 +76,49 @@ const InvoiceDetail = ({ invoice }) => {
       setRenderStatus("Đã thanh toán");
       handleOpenDoneModal();
     });
+    //get warranty
+    const obj = {
+      customerName: invoice.list.customerName,
+      phoneNumber: customer.phoneNumber,
+      listProductId: invoice.list.productResponseDTOList.reduce(
+        (acc, curr) => [...acc, curr.id],
+        []
+      ),
+    };
+    console.log(obj);
+    fetch("http://mahika.foundation:8080/swp/api/warranty/pdf/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        customerName: invoice.list.customerName,
+        phoneNumber: customer.phoneNumber,
+        listProductId: invoice.list.productResponseDTOList.reduce(
+          (acc, curr) => [...acc, curr.id],
+          []
+        ),
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.blob();
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "warranty.pdf"; // You can set the desired file name here
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
   };
 
   useEffect(() => {

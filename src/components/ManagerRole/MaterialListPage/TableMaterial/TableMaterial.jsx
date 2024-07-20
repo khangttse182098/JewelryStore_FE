@@ -6,15 +6,13 @@ import AddMaterialModal from "../AddMaterialModalRef/AddMaterialModal";
 import { useNavigate } from "react-router-dom";
 import { formatter } from "../../../../util/formatter";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
-import viewIcon from "/assets/eye.png";
 
 const TableMaterial = () => {
   const addMaterialModalRef = useRef();
   const doneModelRef = useRef();
   const [materialList, setMaterialList] = useState([]);
-  const [searchField, setSearchField] = useState();
+  const [searchField, setSearchField] = useState("");
   const [filterMaterialList, setFilterMaterialList] = useState([]);
-  const [selectedFilter, setSelectedFilter] = useState("Tất cả");
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -33,7 +31,7 @@ const TableMaterial = () => {
       );
     });
     setFilterMaterialList(newFilterMaterial);
-  }, [searchField]);
+  }, [searchField, materialList]);
 
   const lastDiscountIndex = currentPage * materialPerPage;
   const firstDiscountIndex = lastDiscountIndex - materialPerPage;
@@ -41,16 +39,13 @@ const TableMaterial = () => {
     firstDiscountIndex,
     lastDiscountIndex
   );
-  console.log(currentMaterial);
 
   const handleMaterial = async () => {
     const response = await fetch(
       "http://mahika.foundation:8080/swp/api/gold-price"
     );
     const data = await response.json();
-    console.log(data);
     setMaterialList(data);
-    setSelectedFilter("Tất cả");
     setFilterMaterialList(data);
     setIsLoading(false);
   };
@@ -141,7 +136,7 @@ const TableMaterial = () => {
                   return (
                     <tr
                       onClick={() =>
-                        navigate("/managermaterialhistory", {
+                        navigate("/manager/material/history", {
                           state: { material },
                         })
                       }

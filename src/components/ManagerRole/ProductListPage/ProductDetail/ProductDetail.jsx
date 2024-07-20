@@ -144,7 +144,9 @@ const ProductDetail = ({ product }) => {
       try {
         const response = await fetch(
           "http://mahika.foundation:8080/swp/api/material",
-          { signal }
+          {
+            signal,
+          }
         );
         const dataMaterial = await response.json();
         setMaterialList(dataMaterial);
@@ -162,7 +164,9 @@ const ProductDetail = ({ product }) => {
       try {
         const response = await fetch(
           "http://mahika.foundation:8080/swp/api/counter",
-          { signal }
+          {
+            signal,
+          }
         );
         const dataCounter = await response.json();
         setCounterList(dataCounter);
@@ -180,7 +184,9 @@ const ProductDetail = ({ product }) => {
       try {
         const response = await fetch(
           "http://mahika.foundation:8080/swp/api/gem",
-          { signal }
+          {
+            signal,
+          }
         );
         const dataDiamond = await response.json();
         setDiamondCriteria(dataDiamond);

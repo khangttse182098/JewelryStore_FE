@@ -85,13 +85,13 @@ const GemHistory = ({ gem }) => {
           <button
             className="h-10 w-40 mt-4 rounded bg-[#0088FF] hover:bg-[#0a73ce]
           text-slate-100 text-xl mr-3"
-            onClick={() => navigate("/managergemlist")}
+            onClick={() => navigate("/manager/gem/list")}
           >
             Quay lại
           </button>
           <button
             onClick={() =>
-              navigate("/managergemdetail", {
+              navigate("/manager/gem/detail", {
                 state: {
                   gem: {
                     ...gemHistory[0],

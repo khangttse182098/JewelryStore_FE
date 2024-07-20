@@ -59,7 +59,7 @@ const PurchasePage = () => {
   const navigate = useNavigate();
 
   function handleClick() {
-    navigate("/repurchasepage");
+    navigate("/seller/repurchasepage");
   }
 
   useEffect(() => {

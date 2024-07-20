@@ -8,7 +8,7 @@ import NotAllowed from "../components/UtilComponent/NotAllowed/NotAllowed";
 const CustomerListPage = () => {
   return (
     <>
-      <div className="grid grid-cols-6 grid-rows-none gap-0">
+      <div className="grid grid-cols-6 grid-rows-none gap-0 h-[144vh]">
         <div className="col-span-1">
           <CashierSidebar activePage="Khách hàng" />
         </div>

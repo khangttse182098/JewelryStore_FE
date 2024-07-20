@@ -6,7 +6,6 @@ import sellIcon from "/assets/sell.png";
 import purchaseIcon from "/assets/purchase.png";
 import productIcon from "/assets/product-seller.png";
 import logoutIcon from "/assets/logout.png";
-import SellerPage from "./../../../../page/SellerPage";
 
 const SellerSidebar = ({ visible, onClose }) => {
   return (

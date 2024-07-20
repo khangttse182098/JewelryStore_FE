@@ -14,7 +14,7 @@ const CashierInvoiceDetailPage = () => {
   const renderContent =
     userRole === "CASHIER" ? (
       <>
-        <div className="grid grid-cols-6 grid-rows-none gap-0">
+        <div className="grid grid-cols-6 grid-rows-none gap-0 h-[145vh]">
           <div className="col-span-1">
             <CashierSidebar activePage="Danh sách hóa đơn" />
           </div>

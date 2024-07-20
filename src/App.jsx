@@ -28,87 +28,125 @@ import ManagerStaffDetailPage from "./page/ManagerStaffDetailPage";
 import ManagerMaterialPage from "./page/ManagerMaterialPage";
 import ManagerMaterialDetailPage from "./page/ManagerMaterialDetailPage";
 import ManagerMaterialHistoryPage from "./page/ManagerMaterialHistoryPage";
-import TestChart from "./components/ManagerRole/Dashboard/DashboardChart";
 import DashBoardPage from "./page/DashBoardPage";
 import ManagerInvoicePage from "./page/ManagerInvoicePage";
 import ManagerInvoiceDetailPage from "./page/ManagerInvoiceDetailPage";
 import ManagerCustomerPage from "./page/ManagerCustomerPage";
 import ManagerCustomerDetailPage from "./page/ManagerCustomerDetailPage";
+import ResponsiveWrapper from "./components/UtilComponent/ResponsiveWrapper/ResponsiveWrapper";
 
 function App() {
   return (
-    <SkeletonTheme baseColor="#DFD8D8" highlightColor="#FFFFFF">
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/sellpage" element={<SellerPage />} />
-        <Route path="/invoicelist" element={<CashierPage />} />
-        <Route path="/cashierproductlist" element={<CashierProductPage />} />
-        <Route
-          path="/cashierproductdetail"
-          element={<CashierProductDetailPage />}
-        />
-        <Route path="/purchasepage" element={<PurchasePage />} />
-        <Route path="/customerlist" element={<CustomerListPage />} />
-        <Route path="/statuslist" element={<StatusSellerPage />} />
-        <Route path="/invoicedetail" element={<CashierInvoiceDetailPage />} />
-        <Route path="/repurchasepage" element={<RepurchasePage />} />
-        <Route path="/managerproductlist" element={<ManagerProductPage />} />
-        <Route
-          path="/managerproductdetail"
-          element={<ManagerProductDetailPage />}
-        />
-        <Route path="/manageraddproduct" element={<ManagerAddProductPage />} />
-        <Route path="/managergemlist" element={<ManagerGemPage />} />
-        <Route
-          path="/manageraddgemprice"
-          element={<ManagerGemAddPricePage />}
-        />
-        <Route path="/managergemhistory" element={<ManagerGemHistoryPage />} />
-        <Route path="/managergemdetail" element={<ManagerGemDetailPage />} />
-        <Route path="managergeminforlist" element={<ManagerGemInforPage />} />
-        <Route
-          path="/managergeminfordetail"
-          element={<ManagerGemInforDetailPage />}
-        />
-        <Route path="/manageraddgem" element={<ManagerGemAddPage />} />
-        <Route path="/managerdiscountlist" element={<ManagerDiscountPage />} />
-        <Route path="/managerstafflist" element={<ManagerStaffPage />} />
-        <Route
-          path="/managerproductdetail"
-          element={<ManagerProductDetailPage />}
-        />
-        <Route path="/manageraddproduct" element={<ManagerAddProductPage />} />
-        <Route
-          path="/managerdiscountdetail"
-          element={<ManagerDiscountDetailPage />}
-        />
-        <Route
-          path="/managerstaffdetail"
-          element={<ManagerStaffDetailPage />}
-        />
-        <Route path="/managermateriallist" element={<ManagerMaterialPage />} />
-        <Route
-          path="/managermaterialdetail"
-          element={<ManagerMaterialDetailPage />}
-        />
-        <Route
-          path="/managermaterialhistory"
-          element={<ManagerMaterialHistoryPage />}
-        />
-        <Route path="/manager/dashboard" element={<DashBoardPage />} />
-        <Route path="/manager/chart" element={<DashBoardPage />} />
-        <Route path="/managerinvoicelist" element={<ManagerInvoicePage />} />
-        <Route
-          path="/managerinvoicedetail"
-          element={<ManagerInvoiceDetailPage />}
-        />
-        <Route path="/managercustomerlist" element={<ManagerCustomerPage />} />
-        <Route
-          path="/managercustomerdetail"
-          element={<ManagerCustomerDetailPage />}
-        />
-      </Routes>
-    </SkeletonTheme>
+    <ResponsiveWrapper>
+      <SkeletonTheme baseColor="#DFD8D8" highlightColor="#FFFFFF">
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/seller/sellpage" element={<SellerPage />} />
+          <Route path="/cashier/invoice/list" element={<CashierPage />} />
+          <Route
+            path="/cashier/product/list"
+            element={<CashierProductPage />}
+          />
+          <Route
+            path="/cashier/product/detail"
+            element={<CashierProductDetailPage />}
+          />
+          <Route path="/seller/purchasepage" element={<PurchasePage />} />
+          <Route path="/cashier/customer/list" element={<CustomerListPage />} />
+          <Route path="/seller/status/list" element={<StatusSellerPage />} />
+          <Route
+            path="/cashier/invoice/detail"
+            element={<CashierInvoiceDetailPage />}
+          />
+          <Route path="/seller/repurchasepage" element={<RepurchasePage />} />
+          <Route
+            path="/manager/product/list"
+            element={<ManagerProductPage />}
+          />
+          <Route
+            path="/manager/product/detail"
+            element={<ManagerProductDetailPage />}
+          />
+          <Route
+            path="/manager/product/add"
+            element={<ManagerAddProductPage />}
+          />
+          <Route path="/manager/gem/list" element={<ManagerGemPage />} />
+          <Route
+            path="/manager/gem/price"
+            element={<ManagerGemAddPricePage />}
+          />
+          <Route
+            path="/manager/gem/history"
+            element={<ManagerGemHistoryPage />}
+          />
+          <Route
+            path="/manager/gem/detail"
+            element={<ManagerGemDetailPage />}
+          />
+          <Route
+            path="/manager/gem/infor/list"
+            element={<ManagerGemInforPage />}
+          />
+          <Route
+            path="/manager/gem/infor/detail"
+            element={<ManagerGemInforDetailPage />}
+          />
+          <Route path="/manager/gem/add" element={<ManagerGemAddPage />} />
+          <Route
+            path="/manager/discount/list"
+            element={<ManagerDiscountPage />}
+          />
+          <Route path="/manager/staff/list" element={<ManagerStaffPage />} />
+          <Route
+            path="/manager/product/detail"
+            element={<ManagerProductDetailPage />}
+          />
+          <Route
+            path="/manager/product/add"
+            element={<ManagerAddProductPage />}
+          />
+          <Route
+            path="/manager/discount/detail"
+            element={<ManagerDiscountDetailPage />}
+          />
+          <Route
+            path="/manager/staff/detail"
+            element={<ManagerStaffDetailPage />}
+          />
+          <Route
+            path="/manager/material/list"
+            element={<ManagerMaterialPage />}
+          />
+          <Route
+            path="/manager/material/detail"
+            element={<ManagerMaterialDetailPage />}
+          />
+          <Route
+            path="/manager/material/history"
+            element={<ManagerMaterialHistoryPage />}
+          />
+          <Route path="/manager/dashboard" element={<DashBoardPage />} />
+          <Route path="/manager/chart" element={<DashBoardPage />} />
+          <Route
+            path="/manager/invoice/list"
+            element={<ManagerInvoicePage />}
+          />
+          <Route
+            path="/manager/invoice/detail"
+            element={<ManagerInvoiceDetailPage />}
+          />
+          <Route
+            path="/manager/customer/list"
+            element={<ManagerCustomerPage />}
+          />
+          <Route
+            path="/manager/customer/detail"
+            element={<ManagerCustomerDetailPage />}
+          />
+        </Routes>
+      </SkeletonTheme>
+    </ResponsiveWrapper>
   );
 }
 

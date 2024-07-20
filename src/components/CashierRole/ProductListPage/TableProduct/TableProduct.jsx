@@ -26,7 +26,9 @@ const TableProduct = () => {
       try {
         const response = await fetch(
           "http://mahika.foundation:8080/swp/api/product",
-          { signal }
+          {
+            signal,
+          }
         );
         const data = await response.json();
         setProductList(data);
@@ -37,7 +39,7 @@ const TableProduct = () => {
 
   //-----------------------------HandleNavigate---------------------
   function handleNavigate(product) {
-    navigate("/cashierproductdetail", { state: { product } });
+    navigate("/cashier/product/detail", { state: { product } });
   }
 
   //----------------------------Pagination---------------------------

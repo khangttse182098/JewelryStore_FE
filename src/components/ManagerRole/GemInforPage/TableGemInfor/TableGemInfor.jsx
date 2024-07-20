@@ -37,7 +37,7 @@ const TableGemInfor = () => {
 
   //-----------------------------HandleNavigate---------------------
   function handleNavigate(gem) {
-    navigate("/managergeminfordetail", { state: { gem } });
+    navigate("/manager/gem/infor/detail", { state: { gem } });
   }
   //----------------------------Search-------------------------------
   const handleSearch = (event) => {
@@ -96,7 +96,7 @@ const TableGemInfor = () => {
               placeholder="Tìm kiếm kim cương"
               onChange={handleSearch}
             />
-            <Link to="/manageraddgem">
+            <Link to="/manager/gem/add">
               <button className="w-32 h-9 rounded-md bg-[#0088FF] text-white">
                 + Thêm mới
               </button>
@@ -148,7 +148,7 @@ const TableGemInfor = () => {
                         <td className={classes.td}>
                           <button
                             onClick={(event) => {
-                              navigate("/manageraddgemprice", {
+                              navigate("/manager/gem/price", {
                                 state: {
                                   gem: {
                                     ...gem,
