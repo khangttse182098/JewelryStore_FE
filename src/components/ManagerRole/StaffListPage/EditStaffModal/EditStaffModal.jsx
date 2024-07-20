@@ -45,11 +45,17 @@ const EditStaffModal = forwardRef(({ staff, onClose }, ref) => {
           className="flex flex-col gap-10 h-full"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <h3 className=" text-center mt-5 text-3xl font-semibold">
+          <p
+            className="text-3xl font-semibold text-end mr-5 mt-3 text-red-500 cursor-pointer"
+            onClick={() => ref.current.close()}
+          >
+            &times;
+          </p>
+          <h3 className=" text-center  text-3xl font-semibold">
             Nhập thông tin nhân viên
           </h3>
           <div className="flex flex-col justify-center items-center  ">
-            <div className="block mt-10 ">
+            <div className="block ">
               <label className="flex">Nhập họ và tên</label>
               <input
                 className="w-96 h-10 rounded-sm bg-gray-100"
