@@ -1,7 +1,7 @@
 .container {
   background-color: whitesmoke;
-  width: 50%;
-  height: 80%;
+  width: 919px;
+  height: 837px;
   border-radius: 30px;
   text-align: center;
   font-family: "Montserrat";
@@ -63,4 +63,35 @@
 
 .save-button:hover {
   background-color: #886d45;
+}
+
+@media (min-width: 1280px) {
+  .container {
+    width: calc(919px * var(--scale-factor));
+    height: calc(837px * var(--scale-factor));
+    transform: translate(50%, 15%);
+  }
+  .info-container {
+    height: 493px * var(--scale-factor);
+    transform: translate(0, calc(240px * var(--scale-factor)));
+  }
+  .container p {
+    transform: translate(0, calc(155px * var(--scale-factor)));
+    font-size: 30px * var(--scale-factor);
+  }
+
+  .container label {
+    left: calc(280px * var(--scale-factor));
+  }
+
+  .container input {
+    padding-left: calc(29px * var(--scale-factor));
+    padding-top: calc(27px * var(--scale-factor));
+    width: calc() 409px * var(--scale-factor);
+    height: calc() 61px * var(--scale-factor);
+    background-color: #d9d9d9;
+    border-radius: calc() 20px * var(--scale-factor);
+    margin-bottom: calc() 64px * var(--scale-factor);
+    font-size: calc() 19px * var(--scale-factor);
+  }
 }
