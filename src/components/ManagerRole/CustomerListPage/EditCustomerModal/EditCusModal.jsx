@@ -46,16 +46,17 @@ const EditCusModal = forwardRef(({ customer, onClose }, ref) => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <p
-            className="text-3xl font-semibold text-end mr-10 mt-3 text-red-500 cursor-pointer h-0"
-            onClick={onClose(onSubmit)}
+            className="text-3xl font-semibold text-end mr-5 mt-3 text-red-500 cursor-pointer"
+            onClick={() => ref.current.close()}
           >
             &times;
           </p>
-          <h3 className=" text-center mt-5 text-3xl font-semibold">
+          <h3 className=" text-center mt-[-20px] text-3xl font-semibold">
             Nhập thông tin khách hàng
           </h3>
+
           <div className="flex flex-col justify-center items-center  ">
-            <div className="block mt-10 ">
+            <div className="block mt-5 ">
               <label className="flex">Họ và tên</label>
               <input
                 className="w-96 h-10 rounded-sm bg-gray-100"
