@@ -4,6 +4,8 @@ import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 import { useLocation } from "react-router-dom";
 import { formatter } from "../../../../util/formatter";
 import classes from "./CustomerDetail.module.css";
+import EditCusModal from "../EditCustomerModal/EditCusModal";
+import UpdateIcon from "../../../../../public/assets/pen.png";
 
 const CustomerDetail = () => {
   // const { register, handleSubmit } = useForm();
@@ -12,6 +14,12 @@ const CustomerDetail = () => {
   const location = useLocation();
   const { customer } = location.state || {}; // Kiểm tra nếu state tồn tại
   const [orders, setOrders] = useState([]);
+  const [objCustomer, setObjCustomer] = useState(customer);
+  const customerInputFormRef = useRef();
+
+  if (!objCustomer) {
+    return <div>No customer data available</div>;
+  }
 
   const handleOrder = () => {
     fetch("http://mahika.foundation:8080/swp/api/order", {
@@ -34,8 +42,19 @@ const CustomerDetail = () => {
     handleOrder();
   }, []);
 
-  if (!customer) {
-    return <div>No customer data available</div>;
+  function handleClick() {
+    customerInputFormRef.current.showModal();
+  }
+
+  function handleClose(submitData) {
+    setObjCustomer((o) => ({
+      ...o,
+      fullName: submitData.fullName,
+      phoneNumber: submitData.phoneNumber,
+      address: submitData.address,
+      gender: submitData.gender,
+    }));
+    customerInputFormRef.current.close();
   }
 
   //   const averageExpense = customer.expense / customer.quantityOrder;
@@ -51,33 +70,47 @@ const CustomerDetail = () => {
 
   return (
     <>
-      {/* Personal Ìnormation */}
+      <EditCusModal
+        customer={objCustomer}
+        onClose={handleClose}
+        ref={customerInputFormRef}
+      />
+      {/* Personal Information */}
       <div className="p-4 w-full">
         <div className="bg-white shadow-md p-4 rounded-md">
-          <h2 className="font-semibold text-3xl">Thông tin cá nhân</h2>
-
+          <div className="flex justify-between items-center">
+            <h2 className="font-semibold text-3xl">Thông tin cá nhân</h2>
+            <img
+              src={UpdateIcon}
+              alt="UpdateIcon"
+              className="w-[20px]"
+              onClick={handleClick}
+            />
+          </div>
           <div className="grid grid-cols-4 gap-3 text-center mt-4 mb-4 h-[90px]">
             <div>
               <label className="text-xl text-gray-700">Họ và tên</label>
               <div className="text-2xl mt-3 font-medium">
-                {customer.fullName}
+                {objCustomer.fullName}
               </div>
             </div>
             <div>
               <label className="text-xl text-gray-700">Số điện thoại</label>
               <div className="text-2xl mt-3 font-medium">
-                {customer.phoneNumber}
+                {objCustomer.phoneNumber}
               </div>
             </div>
             <div>
               <label className="text-xl text-gray-700">Địa chỉ</label>
               <div className="text-2xl mt-3 font-medium">
-                {customer.address}
+                {objCustomer.address}
               </div>
             </div>
             <div>
               <label className="text-xl text-gray-700">Giới tính</label>
-              <div className="text-2xl mt-3 font-medium">{customer.gender}</div>
+              <div className="text-2xl mt-3 font-medium">
+                {objCustomer.gender}
+              </div>
             </div>
           </div>
           <hr className="w-full my-2" />
@@ -86,13 +119,13 @@ const CustomerDetail = () => {
             <div>
               <label className="text-xl text-gray-700">Số đơn hàng</label>
               <div className="text-2xl mt-3 font-medium">
-                {customer.quantityOrder}
+                {objCustomer.quantityOrder}
               </div>
             </div>
             <div>
               <label className="text-xl text-gray-700">Tổng chi tiêu</label>
               <div className="text-2xl mt-3 font-medium">
-                {formatter.format(customer.expense)}
+                {formatter.format(objCustomer.expense)}
               </div>
             </div>
             <div>
