@@ -273,57 +273,58 @@ const TableStaff = () => {
                       ? classes["status-success"]
                       : classes["status-closed"];
 
-                return (
-                  <tr
-                    className={`${classes.tr} ${
-                      staff?.isChecked ? classes.select : ""
-                    }`}
-                    key={staff.id}
-                  >
-                    <td className={classes.td}>
-                      <input
-                        type="checkbox"
-                        name={staff.id}
-                        onClick={handleCheckbox}
-                        onChange={(event) => event.stopPropagation()}
-                        checked={staff?.isChecked}
-                      />
-                    </td>
-                    <td
-                      className={classes.td}
-                      onClick={() => handleNavigate(staff)}
+                  return (
+                    <tr
+                      className={`${classes.tr} ${
+                        staff?.isChecked ? classes.select : ""
+                      }`}
+                      key={staff.id}
                     >
-                      {staff.fullName}
-                    </td>
-                    <td
-                      className={classes.td}
-                      onClick={() => handleNavigate(staff)}
-                    >
-                      {staff.role}
-                    </td>
-                    <td
-                      className={classes.td}
-                      onClick={() => handleNavigate(staff)}
-                    >
-                      {staff.phone}
-                    </td>
-                    <td
-                      className={classes.td}
-                      onClick={() => handleNavigate(staff)}
-                    >
-                      {formatter.format(staff.personalIncome)}
-                    </td>
-                    <td
-                      className={classes.td}
-                      onClick={() => handleNavigate(staff)}
-                    >
-                      <p className={`${statusClass} ${classes.status}`}>
-                        {staff.status}
-                      </p>
-                    </td>
-                  </tr>
-                );
-              })}
+                      <td className={classes.td}>
+                        <input
+                          type="checkbox"
+                          name={staff.id}
+                          onClick={handleCheckbox}
+                          onChange={(event) => event.stopPropagation()}
+                          checked={staff?.isChecked}
+                        />
+                      </td>
+                      <td
+                        className={classes.td}
+                        onClick={() => handleNavigate(staff)}
+                      >
+                        {staff.fullName}
+                      </td>
+                      <td
+                        className={classes.td}
+                        onClick={() => handleNavigate(staff)}
+                      >
+                        {staff.role}
+                      </td>
+                      <td
+                        className={classes.td}
+                        onClick={() => handleNavigate(staff)}
+                      >
+                        {staff.phone}
+                      </td>
+                      <td
+                        className={classes.td}
+                        onClick={() => handleNavigate(staff)}
+                      >
+                        {formatter.format(staff.personalIncome)}
+                      </td>
+                      <td
+                        className={classes.td}
+                        onClick={() => handleNavigate(staff)}
+                      >
+                        <p className={`${statusClass} ${classes.status}`}>
+                          {staff.status}
+                        </p>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
           <PaginationStaffList
