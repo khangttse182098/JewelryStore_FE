@@ -14,16 +14,6 @@
   margin-left: 42.5px;
 }
 
-.search {
-  width: 583px;
-  height: 37px;
-  border-radius: 10px;
-  border-style: double;
-  border-color: #dfd8d8;
-  outline: none;
-  padding-left: 39.5px;
-}
-
 .img {
   margin-right: 17px;
 }
@@ -33,7 +23,7 @@
 }
 
 .td {
-  @apply border-b-[#dddddd] h-10 font-[400] text-center;
+  @apply border-b border-[#dddddd] h-10 font-[400] text-center;
 }
 
 .td-skeleton {
@@ -60,7 +50,7 @@
 }
 
 .current {
-  @apply text-[#2661ec] font-semibold border-b-[#2661ec] opacity-90;
+  @apply text-[#2661ec] font-semibold border-b-[#2661ec] opacity-90 border-b-4;
 }
 
 .status {

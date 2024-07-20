@@ -11,5 +11,5 @@ export function formatDate(input) {
   const min = String(date.getMinutes()).padStart(2, "0");
   const ss = String(date.getSeconds()).padStart(2, "0"); // Add seconds (00) for uniformity
 
-  return `${dd}/${mm}/${yyyy} ${hh}:${min}:${ss}`;
+  return `${dd}/${mm}/${yyyy} ${hh}:${min}`;
 }

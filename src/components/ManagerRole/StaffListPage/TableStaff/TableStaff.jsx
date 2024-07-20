@@ -4,16 +4,17 @@ import { formatter } from "../../../../util/formatter";
 import PaginationStaffList from "./../PaginationStaffList/PaginationStaffList";
 import AddStaffModal from "../AddStaffModal/AddStaffModal";
 import { useNavigate } from "react-router-dom";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const TableStaff = () => {
   const [staffList, setStaffList] = useState([]);
   const [filterStaff, setFilterStaff] = useState([...staffList]);
   const [currentPage, setCurrentPage] = useState(1);
   const [staffPerPage, setStaffPerPage] = useState(5);
+  const [isLoading, setIsLoading] = useState(true);
   const lastStaffIndex = currentPage * staffPerPage;
   const firstStaffIndex = lastStaffIndex - staffPerPage;
   const currentStaff = filterStaff.slice(firstStaffIndex, lastStaffIndex);
-  const [showModal, setShowModal] = useState(false);
   const staffInputFormRef = useRef();
   const [select, setSelect] = useState(false);
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ const TableStaff = () => {
       let temp = data?.map((e) => ({ ...e, isChecked: false })) || [];
       setStaffList(temp);
       setFilterStaff(temp);
+      setIsLoading(false);
     };
     return await handleStaff();
   };
@@ -119,24 +121,37 @@ const TableStaff = () => {
       return (
         staff.fullName.toLowerCase().includes(searchField) ||
         staff.phone.toLowerCase().includes(searchField) ||
-        staff.role.toLowerCase().includes(searchField)
+        staff.role.toLowerCase().includes(searchField) ||
+        staff.status.toLowerCase().includes(searchField) ||
+        staff.personalIncome.toString().toLowerCase().includes(searchField)
       );
     });
     setFilterStaff(newFilterStaff);
   }, [searchField, staffList]);
 
+  let skeletonRowList = [];
+  for (let index = 0; index < staffPerPage; index++) {
+    skeletonRowList.push(
+      <tr key={index}>
+        <td colSpan="6">
+          <Skeleton className={classes["td-skeleton"]} />
+        </td>
+      </tr>
+    );
+  }
+
   return (
-    <Fragment>
+    <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
       <AddStaffModal onClose={handleHide} ref={staffInputFormRef} />
       <div className="w-10/12 h-5/6 mx-auto">
-        <div className="text-3xl font-medium py-10">
+        <div className="text-3xl font-medium py-7">
           <p>Danh sách nhân viên</p>
         </div>
 
         <div className="bg-white border-2 border-white rounded-xl shadow-lg">
           <div>
             <button
-              className={`${"h-12 w-48 rounded-t-lg border-white border-b-2  bg-white text-center text-gray-500 font-montserrat text-base hover:border-b-2 hover:border-blue-600 hover:text-blue-600 cursor-pointer"}
+              className={`${classes.button}
               ${currentStatus === "Tất cả" ? classes.current : ""}`}
               status="Tất cả"
               onClick={handleStatusOption}
@@ -147,8 +162,8 @@ const TableStaff = () => {
             {["Đang làm việc", "Đang tạm nghỉ"].map((status) => (
               <button
                 key={status}
-                className={`h-12 w-48 rounded-t-lg border-white border-b-2  bg-white text-center text-gray-500 font-montserrat text-base hover:border-b-2 hover:border-blue-600 hover:text-blue-600 cursor-pointer ${
-                  currentStatus === status ? classes.current : ""
+                className={`${classes.button}
+                  ${currentStatus === status ? classes.current : ""}
                 }`}
                 status={status}
                 onClick={handleStatusOption}
@@ -238,13 +253,25 @@ const TableStaff = () => {
               </tr>
             </thead>
             <tbody>
-              {currentStaff.map((staff) => {
-                const statusClass =
-                  staff.status === "Đang tạm nghỉ"
-                    ? classes["status-inProgress"]
-                    : staff.status === "Đang làm việc"
-                    ? classes["status-success"]
-                    : classes["status-closed"];
+              {isLoading ? (
+                skeletonRowList
+              ) : !currentStaff.length ? (
+                <tr>
+                  <td
+                    colSpan="6"
+                    className="font-medium text-red-500 text-center h-32"
+                  >
+                    Không tìm thấy kết quả cho "{searchField}"
+                  </td>
+                </tr>
+              ) : (
+                currentStaff.map((staff) => {
+                  const statusClass =
+                    staff.status === "Đang tạm nghỉ"
+                      ? classes["status-inProgress"]
+                      : staff.status === "Đang làm việc"
+                      ? classes["status-success"]
+                      : classes["status-closed"];
 
                 return (
                   <tr
@@ -307,7 +334,7 @@ const TableStaff = () => {
           />
         </div>
       </div>
-    </Fragment>
+    </SkeletonTheme>
   );
 };
 

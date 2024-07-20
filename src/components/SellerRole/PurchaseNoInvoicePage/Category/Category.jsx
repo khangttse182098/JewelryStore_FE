@@ -215,7 +215,6 @@ const Category = () => {
             <div className={classes.frame1}>
               <p className={classes["head-frame-diamond"]}>Kim cương</p>
             </div>
-            <hr className={classes.line} />
             <div className={classes.origin}>
               <p className={classes["selection-title"]}>Nguồn gốc</p>
               <DropDownOrigin

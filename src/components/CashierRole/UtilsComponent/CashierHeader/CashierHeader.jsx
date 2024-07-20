@@ -1,27 +1,45 @@
-import classes from "./CashierHeader.module.css";
-import MahikaLogoImg from "/assets/img-logo.png";
+import MahikaLogoImg from "/assets/managerLogo.png";
 import MahikaLogoText from "/assets/text-logo.png";
-import Arrow from "/assets/arrow-down-icon.png";
+import DropDownAccount from "../DropDownAccount/DropDownAccount";
+import React, { useState, useEffect, useContext } from "react";
+import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
+import classes from "./CashierHeader.module.css";
 
 const CashierHeader = () => {
+  const [cashierName, setCashierName] = useState([]);
+  const { userId } = useContext(LoggedInUserContext);
+  const handleUser = () => {
+    fetch("http://mahika.foundation:8080/swp/api/user", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((dataUser) => {
+        const cashierList = dataUser.filter((user) => user.id === userId);
+        const name = cashierList.map((user) => user.fullName);
+        setCashierName(name);
+      })
+      .catch((error) => console.log(error));
+  };
+  useEffect(() => {
+    handleUser();
+  }, []);
+
   return (
-    <div className={classes.header}>
-      <div className={classes.logo}>
-        <img
-          src={MahikaLogoImg}
-          alt="Mahika Logo"
-          className={classes["img-logo"]}
-        />
-        <img
-          src={MahikaLogoText}
-          alt="Mahika Logo"
-          className={classes["text-logo"]}
-        />
+    <div className="bg-white flex justify-normal p-3">
+      <div className="flex">
+        <img src={MahikaLogoImg} alt="Mahika Logo" />
+        <img src={MahikaLogoText} alt="Mahika Logo" className="h-12 mt-3" />
       </div>
+
       <div className={classes.name}>
-        <p>Pham Hoang Phuc</p>
+        {cashierName.map((name, index) => (
+          <p key={index}></p>
+        ))}
       </div>
-      <img src={Arrow} alt="Arrow" className={classes["arrow-down-icon"]} />
+      <DropDownAccount className={classes.dropdown} />
     </div>
   );
 };

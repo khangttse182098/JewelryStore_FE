@@ -35,6 +35,24 @@
   font-size: 20px;
 }
 
+.difference-price-negative {
+  font-weight: 700;
+  margin-top: 8px;
+  margin-left: 11px;
+  margin-right: 26px;
+  font-size: 20px;
+  color: red;
+}
+
+.difference-price {
+  font-weight: 700;
+  margin-top: 8px;
+  margin-left: 11px;
+  margin-right: 26px;
+  font-size: 20px;
+  color: #1d9b25;
+}
+
 .total {
   font-weight: 700;
   margin-top: 8px;

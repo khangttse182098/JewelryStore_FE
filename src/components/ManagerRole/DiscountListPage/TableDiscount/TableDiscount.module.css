@@ -3,7 +3,7 @@
 }
 
 .selectedFilter {
-  @apply box-border text-blue-600 border-b-2 border-blue-600;
+  @apply box-border text-blue-600 border-b-4 border-blue-600 font-semibold;
 }
 
 .search-container {
@@ -31,7 +31,7 @@
 }
 
 .td {
-  @apply border-b-[#dddddd] h-10 font-[400] text-center;
+  @apply border-b border-[#dddddd] h-10 font-[400] text-center;
 }
 
 .td-skeleton {
@@ -46,6 +46,10 @@
   @apply text-center p-2 cursor-pointer hover:bg-[#eff7fd];
 }
 
+.selectedTr {
+  @apply bg-[#eff7fd];
+}
+
 .th,
 .td {
   @apply text-base;
@@ -56,7 +60,7 @@
 }
 
 .current {
-  @apply text-[#2661ec] font-semibold border-b-[#2661ec] opacity-90;
+  @apply text-[#2661ec] font-semibold border-b-[#2661ec] opacity-90 border-b-4;
 }
 
 .status {

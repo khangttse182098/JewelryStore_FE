@@ -17,6 +17,8 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
   const { userId } = useContext(LoggedInUserContext);
   const [price, setPrice] = useState(0);
   const [totalDiscountPrice, setTotalDiscountPrice] = useState(0);
+  const [purchaseDiscountPrice, setPurchaseDiscountPrice] = useState(null);
+  const [differenceInPrice, setDifferenceInPrice] = useState(0);
   const doneModalRef = useRef();
 
   useEffect(() => {
@@ -31,37 +33,44 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
     productId: [...productSellInvoiceListId],
   };
   // receive price from BE
-  const handleFetch = () => {
-    fetch(
-      "http://mahika.foundation:8080/swp/api/purchase-order/product-price",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reqBodySellInvoicePrice),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setItemSellInvoice(
-          itemSellInvoice.reduce((acc, curr) => {
-            const resInvoice = data.find(
-              (element) => element.productId === curr.id
-            );
-            return [
-              ...acc,
-              {
-                ...curr,
-                price: resInvoice.purchasePrice,
-              },
-            ];
-          }, [])
-        );
-      });
-  };
 
   useEffect(() => {
+    const handleFetch = () => {
+      fetch(
+        "http://mahika.foundation:8080/swp/api/purchase-order/product-price",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(reqBodySellInvoicePrice),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+
+          setItemSellInvoice(
+            itemSellInvoice.reduce((acc, curr) => {
+              const resInvoice = data.find(
+                (element) => element.productId === curr.id
+              );
+
+              setPurchaseDiscountPrice(resInvoice.discountPrice);
+              return [
+                ...acc,
+                {
+                  ...curr,
+                  price: resInvoice.purchasePrice,
+                  discountPrice: resInvoice.discountPrice,
+                  originalPrice: resInvoice.soldPrice,
+                },
+              ];
+            }, [])
+          );
+        });
+    };
+
     handleFetch();
   }, [itemSellList]);
 
@@ -71,7 +80,7 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
         return acc + curr.discountPrice;
       }, 0)
     );
-  }, [itemSellList]);
+  }, [itemSellList, purchaseDiscountPrice]);
 
   // send purhchase order to BE
   const reqBody = {
@@ -98,6 +107,25 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
   function handleCloseDoneModal() {
     doneModalRef.current.close();
   }
+  useEffect(() => {
+    if (itemSellInvoice.length) {
+      console.log(
+        itemSellInvoice.reduce(
+          (acc, curr) => acc + curr.originalPrice - curr.discountPrice,
+          0
+        )
+      );
+      function handleDifferenceInPrice() {
+        setDifferenceInPrice(
+          itemSellInvoice.reduce(
+            (acc, curr) => acc + curr.originalPrice - curr.price,
+            0
+          )
+        );
+      }
+      handleDifferenceInPrice();
+    }
+  }, [itemSellInvoice]);
 
   return (
     <>
@@ -129,7 +157,7 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
             </p>
           </div>
           <div className={classes.frame}>
-            <p className={classes.p}>Chiết khấu</p>
+            <p className={classes.p}>Khuyến mãi</p>
             <p className={classes.p}>
               {itemSellInvoice.length
                 ? `+${formatter.format(totalDiscountPrice)}`
@@ -139,6 +167,13 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
 
           <div className={classes.frame}>
             <p className={classes.total}>Thanh toán</p>
+            {differenceInPrice >= 0 ? (
+              <p className={classes["difference-price"]}>
+                {`(+${formatter.format(differenceInPrice)})`}
+              </p>
+            ) : (
+              <p className={classes["difference-price-negative"]}></p>
+            )}
             <p className={classes.total}>
               {itemSellInvoice.length
                 ? formatter.format(price + totalDiscountPrice)

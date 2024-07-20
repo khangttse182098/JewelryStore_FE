@@ -5,6 +5,8 @@ export default {
     extend: {
       colors: {
         "sidebar-blue": "#182537",
+        "blue-add": "#0088FF",
+        "cancel-button": "#D9D9D9",
         "blue-600": "#2661ec",
         "gray-300": "#dddddd",
         "gray-100": "#f4f6f8",

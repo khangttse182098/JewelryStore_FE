@@ -3,7 +3,7 @@ import toDatetimeLocal from "../../../../util/toDateTimeLocal";
 
 const DetailDiscountInput = ({ title, isDate, register, discount }) => {
   return (
-    <div className="flex flex-col justify-evenly drop-shadow-lg shadow-lg rounded h-1/2 w-5/6 mt-10 ml-10">
+    <div className="flex flex-col justify-evenly drop-shadow-lg bg-white shadow-lg rounded h-3/5 w-5/6 mt-10 ml-10">
       {!isDate ? (
         <>
           <label className="w-4/5 ml-11 text-xl font-medium">

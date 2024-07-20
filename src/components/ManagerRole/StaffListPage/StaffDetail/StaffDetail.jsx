@@ -75,7 +75,7 @@ const StaffDetail = () => {
             <img
               src={UpdateIcon}
               alt="UpdateIcon"
-              className="w-[20px]"
+              className="w-[20px] cursor-pointer"
               onClick={handleClick}
             />
           </div>
