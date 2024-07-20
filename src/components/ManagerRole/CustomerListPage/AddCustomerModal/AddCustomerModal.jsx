@@ -35,7 +35,7 @@ const AddCustomerModal = forwardRef(({ onClose }, ref) => {
       <DoneModal ref={doneModalRef} handleClose={handleClose} />
       <dialog
         ref={ref}
-        className="w-2/5 fixed rounded translate-x-3/4 translate-y-7 drop-shadow-xl"
+        className="w-2/5 fixed rounded translate-x-3/4 translate-y-40 drop-shadow-xl"
       >
         <form
           className="flex flex-col h-full"

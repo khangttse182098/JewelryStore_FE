@@ -5,6 +5,7 @@ import PaginationCustomerList from "./../PaginationCustomerList/PaginationCustom
 import { useNavigate } from "react-router-dom";
 import SkeletonRowList from "../../../UtilComponent/SkeletonRowList/SkeletonRowList";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import AddCustomerModal from "../AddCustomerModal/AddCustomerModal";
 
 const TableCustomer = () => {
   const [customerList, setCustomerList] = useState([]);
@@ -88,7 +89,7 @@ const TableCustomer = () => {
 
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
-      <AddStaffModal onClose={handleHide} ref={customerInputFormRef} />
+      <AddCustomerModal onClose={handleHide} ref={customerInputFormRef} />
       <div className="w-10/12 h-5/6 mx-auto">
         <div className="text-3xl font-medium py-7">
           <p>Danh sách khách hàng</p>

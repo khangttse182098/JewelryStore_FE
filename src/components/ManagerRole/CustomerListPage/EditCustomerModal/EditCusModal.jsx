@@ -45,6 +45,12 @@ const EditCusModal = forwardRef(({ customer, onClose }, ref) => {
           className="flex flex-col gap-10 h-full"
           onSubmit={handleSubmit(onSubmit)}
         >
+          <p
+            className="text-3xl font-semibold text-end mr-10 mt-3 text-red-500 cursor-pointer h-0"
+            onClick={onClose(onSubmit)}
+          >
+            &times;
+          </p>
           <h3 className=" text-center mt-5 text-3xl font-semibold">
             Nhập thông tin khách hàng
           </h3>
