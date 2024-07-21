@@ -159,21 +159,14 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
           <div className={classes.frame}>
             <p className={classes.p}>Khuyến mãi</p>
             <p className={classes.p}>
-              {itemSellInvoice.length
+              {totalDiscountPrice >= 0
                 ? `+${formatter.format(totalDiscountPrice)}`
-                : ""}
+                : `${formatter.format(totalDiscountPrice)}`}
             </p>
           </div>
 
           <div className={classes.frame}>
             <p className={classes.total}>Thanh toán</p>
-            {differenceInPrice >= 0 ? (
-              <p className={classes["difference-price"]}>
-                {`(+${formatter.format(differenceInPrice)})`}
-              </p>
-            ) : (
-              <p className={classes["difference-price-negative"]}></p>
-            )}
             <p className={classes.total}>
               {itemSellInvoice.length
                 ? formatter.format(price + totalDiscountPrice)
