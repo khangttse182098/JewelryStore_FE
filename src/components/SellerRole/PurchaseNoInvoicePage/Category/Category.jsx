@@ -29,7 +29,6 @@ const Category = () => {
   const [listCut, setListCut] = useState([]);
   const [listColor, setListColor] = useState([]);
   const [listClarity, setListClarity] = useState([]);
-  const [errorMsg, setErrorMsg] = useState("");
   const errorModalRef = useRef();
 
   const criteriaItem = {
@@ -184,7 +183,7 @@ const Category = () => {
       <ErrorModal
         ref={errorModalRef}
         handleClose={handleCloseErrorModal}
-        msg={errorMsg}
+        msg={"Không tìm thấy sản phẩm"}
       />
 
       <div className={classes.container}>
