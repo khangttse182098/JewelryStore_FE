@@ -70,11 +70,11 @@ const TableProduct = () => {
 
   //-----------------------------HandleNavigate---------------------
   function handleNavigate(list) {
-    navigate("/managerproductdetail", { state: { list } });
+    navigate("/manager/product/detail", { state: { list } });
   }
 
   function handleAdd() {
-    navigate("/manageraddproduct");
+    navigate("/manager/product/add");
   }
 
   //----------------------------Pagination---------------------------
