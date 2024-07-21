@@ -183,7 +183,7 @@ const Category = () => {
       <ErrorModal
         ref={errorModalRef}
         handleClose={handleCloseErrorModal}
-        msg={"Không tìm thấy sản phẩm"}
+        msg={"Sản phẩm hiện chưa có giá. Vui lòng thử lại."}
       />
 
       <div className={classes.container}>
