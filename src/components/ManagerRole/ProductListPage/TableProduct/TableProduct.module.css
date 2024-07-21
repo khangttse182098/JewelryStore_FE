@@ -14,7 +14,6 @@
   margin-left: 42.5px;
 }
 
-
 .img {
   margin-right: 17px;
 }
@@ -53,7 +52,6 @@
 .current {
   @apply text-[#2661ec] font-semibold border-b-[#2661ec] opacity-90 border-b-4;
 }
-
 
 .status {
   @apply p-2 w-40 my-5 mx-auto outline rounded-[20px] font-semibold;

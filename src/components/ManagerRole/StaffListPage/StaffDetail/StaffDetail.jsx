@@ -1,4 +1,5 @@
 import classes from "./StaffDetail.module.css";
+import Pen from "../../../../../public/assets/pen.png";
 import React, { useRef, useState, useEffect } from "react";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
 import { useLocation } from "react-router-dom";

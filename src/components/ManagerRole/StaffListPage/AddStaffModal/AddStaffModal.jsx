@@ -35,23 +35,23 @@ const AddStaffModal = forwardRef(({ onClose }, ref) => {
       <DoneModal ref={doneModalRef} handleClose={handleClose} />
       <dialog
         ref={ref}
-        className="w-2/5 fixed rounded translate-x-3/4 translate-y-7 drop-shadow-xl"
+        className="w-2/5 fixed rounded translate-x-3/4 translate-y-40 drop-shadow-xl"
       >
         <form
           className="flex flex-col h-full"
           onSubmit={handleSubmit(onSubmit)}
         >
           <p
-            className="text-3xl font-semibold text-end mr-10 mt-3 text-red-500 cursor-pointer"
-            onClick={onClose}
+            className="text-3xl font-semibold text-end mr-5 mt-3 text-red-500 cursor-pointer"
+            onClick={() => ref.current.close()}
           >
             &times;
           </p>
-          <h3 className="text-center mt-5 text-3xl font-semibold">
+          <h3 className=" text-center text-3xl font-semibold">
             Nhập thông tin nhân viên mới
           </h3>
           <div className="flex flex-col justify-center items-center  ">
-            <div className="block mt-10 ">
+            <div className="block mt-5 ">
               <label className="flex">Nhập họ và tên</label>
               <input
                 className="w-96 h-10 rounded-sm bg-gray-100"
