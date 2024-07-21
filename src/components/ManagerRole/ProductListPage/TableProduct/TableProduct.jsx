@@ -274,7 +274,7 @@ const TableProduct = () => {
             </tbody>
           </table>
           <Pagination
-            totalInvoice={filterProduct.length}
+            totalInvoice={productList.length}
             invoicePerPage={productPerPage}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}

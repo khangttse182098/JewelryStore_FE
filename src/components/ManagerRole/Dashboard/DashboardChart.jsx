@@ -70,8 +70,6 @@ const DashboardChart = () => {
         <option value="7days">7 ngày</option>;
         <option value="4weeks">4 tuần</option>;
         <option value="12months">12 tháng</option>;
-        <option value="alltime">Tất cả</option>;
-        <option value="custom">Tùy chỉnh</option>;
       </select>
       <div className="flex flex-col bg-white drop-shadow-xl h-[80%] w-[90%] mt-10 ml-24 rounded-xl ">
         <h1 className="text-3xl font-medium my-5 ml-5">

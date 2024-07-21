@@ -126,6 +126,7 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
       handleDifferenceInPrice();
     }
   }, [itemSellInvoice]);
+  console.log(differenceInPrice);
 
   return (
     <>
@@ -169,7 +170,7 @@ const PurchaseOrderDetail = ({ sellOrderCode }) => {
             <p className={classes.total}>Thanh toán</p>
             {differenceInPrice >= 0 ? (
               <p className={classes["difference-price"]}>
-                {`(+${formatter.format(differenceInPrice)})`}
+                {`(+${formatter.format(totalDiscountPrice)})`}
               </p>
             ) : (
               <p className={classes["difference-price-negative"]}></p>
