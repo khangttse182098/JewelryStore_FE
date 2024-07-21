@@ -14,7 +14,7 @@ const SidebarFunction = ({ icon, title }) => {
       localStorage.clear();
       setUserId(null);
       setUserRole(null);
-      navigate("/login");
+      navigate("/");
     } else if (title === "Dịch vụ bán") {
       navigate("/seller/sellpage");
     } else if (title === "Bảng sản phẩm") {

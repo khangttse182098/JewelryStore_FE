@@ -65,7 +65,7 @@
   background-color: #886d45;
 }
 
-@media (min-width: 1280px) {
+@media only screen and (min-width: 1208px) and (max-width: 2000px) {
   .container {
     background-color: whitesmoke;
     width: calc(919px * var(--scale-factor));

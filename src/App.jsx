@@ -37,12 +37,14 @@ import ResponsiveWrapper from "./components/UtilComponent/ResponsiveWrapper/Resp
 import { useMediaQuery } from "react-responsive";
 
 function App() {
-  const isLargeScreen = useMediaQuery({ query: "(min-width: 1280px)" });
+  const isLargeScreen = useMediaQuery({
+    query: "only screen and (min-width: 1208px) and (max-width: 2000px)",
+  });
 
   const content = (
     <SkeletonTheme baseColor="#DFD8D8" highlightColor="#FFFFFF">
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/seller/sellpage" element={<SellerPage />} />
         <Route path="/cashier/invoice/list" element={<CashierPage />} />
         <Route path="/cashier/product/list" element={<CashierProductPage />} />

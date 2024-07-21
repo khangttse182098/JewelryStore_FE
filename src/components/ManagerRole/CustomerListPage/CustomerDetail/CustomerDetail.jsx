@@ -76,7 +76,7 @@ const CustomerDetail = () => {
     )
       .then((res) => {
         if (res.ok) {
-          navigate("/managercustomerlist");
+          navigate("/manager/customer/list");
         } else {
           console.log("Error deleting customer");
         }

@@ -87,7 +87,7 @@
   background-color: #0088ff;
   border-radius: 5px;
 }
-@media (min-width: 1280px) {
+@media only screen and (min-width: 1208px) and (max-width: 2000px) {
   .container {
     font-family: "Montserrat";
     width: calc(863px * var(--scale-factor));
