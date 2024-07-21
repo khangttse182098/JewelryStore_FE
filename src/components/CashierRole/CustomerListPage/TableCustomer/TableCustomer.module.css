@@ -100,3 +100,9 @@
   border-bottom-color: #2661ec;
   opacity: 0.9;
 }
+
+.td-skeleton {
+  border-bottom: none;
+  cursor: pointer;
+  height: 53px;
+}

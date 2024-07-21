@@ -53,7 +53,7 @@ const InvoiceDetail = ({ invoice }) => {
       });
   };
 
-  const onChangeCustomer = (updatedCustomer) => {
+  const handleUpdateCustomer = (updatedCustomer) => {
     setCustomer(updatedCustomer);
   };
 
@@ -250,7 +250,7 @@ const InvoiceDetail = ({ invoice }) => {
               ref={CustomerModalRef}
               customer={customer}
               handleHide={handleCloseCustomerModal}
-              onChangeCustomer={onChangeCustomer}
+              handleUpdateCustomer={handleUpdateCustomer}
             />
             <div className={classes["customer-detail"]}>
               <div className={classes["customer-title-container"]}>
