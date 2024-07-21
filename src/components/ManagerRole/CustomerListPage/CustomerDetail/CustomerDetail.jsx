@@ -1,18 +1,21 @@
 import Pen from "../../../../../public/assets/pen.png";
-import React, { useRef, useState, useEffect, useContext } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { formatter } from "../../../../util/formatter";
 import classes from "./CustomerDetail.module.css";
 import EditCusModal from "../EditCustomerModal/EditCusModal";
 import UpdateIcon from "../../../../../public/assets/pen.png";
+import DeleteIcon from "../../../../../public/assets/delete.png";
+import DeleteCustomerModal from "../DeleteCustomerModal/DeleteCustomerModal"; // Import the new modal
 
 const CustomerDetail = () => {
-  // const { register, handleSubmit } = useForm();
   const doneModalRef = useRef();
+  const deleteModalRef = useRef();
+  const navigate = useNavigate();
 
   const location = useLocation();
-  const { customer } = location.state || {}; // Kiểm tra nếu state tồn tại
+  const { customer } = location.state || {};
   const [orders, setOrders] = useState([]);
   const [objCustomer, setObjCustomer] = useState(customer);
   const customerInputFormRef = useRef();
@@ -57,14 +60,35 @@ const CustomerDetail = () => {
     customerInputFormRef.current.close();
   }
 
-  //   const averageExpense = customer.expense / customer.quantityOrder;
-  //   if (customer.quantityOrder === 0) return averageExpense === 0;
+  function handleDeleteClick() {
+    deleteModalRef.current.showModal();
+  }
 
-  function averageExpense(average) {
+  function handleDelete() {
+    fetch(
+      `http://mahika.foundation:8080/swp/api/customer/delete-${objCustomer.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        if (res.ok) {
+          navigate("/managercustomerlist");
+        } else {
+          console.log("Error deleting customer");
+        }
+      })
+      .catch((error) => console.log(error));
+  }
+
+  function averageExpense() {
     if (customer.quantityOrder === 0) {
-      return (average = 0);
+      return 0;
     } else {
-      return (average = customer.expense / customer.quantityOrder);
+      return customer.expense / customer.quantityOrder;
     }
   }
 
@@ -75,17 +99,30 @@ const CustomerDetail = () => {
         onClose={handleClose}
         ref={customerInputFormRef}
       />
-      {/* Personal Information */}
+      <DeleteCustomerModal
+        ref={deleteModalRef}
+        onDelete={handleDelete}
+        hasOrders={orders.length > 0}
+      />
       <div className="p-4 w-full">
         <div className="bg-white shadow-md p-4 rounded-md">
           <div className="flex justify-between items-center">
             <h2 className="font-semibold text-3xl">Thông tin cá nhân</h2>
-            <img
-              src={UpdateIcon}
-              alt="UpdateIcon"
-              className="w-[20px]"
-              onClick={handleClick}
-            />
+            <div className="flex items-center">
+              <img
+                src={UpdateIcon}
+                alt="UpdateIcon"
+                className="w-[20px] mr-5"
+                onClick={handleClick}
+              />
+
+              <img
+                src={DeleteIcon}
+                alt="DeleteIcon"
+                className="w-[20px]"
+                onClick={handleDeleteClick}
+              />
+            </div>
           </div>
           <div className="grid grid-cols-4 gap-3 text-center mt-4 mb-4 h-[90px]">
             <div>
@@ -132,14 +169,13 @@ const CustomerDetail = () => {
               <label className="text-xl text-gray-700">
                 Chi tiêu trung bình
               </label>
-              <div className="text-2xl mt-3 font-medium ">
+              <div className="text-2xl mt-3 font-medium">
                 {formatter.format(averageExpense())}
               </div>
             </div>
           </div>
         </div>
-        {/* Recent invoice */}
-        <div className="bg-white shadow-md p-4 rounded-md mt-4 ">
+        <div className="bg-white shadow-md p-4 rounded-md mt-4">
           <h2 className="font-semibold text-3xl mb-5">Hóa đơn gần đây</h2>
           <div className="overflow-y-scroll h-[383px]">
             {orders.length > 0 ? (
@@ -151,7 +187,10 @@ const CustomerDetail = () => {
                     ? classes["status-success"]
                     : classes["status-closed"];
                 return (
-                  <div className="grid grid-cols-4 gap-3 text-center mt-12 mb-12">
+                  <div
+                    key={index}
+                    className="grid grid-cols-4 gap-3 text-center mt-12 mb-12"
+                  >
                     <div>
                       <div className="text-2xl mt-3 font-medium">
                         {order.invoiceCode}
@@ -170,7 +209,6 @@ const CustomerDetail = () => {
                     <div>
                       <div className={`${statusClass} ${classes.status}`}>
                         {order.status}
-                        {/* status */}
                       </div>
                     </div>
                   </div>
@@ -185,4 +223,5 @@ const CustomerDetail = () => {
     </>
   );
 };
+
 export default CustomerDetail;
