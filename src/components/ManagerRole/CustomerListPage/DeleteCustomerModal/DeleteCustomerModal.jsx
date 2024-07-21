@@ -15,8 +15,8 @@ const DeleteCustomerModal = forwardRef(({ onDelete, hasOrders }, ref) => {
 
   return (
     isOpen && (
-      <div className="fixed inset-0 bg-gray-400 bg-opacity-75 flex justify-center items-center">
-        <div className="bg-white p-6 rounded-md shadow-md">
+      <div className="fixed inset-0 bg-gray-400 bg-opacity-75 flex justify-center items-center h-[1200px]">
+        <div className="bg-white p-6 rounded-md shadow-md ">
           {hasOrders ? (
             <>
               <p className="text-2xl font-semibold">
