@@ -1,19 +1,24 @@
 /* eslint-disable react/prop-types */
 import { useNavigate } from "react-router-dom";
 import classes from "./SidebarFunction.module.css";
+import { useContext } from "react";
+import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
 
 const SidebarFunction = ({ icon, title }) => {
   const navigate = useNavigate();
-
+  const { setUserId, setUserRole } = useContext(LoggedInUserContext);
   function handleClick() {
     if (title === "Dịch vụ mua lại") {
-      navigate("/purchasepage");
+      navigate("/seller/purchasepage");
     } else if (title === "Đăng xuất") {
+      localStorage.clear();
+      setUserId(null);
+      setUserRole(null);
       navigate("/");
     } else if (title === "Dịch vụ bán") {
-      navigate("/sellpage");
+      navigate("/seller/sellpage");
     } else if (title === "Bảng sản phẩm") {
-      navigate("/statuslist");
+      navigate("/seller/status/list");
     }
   }
 

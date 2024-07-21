@@ -5,34 +5,51 @@ import { Link, useNavigate } from "react-router-dom";
 import ImageLoader from "../../../../util/ImageLoader";
 import Red from "/assets/red.png";
 import Green from "/assets/green.png";
-import SkeletonRowList from "../../../UtilComponent/SkeletonRowList/SkeletonRowList";
-import { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import ErrorModal from "../../../UtilComponent/ErrorModal/ErrorModal";
 
 const TableProduct = () => {
+  const errorModalRef = useRef();
   const controllerRef = useRef();
+  const [isDisplay, setIsDisplay] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
   const [productList, setProductList] = useState([]);
   const [searchField, setSearchField] = useState("");
   const [filterProduct, setFilterProduct] = useState([...productList]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productPerPage, setProductPerPage] = useState(4);
+  const [productPerPage, setProductPerPage] = useState(5);
+  const [isLoading, setIsLoading] = useState(true);
   const [select, setSelect] = useState(false);
   const ids = [];
   const navigate = useNavigate();
   const deleteCode = productList.map((product) => ids.push(product.id));
 
+  function handleOpenErrorModal() {
+    errorModalRef.current.showModal();
+  }
+
+  function handleCLoseErrorModal() {
+    errorModalRef.current.close();
+  }
   //-------------------------handleDelete--------------------
-  const handleDelete = () => {
-    fetch("http://mahika.foundation:8080/swp/api/product", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(deleteCode),
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => console.log(error));
+  const handleDelete = async () => {
+    try {
+      const res = await fetch("http://mahika.foundation:8080/swp/api/product", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(deleteCode),
+      });
+      const obj = await res.json();
+      console.log(obj);
+      if (!obj.messsage) {
+        handleOpenErrorModal();
+        setErrorMsg(obj.message);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   //------------------------Get list products--------------------
@@ -44,10 +61,13 @@ const TableProduct = () => {
       try {
         const response = await fetch(
           "http://mahika.foundation:8080/swp/api/product",
-          { signal }
+          {
+            signal,
+          }
         );
         const data = await response.json();
         setProductList(data);
+        setIsLoading(false);
       } catch (err) {}
     };
     handleProduct();
@@ -55,11 +75,11 @@ const TableProduct = () => {
 
   //-----------------------------HandleNavigate---------------------
   function handleNavigate(list) {
-    navigate("/managerproductdetail", { state: { list } });
+    navigate("/manager/product/detail", { state: { list } });
   }
 
   function handleAdd() {
-    navigate("/manageraddproduct");
+    navigate("/manager/product/add");
   }
 
   //----------------------------Pagination---------------------------
@@ -81,7 +101,9 @@ const TableProduct = () => {
       return (
         product.productCode.toLowerCase().includes(searchField) ||
         product.productName.toLowerCase().includes(searchField) ||
-        product.categoryName.toLowerCase().includes(searchField)
+        product.categoryName.toLowerCase().includes(searchField) ||
+        product.counterNo.toLowerCase().includes(searchField) ||
+        product.createdDate.toLowerCase().includes(searchField)
       );
     });
     setFilterProduct(newFilterProduct);
@@ -96,6 +118,7 @@ const TableProduct = () => {
         return { ...product, isChecked: checked };
       });
       setProductList(tempProduct);
+      setIsDisplay(checked);
     } else {
       const tempProduct = productList.map((product) => {
         return product.productCode === name
@@ -103,33 +126,50 @@ const TableProduct = () => {
           : product;
       });
       setProductList(tempProduct);
+      setIsDisplay(tempProduct.some((product) => product.isChecked));
     }
   };
 
+  let skeletonRowList = [];
+  for (let index = 0; index < productPerPage; index++) {
+    skeletonRowList.push(
+      <tr key={index}>
+        <td colSpan="7">
+          <Skeleton className={classes["td-skeleton"]} />
+        </td>
+      </tr>
+    );
+  }
+
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
+      <ErrorModal
+        ref={errorModalRef}
+        handleClose={handleCLoseErrorModal}
+        msg={errorMsg}
+      />
       <div className="w-10/12 h-5/6 ">
-        <div className="text-3xl font-medium py-9">
+        <div className="text-3xl font-medium py-7">
           <p>Danh sách sản phẩm</p>
         </div>
         <div className="bg-white border-2 rounded-xl">
           <div>
             <button
               onChange={handleAdd}
-              className="h-[50px] w-[200px] border-b-4 border-[#0088FF] text-center text-[#0088FF] font-montserrat text-[15px] cursor-pointer"
+              className="h-[50px] w-[200px] border-b-4 border-b-[#2661ec]  text-center text-[#2661ec] font-semibold font-montserrat  cursor-pointer"
             >
               Tất cả
             </button>
           </div>
           <hr />
-          <div className="mt-3 mb-3">
+          <div className="my-5">
             <input
               className="h-9 w-96 rounded-md border border-[#dfd8d8] outline-none pl-11 ml-14 mr-4"
               type="search"
               placeholder="Tìm kiếm sản phẩm"
               onChange={handleSearch}
             />
-            <Link to="/manageraddproduct">
+            <Link to="/manager/product/add">
               <button className="w-32 h-9 rounded-md bg-[#0088FF] text-white">
                 + Thêm mới
               </button>
@@ -148,15 +188,14 @@ const TableProduct = () => {
                 </th>
                 {select && (
                   <>
-                    <th colSpan="6" className={classes.th}>
+                    <th colSpan="7" className={classes.th}>
                       <div className="flex">
                         <p className="font-normal pr-2">
                           Đã chọn <b>tất cả</b> sản phẩm trên trang này
                         </p>
                         <select
-                          onClick={handleDelete}
                           defaultValue=""
-                          className="border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none"
+                          className="cursor-pointer border-2 rounded-md border-[#0088FF] text-[#0088FF] outline-none"
                         >
                           <option value="" disabled>
                             Chọn thao tác
@@ -181,12 +220,17 @@ const TableProduct = () => {
               </tr>
             </thead>
             <tbody>
-              {!currentProduct.length ? (
-                <SkeletonRowList
-                  amount={4}
-                  style="border-b-[#dddddd] h-20 font-[400] text-center border-b-0"
-                  col={8}
-                />
+              {isLoading ? (
+                skeletonRowList
+              ) : !currentProduct.length ? (
+                <tr>
+                  <td
+                    colSpan="8"
+                    className="font-medium text-red-500 text-center h-32"
+                  >
+                    Không tìm thấy kết quả cho "{searchField}"
+                  </td>
+                </tr>
               ) : (
                 currentProduct.map((product) => {
                   return (
@@ -198,13 +242,15 @@ const TableProduct = () => {
                       onClick={() => handleNavigate(product)}
                     >
                       <td className={classes.td}>
-                        <input
-                          type="checkbox"
-                          name={product.productCode}
-                          onChange={handleCheckbox}
-                          checked={product?.isChecked || false}
-                          onClick={(event) => event.stopPropagation()}
-                        />
+                        {isDisplay && (
+                          <input
+                            type="checkbox"
+                            name={product.productCode}
+                            onChange={handleCheckbox}
+                            checked={product?.isChecked || false}
+                            onClick={(event) => event.stopPropagation()}
+                          />
+                        )}
                       </td>
                       <td className={classes.td}>
                         <ImageLoader

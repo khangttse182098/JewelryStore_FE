@@ -11,9 +11,19 @@ const defaultFormField = {
 const SignInForm = () => {
   const [formField, setFormField] = useState(defaultFormField);
   const [isWrong, setIsWrong] = useState(false);
-  const { setUserId } = useContext(LoggedInUserContext);
+  const { setUserId, userRole, setUserRole } = useContext(LoggedInUserContext);
   const { username, password } = formField;
   const navigate = useNavigate();
+  //check if user already login
+  if (userRole) {
+    if (userRole === "SELLER") {
+      navigate("/seller/sellpage");
+    } else if (userRole === "MANAGER") {
+      navigate("/manager/chart");
+    } else if (userRole === "CASHIER") {
+      navigate("/cashier/invoice/list");
+    }
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     fetch("http://mahika.foundation:8080/swp/api/user/login", {
@@ -26,13 +36,16 @@ const SignInForm = () => {
       .then((res) => res.json())
       .then((data) => {
         {
+          localStorage.setItem("userId", data.userId);
+          localStorage.setItem("roleCode", data.roleCode);
           data.roleCode && setUserId(data.userId);
+          data.roleCode && setUserRole(data.roleCode);
         }
         if (data.roleCode === "SELLER") {
-          navigate("/sellpage");
+          navigate("/seller/sellpage");
           setIsWrong(false);
         } else if (data.roleCode === "CASHIER") {
-          navigate("/invoicelist");
+          navigate("/cashier/invoice/list");
           setIsWrong(false);
         } else if (data.roleCode === "MANAGER") {
           navigate("/manager/chart");
@@ -78,7 +91,11 @@ const SignInForm = () => {
         </div>
         {isWrong && (
           <p
-            style={{ color: "#cc0000", textAlign: "center", marginTop: "5px" }}
+            style={{
+              color: "#cc0000",
+              textAlign: "center",
+              marginTop: "5px",
+            }}
           >
             Wrong username or password!
           </p>

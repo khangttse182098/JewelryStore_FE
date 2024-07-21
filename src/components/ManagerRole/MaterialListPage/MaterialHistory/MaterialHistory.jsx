@@ -80,7 +80,7 @@ const MaterialHistory = ({ material }) => {
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
       <div className="w-10/12 h-5/6 mx-auto">
-        <div className="text-3xl font-medium py-10 flex justify-between">
+        <div className="text-3xl font-medium py-7 flex justify-between">
           <p>Lịch sử giá vàng</p>
         </div>
 
@@ -124,7 +124,7 @@ const MaterialHistory = ({ material }) => {
           <div className="text-right mr-28">
             <button
               onClick={() =>
-                navigate("/managermaterialdetail", {
+                navigate("/manager/material/detail", {
                   state: {
                     material: { ...materialHistory[0], ["id"]: material.id },
                   },

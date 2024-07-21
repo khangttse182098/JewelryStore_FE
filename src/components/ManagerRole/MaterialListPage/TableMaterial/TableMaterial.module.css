@@ -1,9 +1,9 @@
 .button {
-  @apply h-12 w-48 bg-white text-center box-border text-gray-500 font-["Montserrat"] text-base hover:box-border hover:text-blue-600 hover:border-b-2 hover:border-blue-600 cursor-pointer;
+  @apply h-12 w-48 bg-white text-center box-border text-gray-500 font-["Montserrat"] text-base hover:box-border hover:text-blue-600 hover:border-b-4 hover:border-blue-600 cursor-pointer;
 }
 
 .selectedFilter {
-  @apply box-border text-blue-600 border-b-2 border-blue-600;
+  @apply box-border text-blue-600 border-b-4 border-blue-600 font-semibold;
 }
 
 .search-container {
@@ -31,11 +31,13 @@
 }
 
 .td {
-  @apply border-b-[#dddddd] h-10 font-[400] text-center;
+  @apply border-b border-[#dddddd] h-20 font-[400] text-center;
 }
 
 .td-skeleton {
-  @apply border-b-[#dddddd] h-20 font-[400] text-center border-b-0;
+  border-bottom: none;
+  cursor: pointer;
+  height: 53px;
 }
 
 .checkbox {
@@ -44,10 +46,6 @@
 
 .tr {
   @apply text-center p-2 cursor-pointer hover:bg-[#eff7fd];
-}
-
-.selectedTr {
-  @apply bg-[#eff7fd];
 }
 
 .th,

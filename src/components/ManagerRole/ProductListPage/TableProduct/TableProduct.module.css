@@ -14,7 +14,6 @@
   margin-left: 42.5px;
 }
 
-
 .img {
   margin-right: 17px;
 }
@@ -51,7 +50,7 @@
 }
 
 .current {
-  @apply text-[#2661ec] font-semibold border-b-[#2661ec] opacity-90;
+  @apply text-[#2661ec] font-semibold border-b-[#2661ec] opacity-90 border-b-4;
 }
 
 .status {

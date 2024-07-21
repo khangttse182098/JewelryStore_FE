@@ -70,13 +70,19 @@ const AddDiscountModal = forwardRef(({ onClose }, ref) => {
       />
       <dialog
         ref={ref}
-        className="h-1/2 w-1/2 absolute inset-y-44 inset-x-auto rounded drop-shadow-xl"
+        className="h-1/2 w-1/2 fixed rounded translate-x-2/4 translate-y-2/4 drop-shadow-xl"
       >
         <form
-          className="flex flex-col gap-10 h-full "
+          className="flex flex-col h-full "
           onSubmit={handleSubmit(onSubmit)}
         >
-          <h1 className="text-center mt-5 text-xl font-medium">
+          <p
+            className="text-3xl font-semibold text-end mr-10 mt-3 text-red-500 cursor-pointer"
+            onClick={onClose}
+          >
+            &times;
+          </p>
+          <h1 className="text-center text-xl font-medium">
             Thêm mã khuyến mãi
           </h1>
           <div className="flex grow flex-col ml-16 mr-16 justify-around ">
@@ -106,7 +112,7 @@ const AddDiscountModal = forwardRef(({ onClose }, ref) => {
             </div>
           </div>
           <button
-            className="bg-blue-500 hover:bg-blue-600 text-slate-200 p-3 w-1/3 mb-3 text-lg self-center rounded"
+            className="bg-blue-500 hover:bg-blue-600 text-slate-200 p-3 w-1/3 mb-3 text-lg self-center rounded mt-3"
             type="submit"
           >
             Thêm

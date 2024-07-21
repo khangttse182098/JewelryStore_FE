@@ -87,3 +87,94 @@
   background-color: #0088ff;
   border-radius: 5px;
 }
+@media only screen and (min-width: 1208px) and (max-width: 2000px) {
+  .container {
+    font-family: "Montserrat";
+    width: calc(863px * var(--scale-factor));
+    height: calc(430px * var(--scale-factor));
+    border-radius: 10px;
+    margin: auto;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: calc(30px * var(--scale-factor));
+    font-weight: 500;
+  }
+
+  .hr {
+    width: calc(820px * var(--scale-factor));
+  }
+
+  .form-container {
+    margin-top: calc(23px * var(--scale-factor));
+  }
+
+  .first-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: calc(55px * var(--scale-factor));
+  }
+
+  .second-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: calc(22px * var(--scale-factor));
+  }
+
+  .input-field {
+    font-size: calc(20px * var(--scale-factor));
+  }
+
+  .radio-field {
+    font-size: calc(20px * var(--scale-factor));
+    width: calc(360px * var(--scale-factor));
+    height: calc(50px * var(--scale-factor));
+  }
+
+  .range {
+    display: flex;
+    justify-content: space-between;
+    margin-top: calc(10px * var(--scale-factor));
+  }
+
+  .box {
+    width: calc(360px * var(--scale-factor));
+    height: calc(50px * var(--scale-factor));
+    border: #a6abb2 solid 1px;
+    border-radius: 5px;
+  }
+
+  .close {
+    font-size: calc(40px * var(--scale-factor));
+    cursor: pointer;
+  }
+
+  .position-button {
+    display: flex;
+    justify-content: center;
+  }
+
+  .button {
+    width: calc(182px * var(--scale-factor));
+    height: calc(50px * var(--scale-factor));
+    background: none;
+    color: white;
+    border: none;
+    padding: 0;
+    font: inherit;
+    font-size: calc(18px * var(--scale-factor));
+    font-weight: 500;
+    cursor: pointer;
+    outline: inherit;
+    background-color: #0088ff;
+    border-radius: 5px;
+  }
+}

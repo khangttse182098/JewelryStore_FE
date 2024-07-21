@@ -6,17 +6,32 @@ import AddMaterialModal from "../AddMaterialModalRef/AddMaterialModal";
 import { useNavigate } from "react-router-dom";
 import { formatter } from "../../../../util/formatter";
 import DoneModal from "../../../UtilComponent/DoneModal/DoneModal";
-import viewIcon from "/assets/eye.png";
 
 const TableMaterial = () => {
   const addMaterialModalRef = useRef();
   const doneModelRef = useRef();
   const [materialList, setMaterialList] = useState([]);
+  const [searchField, setSearchField] = useState("");
   const [filterMaterialList, setFilterMaterialList] = useState([]);
-  const [selectedFilter, setSelectedFilter] = useState("Tất cả");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const materialPerPage = 4;
+  const materialPerPage = 10;
+
+  const handleSearch = (event) => {
+    const searchFieldString = event.target.value.toLowerCase();
+    setSearchField(searchFieldString);
+  };
+
+  useEffect(() => {
+    const newFilterMaterial = materialList.filter((material) => {
+      return (
+        material.goldName.toLowerCase().includes(searchField) ||
+        material.effectDate.includes(searchField)
+      );
+    });
+    setFilterMaterialList(newFilterMaterial);
+  }, [searchField, materialList]);
 
   const lastDiscountIndex = currentPage * materialPerPage;
   const firstDiscountIndex = lastDiscountIndex - materialPerPage;
@@ -24,17 +39,15 @@ const TableMaterial = () => {
     firstDiscountIndex,
     lastDiscountIndex
   );
-  console.log(currentMaterial);
 
   const handleMaterial = async () => {
     const response = await fetch(
       "http://mahika.foundation:8080/swp/api/gold-price"
     );
     const data = await response.json();
-    console.log(data);
     setMaterialList(data);
-    setSelectedFilter("Tất cả");
     setFilterMaterialList(data);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -70,7 +83,7 @@ const TableMaterial = () => {
       <DoneModal ref={doneModelRef} handleClose={handleClose} />
       <AddMaterialModal ref={addMaterialModalRef} onClose={handleHide} />
       <div className="w-10/12 h-5/6 mx-auto">
-        <div className="text-3xl font-medium py-10 flex justify-between">
+        <div className="text-3xl font-medium py-7 flex justify-between">
           <p>Giá vàng thời điểm</p>
           <button
             onClick={handleAdd}
@@ -94,6 +107,7 @@ const TableMaterial = () => {
               className="h-9 w-96 rounded-lg border-2 border-gray-300 outline-none pl-4 ml-14"
               type="search"
               placeholder="Tìm kiếm loại vàng"
+              onChange={handleSearch}
             />
           </div>
           <table className="group w-full border-collapse">
@@ -106,34 +120,45 @@ const TableMaterial = () => {
               </tr>
             </thead>
             <tbody>
-              {!currentMaterial.length
-                ? skeletonRowList
-                : currentMaterial.map((material) => {
-                    return (
-                      <tr
-                        onClick={() =>
-                          navigate("/managermaterialhistory", {
-                            state: { material },
-                          })
-                        }
-                        className={`${classes.tr}`}
-                        key={material.goldName}
-                      >
-                        <td className={classes.td}>{material.goldName}</td>
-                        <td className={classes.td}>
-                          {formatter.format(material.buyPrice)}
-                        </td>
-                        <td className={classes.td}>
-                          {formatter.format(material.sellPrice)}
-                        </td>
-                        <td className={classes.td}>{material.effectDate}</td>
-                      </tr>
-                    );
-                  })}
+              {isLoading ? (
+                skeletonRowList
+              ) : !currentMaterial.length ? (
+                <tr>
+                  <td
+                    colSpan="4"
+                    className="font-medium text-red-500 text-center h-32"
+                  >
+                    Không tìm thấy kết quả cho "{searchField}"
+                  </td>
+                </tr>
+              ) : (
+                currentMaterial.map((material) => {
+                  return (
+                    <tr
+                      onClick={() =>
+                        navigate("/manager/material/history", {
+                          state: { material },
+                        })
+                      }
+                      className={`${classes.tr}`}
+                      key={material.goldName}
+                    >
+                      <td className={classes.td}>{material.goldName}</td>
+                      <td className={classes.td}>
+                        {formatter.format(material.buyPrice)}
+                      </td>
+                      <td className={classes.td}>
+                        {formatter.format(material.sellPrice)}
+                      </td>
+                      <td className={classes.td}>{material.effectDate}</td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
           <Pagination
-            totalInvoice={filterMaterialList.length}
+            totalInvoice={materialList.length}
             invoicePerPage={materialPerPage}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
