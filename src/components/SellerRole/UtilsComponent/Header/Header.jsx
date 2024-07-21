@@ -4,6 +4,7 @@ import MahikaLogo from "/assets/Logo.png";
 import SellerSidebar from "../SellerSidebar/SellerSidebar";
 import { useNavigate } from "react-router-dom";
 import { LoggedInUserContext } from "../../../../context/LoggedInUserContext";
+import ResponsiveWrapper from "../../../UtilComponent/ResponsiveWrapper/ResponsiveWrapper";
 
 const Header = () => {
   const [visible, setVisible] = useState(false);

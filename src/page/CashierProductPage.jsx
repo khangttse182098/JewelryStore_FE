@@ -5,7 +5,7 @@ import CashierSidebar from "../components/CashierRole/UtilsComponent/CashierSide
 const CashierProductPage = () => {
   return (
     <>
-      <div className="grid grid-cols-6 grid-rows-none gap-0">
+      <div className="grid grid-cols-6 grid-rows-none gap-0 h-[145vh]">
         <div className="col-span-1">
           <CashierSidebar activePage="Sản phẩm" />
         </div>

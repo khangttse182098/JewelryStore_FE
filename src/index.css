@@ -2,9 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+:root {
+  --scale-factor: 0.7;
+}
+
+body,
+html {
   margin: 0;
   font-family: "Montserrat", sans-serif;
+  height: 100%;
+  overflow: hidden;
 }
 
 code {

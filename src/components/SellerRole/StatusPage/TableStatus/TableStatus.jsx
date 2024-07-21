@@ -89,7 +89,7 @@ const TableStatus = () => {
   return (
     <SkeletonTheme baseColor="#f2f2f2" highlightColor="white">
       <DoneModal ref={doneModalRef} handleClose={handleCloseDoneModal} />
-      <div className="w-screen my-10 px-5">
+      <div className="w-screen h-[142vh] my-10 px-5">
         <div className={classes.title}>
           <p>Danh sách trạng thái</p>
         </div>

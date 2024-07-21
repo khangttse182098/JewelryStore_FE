@@ -33,9 +33,13 @@ import ManagerInvoicePage from "./page/ManagerInvoicePage";
 import ManagerInvoiceDetailPage from "./page/ManagerInvoiceDetailPage";
 import ManagerCustomerPage from "./page/ManagerCustomerPage";
 import ManagerCustomerDetailPage from "./page/ManagerCustomerDetailPage";
+import ResponsiveWrapper from "./components/UtilComponent/ResponsiveWrapper/ResponsiveWrapper";
+import { useMediaQuery } from "react-responsive";
 
 function App() {
-  return (
+  const isLargeScreen = useMediaQuery({ query: "(min-width: 1280px)" });
+
+  const content = (
     <SkeletonTheme baseColor="#DFD8D8" highlightColor="#FFFFFF">
       <Routes>
         <Route path="/login" element={<LoginPage />} />
@@ -85,14 +89,6 @@ function App() {
         />
         <Route path="/manager/staff/list" element={<ManagerStaffPage />} />
         <Route
-          path="/manager/product/detail"
-          element={<ManagerProductDetailPage />}
-        />
-        <Route
-          path="/manager/product/add"
-          element={<ManagerAddProductPage />}
-        />
-        <Route
           path="/manager/discount/detail"
           element={<ManagerDiscountDetailPage />}
         />
@@ -129,6 +125,12 @@ function App() {
         />
       </Routes>
     </SkeletonTheme>
+  );
+
+  return isLargeScreen ? (
+    <ResponsiveWrapper>{content}</ResponsiveWrapper>
+  ) : (
+    content
   );
 }
 

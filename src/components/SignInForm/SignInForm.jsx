@@ -91,7 +91,11 @@ const SignInForm = () => {
         </div>
         {isWrong && (
           <p
-            style={{ color: "#cc0000", textAlign: "center", marginTop: "5px" }}
+            style={{
+              color: "#cc0000",
+              textAlign: "center",
+              marginTop: "5px",
+            }}
           >
             Wrong username or password!
           </p>
