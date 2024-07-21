@@ -43,10 +43,7 @@ const TableProduct = () => {
       });
       const obj = await res.json();
       console.log(obj);
-      if (!obj.messsage) {
-        handleOpenErrorModal();
-        setErrorMsg(obj.message);
-      }
+      handleOpenErrorModal();
     } catch (error) {
       console.log(error.message);
     }
@@ -61,9 +58,7 @@ const TableProduct = () => {
       try {
         const response = await fetch(
           "http://mahika.foundation:8080/swp/api/product",
-          {
-            signal,
-          }
+          { signal }
         );
         const data = await response.json();
         setProductList(data);
@@ -75,11 +70,11 @@ const TableProduct = () => {
 
   //-----------------------------HandleNavigate---------------------
   function handleNavigate(list) {
-    navigate("/manager/product/detail", { state: { list } });
+    navigate("/managerproductdetail", { state: { list } });
   }
 
   function handleAdd() {
-    navigate("/manager/product/add");
+    navigate("/manageraddproduct");
   }
 
   //----------------------------Pagination---------------------------
@@ -146,7 +141,7 @@ const TableProduct = () => {
       <ErrorModal
         ref={errorModalRef}
         handleClose={handleCLoseErrorModal}
-        msg={errorMsg}
+        msg={"Không xóa được sản phẩm trong hóa đơn"}
       />
       <div className="w-10/12 h-5/6 ">
         <div className="text-3xl font-medium py-7">
@@ -169,7 +164,7 @@ const TableProduct = () => {
               placeholder="Tìm kiếm sản phẩm"
               onChange={handleSearch}
             />
-            <Link to="/manager/product/add">
+            <Link to="/manageraddproduct">
               <button className="w-32 h-9 rounded-md bg-[#0088FF] text-white">
                 + Thêm mới
               </button>
